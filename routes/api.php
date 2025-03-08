@@ -9,6 +9,7 @@ use App\Http\Controllers\IncomeExpenseController;
 use App\Http\Controllers\IncomeStatementController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CommonDataController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -66,6 +67,18 @@ Route::middleware(['web'])->group(function () {
     Route::get('/income/pluck', [IncomeExpenseController::class, 'pluckIncome'])->name('api.income.pluck'); 
     Route::get('/expense/pluck', [IncomeExpenseController::class, 'pluckExpenses'])->name('api.expense.pluck'); 
     
+
+     // Business Type Routes
+    Route::post('/business/type/save', [CommonDataController::class,'saveBusinessType'])->name('api.business.types.store');
+    Route::get('/business/types', [CommonDataController::class,'getAllBusinessTypes'])->name('api.business.types.fetch');
+    Route::delete('/business/type/{id}', [CommonDataController::class,'deleteBusinessType'])->name('api.business.type.delete');
+    Route::get('/business/types/pluck', [CommonDataController::class,'pluckBusinessTypes'])->name('api.business.types.pluck');
+
+    // Person Routes
+    Route::post('/person/save', [CommonDataController::class,'savePerson'])->name('api.person.store');
+    Route::get('/persons', [CommonDataController::class,'getAllPersons'])->name('api.persons.fetch');
+    Route::delete('/person/{id}', [CommonDataController::class,'deletePerson'])->name('api.person.delete');
+    Route::get('/persons/pluck', [CommonDataController::class,'pluckPersons'])->name('api.persons.pluck');
 
     // reports
     Route::post('/transaction/reports/fetch', [ReportController::class, 'transactions_reports_fetch'])->name('api.transaction.report.fetch');             // Fetch all transaction entries

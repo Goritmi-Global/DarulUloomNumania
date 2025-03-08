@@ -10,6 +10,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\IncomeExpenseController;
 use App\Http\Controllers\IncomeStatementController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\CommonDataController;
  
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -63,6 +64,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //  reports 
     Route::get('/income-statements', [IncomeStatementController::class, 'index'])->name('income-statements'); 
    
+    // Business Types
+    Route::get('/business/types', [CommonDataController::class, 'indexBusinessTypes'])->name('business.types');
+    // Persons
+    Route::get('/persons', [CommonDataController::class, 'indexPersonTypes'])->name('persons');
+
  
 
     // data saving routes

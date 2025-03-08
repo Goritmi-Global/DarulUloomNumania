@@ -130,93 +130,149 @@
 
         <!-- ======= Sidebar ======= -->
         <aside id="sidebar" class="sidebar">
-            <ul class="sidebar-nav" id="sidebar-nav">
-                <!-- Dashboard Nav Item -->
-                <li class="nav-item">
-                    <a
-                        class="nav-link collapsed"
-                        :class="{ active: isActive('/dashboard') }"
-                        href="/dashboard"
-                    >
-                        <i class="bi bi-house-door"></i>
-                        <!-- Icon for Dashboard -->
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <!-- Transactions Nav Item -->
-                <li class="nav-item">
-                    <a
-                        class="nav-link collapsed"
-                        :class="{ active: isActive('/transactions') }"
-                        href="/transactions"
-                    >
-                        <i class="bi bi-cash"></i>
-                        <!-- Icon for Transactions -->
-                        <span>Transactions</span>
-                    </a>
-                </li>
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <!-- Dashboard Nav Item -->
+        <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                :class="{ active: isActive('/dashboard') }"
+                href="/dashboard"
+            >
+                <i class="bi bi-house-door"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
 
-                <!-- Users Nav Item -->
-                <li class="nav-item">
-                    <a
-                        class="nav-link collapsed"
-                        :class="{ active: isActive('/expense/types') }"
-                        href="/expense/types"
-                    >
-                        <i class="bi bi-dash-circle"></i>
-                        <!-- Icon for Users -->
-                        <span>Expense Types</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a
-                        class="nav-link collapsed"
-                        :class="{ active: isActive('/income/types') }"
-                        href="/income/types"
-                    >
-                        <i class="bi bi-plus-circle"></i>
-                        <!-- Icon for Users -->
-                        <span>Income Types</span>
-                    </a>
-                </li>
-                <!-- Income Statements Nav Item -->
-                <li class="nav-item">
-                    <a
-                        class="nav-link collapsed"
-                        :class="{ active: isActive('/income-statements') }"
-                        href="/income-statements"
-                    >
-                        <i class="bi bi-file-earmark-text"></i>
-                        <!-- Icon for Income Statements -->
-                        <span>Income Statements</span>
-                    </a>
-                </li>
-                <!-- Reports Nav Item -->
-                <li class="nav-item">
-                    <a
-                        class="nav-link collapsed"
-                        :class="{ active: isActive('/reports') }"
-                        href="/reports"
-                    >
-                        <i class="bi bi-bar-chart-line"></i>
-                        <!-- Icon for Reports -->
-                        <span>Reports</span>
-                    </a>
-                </li>
+        <!-- Transactions Nav Item -->
+        <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                :class="{ active: isActive('/transactions') }"
+                href="/transactions"
+            >
+                <i class="bi bi-cash"></i>
+                <span>Transactions</span>
+            </a>
+        </li>
 
-                <li class="nav-item">
-                    <a
-                        class="nav-link collapsed"
-                        :class="{ active: isActive('/users') }"
-                        href="/users"
-                    >
-                        <i class="bi bi-person-circle"></i>
-                        <!-- Icon for Users -->
-                        <span>Software Users</span>
-                    </a>
-                </li>
-            </ul>
-        </aside>
+        <!-- Expense Types -->
+        <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                :class="{ active: isActive('/expense/types') }"
+                href="/expense/types"
+            >
+                <i class="bi bi-dash-circle"></i>
+                <span>Expense Types</span>
+            </a>
+        </li>
+
+        <!-- Income Types -->
+        <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                :class="{ active: isActive('/income/types') }"
+                href="/income/types"
+            >
+                <i class="bi bi-plus-circle"></i>
+                <span>Income Types</span>
+            </a>
+        </li>
+
+        <!-- Income Statements -->
+        <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                :class="{ active: isActive('/income-statements') }"
+                href="/income-statements"
+            >
+                <i class="bi bi-file-earmark-text"></i>
+                <span>Income Statements</span>
+            </a>
+        </li>
+
+        <!-- Reports -->
+        <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                :class="{ active: isActive('/reports') }"
+                href="/reports"
+            >
+                <i class="bi bi-bar-chart-line"></i>
+                <span>Reports</span>
+            </a>
+        </li>
+        <li class="nav-item">
+    <a
+        class="nav-link collapsed"
+        data-bs-toggle="collapse"
+        href="#loan-management-nav"
+        :class="{ active: isLoanManagementActive }"
+    >
+        <i class="bi bi-bank"></i>
+        <span>Loan Management</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul
+        id="loan-management-nav"
+        class="nav-content collapse"
+        :class="{ show: isLoanManagementActive }"
+        data-bs-parent="#sidebar-nav"
+    >
+        <li>
+            <a :class="{ active: isActive('/persons') }" href="/persons">
+                <i class="bi bi-person"></i>
+                <span>Persons</span>
+            </a>
+        </li>
+        <li>
+            <a :class="{ active: isActive('/business/types') }" href="/business/types">
+                <i class="bi bi-buildings"></i>
+                <span>Business Types</span>
+            </a>
+        </li>
+    </ul>
+</li>
+
+
+
+        <!-- Business Types -->
+        <!-- <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                :class="{ active: isActive('/business/types') }"
+                href="/business/types"
+            >
+                <i class="bi bi-building"></i>
+                <span>Business Types</span>
+            </a>
+        </li>
+
+        Persons
+        <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                :class="{ active: isActive('/persons') }"
+                href="/persons"
+            >
+                <i class="bi bi-person-circle"></i>
+                <span>Persons</span>
+            </a>
+        </li> -->
+
+        <!-- Software Users -->
+        <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                :class="{ active: isActive('/users') }"
+                href="/users"
+            >
+                <i class="bi bi-people"></i>
+                <span>Software Users</span>
+            </a>
+        </li>
+    </ul>
+</aside>
 
         <!-- End Sidebar-->
 
@@ -238,7 +294,6 @@
 </template>
 
 <script>
-// import "http://alsmi.test/backend/assets/vendor/bootstrap/js/bootstrap.bundle.min.js";
 import axios from "axios";
 
 export default {
@@ -255,13 +310,22 @@ export default {
         document.head.appendChild(mainJs);
     },
 
-    setup() {
-        return {};
+    computed: {
+        // Keeps Loan Management open if any sub-route is active
+        isLoanManagementActive() {
+            return (
+                window.location.pathname.startsWith("/persons") ||
+                window.location.pathname.startsWith("/business/types")
+            );
+        }
     },
+
     methods: {
+        // Checks if the current route starts with the given path
         isActive(route) {
-            return window.location.pathname === route;
+            return window.location.pathname.startsWith(route);
         },
+
         logout() {
             axios
                 .post(route("api.logout"), this.form, {

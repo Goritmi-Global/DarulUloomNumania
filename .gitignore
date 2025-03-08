@@ -18,6 +18,5 @@ yarn-error.log
 /.idea
 /.vscode
 /public/real_public
-/public/CustomerFiles
-/public/TravelAdvisorFiles
+/public/CustomerFiles 
 /public/sitemap.xml
