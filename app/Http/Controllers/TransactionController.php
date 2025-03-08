@@ -354,7 +354,7 @@ class TransactionController extends Controller
 
         if ($transaction->transaction_type == 'Borrow') {
             $moneyTaken              = MoneyTakenFrom::where('transaction_id', $id)->first();
-            $transaction->expense_type = $moneyTaken->person_id;
+            $transaction->person = $moneyTaken->person_id;
             $transaction->process_type = 'Borrow';
 
             $transaction->cash_out = 0;
@@ -479,7 +479,7 @@ class TransactionController extends Controller
         }
         MoneyTakenFrom::where('transaction_id',$id)->delete();
         MoneyGivenTo::where('transaction_id',$id)->delete();
-        
+
         $transaction->delete();
         return 'success';
 
