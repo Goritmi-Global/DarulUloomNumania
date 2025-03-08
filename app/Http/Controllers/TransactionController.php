@@ -11,6 +11,7 @@ use App\Models\MoneyGivenTo;
 use App\Models\MoneyTakenFrom;
 use App\Models\Person;
 use App\Models\Upload;
+use App\Models\BusinessType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -34,16 +35,27 @@ class TransactionController extends Controller
         // Start the query builder for transactions
         $query = Transaction::query();
 
+        // if($request->businessType)
+        // {
+        //     $businessTypeId = $request->businessType;
+        //     $business =  BusinessType::where()->first();
+        // }
+        
         // Apply filters only if request contains filtering parameters
         if ($request->has('selectedFilter') && $request->selectedFilter) {
             $filter = $request->selectedFilter;
-
+            if($request->businessType)
+            {
+               
+                $query->where('business_type_id', $request->businessType);
+            }
             if ($filter == 'Yearly' && $request->has('selectedYear')) {
                 $query->whereYear('transaction_date', $request->selectedYear);
             } elseif ($filter == 'Monthly' && $request->has(['selectedYear', 'selectedMonth'])) {
                 $query->whereYear('transaction_date', $request->selectedYear)
                     ->whereMonth('transaction_date', $request->selectedMonth);
-            } elseif ($filter == 'Custom' && $request->has(['startDate', 'endDate'])) {
+            } 
+            elseif ($filter == 'Custom' && $request->has(['startDate', 'endDate'])) {
                 $query->whereBetween('transaction_date', [$request->startDate, $request->endDate]);
             }
         }
@@ -378,11 +390,17 @@ class TransactionController extends Controller
         $selectedMonth  = null;
         $startDate      = null;
         $endDate        = null;
+        $businessType        = null;
 
         $query = Transaction::query();
 
         // Apply filters only if a filter is selected
         if ($selectedFilter) {
+            if($request->businessType)
+            {
+               
+                $query->where('business_type_id', $request->businessType);
+            }
             if ($selectedFilter == 'Yearly') {
                 $selectedYear = $request->selectedYear;
                 $query->whereYear('transaction_date', $selectedYear);
@@ -424,6 +442,11 @@ class TransactionController extends Controller
 
         // Apply filters only if a filter is selected
         if ($request->has('selectedFilter') && $request->selectedFilter) {
+            if($request->businessType)
+            {
+               
+                $query->where('business_type_id', $request->businessType);
+            }
             $filter = $request->selectedFilter;
 
             if ($filter == 'Yearly' && $request->selectedYear) {
@@ -445,8 +468,7 @@ class TransactionController extends Controller
 
 
     public function destroy($id)
-    { 
-
+    {  
         $transaction = Transaction::findOrFail($id);
         if ($transaction->receipt_image) {
             $existingInUploads = Upload::where('id', $transaction->receipt_image)->first();
@@ -455,6 +477,9 @@ class TransactionController extends Controller
                 $existingInUploads->delete();
             }
         }
+        MoneyTakenFrom::where('transaction_id',$id)->delete();
+        MoneyGivenTo::where('transaction_id',$id)->delete();
+        
         $transaction->delete();
         return 'success';
 

@@ -172,6 +172,16 @@
                                     />
                                 </div>
 
+                                <div class="col-auto" v-if="selectedFilter">
+                                    <Multiselect
+                                        v-model="filterBusinessType"
+                                        :options="businessTypesOptions"
+                                        placeholder="Bussiness Type"
+                                        :searchable="true"
+                                    />
+                                    
+                                </div>
+
                                 <div class="col-auto">
                                     <button
                                         @click="fetchTransactionEntries"
@@ -332,13 +342,24 @@
                                             {{ formErrors.process_type[0] }}
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-12 mb-3" v-if="form.process_type == 'Income' || form.process_type == 'Expense'">
+                                    <div
+                                        class="col-12 col-md-12 mb-3"
+                                        v-if="
+                                            form.process_type == 'Income' ||
+                                            form.process_type == 'Expense'
+                                        "
+                                    >
                                         <label>{{ "Bussiness Type" }} </label>
                                         <Multiselect
                                             v-model="form.business_type"
                                             :options="businessTypesOptions"
                                             :searchable="true"
-                                            @select="pluckExpIncTypes(form.business_type,form.process_type)"
+                                            @select="
+                                                pluckExpIncTypes(
+                                                    form.business_type,
+                                                    form.process_type
+                                                )
+                                            "
                                             :class="{
                                                 'invalid-bg':
                                                     formErrors.business_type,
@@ -374,14 +395,11 @@
                                         </div>
                                     </div>
 
-                                    
                                     <div
                                         class="col-12 col-md-6"
                                         v-if="form.process_type == 'Expense'"
                                     >
-                                        <label 
-                                            >{{ "Expense Type" }}
-                                        </label>
+                                        <label>{{ "Expense Type" }} </label>
                                         <Multiselect
                                             v-model="form.expense_type"
                                             :options="ExpenseTypesOptions"
@@ -400,18 +418,18 @@
                                     </div>
                                     <div
                                         class="col-12 col-md-6"
-                                        v-if="form.process_type == 'Borrow' || form.process_type == 'Lend' "
+                                        v-if="
+                                            form.process_type == 'Borrow' ||
+                                            form.process_type == 'Lend'
+                                        "
                                     >
-                                        <label 
-                                            >{{ "Select person" }}
-                                        </label>
+                                        <label>{{ "Select person" }} </label>
                                         <Multiselect
                                             v-model="form.person"
                                             :options="personsOptions"
                                             :searchable="true"
                                             :class="{
-                                                'invalid-bg':
-                                                    formErrors.person,
+                                                'invalid-bg': formErrors.person,
                                             }"
                                         />
                                         <div
@@ -423,11 +441,12 @@
                                     </div>
                                     <div
                                         class="col-md-6 col-12"
-                                        v-if="form.process_type == 'Income' || form.process_type == 'Borrow'"
+                                        v-if="
+                                            form.process_type == 'Income' ||
+                                            form.process_type == 'Borrow'
+                                        "
                                     >
-                                        <label for="cash_in" 
-                                            >Cash In</label
-                                        >
+                                        <label for="cash_in">Cash In</label>
                                         <input
                                             type="text"
                                             class="form-control"
@@ -446,14 +465,14 @@
                                         </div>
                                     </div>
 
-
                                     <div
                                         class="col-md-6 col-12"
-                                        v-if="form.process_type == 'Expense' || form.process_type == 'Lend'"
+                                        v-if="
+                                            form.process_type == 'Expense' ||
+                                            form.process_type == 'Lend'
+                                        "
                                     >
-                                        <label for="cash_out" 
-                                            >Cash Out</label
-                                        >
+                                        <label for="cash_out">Cash Out</label>
                                         <input
                                             type="text"
                                             class="form-control"
@@ -473,9 +492,7 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="remarks" 
-                                            >Description</label
-                                        >
+                                        <label for="remarks">Description</label>
                                         <input
                                             type="text"
                                             class="form-control"
@@ -495,9 +512,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-6">
-                                        <label 
-                                            >{{ "Payment Method" }}
-                                        </label>
+                                        <label>{{ "Payment Method" }} </label>
                                         <Multiselect
                                             v-model="form.method"
                                             :options="methodTypesOpions"
@@ -515,9 +530,7 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="type" 
-                                            >Reciept No</label
-                                        >
+                                        <label for="type">Reciept No</label>
                                         <input
                                             type="text"
                                             class="form-control"
@@ -536,9 +549,7 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="date" 
-                                            >Date</label
-                                        >
+                                        <label for="date">Date</label>
                                         <input
                                             type="date"
                                             class="form-control"
@@ -557,9 +568,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12">
-                                        <label
-                                            for="receipt_image"
-                                            
+                                        <label for="receipt_image"
                                             >Receipt image</label
                                         >
                                         <br />
@@ -667,6 +676,7 @@ export default {
             selectedYear: "",
             startDate: "",
             endDate: "",
+            filterBusinessType: "",
             months: [
                 "January",
                 "February",
@@ -709,7 +719,7 @@ export default {
             ExpenseTypesOptions: [],
             IncomeTypesOptions: [],
             methodTypesOpions: ["Bank", "Cash"],
-            processTypeOptions: ["Expense", "Income","Borrow","Lend"],
+            processTypeOptions: ["Expense", "Income", "Borrow", "Lend"],
             monthsOptions: [
                 { value: 1, label: "January" },
                 { value: 2, label: "February" },
@@ -724,8 +734,8 @@ export default {
                 { value: 11, label: "November" },
                 { value: 12, label: "December" },
             ],
-            personsOptions:[],
-            businessTypesOptions:[],
+            personsOptions: [],
+            businessTypesOptions: [],
             yearsOptions: Array.from(
                 { length: 2050 - 2025 + 1 },
                 (_, i) => 2025 + i
@@ -816,6 +826,9 @@ export default {
             if (this.endDate) {
                 formData.append("endDate", this.endDate);
             }
+            if (this.filterBusinessType) {
+                formData.append("businessType", this.filterBusinessType);
+            }
 
             axios
                 .post(route("api.transaction.fetch"), formData, {
@@ -829,7 +842,7 @@ export default {
                 })
                 .catch((error) => {
                     this.serachingLoading = false;
-                    console.error(error);
+                    toastr.error(error.response.data.message);
                 });
         },
         calculateBalance(index) {
@@ -856,7 +869,10 @@ export default {
             formData.append("ref_no", sanitizeValue(this.form.ref_no));
             formData.append("method", sanitizeValue(this.form.method));
             formData.append("remarks", sanitizeValue(this.form.remarks));
-            formData.append("business_type", sanitizeValue(this.form.business_type));
+            formData.append(
+                "business_type",
+                sanitizeValue(this.form.business_type)
+            );
             formData.append("person", sanitizeValue(this.form.person));
             formData.append(
                 "expense_type",
@@ -893,8 +909,6 @@ export default {
                     this.formStatus = 1;
                     toastr.error(error.response.data.message);
                     this.formErrors = error.response.data.errors;
-                    console.log(this.formErrors);
-                    console.log(this.formErrors);
                 });
         },
         formatCurrency(value) {
@@ -919,44 +933,42 @@ export default {
             this.formErrors = [];
         },
         showEntry(entry_id) {
-    axios
-        .get(route("api.transaction.show", entry_id))
-        .then((response) => {
-            console.log(response.data);
+            axios
+                .get(route("api.transaction.show", entry_id))
+                .then((response) => {
+                    console.log(response.data);
 
-            // Call pluck functions before setting form data
-            if (response.data.process_type === 'Income') {
-                this.pluckIncomeTypes(response.data.business_type_id);
-            }
-            if (response.data.process_type === 'Expense') {
-                this.pluckExpenseTypes(response.data.business_type_id);
-            }
+                    // Call pluck functions before setting form data
+                    if (response.data.process_type === "Income") {
+                        this.pluckIncomeTypes(response.data.business_type_id);
+                    }
+                    if (response.data.process_type === "Expense") {
+                        this.pluckExpenseTypes(response.data.business_type_id);
+                    }
 
-            this.form = {
-                id: response.data.id,
-                cash_in: parseInt(response.data.cash_in),
-                cash_out: response.data.cash_out,
-                date: response.data.transaction_date,
-                ref_no: response.data.ref_no,
-                method: response.data.method,
-                remarks: response.data.remarks,
-                expense_type: response.data.expense_type || "",
-                income_type: response.data.income_type || "",
-                process_type: response.data.process_type || "",
-                person: response.data.person || "",
-                business_type: response.data.business_type_id || "",
-            };
+                    this.form = {
+                        id: response.data.id,
+                        cash_in: parseInt(response.data.cash_in),
+                        cash_out: response.data.cash_out,
+                        date: response.data.transaction_date,
+                        ref_no: response.data.ref_no,
+                        method: response.data.method,
+                        remarks: response.data.remarks,
+                        expense_type: response.data.expense_type || "",
+                        income_type: response.data.income_type || "",
+                        process_type: response.data.process_type || "",
+                        person: response.data.person || "",
+                        business_type: response.data.business_type_id || "",
+                    };
 
-            // Set existing receipt image for preview
-            this.existing_receipt_image = response.data.receipt_image;
-        })
-        .catch((error) => {
-            toastr.error(error.response.data.message);
-            this.formErrors = error.response.data.errors;
-        });
-}
-,
-
+                    // Set existing receipt image for preview
+                    this.existing_receipt_image = response.data.receipt_image;
+                })
+                .catch((error) => {
+                    toastr.error(error.response.data.message);
+                    this.formErrors = error.response.data.errors;
+                });
+        },
         deleteThis(id) {
             axios
                 .delete(route("api.transaction.delete", id))
@@ -968,38 +980,35 @@ export default {
                     console.error(error);
                 });
         },
-        pluckExpIncTypes(business_type_id,expense_type)
-        {
-            if(expense_type == 'Income'){
+        pluckExpIncTypes(business_type_id, expense_type) {
+            if (expense_type == "Income") {
                 this.pluckIncomeTypes(business_type_id);
             }
-            if(expense_type == 'Expense'){
+            if (expense_type == "Expense") {
                 this.pluckExpenseTypes(business_type_id);
             }
         },
         pluckIncomeTypes(business_type_id) {
-    axios
-        .get(route("api.income.pluck", business_type_id)) // Ensure this API returns income types
-        .then((response) => {
-            this.IncomeTypesOptions = response.data; // Fix variable name casing
-        })
-        .catch((error) => {
-            console.error("Error fetching income types:", error);
-        });
-},
-
-pluckExpenseTypes(business_type_id) {
-    axios
-        .get(route("api.expense.pluck", business_type_id)) // Ensure this API returns expense types
-        .then((response) => {
-            this.ExpenseTypesOptions = response.data;
-        })
-        .catch((error) => {
-            console.error("Error fetching expense types:", error);
-        });
-},
-
-       pluckPersons() {
+            axios
+                .get(route("api.income.pluck", business_type_id)) // Ensure this API returns income types
+                .then((response) => {
+                    this.IncomeTypesOptions = response.data; // Fix variable name casing
+                })
+                .catch((error) => {
+                    console.error("Error fetching income types:", error);
+                });
+        }, 
+        pluckExpenseTypes(business_type_id) {
+            axios
+                .get(route("api.expense.pluck", business_type_id)) // Ensure this API returns expense types
+                .then((response) => {
+                    this.ExpenseTypesOptions = response.data;
+                })
+                .catch((error) => {
+                    console.error("Error fetching expense types:", error);
+                });
+        }, 
+        pluckPersons() {
             axios
                 .get(route("api.persons.pluck"))
                 .then((response) => {
@@ -1037,6 +1046,9 @@ pluckExpenseTypes(business_type_id) {
             }
             if (this.endDate) {
                 formData.append("endDate", this.endDate);
+            }
+            if (this.filterBusinessType) {
+                formData.append("businessType", this.filterBusinessType);
             }
 
             axios
@@ -1085,6 +1097,11 @@ pluckExpenseTypes(business_type_id) {
             if (this.endDate) {
                 formData.append("endDate", this.endDate);
             }
+            if (this.filterBusinessType) {
+                formData.append("businessType", this.filterBusinessType);
+            }
+
+            
 
             axios
                 .post(route("download-pdf"), formData, {

@@ -21,6 +21,11 @@ class ReportController extends Controller
 
         // Apply filters based on request
         if ($request->has('selectedFilter') && $request->selectedFilter) {
+            if($request->businessType)
+            {
+               
+                $query->where('business_type_id', $request->businessType);
+            }
             $filter = $request->selectedFilter;
 
             if ($filter == 'Yearly' && $request->has('selectedYear')) {
@@ -92,6 +97,11 @@ class ReportController extends Controller
 
         // Apply filters
         if ($request->has('selectedFilter') && $request->selectedFilter) {
+            if($request->businessType)
+            {
+               
+                $query->where('business_type_id', $request->businessType);
+            }
             $filter = $request->selectedFilter;
 
             if ($filter == 'Yearly' && $request->has('selectedYear')) {

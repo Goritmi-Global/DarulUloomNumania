@@ -19,56 +19,61 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title theme-text-color">
-                        All Transaction & Reports  {{ selectedFilter }}
+                        All Transaction & Reports {{ selectedFilter }}
                     </h5>
-                     <!-- Filter Section -->
-                     <div class="d-flex justify-content-end p-2">
-                        
-                    <!-- Export Buttons -->
-                    <div class="btn-group" role="group"  v-if="transactionEntries && transactionEntries.length">
-                                <button
-                                    class="btn btn-primary"
-                                    title="Download as Excel"
-                                    @click="exportToExcel"
-                                    :disabled="excelBtnLoader"
-                                >
-                                    <span
-                                        v-if="excelBtnLoader"
-                                        class="spinner-border spinner-border-sm"
-                                        role="status"
-                                        aria-hidden="true"
-                                    ></span>
-                                    <span v-if="!excelBtnLoader">
-                                        <i class="bi bi-file-earmark-excel"></i
-                                    ></span>
-                                </button>
-                                <button
-                                    class="btn btn-danger"
-                                    title="Download as PDF"
-                                    @click="exportToPDF"
-                                    :disabled="pdfBtnLoader"
-                                >
-                                    <span
-                                        v-if="pdfBtnLoader"
-                                        class="spinner-border spinner-border-sm"
-                                        role="status"
-                                        aria-hidden="true"
-                                    ></span>
-                                    <span v-if="!pdfBtnLoader">
-                                        <i class="bi bi-file-earmark-pdf"></i
-                                    ></span>
-                                </button>
-                                <button
-                                    class="btn btn-secondary"
-                                    title="Print"
-                                    @click="printSlip"
-                                >
-                                    <i class="bi bi-printer"></i>
-                                </button>
-                            </div>
+                    <!-- Filter Section -->
+                    <div class="d-flex justify-content-end p-2">
+                        <!-- Export Buttons -->
+                        <div
+                            class="btn-group"
+                            role="group"
+                            v-if="
+                                transactionEntries && transactionEntries.length
+                            "
+                        >
+                            <button
+                                class="btn btn-primary"
+                                title="Download as Excel"
+                                @click="exportToExcel"
+                                :disabled="excelBtnLoader"
+                            >
+                                <span
+                                    v-if="excelBtnLoader"
+                                    class="spinner-border spinner-border-sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                ></span>
+                                <span v-if="!excelBtnLoader">
+                                    <i class="bi bi-file-earmark-excel"></i
+                                ></span>
+                            </button>
+                            <button
+                                class="btn btn-danger"
+                                title="Download as PDF"
+                                @click="exportToPDF"
+                                :disabled="pdfBtnLoader"
+                            >
+                                <span
+                                    v-if="pdfBtnLoader"
+                                    class="spinner-border spinner-border-sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                ></span>
+                                <span v-if="!pdfBtnLoader">
+                                    <i class="bi bi-file-earmark-pdf"></i
+                                ></span>
+                            </button>
+                            <button
+                                class="btn btn-secondary"
+                                title="Print"
+                                @click="printSlip"
+                            >
+                                <i class="bi bi-printer"></i>
+                            </button>
+                        </div>
                     </div>
                     <!-- Filter Section -->
-                    <div class="card card-body p-2 ">
+                    <div class="card card-body p-2">
                         <div
                             class="d-flex justify-content-between align-items-center c-filter col-12"
                         >
@@ -131,7 +136,7 @@
                                 </div>
 
                                 <!-- Custom Date Range -->
-                                
+
                                 <div
                                     class="col-auto d-flex gap-2"
                                     v-if="selectedFilter === 'Custom'"
@@ -141,7 +146,6 @@
                                         class="form-control"
                                         id="date"
                                         v-model="startDate"
-                                         
                                         placeholder="Start Date"
                                     />
                                     <input
@@ -149,8 +153,16 @@
                                         class="form-control"
                                         id="date"
                                         v-model="endDate"
-                                        
                                         placeholder="End Date"
+                                    />
+                                </div>
+
+                                <div class="col-auto" v-if="selectedFilter">
+                                    <Multiselect
+                                        v-model="filterBusinessType"
+                                        :options="businessTypesOptions"
+                                        placeholder="Bussiness Type"
+                                        :searchable="true"
                                     />
                                 </div>
 
@@ -172,8 +184,6 @@
                                     </button>
                                 </div>
                             </div>
-
-                            
                         </div>
                         <span class="text-danger" v-if="FilterErrors">
                             {{ FilterErrors }}
@@ -264,6 +274,8 @@ export default {
     },
     data() {
         return {
+            filterBusinessType: "",
+            businessTypesOptions: [],
             transactionEntries: [],
             selectedFilter: "Yearly",
             selectedMonth: 1,
@@ -284,8 +296,10 @@ export default {
                 { value: 11, label: "November" },
                 { value: 12, label: "December" },
             ],
-            yearsOptions: Array.from({ length: 2050 - 2025 + 1 }, (_, i) => 2025 + i),
-
+            yearsOptions: Array.from(
+                { length: 2050 - 2025 + 1 },
+                (_, i) => 2025 + i
+            ),
 
             totalIncome: 0, // Total Income
             totalExpense: 0, // Total Expense
@@ -301,6 +315,7 @@ export default {
     },
     mounted() {
         this.fetchTransactionEntries();
+        this.pluckBussinessTypes();
     },
     methods: {
         fetchTransactionEntries() {
@@ -322,7 +337,7 @@ export default {
                 this.FilterErrors =
                     "Please select a Year for the Yearly filter.";
                 this.serachingLoading = false;
-                
+
                 return;
             }
 
@@ -352,6 +367,9 @@ export default {
                 formData.append("endDate", this.endDate);
             }
 
+            if (this.filterBusinessType) {
+                formData.append("businessType", this.filterBusinessType);
+            }
             axios
                 .post(route("api.transaction.report.fetch"), formData, {
                     headers: {
@@ -469,51 +487,57 @@ export default {
 
         // Export to Excel
         exportToExcel() {
-    this.excelBtnLoader = true;
-    let formData = new FormData();
+            this.excelBtnLoader = true;
+            let formData = new FormData();
 
-    formData.append("selectedFilter", this.selectedFilter);
+            formData.append("selectedFilter", this.selectedFilter);
 
-    if (this.selectedMonth) {
-        formData.append("selectedMonth", this.selectedMonth);
-    }
-    if (this.selectedYear) {
-        formData.append("selectedYear", this.selectedYear);
-    }
-    if (this.startDate) {
-        formData.append("startDate", this.startDate);
-    }
-    if (this.endDate) {
-        formData.append("endDate", this.endDate);
-    }
-
-    axios
-        .post(route("download-report-excel"), formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-            responseType: "blob", // Important for handling Excel response
-        })
-        .then((response) => {
-            // Create a link element
-            const link = document.createElement("a");
-            // Create a URL for the blob
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            link.href = url;
-            // Set the file name for the download
-            link.setAttribute("download", "TransactionReport.xlsx");
-            // Append the link to the body, click it to trigger download, and then remove it
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            this.excelBtnLoader = false;
-        })
-        .catch((error) => {
-            this.excelBtnLoader = false;
-            toastr.error(error.response?.data?.message || "Error generating Excel");
-        });
-},
-
+            if (this.selectedMonth) {
+                formData.append("selectedMonth", this.selectedMonth);
+            }
+            if (this.selectedYear) {
+                formData.append("selectedYear", this.selectedYear);
+            }
+            if (this.startDate) {
+                formData.append("startDate", this.startDate);
+            }
+            if (this.endDate) {
+                formData.append("endDate", this.endDate);
+            }
+            if (this.filterBusinessType) {
+                formData.append("businessType", this.filterBusinessType);
+            }
+            axios
+                .post(route("download-report-excel"), formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                    responseType: "blob", // Important for handling Excel response
+                })
+                .then((response) => {
+                    // Create a link element
+                    const link = document.createElement("a");
+                    // Create a URL for the blob
+                    const url = window.URL.createObjectURL(
+                        new Blob([response.data])
+                    );
+                    link.href = url;
+                    // Set the file name for the download
+                    link.setAttribute("download", "TransactionReport.xlsx");
+                    // Append the link to the body, click it to trigger download, and then remove it
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    this.excelBtnLoader = false;
+                })
+                .catch((error) => {
+                    this.excelBtnLoader = false;
+                    toastr.error(
+                        error.response?.data?.message ||
+                            "Error generating Excel"
+                    );
+                });
+        },
 
         // Export to PDF
         exportToPDF() {
@@ -534,7 +558,9 @@ export default {
             if (this.endDate) {
                 formData.append("endDate", this.endDate);
             }
-
+            if (this.filterBusinessType) {
+                formData.append("businessType", this.filterBusinessType);
+            }
             axios
                 .post(route("download-report-pdf"), formData, {
                     headers: {
@@ -581,6 +607,16 @@ export default {
                 month: "short",
                 year: "numeric",
             });
+        },
+        pluckBussinessTypes() {
+            axios
+                .get(route("api.business.types.pluck"))
+                .then((response) => {
+                    this.businessTypesOptions = response.data;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         },
     },
 };
