@@ -181,7 +181,7 @@
                     </div>
 
                     <!-- Charts -->
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">
@@ -192,7 +192,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">
@@ -202,7 +202,7 @@
                                 <canvas id="lineChart"></canvas>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </section>
         </main>
@@ -227,7 +227,7 @@ export default {
             transactionEntries: [],
             incomeTypeDetails: [],
             incomeTypeTotal: 0,
-            expenseTypeDetails:[],
+            expenseTypeDetails: [],
             expenseTypeTotal: 0,
 
             expenseDetails: [],
@@ -276,7 +276,6 @@ export default {
             axios
                 .get(route("api.dashboard.income.details.fetch"))
                 .then((response) => {
-                     
                     this.incomeTypeDetails = response.data.income_types;
                     this.incomeTypeTotal = response.data.total_income;
                 })
@@ -325,10 +324,10 @@ export default {
                 this.barChart.destroy();
                 this.barChart = null;
             }
-            if (this.lineChart) {
-                this.lineChart.destroy();
-                this.lineChart = null;
-            }
+            // if (this.lineChart) {
+            //     this.lineChart.destroy();
+            //     this.lineChart = null;
+            // }
 
             if (this.selectedFilter === "all") {
                 // Aggregate totals for cash in and cash out
@@ -341,7 +340,7 @@ export default {
                     (sum, entry) => sum + parseFloat(entry.cash_out || 0),
                     0
                 );
- 
+
                 // Bar Chart (Overall Data for All)
                 const barCtx = document
                     .getElementById("barChart")
@@ -510,6 +509,7 @@ export default {
                 .get(route("api.dashbaord.transaction.fetch"))
                 .then((response) => {
                     this.transactionEntries = response.data || [];
+
                     this.applyFilter();
                 })
                 .catch((error) => {
@@ -519,19 +519,24 @@ export default {
 
         calculateStats() {
             const currentDate = new Date();
+
+            // Filter transactions based on selected time range
             const filteredEntries = this.transactionEntries.filter((entry) => {
                 const entryDate = new Date(entry.transaction_date);
-                if (isNaN(entryDate)) return false;
+
+                if (isNaN(entryDate)) return false; // Skip invalid dates
 
                 if (this.selectedFilter === "all") return true;
 
-                const filterMonths = parseInt(this.selectedFilter);
+                const filterMonths = parseInt(this.selectedFilter, 10);
                 const pastDate = new Date();
                 pastDate.setMonth(currentDate.getMonth() - filterMonths);
+                pastDate.setDate(1); // Ensuring we start from the first of the month
 
                 return entryDate >= pastDate;
             });
 
+            // Calculate total cash in and out
             this.cashIn = filteredEntries.reduce(
                 (sum, entry) => sum + (parseFloat(entry.cash_in) || 0),
                 0
@@ -540,16 +545,12 @@ export default {
                 (sum, entry) => sum + (parseFloat(entry.cash_out) || 0),
                 0
             );
+
             this.balance = this.cashIn - this.cashOut;
 
-            this.last6MonthsData = this.groupDataByMonths(
-                filteredEntries,
-                this.selectedFilter
-            );
-            this.last12MonthsData = this.groupDataByMonths(
-                filteredEntries,
-                this.selectedFilter
-            );
+            // Ensure separate calculations for 6-month and 12-month data
+            this.last6MonthsData = this.groupDataByMonths(filteredEntries, 6);
+            this.last12MonthsData = this.groupDataByMonths(filteredEntries, 12);
         },
 
         applyFilter() {
