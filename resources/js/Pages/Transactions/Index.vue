@@ -355,31 +355,7 @@
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="col-md-6 col-12"
-                                        v-if="form.process_type == 'Income'"
-                                    >
-                                        <label for="cash_in" class="form-label"
-                                            >Cash In</label
-                                        >
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="cash_in"
-                                            v-model="form.cash_in"
-                                            :class="{
-                                                'invalid-bg':
-                                                    formErrors.cash_in,
-                                            }"
-                                        />
-                                        <div
-                                            v-if="formErrors.cash_in"
-                                            class="invalid-feedback"
-                                        >
-                                            {{ formErrors.cash_in[0] }}
-                                        </div>
-                                    </div>
-
+                                    
                                     <div
                                         class="col-12 col-md-6"
                                         v-if="form.process_type == 'Expense'"
@@ -403,10 +379,58 @@
                                             {{ formErrors.expense_type[0] }}
                                         </div>
                                     </div>
+                                    <div
+                                        class="col-12 col-md-6"
+                                        v-if="form.process_type == 'Liability (Borrowed Funds)' || form.process_type == 'Loan Disbursement (Lent Funds)' "
+                                    >
+                                        <label class="form-label"
+                                            >{{ "Select person" }}
+                                        </label>
+                                        <Multiselect
+                                            v-model="form.person"
+                                            :options="personsOptions"
+                                            :searchable="true"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.person,
+                                            }"
+                                        />
+                                        <div
+                                            class="invalid-feedback animated fadeIn"
+                                            v-if="formErrors.person"
+                                        >
+                                            {{ formErrors.person[0] }}
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="col-md-6 col-12"
+                                        v-if="form.process_type == 'Income' || form.process_type == 'Loan Disbursement (Lent Funds)'"
+                                    >
+                                        <label for="cash_in" class="form-label"
+                                            >Cash In</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="cash_in"
+                                            v-model="form.cash_in"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.cash_in,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.cash_in"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.cash_in[0] }}
+                                        </div>
+                                    </div>
+
 
                                     <div
                                         class="col-md-6 col-12"
-                                        v-if="form.process_type == 'Expense'"
+                                        v-if="form.process_type == 'Expense' || form.process_type == 'Liability (Borrowed Funds)'"
                                     >
                                         <label for="cash_out" class="form-label"
                                             >Cash Out</label
@@ -656,6 +680,7 @@ export default {
                 income_type: "",
                 process_type: "",
                 receipt_image: "",
+                person: "",
             },
             formErrors: [],
             formStatus: 1, // 1 = ready, 0 = saving
@@ -664,7 +689,7 @@ export default {
             ExpansTypesOpions: [],
             IncomeTypesOpions: [],
             methodTypesOpions: ["Bank", "Cash"],
-            processTypeOptions: ["Expense", "Income"],
+            processTypeOptions: ["Expense", "Income","Liability (Borrowed Funds)","Loan Disbursement (Lent Funds)"],
             monthsOptions: [
                 { value: 1, label: "January" },
                 { value: 2, label: "February" },
@@ -679,6 +704,8 @@ export default {
                 { value: 11, label: "November" },
                 { value: 12, label: "December" },
             ],
+            personsOptions:[],
+            businessTypesOptions:[],
             yearsOptions: Array.from(
                 { length: 2050 - 2025 + 1 },
                 (_, i) => 2025 + i
@@ -694,6 +721,8 @@ export default {
     },
     mounted() {
         this.fetchTransactionEntries();
+        this.pluckPersons();
+        this.pluckBussinessTypes();
     },
 
     methods: {
@@ -919,6 +948,26 @@ export default {
                 .get(route("api.expense.pluck"))
                 .then((response) => {
                     this.ExpansTypesOpions = response.data;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+       pluckPersons() {
+            axios
+                .get(route("api.persons.pluck"))
+                .then((response) => {
+                    this.personsOptions = response.data;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+        pluckBussinessTypes() {
+            axios
+                .get(route("api.business.types.pluck"))
+                .then((response) => {
+                    this.businessTypesOptions = response.data;
                 })
                 .catch((error) => {
                     console.error(error);

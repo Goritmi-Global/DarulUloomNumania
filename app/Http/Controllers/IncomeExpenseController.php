@@ -8,6 +8,8 @@ use App\Models\IncomeType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use App\Models\BusinessType;
+use App\Models\Person;
 
 class IncomeExpenseController extends Controller
 {
@@ -25,21 +27,31 @@ class IncomeExpenseController extends Controller
     public function fetch($process)
     {
         if ($process == 'Expense') {
-            $record = ExpenseType::all();
+            $records = ExpenseType::all();
+            
 
         } else {
-            $record = IncomeType::all();
+            $records = IncomeType::all();
 
         }
-        return $record;
+        foreach($records as $record)
+            {
+                $business_type = BusinessType::where('id',$record->business_type)->first();
+                if($business_type)
+                { 
+                    $record->related_business_type = $business_type->name;
+                }
+                // dd($record->related_business_type);
+            }
+        return $records;
     }
 
     // Store or update a expense entry
     public function store(Request $request)
-    {
+    { 
         $request->validate([
             'name' => 'required|string|max:255',
-
+            'business_type' => 'required',
         ]);
 
         if ($request->id) {
@@ -64,6 +76,7 @@ class IncomeExpenseController extends Controller
 
         // Set values
         $record->name = $request->name;
+        $record->business_type = $request->business_type;
 
         // $record->status = 1;
 

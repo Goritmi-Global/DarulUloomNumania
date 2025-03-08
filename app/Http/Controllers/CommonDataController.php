@@ -6,6 +6,7 @@ use App\Models\BusinessType;
 use App\Models\Person;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class CommonDataController extends Controller
 {
