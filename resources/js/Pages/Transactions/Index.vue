@@ -332,6 +332,25 @@
                                             {{ formErrors.process_type[0] }}
                                         </div>
                                     </div>
+                                    <div class="col-12 col-md-12 mb-3" v-if="form.process_type == 'Income' || form.process_type == 'Expense'">
+                                        <label>{{ "Bussiness Type" }} </label>
+                                        <Multiselect
+                                            v-model="form.business_type"
+                                            :options="businessTypesOptions"
+                                            :searchable="true"
+                                            @select="pluckExpIncTypes(form.business_type,form.process_type)"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.business_type,
+                                            }"
+                                        />
+                                        <div
+                                            class="invalid-feedback animated fadeIn"
+                                            v-if="formErrors.business_type"
+                                        >
+                                            {{ formErrors.business_type[0] }}
+                                        </div>
+                                    </div>
 
                                     <div
                                         class="col-12 col-md-6"
@@ -340,7 +359,7 @@
                                         <label>{{ "Income Type" }} </label>
                                         <Multiselect
                                             v-model="form.income_type"
-                                            :options="IncomeTypesOpions"
+                                            :options="IncomeTypesOptions"
                                             :searchable="true"
                                             :class="{
                                                 'invalid-bg':
@@ -360,12 +379,12 @@
                                         class="col-12 col-md-6"
                                         v-if="form.process_type == 'Expense'"
                                     >
-                                        <label class="form-label"
+                                        <label 
                                             >{{ "Expense Type" }}
                                         </label>
                                         <Multiselect
                                             v-model="form.expense_type"
-                                            :options="ExpansTypesOpions"
+                                            :options="ExpenseTypesOptions"
                                             :searchable="true"
                                             :class="{
                                                 'invalid-bg':
@@ -381,9 +400,9 @@
                                     </div>
                                     <div
                                         class="col-12 col-md-6"
-                                        v-if="form.process_type == 'Liability (Borrowed Funds)' || form.process_type == 'Loan Disbursement (Lent Funds)' "
+                                        v-if="form.process_type == 'Borrow' || form.process_type == 'Lend' "
                                     >
-                                        <label class="form-label"
+                                        <label 
                                             >{{ "Select person" }}
                                         </label>
                                         <Multiselect
@@ -404,9 +423,9 @@
                                     </div>
                                     <div
                                         class="col-md-6 col-12"
-                                        v-if="form.process_type == 'Income' || form.process_type == 'Loan Disbursement (Lent Funds)'"
+                                        v-if="form.process_type == 'Income' || form.process_type == 'Borrow'"
                                     >
-                                        <label for="cash_in" class="form-label"
+                                        <label for="cash_in" 
                                             >Cash In</label
                                         >
                                         <input
@@ -430,9 +449,9 @@
 
                                     <div
                                         class="col-md-6 col-12"
-                                        v-if="form.process_type == 'Expense' || form.process_type == 'Liability (Borrowed Funds)'"
+                                        v-if="form.process_type == 'Expense' || form.process_type == 'Lend'"
                                     >
-                                        <label for="cash_out" class="form-label"
+                                        <label for="cash_out" 
                                             >Cash Out</label
                                         >
                                         <input
@@ -454,7 +473,7 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="remarks" class="form-label"
+                                        <label for="remarks" 
                                             >Description</label
                                         >
                                         <input
@@ -476,7 +495,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-6">
-                                        <label class="form-label"
+                                        <label 
                                             >{{ "Payment Method" }}
                                         </label>
                                         <Multiselect
@@ -496,7 +515,7 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="type" class="form-label"
+                                        <label for="type" 
                                             >Reciept No</label
                                         >
                                         <input
@@ -517,7 +536,7 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="date" class="form-label"
+                                        <label for="date" 
                                             >Date</label
                                         >
                                         <input
@@ -540,7 +559,7 @@
                                     <div class="col-md-6 col-12">
                                         <label
                                             for="receipt_image"
-                                            class="form-label"
+                                            
                                             >Receipt image</label
                                         >
                                         <br />
@@ -631,8 +650,8 @@ export default {
     layout: Master,
     created() {
         // this.fetchTransactionEntries();
-        this.pluckExpansTypes();
-        this.pluckIncomeTypes();
+        // this.pluckExpansTypes();
+        // this.pluckIncomeTypes();
         this.process_type = "Income";
     },
     components: {
@@ -681,15 +700,16 @@ export default {
                 process_type: "",
                 receipt_image: "",
                 person: "",
+                business_type: "",
             },
             formErrors: [],
             formStatus: 1, // 1 = ready, 0 = saving
             isCashInReadonly: false,
             isCashOutReadonly: false,
-            ExpansTypesOpions: [],
-            IncomeTypesOpions: [],
+            ExpenseTypesOptions: [],
+            IncomeTypesOptions: [],
             methodTypesOpions: ["Bank", "Cash"],
-            processTypeOptions: ["Expense", "Income","Liability (Borrowed Funds)","Loan Disbursement (Lent Funds)"],
+            processTypeOptions: ["Expense", "Income","Borrow","Lend"],
             monthsOptions: [
                 { value: 1, label: "January" },
                 { value: 2, label: "February" },
@@ -747,6 +767,7 @@ export default {
         clearProcessType() {
             this.form.cash_in = "";
             this.form.cash_out = "";
+            this.form.business_type = "";
         },
         fetchTransactionEntries() {
             this.serachingLoading = true;
@@ -835,6 +856,8 @@ export default {
             formData.append("ref_no", sanitizeValue(this.form.ref_no));
             formData.append("method", sanitizeValue(this.form.method));
             formData.append("remarks", sanitizeValue(this.form.remarks));
+            formData.append("business_type", sanitizeValue(this.form.business_type));
+            formData.append("person", sanitizeValue(this.form.person));
             formData.append(
                 "expense_type",
                 sanitizeValue(this.form.expense_type)
@@ -853,7 +876,7 @@ export default {
                 formData.append("receipt_image", this.form.receipt_image);
             }
 
-            this.formStatus = 0;
+            // this.formStatus = 0;
             axios
                 .post(route("api.transaction.store"), formData, {
                     headers: {
@@ -896,31 +919,43 @@ export default {
             this.formErrors = [];
         },
         showEntry(entry_id) {
-            axios
-                .get(route("api.transaction.show", entry_id))
-                .then((response) => {
-                    console.log(response.data);
+    axios
+        .get(route("api.transaction.show", entry_id))
+        .then((response) => {
+            console.log(response.data);
 
-                    this.form = {
-                        id: response.data.id,
-                        cash_in: parseInt(response.data.cash_in),
-                        cash_out: response.data.cash_out,
-                        date: response.data.transaction_date,
-                        ref_no: response.data.ref_no,
-                        method: response.data.method,
-                        remarks: response.data.remarks,
-                        expense_type: response.data.expense_type || "",
-                        income_type: response.data.income_type || "",
-                        process_type: response.data.process_type || "",
-                    };
+            // Call pluck functions before setting form data
+            if (response.data.process_type === 'Income') {
+                this.pluckIncomeTypes(response.data.business_type_id);
+            }
+            if (response.data.process_type === 'Expense') {
+                this.pluckExpenseTypes(response.data.business_type_id);
+            }
 
-                    // Set existing receipt image for preview
-                    this.existing_receipt_image = response.data.receipt_image;
-                })
-                .catch((error) => {
-                    toastr.error(error.response.data.message);
-                });
-        },
+            this.form = {
+                id: response.data.id,
+                cash_in: parseInt(response.data.cash_in),
+                cash_out: response.data.cash_out,
+                date: response.data.transaction_date,
+                ref_no: response.data.ref_no,
+                method: response.data.method,
+                remarks: response.data.remarks,
+                expense_type: response.data.expense_type || "",
+                income_type: response.data.income_type || "",
+                process_type: response.data.process_type || "",
+                person: response.data.person || "",
+                business_type: response.data.business_type_id || "",
+            };
+
+            // Set existing receipt image for preview
+            this.existing_receipt_image = response.data.receipt_image;
+        })
+        .catch((error) => {
+            toastr.error(error.response.data.message);
+            this.formErrors = error.response.data.errors;
+        });
+}
+,
 
         deleteThis(id) {
             axios
@@ -933,26 +968,37 @@ export default {
                     console.error(error);
                 });
         },
-        pluckExpansTypes() {
-            axios
-                .get(route("api.income.pluck"))
-                .then((response) => {
-                    this.IncomeTypesOpions = response.data;
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+        pluckExpIncTypes(business_type_id,expense_type)
+        {
+            if(expense_type == 'Income'){
+                this.pluckIncomeTypes(business_type_id);
+            }
+            if(expense_type == 'Expense'){
+                this.pluckExpenseTypes(business_type_id);
+            }
         },
-        pluckIncomeTypes() {
-            axios
-                .get(route("api.expense.pluck"))
-                .then((response) => {
-                    this.ExpansTypesOpions = response.data;
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        },
+        pluckIncomeTypes(business_type_id) {
+    axios
+        .get(route("api.income.pluck", business_type_id)) // Ensure this API returns income types
+        .then((response) => {
+            this.IncomeTypesOptions = response.data; // Fix variable name casing
+        })
+        .catch((error) => {
+            console.error("Error fetching income types:", error);
+        });
+},
+
+pluckExpenseTypes(business_type_id) {
+    axios
+        .get(route("api.expense.pluck", business_type_id)) // Ensure this API returns expense types
+        .then((response) => {
+            this.ExpenseTypesOptions = response.data;
+        })
+        .catch((error) => {
+            console.error("Error fetching expense types:", error);
+        });
+},
+
        pluckPersons() {
             axios
                 .get(route("api.persons.pluck"))

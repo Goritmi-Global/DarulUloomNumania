@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 
-class Person extends Model
+class MoneyGivenTo extends Model
 {
     use HasFactory;
     public $incrementing=false;
-    protected $table = 'persons';
+    protected $table = 'money_give_to';
     
     protected static function boot()
     {
@@ -20,7 +20,9 @@ class Person extends Model
             $model->id = (string) Str::orderedUuid();
         });
     }
-    
-    
+    public function money_give_to()
+    {
+        return $this->hasMany(Peron::class, 'person_id');
+    }
 }
 

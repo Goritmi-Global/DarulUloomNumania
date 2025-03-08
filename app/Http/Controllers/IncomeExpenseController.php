@@ -112,16 +112,20 @@ class IncomeExpenseController extends Controller
         return 'success';
     }
 
-    public function pluckExpenses()
+    public function pluckExpenses($business_type_id)
     {
-        $expense = ExpenseType::pluck('name', 'id');
-        return $expense;
+        $expense = ExpenseType::where('business_type', $business_type_id)
+                              ->pluck('name', 'id'); // Pluck should come last
+        return response()->json($expense); // Return JSON response
     }
-    public function pluckIncome()
+    
+    public function pluckIncome($business_type_id)
     {
-        $income = IncomeType::pluck('name', 'id');
-        return $income;
+        $income = IncomeType::where('business_type', $business_type_id)
+                            ->pluck('name', 'id'); // Pluck should come last
+        return response()->json($income); // Return JSON response
     }
+    
 
     public function income_expense_details($type, $id)
     {

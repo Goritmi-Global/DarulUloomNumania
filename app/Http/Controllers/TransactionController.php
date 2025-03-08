@@ -7,6 +7,9 @@ use App\Models\ExpenseType;
 use App\Models\Income;
 use App\Models\IncomeType;
 use App\Models\Transaction;
+use App\Models\MoneyGivenTo;
+use App\Models\MoneyTakenFrom;
+use App\Models\Person;
 use App\Models\Upload;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -49,20 +52,36 @@ class TransactionController extends Controller
         $transactions = $query->orderByDesc('transaction_date')->get();
 
         foreach ($transactions as $transaction) {
-            // Check if the transaction has cash_out
-            if ($transaction->cash_out) {
+            // Check if the transaction has Expense
+            if ($transaction->transaction_type == 'Expense') {
                 $expense = Expense::where('transaction_id', $transaction->id)->first();
                 if ($expense) {
                     $expense_type              = ExpenseType::where('id', $expense->expense_type_id)->first();
                     $transaction->expense_type = $expense_type ? $expense_type->name . " (Expense)" : "Unknown Expense";
                 }
             }
-            // Check if the transaction has cash_in
-            elseif ($transaction->cash_in) {
+            // Check if the transaction has Income
+            if ($transaction->transaction_type == 'Income') {
                 $income = Income::where('transaction_id', $transaction->id)->first();
                 if ($income) {
                     $income_type              = IncomeType::where('id', $income->income_type_id)->first();
                     $transaction->income_type = $income_type ? $income_type->name . " (Income)" : "Unknown Income";
+                }
+            }
+            // Check if the transaction has Lend
+            if ($transaction->transaction_type == 'Lend') {
+                $moneyGiven = MoneyGivenTo::where('transaction_id', $transaction->id)->first();
+                if ($moneyGiven) {
+                    $person              = Person::where('id', $moneyGiven->person_id)->first();
+                    $transaction->expense_type = $person ? $person->name . " (Lent)" : "Unknown Expense";
+                }
+            }
+            // Check if the transaction has Borrow
+            if ($transaction->transaction_type == 'Borrow') {
+                $moneyTaken = MoneyTakenFrom::where('transaction_id', $transaction->id)->first();
+                if ($moneyTaken) {
+                    $person              = Person::where('id', $moneyTaken->person_id)->first();
+                    $transaction->income_type = $person ? $person->name . " (Borrowed)" : "Unknown Expense";
                 }
             }
 
@@ -83,17 +102,31 @@ class TransactionController extends Controller
     public function store(Request $request)
     { 
         // Validate the incoming request
+        // $request->validate([
+        //     'process_type' => 'required',
+        //     'income_type'  => 'required_if:process_type,Income',
+        //     'expense_type' => 'required_if:process_type,Expense',
+        //     'cash_in'      => 'nullable|numeric|required_without:cash_out|required_if:income_type,!null',
+        //     'cash_out'     => 'nullable|numeric|required_without:cash_in|required_if:expense_type,!null',
+        //     'date'         => 'required|date',
+        //     'ref_no'       => 'required|string|max:255',
+        //     'method'       => 'required|string|max:255',
+        //     'remarks'      => 'required|string|max:255',
+        // ]);
         $request->validate([
-            'process_type' => 'required',
-            'income_type'  => 'required_if:process_type,Income',
-            'expense_type' => 'required_if:process_type,Expense',
-            'cash_in'      => 'nullable|numeric|required_without:cash_out|required_if:income_type,!null',
-            'cash_out'     => 'nullable|numeric|required_without:cash_in|required_if:expense_type,!null',
-            'date'         => 'required|date',
-            'ref_no'       => 'required|string|max:255',
-            'method'       => 'required|string|max:255',
-            'remarks'      => 'required|string|max:255',
+            'process_type'  => 'required',
+            'income_type'   => 'required_if:process_type,Income',
+            'expense_type'  => 'required_if:process_type,Expense',
+            'person'        => 'required_if:process_type,Borrow,Lend', // Person is required for borrowed/loan
+            'cash_in'       => 'nullable|numeric|required_without:cash_out|required_if:income_type,!null|required_if:process_type,Borrow',
+            'cash_out'      => 'nullable|numeric|required_without:cash_in|required_if:expense_type,!null|required_if:process_type,Lend',
+            'date'          => 'required|date',
+            'ref_no'        => 'required|string|max:255',
+            'method'        => 'required|string|max:255',
+            'remarks'       => 'required|string|max:255',
         ]);
+
+        
         
 
         if ($request->id) {
@@ -101,25 +134,43 @@ class TransactionController extends Controller
             $transaction = Transaction::findOrFail($request->id);
 
             // Determine previous process type correctly
-            if ($transaction->cash_in > 0) {
+            if ($transaction->cash_in > 0 && $request->process_type == 'Income') {
                 $previousProcessType = "Income";
-            } elseif ($transaction->cash_out > 0) {
+            } elseif ($transaction->cash_out > 0 && $request->process_type == 'Expense') {
                 $previousProcessType = "Expense";
-            } else {
+            
+            }
+            elseif ($transaction->cash_in > 0 && $request->process_type == 'Borrow') {
+                $previousProcessType = "Borrow";
+            } 
+            elseif ($transaction->cash_out > 0 && $request->process_type == 'Lend') {
+                $previousProcessType = "Lend";
+            }
+             
+            else {
                 $previousProcessType = null;
             }
 
             // Fetch related records
+
             $expense = Expense::where('transaction_id', $transaction->id)->first();
             $income  = Income::where('transaction_id', $transaction->id)->first();
+            $MoneyTakenFrom  = MoneyTakenFrom::where('transaction_id', $transaction->id)->first();
+            $MoneyGivenTo  = MoneyGivenTo::where('transaction_id', $transaction->id)->first();
 
             // Handle process type change
             if ($previousProcessType !== $request->process_type) {
-                if ($previousProcessType === "Income" && $income) {
+                if (($previousProcessType === "Income"  ) && $income) {
                     $income->delete(); // Delete old income record
                 }
-                if ($previousProcessType === "Expense" && $expense) {
+                if (($previousProcessType === "Expense")&& $expense) {
                     $expense->delete(); // Delete old expense record
+                }
+                if (($previousProcessType === "Borrow")&& $MoneyTakenFrom) {
+                    $MoneyTakenFrom->delete(); // Delete old expense record
+                }
+                if (($previousProcessType === "Lend")&& $MoneyGivenTo) {
+                    $MoneyGivenTo->delete(); // Delete old expense record
                 }
 
                 // Reset cash_in or cash_out in transaction to prevent mixed values
@@ -211,7 +262,46 @@ class TransactionController extends Controller
 
             $income->save();
         }
+        // Handle Money Taken
+        if ($request->process_type == 'Borrow') {
+            $borrowedMoney = MoneyTakenFrom::where('transaction_id', $transaction->id)->first();
+            if (! $borrowedMoney) {
+                $borrowedMoney     = new MoneyTakenFrom();
+                $borrowedMoney->id = Str::orderedUuid();
+            }
+            $borrowedMoney->transaction_id   = $transaction->id;
+            $borrowedMoney->person_id   = $request->person;
+            $borrowedMoney->transaction_date = $request->date;
+            $borrowedMoney->amount           = $request->cash_in;
 
+            // dd($request);
+            // Ensure transaction reflects the borowed correctly
+            $transaction->cash_in  = $request->cash_in;
+            $transaction->cash_out = null; // Ensure cash_out is reset when switching
+
+            $borrowedMoney->save();
+        }
+        // Handle Money Give
+        if ($request->process_type == 'Lend') {
+            $returnMoney = MoneyGivenTo::where('transaction_id', $transaction->id)->first();
+            if (! $returnMoney) {
+                $returnMoney     = new MoneyGivenTo();
+                $returnMoney->id = Str::orderedUuid();
+            }
+            $returnMoney->transaction_id   = $transaction->id;
+            $returnMoney->person_id   = $request->person;
+            $returnMoney->transaction_date = $request->date;
+            $returnMoney->amount           = $request->cash_out;
+
+            // Ensure transaction reflects the returnMoney correctly
+            $transaction->cash_out  = $request->cash_out;
+            $transaction->cash_in = null; // Ensure cash_out is reset when switching
+
+            $returnMoney->save();
+        }
+
+        $transaction->transaction_type = $request->process_type;
+        $transaction->business_type_id = $request->business_type ?? NULL;
         $transaction->save();
 
         return 'success';
@@ -228,19 +318,36 @@ class TransactionController extends Controller
         }
 
         // Determine process type based on cash_in
-        if ($transaction->cash_in && $transaction->cash_in > 0) {
+        if ($transaction->transaction_type == 'Income') {
             $income_type               = Income::where('transaction_id', $id)->first();
             $transaction->income_type  = $income_type->income_type_id;
             $transaction->process_type = 'Income';
             $transaction->cash_out = 0;
         }
-        if ($transaction->cash_out && $transaction->cash_out > 0) {
+        if ($transaction->transaction_type == 'Expense') {
             $expense_type              = Expense::where('transaction_id', $id)->first();
             $transaction->expense_type = $expense_type->expense_type_id;
             $transaction->process_type = 'Expense';
 
             $transaction->cash_in = 0;
         }
+        if ($transaction->transaction_type == 'Lend') {
+            $moneyGiven               = MoneyGivenTo::where('transaction_id', $id)->first();
+             
+            $transaction->person  = $moneyGiven->person_id;
+           
+            $transaction->process_type = 'Lend';
+            $transaction->cash_in = 0;
+        }
+
+        if ($transaction->transaction_type == 'Borrow') {
+            $moneyTaken              = MoneyTakenFrom::where('transaction_id', $id)->first();
+            $transaction->expense_type = $moneyTaken->person_id;
+            $transaction->process_type = 'Borrow';
+
+            $transaction->cash_out = 0;
+        }
+         
 
         return $transaction;
     }
