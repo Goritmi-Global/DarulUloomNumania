@@ -63,9 +63,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/reports', [ReportController::class, 'index'])->name('reports'); 
     //  reports 
     Route::get('/income-statements', [IncomeStatementController::class, 'index'])->name('income-statements'); 
-   
+    
     // Business Types
     Route::get('/business/types', [CommonDataController::class, 'indexBusinessTypes'])->name('business.types');
+    Route::get('/person/details/{id}', [CommonDataController::class, 'person_details'])->name('person.details'); 
     // Persons
     Route::get('/persons', [CommonDataController::class, 'indexPersonTypes'])->name('persons');
 

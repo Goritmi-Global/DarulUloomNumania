@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\BusinessType;
 use App\Models\Person;
 use Illuminate\Http\Request;
+use App\Models\MoneyGivenTo;
+use App\Models\MoneyTakenFrom;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
@@ -82,7 +84,47 @@ class CommonDataController extends Controller
     {
         return response()->json(Person::all());
     }
+    public function person_details($id)
+    {
+        // Fetch person details
+        $person = Person::find($id);
+    
+        if (!$person) {
+            return redirect()->back()->with('error', 'Person not found');
+        }
+    
+        // Fetch transactions related to the person
+        $moneyTaken = MoneyTakenFrom::where('person_id', $id)->get();
+        if($moneyTaken)
+        {
 
+            foreach($moneyTaken as $singleRecord)
+            {
+                $singleRecord->credit = '1';
+                $singleRecord->debit = '0';
+            }
+        }
+    
+        $moneyGiven = MoneyGivenTo::where('person_id', $id)->get();
+        if($moneyGiven)
+        {
+
+            foreach($moneyGiven as $singleRecord)
+            {
+                $singleRecord->credit = '0';
+                $singleRecord->debit = '1';
+            }
+        }
+        // Merge and sort by created_at
+        $ledger = $moneyTaken->merge($moneyGiven)->sortBy('created_at')->values();
+    
+ 
+        return Inertia::render('CommonData/PersonDetails', [
+            'person_name' => $person->name,
+            'ledger' => $ledger
+        ]);
+    }
+    
     // Delete Person
     public function deletePerson($id)
     {

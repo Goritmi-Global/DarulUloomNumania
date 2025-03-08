@@ -356,6 +356,9 @@ class TransactionController extends Controller
     public function delete($id)
     {
         $transaction = Transaction::findOrFail($id);
+        MoneyTakenFrom::where('transaction_id',$id)->delete();
+        MoneyGivenTo::where('transaction_id',$id)->delete();
+        
         $transaction->delete();
 
         return 'success';

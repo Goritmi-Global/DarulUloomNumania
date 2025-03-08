@@ -45,7 +45,20 @@
                                     :key="person.id"
                                 >
                                     <th scope="row">{{ index + 1 }}</th>
-                                    <td>{{ person.name }}</td>
+                                    
+                                    <td>
+                                        <Link
+                                            class="c-text-theme"
+                                            :href="
+                                                route(
+                                                    'person.details',
+                                                    person.id
+                                                )
+                                            "
+                                        >
+                                        {{ person.name }}
+                                        </Link>
+                                        </td>
                                     <td>{{ person.contact }}</td>
                                     <td>
                                         <button
