@@ -67,6 +67,7 @@
                                             ]"
                                             :searchable="true"
                                             placeholder="Filter By"
+                                            @clear="fetchTransactionEntries"
                                         />
                                     </div>
 

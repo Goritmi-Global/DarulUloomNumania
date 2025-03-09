@@ -13,7 +13,7 @@
                     </ol>
                 </nav>
             </div>
-            <div>
+            <!-- <div>
                 <button
                     class="btn btn-success mt-3"
                     data-bs-toggle="modal"
@@ -23,7 +23,7 @@
                 >
                     <i class="bi bi-plus-lg"></i> New Transaction
                 </button>
-            </div>
+            </div> -->
         </div>
 
         <section class="section">
@@ -100,6 +100,7 @@
                                         ]"
                                         :searchable="true"
                                         placeholder="Filter By"
+                                        @clear="fetchTransactionEntries"
                                     />
                                 </div>
 
@@ -172,12 +173,13 @@
                                     />
                                 </div>
 
-                                <div class="col-auto" v-if="selectedFilter">
+                                <div class="col-auto" >
                                     <Multiselect
                                         v-model="filterBusinessType"
                                         :options="businessTypesOptions"
                                         placeholder="Bussiness Type"
                                         :searchable="true"
+                                        @clear="fetchTransactionEntries"
                                     />
                                     
                                 </div>
@@ -214,6 +216,7 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Reciept No</th>
+                                    <th scope="col">Business Type</th>
                                     <th scope="col">Descriptions</th>
                                     <th scope="col">Method</th>
                                     <th scope="col">Type</th>
@@ -232,6 +235,7 @@
                                     <th scope="row">{{ index + 1 }}</th>
                                     <td>{{ entry.transaction_date }}</td>
                                     <td>{{ entry.ref_no }}</td>
+                                    <td>{{ entry.business_type }}</td>
                                     <td>{{ entry.remarks }}</td>
                                     <td>{{ entry.method }}</td>
                                     <td>
@@ -1205,6 +1209,7 @@ export default {
                         <th>#</th>
                         <th>Date</th>
                         <th>Receipt No</th>
+                        <th>Business Type</th>
                         <th>Descriptions</th>
                         <th>Method</th>
                         <th>Type</th>
@@ -1221,6 +1226,7 @@ export default {
                             <td>${index + 1}</td>
                             <td>${entry.transaction_date}</td>
                             <td>${entry.ref_no}</td>
+                            <td>${entry.business_type}</td>
                             <td>${entry.remarks}</td>
                             <td>${entry.method}</td>
                             <td>${entry.income_type ?? entry.expense_type}</td>

@@ -24,6 +24,17 @@
                         </a>
                         
                     </li> -->
+                    <li>
+                        <button
+                            class="btn btn-success btn-sm"
+                            data-bs-toggle="modal"
+                            ref="openTransactionModal"
+                            data-bs-target="#transactionmodal"
+                            @click="clearFields"
+                        >
+                            <i class="bi bi-plus-lg"></i> New Transaction
+                        </button>
+                    </li>
                     <li class="nav-item dropdown nav-item d-block d-lg-none">
                         <a
                             class="nav-link nav-profile d-flex align-items-center pe-0"
@@ -122,6 +133,353 @@
         </header>
         <!-- End Header -->
 
+        <!-- Modal for the new transactions -->
+        <!-- Transaction Modal -->
+        <div
+            class="modal fade"
+            id="transactionmodal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-primary" v-if="form.id">
+                            {{ form.remarks }} - {{ form.method }}
+                            <small>({{ form.date }})</small>
+                        </h5>
+                        <h5 class="modal-title text-primary" v-else>
+                            New Transaction Entry
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card card-body p-3">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-12 mb-3">
+                                    <label>{{ "Process Type" }} </label>
+                                    <Multiselect
+                                        v-model="form.process_type"
+                                        :options="processTypeOptions"
+                                        :searchable="true"
+                                        @select="clearProcessType"
+                                        :class="{
+                                            'invalid-bg':
+                                                formErrors.process_type,
+                                        }"
+                                    />
+                                    <div
+                                        class="invalid-feedback animated fadeIn"
+                                        v-if="formErrors.process_type"
+                                    >
+                                        {{ formErrors.process_type[0] }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="col-12 col-md-12 mb-3"
+                                    v-if="
+                                        form.process_type == 'Income' ||
+                                        form.process_type == 'Expense'
+                                    "
+                                >
+                                    <label>{{ "Bussiness Type" }} </label>
+                                    <Multiselect
+                                        v-model="form.business_type"
+                                        :options="businessTypesOptions"
+                                        :searchable="true"
+                                        @select="
+                                            pluckExpIncTypes(
+                                                form.business_type,
+                                                form.process_type
+                                            )
+                                        "
+                                        :class="{
+                                            'invalid-bg':
+                                                formErrors.business_type,
+                                        }"
+                                    />
+                                    <div
+                                        class="invalid-feedback animated fadeIn"
+                                        v-if="formErrors.business_type"
+                                    >
+                                        {{ formErrors.business_type[0] }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="col-12 col-md-6"
+                                    v-if="form.process_type == 'Income'"
+                                >
+                                    <label>{{ "Income Type" }} </label>
+                                    <Multiselect
+                                        v-model="form.income_type"
+                                        :options="IncomeTypesOptions"
+                                        :searchable="true"
+                                        :class="{
+                                            'invalid-bg':
+                                                formErrors.income_type,
+                                        }"
+                                    />
+                                    <div
+                                        class="invalid-feedback animated fadeIn"
+                                        v-if="formErrors.income_type"
+                                    >
+                                        {{ formErrors.income_type[0] }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="col-12 col-md-6"
+                                    v-if="form.process_type == 'Expense'"
+                                >
+                                    <label>{{ "Expense Type" }} </label>
+                                    <Multiselect
+                                        v-model="form.expense_type"
+                                        :options="ExpenseTypesOptions"
+                                        :searchable="true"
+                                        :class="{
+                                            'invalid-bg':
+                                                formErrors.expense_type,
+                                        }"
+                                    />
+                                    <div
+                                        class="invalid-feedback animated fadeIn"
+                                        v-if="formErrors.expense_type"
+                                    >
+                                        {{ formErrors.expense_type[0] }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="col-12 col-md-6"
+                                    v-if="
+                                        form.process_type == 'Borrow' ||
+                                        form.process_type == 'Lend'
+                                    "
+                                >
+                                    <label>{{ "Select person" }} </label>
+                                    <Multiselect
+                                        v-model="form.person"
+                                        :options="personsOptions"
+                                        :searchable="true"
+                                        :class="{
+                                            'invalid-bg': formErrors.person,
+                                        }"
+                                    />
+                                    <div
+                                        class="invalid-feedback animated fadeIn"
+                                        v-if="formErrors.person"
+                                    >
+                                        {{ formErrors.person[0] }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="col-md-6 col-12"
+                                    v-if="
+                                        form.process_type == 'Income' ||
+                                        form.process_type == 'Borrow'
+                                    "
+                                >
+                                    <label for="cash_in">Cash In</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="cash_in"
+                                        v-model="form.cash_in"
+                                        :class="{
+                                            'invalid-bg': formErrors.cash_in,
+                                        }"
+                                    />
+                                    <div
+                                        v-if="formErrors.cash_in"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ formErrors.cash_in[0] }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="col-md-6 col-12"
+                                    v-if="
+                                        form.process_type == 'Expense' ||
+                                        form.process_type == 'Lend'
+                                    "
+                                >
+                                    <label for="cash_out">Cash Out</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="cash_out"
+                                        v-model="form.cash_out"
+                                        :class="{
+                                            'invalid-bg': formErrors.cash_out,
+                                        }"
+                                    />
+                                    <div
+                                        v-if="formErrors.cash_out"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ formErrors.cash_out[0] }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <label for="remarks">Description</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="remarks"
+                                        v-model="form.remarks"
+                                        :class="{
+                                            'invalid-bg': formErrors.remarks,
+                                        }"
+                                    />
+                                    <div
+                                        v-if="formErrors.remarks"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ formErrors.remarks[0] }}
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label>{{ "Payment Method" }} </label>
+                                    <Multiselect
+                                        v-model="form.method"
+                                        :options="methodTypesOpions"
+                                        :searchable="true"
+                                        :class="{
+                                            'invalid-bg': formErrors.method,
+                                        }"
+                                    />
+                                    <div
+                                        class="invalid-feedback animated fadeIn"
+                                        v-if="formErrors.method"
+                                    >
+                                        {{ formErrors.method[0] }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <label for="type">Reciept No</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="type"
+                                        v-model="form.ref_no"
+                                        :class="{
+                                            'invalid-bg': formErrors.ref_no,
+                                        }"
+                                    />
+                                    <div
+                                        v-if="formErrors.ref_no"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ formErrors.ref_no[0] }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <label for="date">Date</label>
+                                    <input
+                                        type="date"
+                                        class="form-control"
+                                        :max="today"
+                                        id="date"
+                                        v-model="form.date"
+                                        :class="{
+                                            'invalid-bg': formErrors.date,
+                                        }"
+                                    />
+                                    <div
+                                        v-if="formErrors.date"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ formErrors.date[0] }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <label for="receipt_image"
+                                        >Receipt image</label
+                                    >
+                                    <br />
+                                    <CropperOffCanvas
+                                        @croppedImg="croppedImgPassToForm"
+                                        accept=".jpg,.jpeg,.png"
+                                    />
+
+                                    <br />
+                                    <img
+                                        v-if="form.receipt_image"
+                                        :src="
+                                            form.receipt_image ??
+                                            '/images/default.jpg'
+                                        "
+                                        :width="100"
+                                    />
+                                    <img
+                                        v-else-if="existing_receipt_image"
+                                        :src="
+                                            existing_receipt_image ??
+                                            '/images/default.jpg'
+                                        "
+                                        :width="100"
+                                    />
+                                    <img
+                                        v-else
+                                        :src="'/images/default.jpg'"
+                                        :width="100"
+                                    />
+
+                                    <div
+                                        v-if="formErrors.receipt_image"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ formErrors.receipt_image[0] }}
+                                    </div>
+                                </div>
+
+                                <div class="mt-3">
+                                    <button
+                                        type="submit"
+                                        class="btn btn-success"
+                                        v-if="formStatus == 1"
+                                        @click="submit"
+                                    >
+                                        Save
+                                    </button>
+                                    <button
+                                        class="btn btn-success"
+                                        type="button"
+                                        disabled
+                                        v-else
+                                    >
+                                        Saving
+                                        <span
+                                            class="spinner-border spinner-border-sm"
+                                        ></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button
+                hidden
+                data-bs-toggle="modal"
+                data-bs-target="#customermodal"
+                ref="closeModal"
+            ></button>
+        </div>
+
+        <!-- Modal for the new transactions -->
+
         <!-- ======= Sidebar ======= -->
         <aside id="sidebar" class="sidebar">
             <ul class="sidebar-nav" id="sidebar-nav">
@@ -146,6 +504,18 @@
                     >
                         <i class="bi bi-cash"></i>
                         <span>Transactions</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/business/types') }"
+                        href="/business/types"
+                    >
+                        <i class="bi bi-briefcase"></i>
+                        <!-- Updated icon -->
+                        <span>Business Types</span>
                     </a>
                 </li>
 
@@ -207,19 +577,8 @@
                         <span>Loan Management</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a
-                        class="nav-link collapsed"
-                        :class="{ active: isActive('/business/types') }"
-                        href="/business/types"
-                    >
-                        <i class="bi bi-briefcase"></i>
-                        <!-- Updated icon -->
-                        <span>Business Types</span>
-                    </a>
-                </li>
-
-                <!-- Business Types -->
+                
+ 
                 <!-- <li class="nav-item">
             <a
                 class="nav-link collapsed"
@@ -278,8 +637,41 @@
 
 <script>
 import axios from "axios";
-
+import Multiselect from "@vueform/multiselect";
 export default {
+    components: {
+        Multiselect,
+    },
+    created() {
+        this.process_type = "Income";
+    },
+    data() {
+        return {
+            formStatus: 1,
+            form: {
+                id: "",
+                cash_in: "",
+                cash_out: "",
+                date: "",
+                ref_no: "",
+                method: "",
+                remarks: "",
+                expense_type: "",
+                income_type: "",
+                process_type: "",
+                receipt_image: "",
+                person: "",
+                business_type: "",
+            },
+            formErrors: [],
+            methodTypesOpions: ["Bank", "Cash"],
+            ExpenseTypesOptions: [],
+            IncomeTypesOptions: [],
+            processTypeOptions: ["Expense", "Income", "Borrow", "Lend"],
+            personsOptions: [],
+            businessTypesOptions: [],
+        };
+    },
     mounted() {
         let bootstrapJs = document.createElement("script");
         bootstrapJs.setAttribute(
@@ -291,6 +683,10 @@ export default {
         let mainJs = document.createElement("script");
         mainJs.setAttribute("src", "/backend/assets/js/main.js");
         document.head.appendChild(mainJs);
+
+        this.fetchTransactionEntries();
+        this.pluckPersons();
+        this.pluckBussinessTypes();
     },
 
     computed: {
@@ -304,6 +700,189 @@ export default {
     },
 
     methods: {
+        submit() {
+            let formData = new FormData();
+            // Helper function to handle null, undefined, or empty values
+            const sanitizeValue = (value) =>
+                (value ?? "").toString().trim() === "" ? "" : value;
+
+            formData.append("id", sanitizeValue(this.form.id));
+            formData.append("cash_in", sanitizeValue(this.form.cash_in));
+            formData.append("cash_out", sanitizeValue(this.form.cash_out));
+            formData.append("date", sanitizeValue(this.form.date));
+            formData.append("ref_no", sanitizeValue(this.form.ref_no));
+            formData.append("method", sanitizeValue(this.form.method));
+            formData.append("remarks", sanitizeValue(this.form.remarks));
+            formData.append(
+                "business_type",
+                sanitizeValue(this.form.business_type)
+            );
+            formData.append("person", sanitizeValue(this.form.person));
+            formData.append(
+                "expense_type",
+                sanitizeValue(this.form.expense_type)
+            );
+            formData.append(
+                "income_type",
+                sanitizeValue(this.form.income_type)
+            );
+            formData.append(
+                "process_type",
+                sanitizeValue(this.form.process_type)
+            );
+
+            // Append image only if it exists
+            if (this.form.receipt_image) {
+                formData.append("receipt_image", this.form.receipt_image);
+            }
+
+            // this.formStatus = 0;
+            axios
+                .post(route("api.transaction.store"), formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then(() => {
+                    this.formStatus = 1;
+
+                    toastr.success("Transaction entry saved successfully.");
+                    this.$refs.closeModal?.click();
+                    window.location.href = "/transactions";
+                })
+
+                .catch((error) => {
+                    this.formStatus = 1;
+                    toastr.error(error.response.data.message);
+                    this.formErrors = error.response.data.errors;
+                });
+        },
+        croppedImgPassToForm(img) {
+            this.form.receipt_image = img;
+        },
+        setAltImg(event) {
+            event.target.src = "/images/default.jpg";
+        },
+        clearProcessType() {
+            this.form.cash_in = "";
+            this.form.cash_out = "";
+            this.form.business_type = "";
+        },
+        fetchTransactionEntries() {
+            this.serachingLoading = true;
+            // Validation checks
+            this.FilterErrors = "";
+            if (
+                this.selectedFilter === "Monthly" &&
+                (!this.selectedMonth || !this.selectedYear)
+            ) {
+                this.FilterErrors =
+                    "Please select both Month and Year for the Monthly filter.";
+                this.serachingLoading = false;
+                return;
+            }
+
+            if (this.selectedFilter === "Yearly" && !this.selectedYear) {
+                this.FilterErrors =
+                    "Please select a Year for the Yearly filter.";
+                this.serachingLoading = false;
+                return;
+            }
+
+            if (
+                this.selectedFilter === "Custom" &&
+                (!this.startDate || !this.endDate)
+            ) {
+                this.FilterErrors =
+                    "Please select both Start Date and End Date for the Custom filter.";
+                this.serachingLoading = false;
+                return;
+            }
+
+            let formData = new FormData();
+
+            formData.append("selectedFilter", this.selectedFilter);
+
+            if (this.selectedMonth) {
+                formData.append("selectedMonth", this.selectedMonth);
+            }
+            if (this.selectedYear) {
+                formData.append("selectedYear", this.selectedYear);
+            }
+            if (this.startDate) {
+                formData.append("startDate", this.startDate);
+            }
+            if (this.endDate) {
+                formData.append("endDate", this.endDate);
+            }
+            if (this.filterBusinessType) {
+                formData.append("businessType", this.filterBusinessType);
+            }
+
+            axios
+                .post(route("api.transaction.fetch"), formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then((response) => {
+                    this.serachingLoading = false;
+                    this.transactionEntries = response.data;
+                })
+                .catch((error) => {
+                    this.serachingLoading = false;
+                    toastr.error(error.response.data.message);
+                });
+        },
+        pluckExpIncTypes(business_type_id, expense_type) {
+            if (expense_type == "Income") {
+                this.pluckIncomeTypes(business_type_id);
+            }
+            if (expense_type == "Expense") {
+                this.pluckExpenseTypes(business_type_id);
+            }
+        },
+        pluckIncomeTypes(business_type_id) {
+            axios
+                .get(route("api.income.pluck", business_type_id)) // Ensure this API returns income types
+                .then((response) => {
+                    this.IncomeTypesOptions = response.data; // Fix variable name casing
+                })
+                .catch((error) => {
+                    console.error("Error fetching income types:", error);
+                });
+        },
+        pluckExpenseTypes(business_type_id) {
+            axios
+                .get(route("api.expense.pluck", business_type_id)) // Ensure this API returns expense types
+                .then((response) => {
+                    this.ExpenseTypesOptions = response.data;
+                })
+                .catch((error) => {
+                    console.error("Error fetching expense types:", error);
+                });
+        },
+        pluckPersons() {
+            axios
+                .get(route("api.persons.pluck"))
+                .then((response) => {
+                    this.personsOptions = response.data;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+
+        pluckBussinessTypes() {
+            axios
+                .get(route("api.business.types.pluck"))
+                .then((response) => {
+                    this.businessTypesOptions = response.data;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
         // Checks if the current route starts with the given path
         isActive(route) {
             return window.location.pathname.startsWith(route);

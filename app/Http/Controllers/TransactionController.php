@@ -42,13 +42,13 @@ class TransactionController extends Controller
         // }
         
         // Apply filters only if request contains filtering parameters
+        if($request->businessType)
+        {
+           
+            $query->where('business_type_id', $request->businessType);
+        }
         if ($request->has('selectedFilter') && $request->selectedFilter) {
             $filter = $request->selectedFilter;
-            if($request->businessType)
-            {
-               
-                $query->where('business_type_id', $request->businessType);
-            }
             if ($filter == 'Yearly' && $request->has('selectedYear')) {
                 $query->whereYear('transaction_date', $request->selectedYear);
             } elseif ($filter == 'Monthly' && $request->has(['selectedYear', 'selectedMonth'])) {
@@ -97,6 +97,14 @@ class TransactionController extends Controller
                 }
             }
 
+            if($transaction->business_type_id)
+            {
+                $business_type = BusinessType::where('id',$transaction->business_type_id)->first();
+                $transaction->business_type = $business_type->name ?? "Other";
+            }else
+            {
+                $transaction->business_type = "Loan";
+            }
             // Format transaction date
             $transaction->transaction_date = Carbon::parse($transaction->transaction_date)->format('j F Y');
 
@@ -395,12 +403,12 @@ class TransactionController extends Controller
         $query = Transaction::query();
 
         // Apply filters only if a filter is selected
+        if($request->businessType)
+        {
+           
+            $query->where('business_type_id', $request->businessType);
+        }
         if ($selectedFilter) {
-            if($request->businessType)
-            {
-               
-                $query->where('business_type_id', $request->businessType);
-            }
             if ($selectedFilter == 'Yearly') {
                 $selectedYear = $request->selectedYear;
                 $query->whereYear('transaction_date', $selectedYear);
@@ -441,12 +449,12 @@ class TransactionController extends Controller
         $query = Transaction::query();
 
         // Apply filters only if a filter is selected
+        if($request->businessType)
+        {
+           
+            $query->where('business_type_id', $request->businessType);
+        }
         if ($request->has('selectedFilter') && $request->selectedFilter) {
-            if($request->businessType)
-            {
-               
-                $query->where('business_type_id', $request->businessType);
-            }
             $filter = $request->selectedFilter;
 
             if ($filter == 'Yearly' && $request->selectedYear) {

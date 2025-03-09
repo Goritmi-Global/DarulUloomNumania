@@ -90,6 +90,7 @@
                                         ]"
                                         :searchable="true"
                                         placeholder="Filter By"
+                                        @clear="fetchTransactionEntries"
                                     />
                                 </div>
 
@@ -157,12 +158,13 @@
                                     />
                                 </div>
 
-                                <div class="col-auto" v-if="selectedFilter">
+                                <div class="col-auto">
                                     <Multiselect
                                         v-model="filterBusinessType"
                                         :options="businessTypesOptions"
                                         placeholder="Bussiness Type"
                                         :searchable="true"
+                                        @clear="fetchTransactionEntries"
                                     />
                                 </div>
 
