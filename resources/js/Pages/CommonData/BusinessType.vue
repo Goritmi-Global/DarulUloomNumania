@@ -46,7 +46,20 @@
                                     :key="type.id"
                                 >
                                     <th scope="row">{{ index + 1 }}</th>
-                                    <td>{{ type.name }}</td>
+                                    <td>
+                                        <Link
+                                            class="c-text-theme"
+                                            :href="
+                                                route(
+                                                    'businsess.type.details',
+                                                    type.id
+                                                )
+                                            "
+                                        >
+                                        {{ type.name }}
+                                        </Link>
+                                        </td>
+                      
                                     <td>
                                         <button
                                             class="btn btn-sm fs-6"

@@ -66,6 +66,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     // Business Types
     Route::get('/business/types', [CommonDataController::class, 'indexBusinessTypes'])->name('business.types');
+    Route::get('/businsess/type/details/{id}', [CommonDataController::class, 'businsess_type_details'])->name('businsess.type.details'); 
     Route::get('/person/details/{id}', [CommonDataController::class, 'person_details'])->name('person.details'); 
     // Persons
     Route::get('/loan-management', [CommonDataController::class, 'indexPersonTypes'])->name('loan-management');

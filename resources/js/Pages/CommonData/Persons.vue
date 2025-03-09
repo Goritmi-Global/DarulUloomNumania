@@ -45,7 +45,7 @@
                                     :key="person.id"
                                 >
                                     <th scope="row">{{ index + 1 }}</th>
-                                    
+
                                     <td>
                                         <Link
                                             class="c-text-theme"
@@ -56,9 +56,9 @@
                                                 )
                                             "
                                         >
-                                        {{ person.name }}
+                                            {{ person.name }}
                                         </Link>
-                                        </td>
+                                    </td>
                                     <td>{{ person.contact }}</td>
                                     <td>
                                         <button

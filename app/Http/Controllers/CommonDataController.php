@@ -7,6 +7,7 @@ use App\Models\Person;
 use Illuminate\Http\Request;
 use App\Models\MoneyGivenTo;
 use App\Models\MoneyTakenFrom;
+use App\Models\Transaction;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
@@ -54,6 +55,20 @@ class CommonDataController extends Controller
 
         $businessType->delete();
         return response()->json(['message' => 'Business Type deleted successfully']);
+    }
+
+    public function businsess_type_details($id)
+    {
+        // Fetch person details
+        $bussinessType = BusinessType::find($id);
+     
+        // Fetch transactions related to the person
+        $ledger = Transaction::where('business_type_id', $id)->get();
+           
+        return Inertia::render('CommonData/BusinessDetails', [
+            'person_name' => $bussinessType->name,
+            'ledger' => $ledger
+        ]);
     }
 
     // Pluck Business Types (ID => Name)
