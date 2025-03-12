@@ -25,8 +25,16 @@ class BookController extends Controller
             'download_link' => 'nullable|string'
         ]);
 
-        $book = new Book();
-        $book->id = Str::orderedUuid();
+        if($request->id)
+        {
+            $book = Book::findOrFail($request->id);
+        }
+        else
+        {
+
+            $book = new Book();
+            $book->id = Str::orderedUuid();
+        }
         $book->title = $request->title;
         $book->description = $request->description;
         $book->image = $request->image;
@@ -36,25 +44,8 @@ class BookController extends Controller
         return response()->json(['message' => 'Book saved successfully.'], 200);
     }
 
-    public function show($id)
-    {
-        return response()->json(Book::findOrFail($id));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image' => 'nullable|string',
-            'download_link' => 'nullable|string'
-        ]);
-
-        $book = Book::findOrFail($id);
-        $book->update($request->all());
-
-        return response()->json(['message' => 'Book updated successfully.'], 200);
-    }
+    
+  
 
     public function destroy($id)
     {

@@ -5,15 +5,27 @@
                 <h1 class="theme-text-color">{{ translate("Bayanaat") }}</h1>
                 <nav>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/dashboard">{{ translate("Home") }}</a></li>
-                        <li class="breadcrumb-item">{{ translate("Bayanaat") }}</li>
-                        <li class="breadcrumb-item active">{{ translate("Index") }}</li>
+                        <li class="breadcrumb-item">
+                            <a href="/dashboard">{{ translate("Home") }}</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            {{ translate("Bayanaat") }}
+                        </li>
+                        <li class="breadcrumb-item active">
+                            {{ translate("Index") }}
+                        </li>
                     </ol>
                 </nav>
             </div>
             <div>
-                <button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#updateRecordModal" @click="clearFields">
-                    <i class="bi bi-plus-lg"></i> {{ translate("New Bayanaat") }}
+                <button
+                    class="btn btn-success mt-3"
+                    data-bs-toggle="modal"
+                    data-bs-target="#updateRecordModal"
+                    @click="clearFields"
+                >
+                    <i class="bi bi-plus-lg"></i>
+                    {{ translate("New Bayanaat") }}
                 </button>
             </div>
         </div>
@@ -21,7 +33,9 @@
         <section class="section">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title theme-text-color">{{ translate("All Bayanaat") }}</h5>
+                    <h5 class="card-title theme-text-color">
+                        {{ translate("All Bayanaat") }}
+                    </h5>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -30,21 +44,36 @@
                                 <th>{{ translate("Author") }}</th>
                                 <th>{{ translate("Islamic Date") }}</th>
                                 <th>{{ translate("English Date") }}</th>
+                                <th>{{ translate("Contents") }}</th>
                                 <th>{{ translate("Actions") }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(bayan, index) in bayanaat" :key="bayan.id">
+                            <tr
+                                v-for="(bayan, index) in bayanaat"
+                                :key="bayan.id"
+                            >
                                 <td>{{ index + 1 }}</td>
                                 <td>{{ bayan.title }}</td>
                                 <td>{{ bayan.author }}</td>
                                 <td>{{ bayan.islamic_date }}</td>
                                 <td>{{ bayan.english_date }}</td>
                                 <td>
-                                    <button class="btn btn-sm" @click="showEntry(bayan.id)">
+                                    <div v-html="bayan.content"></div>
+                                </td>
+                                <td>
+                                    <button
+                                        class="btn btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#updateRecordModal"
+                                        @click="showEntry(bayan)"
+                                    >
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    <button class="btn btn-sm text-danger" @click="deleteBayan(bayan.id)">
+                                    <button
+                                        class="btn btn-sm text-danger"
+                                        @click="deleteBayan(bayan.id)"
+                                    >
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </td>
@@ -56,22 +85,151 @@
 
             <!-- Modal -->
             <div class="modal fade" id="updateRecordModal">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 v-if="form.id">{{ translate("Edit Bayanaat") }}</h5>
+                            <h5 v-if="form.id">
+                                {{ translate("Edit Bayanaat") }}
+                            </h5>
                             <h5 v-else>{{ translate("New Bayanaat") }}</h5>
-                            <button class="btn-close" data-bs-dismiss="modal"></button>
+                            <button
+                                class="btn-close"
+                                ref="closeModal"
+                                data-bs-dismiss="modal"
+                            ></button>
                         </div>
                         <div class="modal-body">
-                            <input v-model="form.title" placeholder="Title" class="form-control" />
-                            <input v-model="form.author" placeholder="Author" class="form-control" />
-                            <input v-model="form.islamic_date" placeholder="Islamic Date" class="form-control" />
-                            <input v-model="form.english_date" type="date" class="form-control" />
-                            
-                            <QuillEditor v-model="form.content" theme="snow" />
+                            <div class="card card-body p-3">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label for="title" class="form-label">{{
+                                            translate("Title")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="title"
+                                            v-model="form.title"
+                                            :class="{
+                                                'invalid-bg': formErrors.title,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.title"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.title[0] }}
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label
+                                            for="author"
+                                            class="form-label"
+                                            >{{ translate("Author") }}</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="author"
+                                            v-model="form.author"
+                                            :class="{
+                                                'invalid-bg': formErrors.author,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.author"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.author[0] }}
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label
+                                            for="islamic_date"
+                                            class="form-label"
+                                            >{{
+                                                translate("Islamic Date")
+                                            }}</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="islamic_date"
+                                            v-model="form.islamic_date"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.islamic_date,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.islamic_date"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.islamic_date[0] }}
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label
+                                            for="english_date"
+                                            class="form-label"
+                                            >{{
+                                                translate("English Date")
+                                            }}</label
+                                        >
+                                        <input
+                                            type="date"
+                                            class="form-control"
+                                            id="english_date"
+                                            v-model="form.english_date"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.english_date,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.english_date"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.english_date[0] }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="content" class="form-label">{{
+                                        translate("Content")
+                                    }}</label>
+                                    <br />
 
-                            <button class="btn btn-success mt-2" @click="submit">{{ translate("Save") }}</button>
+                                    <QuillEditor
+                                        v-model:content="form.content"
+                                        contentType="html"
+                                        toolbar="full"
+                                        theme="snow"
+                                    />
+                                </div>
+
+                                <div class="mt-3">
+                                    <button
+                                        type="submit"
+                                        class="btn btn-success"
+                                        v-if="formStatus === 1"
+                                        @click="submit"
+                                    >
+                                        {{ translate("Save") }}
+                                    </button>
+                                    <button
+                                        class="btn btn-success"
+                                        type="button"
+                                        disabled
+                                        v-else
+                                    >
+                                        {{ translate("Saving")
+                                        }}<span
+                                            class="spinner-border spinner-border-sm"
+                                        ></span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -82,26 +240,101 @@
 
 <script>
 import Master from "../Layout/Master.vue";
-// import { QuillEditor } from "vue3-quill";
 import axios from "axios";
 
+import { QuillEditor } from "@vueup/vue-quill";
+
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 export default {
     layout: Master,
-    // components: { QuillEditor },
+    components: {
+        QuillEditor,
+    },
     data() {
         return {
             bayanaat: [],
-            form: { id: "", title: "", author: "", islamic_date: "", english_date: "", content: "" }
+            form: {
+                id: "",
+                title: "",
+                author: "",
+                islamic_date: "",
+                english_date: "",
+                content: "",
+            },
+            formErrors: {}, // Error object for form validation
+            formStatus: 1, // 1 = ready, 0 = saving
         };
     },
-    created() { this.fetchBayanaat(); },
+    created() {
+        this.fetchBayanaat();
+    },
     methods: {
-        fetchBayanaat() { axios.get(route("api.bayanaat.fetch")).then(res => this.bayanaat = res.data); },
-        showEntry(id) { axios.get(route("api.bayanaat.show", id)).then(res => this.form = res.data); },
-        submit() { axios.post(route("api.bayanaat.store"), this.form).then(() => this.fetchBayanaat()); },
-        deleteBayan(id) { axios.delete(route("api.bayanaat.delete", id)).then(() => this.fetchBayanaat()); },
-        clearFields() { this.form = { id: "", title: "", author: "", islamic_date: "", english_date: "", content: "" }; }
-    }
+        fetchBayanaat() {
+            axios
+                .get(route("api.bayanaat.fetch"))
+                .then((res) => {
+                    this.bayanaat = res.data;
+                })
+                .catch((error) => {
+                    console.error(error);
+                    toastr.error(this.translate("Failed to fetch bayanaat."));
+                });
+        },
+        showEntry(bayan) {
+            this.form = { ...bayan };
+        },
+        submit() {
+            this.formStatus = 0;
+
+            axios
+                .post(route("api.bayanaat.store"), this.form)
+                .then(() => {
+                    this.formStatus = 1;
+                    this.$refs.closeModal.click();
+                    toastr.success(this.translate("Bayan saved successfully."));
+                    this.fetchBayanaat();
+                    this.clearFields();
+                })
+                .catch((error) => {
+                    this.formStatus = 1;
+                    if (error.response && error.response.data) {
+                        this.formErrors = error.response.data.errors || {};
+                        toastr.error(
+                            this.translate(
+                                "Please correct the errors and try again."
+                            )
+                        );
+                    } else {
+                        toastr.error(
+                            this.translate("An unexpected error occurred.")
+                        );
+                    }
+                });
+        },
+        deleteBayan(id) {
+            axios
+                .delete(route("api.bayanaat.delete", id))
+                .then(() => {
+                    this.fetchBayanaat();
+                    toastr.success(translate("Bayan deleted successfully."));
+                })
+                .catch((error) => {
+                    console.error(error);
+                    toastr.error(this.translate("Failed to delete bayan."));
+                });
+        },
+        clearFields() {
+            this.form = {
+                id: "",
+                title: "",
+                author: "",
+                islamic_date: "",
+                english_date: "",
+                content: "",
+            };
+            this.formErrors = {}; // Clear form errors
+        },
+    },
 };
 </script>

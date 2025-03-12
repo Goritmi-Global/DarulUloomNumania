@@ -627,45 +627,76 @@
                 </li>
                 <!-- End Settings -->
                 <li class="nav-item">
-    <a class="nav-link collapsed" :class="{ active: isActive('/students') }" href="/students">
-        <i class="bi bi-people-fill"></i>
-        <span>Enrolled Student</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link collapsed" :class="{ active: isActive('/introduction') }" href="/introduction">
-        <i class="bi bi-info-circle"></i>
-        <span>Introduction</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link collapsed" :class="{ active: isActive('/books') }" href="/books">
-        <i class="bi bi-book"></i>
-        <span>Books</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link collapsed" :class="{ active: isActive('/bayanaat') }" href="/bayanaat">
-        <i class="bi bi-mic"></i>
-        <span>Bayanaat</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link collapsed" :class="{ active: isActive('/islamic-names') }" href="/islamic-names">
-        <i class="bi bi-person-badge"></i>
-        <span>Islamic Names</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link collapsed" :class="{ active: isActive('/questions-answers') }" href="/questions-answers">
-        <i class="bi bi-question-circle"></i>
-        <span>Questions & Answers</span>
-    </a>
-</li>
-
-                 
-                 
-                
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/students') }"
+                        href="/students"
+                    >
+                        <i class="bi bi-people-fill"></i>
+                        <span>Enrolled Student</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a
+                        class="nav-link collapsed"
+                        data-bs-target="#darul-iftah-nav"
+                        data-bs-toggle="collapse"
+                        href="#"
+                    >
+                        <i class="bi bi-person-circle"></i>
+                        <span>Darul Iftah</span>
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul
+                        id="darul-iftah-nav"
+                        class="nav-content collapse"
+                        data-bs-parent="#sidebar-nav"
+                    >
+                        <li>
+                            <a
+                                :class="{ active: isActive('/introduction') }"
+                                href="/introduction"
+                            >
+                                <i class="bi bi-info-circle"></i> Introduction
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                :class="{ active: isActive('/books') }"
+                                href="/books"
+                            >
+                                <i class="bi bi-book"></i> Books
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                :class="{ active: isActive('/bayanaat') }"
+                                href="/bayanaat"
+                            >
+                                <i class="bi bi-mic"></i> Bayanaat
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                :class="{ active: isActive('/islamic-names') }"
+                                href="/islamic-names"
+                            >
+                                <i class="bi bi-person-badge"></i> Islamic Names
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                :class="{
+                                    active: isActive('/questions-answers'),
+                                }"
+                                href="/questions-answers"
+                            >
+                                <i class="bi bi-question-circle"></i> Questions
+                                & Answers
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </aside>
 

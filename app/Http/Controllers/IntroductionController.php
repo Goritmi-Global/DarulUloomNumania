@@ -27,8 +27,15 @@ class IntroductionController extends Controller
             'description' => 'required|string',
         ]);
 
-        $record = new Introduction();
-        $record->id = Str::orderedUuid();
+        if($request->id)
+        {
+            $record = Introduction::findOrFail($request->id);
+        }else
+        {
+
+            $record = new Introduction();
+            $record->id = Str::orderedUuid();
+        }
         $record->title = $request->title;
         $record->description = $request->description;
         $record->save();

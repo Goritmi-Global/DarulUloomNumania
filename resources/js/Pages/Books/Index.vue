@@ -48,10 +48,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr
-                                    v-for="(book, index) in books"
-                                    :key="book.id"
-                                >
+                                <tr v-for="(book, index) in books" :key="book.id">
                                     <td>{{ index + 1 }}</td>
                                     <td>{{ book.title }}</td>
                                     <td>{{ book.description }}</td>
@@ -76,7 +73,7 @@
                                     <td>
                                         <button
                                             class="btn btn-sm"
-                                            @click="showEntry(book.id)"
+                                            @click="showEntry(book)"
                                         >
                                             <i class="bi bi-pencil"></i>
                                         </button>
@@ -110,22 +107,22 @@
                             <input
                                 v-model="form.title"
                                 placeholder="Title"
-                                class="form-control"
+                                class="form-control mb-2"
                             />
                             <textarea
                                 v-model="form.description"
                                 placeholder="Description"
-                                class="form-control"
+                                class="form-control mb-2"
                             ></textarea>
                             <input
                                 v-model="form.image"
                                 placeholder="Image URL"
-                                class="form-control"
+                                class="form-control mb-2"
                             />
                             <input
                                 v-model="form.download_link"
                                 placeholder="Download Link"
-                                class="form-control"
+                                class="form-control mb-2"
                             />
                             <button
                                 class="btn btn-success mt-2"
@@ -144,6 +141,7 @@
 <script>
 import axios from "axios";
 import Master from "../Layout/Master.vue";
+
 export default {
     layout: Master,
     data() {
@@ -165,22 +163,52 @@ export default {
         fetchBooks() {
             axios
                 .get(route("api.books.fetch"))
-                .then((res) => (this.books = res.data));
+                .then((res) => {
+                    this.books = res.data;
+                })
+                .catch((err) => {
+                    console.error("Error fetching books:", err);
+                });
         },
-        showEntry(id) {
-            axios
-                .get(route("api.books.show", id))
-                .then((res) => (this.form = res.data));
+        showEntry(book) {
+            this.form = { ...book };
+            const modal = new bootstrap.Modal(
+                document.getElementById("updateRecordModal")
+            );
+            modal.show();
         },
         submit() {
+            this.formStatus = 0;
+
             axios
                 .post(route("api.books.store"), this.form)
-                .then(() => this.fetchBooks());
-        },
+                .then(() => {
+                    this.$refs.closeModal.click();
+                    this.formStatus = 1;
+                    toastr.success(
+                        translate("Book saved successfully.")
+                    );
+                    this.fetchBooks();
+                })
+                .catch((error) => {
+    this.formStatus = 1;
+    if (error.response && error.response.data) {
+        this.formErrors = error.response.data.errors || {};
+        toastr.error(error.response.data.message);
+    } else {
+        toastr.error("An unexpected error occurred.");
+    }
+});
+},
         deleteBook(id) {
-            axios
-                .delete(route("api.books.delete", id))
-                .then(() => this.fetchBooks());
+            if (confirm("Are you sure you want to delete this book?")) {
+                axios
+                    .delete(route("api.books.delete", id))
+                    .then(() => this.fetchBooks())
+                    .catch((err) => {
+                        console.error("Error deleting book:", err);
+                    });
+            }
         },
         clearFields() {
             this.form = {
@@ -194,3 +222,12 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.table-responsive {
+    margin-top: 1rem;
+}
+.btn-sm {
+    margin-right: 0.25rem;
+}
+</style>

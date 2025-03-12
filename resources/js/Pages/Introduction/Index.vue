@@ -2,25 +2,36 @@
     <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1 class="theme-text-color">{{ translate("Introduction") }}</h1>
+                <h1 class="theme-text-color">
+                    {{ translate("Introduction") }}
+                </h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/dashboard">{{ translate("Darul Oloom") }}</a>
+                            <a href="/dashboard">{{
+                                translate("Darul Oloom")
+                            }}</a>
                         </li>
-                        <li class="breadcrumb-item">{{ translate("Introduction") }}</li>
-                        <li class="breadcrumb-item active">{{ translate("Index") }}</li>
+                        <li class="breadcrumb-item">
+                            {{ translate("Introduction") }}
+                        </li>
+                        <li class="breadcrumb-item active">
+                            {{ translate("Index") }}
+                        </li>
                     </ol>
                 </nav>
             </div>
-            <div>
+
+            <div v-if="!introductions || introductions.length === 0">
+            <!-- <div> -->
                 <button
                     class="btn btn-success mt-3"
                     data-bs-toggle="modal"
                     data-bs-target="#updateRecordModal"
                     @click="clearFields"
                 >
-                    <i class="bi bi-plus-lg"></i> {{ translate("New Introduction") }}
+                    <i class="bi bi-plus-lg"></i>
+                    {{ translate("New Introduction") }}
                 </button>
             </div>
         </div>
@@ -28,19 +39,30 @@
         <section class="section">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title theme-text-color">{{ translate("All Introductions") }}</h5>
+                    <h5 class="card-title theme-text-color">
+                        {{ translate("All Introductions") }}
+                    </h5>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">{{ translate("Title") }}</th>
-                                    <th scope="col">{{ translate("Description") }}</th>
-                                    <th scope="col">{{ translate("Action") }}</th>
+                                    <th scope="col">
+                                        {{ translate("Title") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Description") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Action") }}
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(intro, index) in introductions" :key="intro.id">
+                                <tr
+                                    v-for="(intro, index) in introductions"
+                                    :key="intro.id"
+                                >
                                     <th scope="row">{{ index + 1 }}</th>
                                     <td>{{ intro.title }}</td>
                                     <td>{{ intro.description }}</td>
@@ -51,17 +73,17 @@
                                                 title="Edit"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#updateRecordModal"
-                                                @click="showEntry(intro.id)"
+                                                @click="showEntry(intro)"
                                             >
                                                 <i class="bi bi-pencil"></i>
                                             </button>
-                                            <button
+                                            <!-- <button
                                                 class="btn btn-sm text-danger"
                                                 title="Delete"
                                                 @click="deleteThis(intro.id)"
                                             >
                                                 <i class="bi bi-trash"></i>
-                                            </button>
+                                            </button> -->
                                         </div>
                                     </td>
                                 </tr>
@@ -89,6 +111,7 @@
                                 {{ translate("New Introduction Entry") }}
                             </h5>
                             <button
+                                ref="closeModal"
                                 type="button"
                                 class="btn-close"
                                 data-bs-dismiss="modal"
@@ -99,29 +122,48 @@
                             <div class="card card-body p-3">
                                 <div class="row g-3">
                                     <div class="col-12">
-                                        <label for="title" class="form-label">{{ translate("Title") }}</label>
+                                        <label for="title" class="form-label">{{
+                                            translate("Title")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             id="title"
                                             v-model="form.title"
-                                            :class="{ 'invalid-bg': formErrors.title }"
+                                            :class="{
+                                                'invalid-bg': formErrors.title,
+                                            }"
                                         />
-                                        <div v-if="formErrors.title" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.title"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.title[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <label for="description" class="form-label">{{ translate("Description") }}</label>
+                                        <label
+                                            for="description"
+                                            class="form-label"
+                                            >{{
+                                                translate("Description")
+                                            }}</label
+                                        >
                                         <textarea
                                             class="form-control"
                                             id="description"
                                             v-model="form.description"
                                             rows="4"
-                                            :class="{ 'invalid-bg': formErrors.description }"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.description,
+                                            }"
                                         ></textarea>
-                                        <div v-if="formErrors.description" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.description"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.description[0] }}
                                         </div>
                                     </div>
@@ -135,9 +177,16 @@
                                         >
                                             {{ translate("Save") }}
                                         </button>
-                                        <button class="btn btn-success" type="button" disabled v-else>
+                                        <button
+                                            class="btn btn-success"
+                                            type="button"
+                                            disabled
+                                            v-else
+                                        >
                                             {{ translate("Saving") }}
-                                            <span class="spinner-border spinner-border-sm"></span>
+                                            <span
+                                                class="spinner-border spinner-border-sm"
+                                            ></span>
                                         </button>
                                     </div>
                                 </div>
@@ -145,12 +194,7 @@
                         </div>
                     </div>
                 </div>
-                <button
-                    hidden
-                    data-bs-toggle="modal"
-                    data-bs-target="#customermodal"
-                    ref="closeModal"
-                ></button>
+                 
             </div>
         </section>
     </main>
@@ -188,17 +232,8 @@ export default {
                     console.error(error);
                 });
         },
-        showEntry(entry_id) {
-            axios
-                .get(route("api.introduction.show", entry_id))
-                .then((response) => {
-                    this.form.id = response.data.id;
-                    this.form.title = response.data.title;
-                    this.form.description = response.data.description;
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+        showEntry(introduction) {
+            this.form = { ...introduction };
         },
         submit() {
             this.formStatus = 0;
@@ -206,23 +241,32 @@ export default {
             axios
                 .post(route("api.introduction.store"), this.form)
                 .then(() => {
-                    this.formStatus = 1;
-                    toastr.success(translate("Introduction saved successfully."));
-                    this.fetchIntroductions();
                     this.$refs.closeModal.click();
+                    this.formStatus = 1;
+                    toastr.success(
+                        translate("Introduction saved successfully.")
+                    );
+                    this.fetchIntroductions();
                 })
                 .catch((error) => {
-                    this.formStatus = 1;
-                    this.formErrors = error.response.data.errors || {};
-                    toastr.error(error.response.data.message);
-                });
+    this.formStatus = 1;
+    if (error.response && error.response.data) {
+        this.formErrors = error.response.data.errors || {};
+        toastr.error(error.response.data.message);
+    } else {
+        toastr.error("An unexpected error occurred.");
+    }
+});
+
         },
         deleteThis(id) {
             axios
                 .delete(route("api.introduction.delete", id))
                 .then(() => {
                     this.fetchIntroductions();
-                    toastr.success(translate("Introduction deleted successfully."));
+                    toastr.success(
+                        translate("Introduction deleted successfully.")
+                    );
                 })
                 .catch((error) => {
                     console.error(error);

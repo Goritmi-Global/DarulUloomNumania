@@ -24,11 +24,18 @@ class BayanaatController extends Controller
             'author' => 'required|string|max:255',
             'islamic_date' => 'required|string|max:255',
             'english_date' => 'required|date',
-            'content' => 'required|string'
+            // 'content' => 'required|string'
         ]);
 
-        $bayanaat = new Bayanaat();
-        $bayanaat->id = Str::orderedUuid();
+        if($request->id)
+        {
+            $bayanaat = Bayanaat::findOrFail($request->id);
+        }else
+        {
+
+            $bayanaat = new Bayanaat();
+            $bayanaat->id = Str::orderedUuid();
+        }
         $bayanaat->title = $request->title;
         $bayanaat->author = $request->author;
         $bayanaat->islamic_date = $request->islamic_date;
