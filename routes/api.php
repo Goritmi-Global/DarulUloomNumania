@@ -122,33 +122,43 @@ Route::middleware(['web'])->group(function () {
 
 
 // introduction controller
-Route::get('/introduction/fetch', [IntroductionController::class, 'fetch'])->name('api.introduction.fetch');
-Route::get('/introduction/show/{id}', [IntroductionController::class, 'show'])->name('api.introduction.show');
-Route::post('/introduction/store', [IntroductionController::class, 'store'])->name('api.introduction.store');
-Route::delete('/introduction/delete/{id}', [IntroductionController::class, 'destroy'])->name('api.introduction.delete');
+ 
+Route::prefix('introduction')->group(function () {
+    Route::get('/fetch', [IntroductionController::class, 'fetch'])->name('api.introduction.fetch');
+    Route::get('/show/{id}', [IntroductionController::class, 'show'])->name('api.introduction.show'); 
+    Route::post('/store', [IntroductionController::class, 'store'])->name('api.introduction.store');
+    Route::delete('/delete/{id}', [IntroductionController::class, 'destroy'])->name('api.introduction.delete');
+});
 
-// Books controller
-Route::get('/books', [BookController::class, 'fetch'])->name('api.books.fetch');
-Route::post('/books', [BookController::class, 'store'])->name('api.books.store');
-Route::get('/books/{id}', [BookController::class, 'show'])->name('api.books.show');
-Route::put('/books/{id}', [BookController::class, 'update'])->name('api.books.update');
-Route::delete('/books/{id}', [BookController::class, 'destroy'])->name('api.books.delete');
+
+// Book Controller Routes
+Route::prefix('books')->group(function () {
+    Route::get('/', [BookController::class, 'fetch'])->name('api.books.fetch');  // Fetch all books
+    Route::post('/', [BookController::class, 'store'])->name('api.books.store'); // Create a book
+    Route::get('/{id}', [BookController::class, 'show'])->name('api.books.show'); // Fetch a single book
+    Route::put('/{id}', [BookController::class, 'update'])->name('api.books.update'); // Update a book
+    Route::delete('/{id}', [BookController::class, 'destroy'])->name('api.books.delete'); // Delete a book
+});
 
 
 // Bayanat
-Route::get('/bayanaat', [BayanaatController::class, 'fetch'])->name('api.bayanaat.fetch');
-Route::post('/bayanaat', [BayanaatController::class, 'store'])->name('api.bayanaat.store');
-Route::get('/bayanaat/{id}', [BayanaatController::class, 'show'])->name('api.bayanaat.show');
-Route::put('/bayanaat/{id}', [BayanaatController::class, 'update'])->name('api.bayanaat.update');
-Route::delete('/bayanaat/{id}', [BayanaatController::class, 'destroy'])->name('api.bayanaat.delete');
+Route::prefix('bayanaat')->group(function () {
+    Route::get('/', [BayanaatController::class, 'fetch'])->name('api.bayanaat.fetch');  // Fetch all Bayanaat
+    Route::post('/', [BayanaatController::class, 'store'])->name('api.bayanaat.store'); // Create a new Bayaan
+    Route::get('/{id}', [BayanaatController::class, 'show'])->name('api.bayanaat.show'); // Fetch a specific Bayaan
+    Route::put('/{id}', [BayanaatController::class, 'update'])->name('api.bayanaat.update'); // Update a Bayaan
+    Route::delete('/{id}', [BayanaatController::class, 'destroy'])->name('api.bayanaat.delete'); // Delete a Bayaan
+});
 
 
 // Islamic names 
-Route::get('/islamic-names', [IslamicNameController::class, 'fetch'])->name('api.islamic-names.fetch');
-Route::post('/islamic-names', [IslamicNameController::class, 'store'])->name('api.islamic-names.store');
-Route::get('/islamic-names/{id}', [IslamicNameController::class, 'show'])->name('api.islamic-names.show');
-Route::put('/islamic-names/{id}', [IslamicNameController::class, 'update'])->name('api.islamic-names.update');
-Route::delete('/islamic-names/{id}', [IslamicNameController::class, 'destroy'])->name('api.islamic-names.delete');
+Route::prefix('islamic-names')->group(function () {
+    Route::get('/', [IslamicNameController::class, 'fetch'])->name('api.islamic-names.fetch'); // Get all names
+    Route::post('/', [IslamicNameController::class, 'store'])->name('api.islamic-names.store'); // Create a new name
+    Route::get('/{id}', [IslamicNameController::class, 'show'])->name('api.islamic-names.show'); // Get a single name
+    Route::put('/{id}', [IslamicNameController::class, 'update'])->name('api.islamic-names.update'); // Update a name
+    Route::delete('/{id}', [IslamicNameController::class, 'destroy'])->name('api.islamic-names.delete'); // Delete a name
+});
 
 
  });

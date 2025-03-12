@@ -41,9 +41,10 @@
                                 <tr>
                                     <th>#</th>
                                     <th>{{ translate("Title") }}</th>
-                                    <th>{{ translate("Description") }}</th>
+
                                     <th>{{ translate("Image") }}</th>
-                                    <th>{{ translate("Download") }}</th>
+                                    <th>{{ translate("Download Link") }}</th>
+                                    <th>{{ translate("Content") }}</th>
                                     <th>{{ translate("Action") }}</th>
                                 </tr>
                             </thead>
@@ -54,25 +55,10 @@
                                 >
                                     <td>{{ index + 1 }}</td>
                                     <td>{{ book.title }}</td>
-                                    <td>{{ book.description }}</td>
-                                    <td>
-                                        <img
-                                            :src="book.image"
-                                            class="img-thumbnail"
-                                            width="50"
-                                            v-if="book.image"
-                                        />
-                                    </td>
-                                    <td>
-                                        <a
-                                            :href="book.download_link"
-                                            target="_blank"
-                                            class="btn btn-primary btn-sm"
-                                            v-if="book.download_link"
-                                        >
-                                            {{ translate("Download") }}
-                                        </a>
-                                    </td>
+
+                                    <td>{{ book.image }}</td>
+                                    <td>{{ book.download_link }}</td>
+                                    <td v-html="book.description"></td>
                                     <td>
                                         <button
                                             class="btn btn-sm"
@@ -96,7 +82,7 @@
 
             <!-- Modal -->
             <div class="modal fade" id="updateRecordModal">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 v-if="form.id">{{ translate("Edit Book") }}</h5>
@@ -104,35 +90,95 @@
                             <button
                                 class="btn-close"
                                 data-bs-dismiss="modal"
+                                ref="closeModal"
                             ></button>
                         </div>
                         <div class="modal-body">
-                            <input
-                                v-model="form.title"
-                                placeholder="Title"
-                                class="form-control mb-2"
-                            />
-                            <textarea
-                                v-model="form.description"
-                                placeholder="Description"
-                                class="form-control mb-2"
-                            ></textarea>
-                            <input
-                                v-model="form.image"
-                                placeholder="Image URL"
-                                class="form-control mb-2"
-                            />
-                            <input
-                                v-model="form.download_link"
-                                placeholder="Download Link"
-                                class="form-control mb-2"
-                            />
-                            <button
-                                class="btn btn-success mt-2"
-                                @click="submit"
-                            >
-                                {{ translate("Save") }}
-                            </button>
+                            <div class="card card-body p-3">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label for="title" class="form-label">{{
+                                            translate("Title")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="title"
+                                            v-model="form.title"
+                                            :class="{
+                                                'invalid-bg': formErrors.title,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.title"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.title[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label
+                                            for="download_link"
+                                            class="form-label"
+                                            >{{
+                                                translate("Download Link")
+                                            }}</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="download_link"
+                                            v-model="form.download_link"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.download_link,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.download_link"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.download_link[0] }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label for="content" class="form-label">{{
+                                        translate("Content")
+                                    }}</label>
+                                    <br />
+                                    <QuillEditor
+                                        v-model:content="form.description"
+                                        contentType="html"
+                                        toolbar="full"
+                                        theme="snow"
+                                    />
+                                </div>
+
+                                <div class="mt-3">
+                                    <button
+                                        type="submit"
+                                        class="btn btn-success"
+                                        v-if="formStatus === 1"
+                                        @click="submit"
+                                    >
+                                        {{ translate("Save") }}
+                                    </button>
+                                    <button
+                                        class="btn btn-success"
+                                        type="button"
+                                        disabled
+                                        v-else
+                                    >
+                                        {{ translate("Saving")
+                                        }}<span
+                                            class="spinner-border spinner-border-sm"
+                                        ></span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -144,19 +190,25 @@
 <script>
 import axios from "axios";
 import Master from "../Layout/Master.vue";
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 export default {
     layout: Master,
+    components: { QuillEditor },
     data() {
         return {
             books: [],
             form: {
                 id: "",
                 title: "",
-                description: "",
-                image: "",
                 download_link: "",
+
+                image: "",
+                description: "",
             },
+            formErrors: {},
+            formStatus: 1,
         };
     },
     created() {
@@ -182,7 +234,6 @@ export default {
         },
         submit() {
             this.formStatus = 0;
-
             axios
                 .post(route("api.books.store"), this.form)
                 .then(() => {
@@ -205,30 +256,19 @@ export default {
             if (confirm("Are you sure you want to delete this book?")) {
                 axios
                     .delete(route("api.books.delete", id))
-                    .then(() => this.fetchBooks())
-                    .catch((err) => {
-                        console.error("Error deleting book:", err);
-                    });
+                    .then(() => this.fetchBooks());
             }
         },
         clearFields() {
             this.form = {
                 id: "",
                 title: "",
-                description: "",
-                image: "",
-                download_link: "",
+                author: "",
+                islamic_date: "",
+                english_date: "",
+                content: "",
             };
         },
     },
 };
 </script>
-
-<style scoped>
-.table-responsive {
-    margin-top: 1rem;
-}
-.btn-sm {
-    margin-right: 0.25rem;
-}
-</style>
