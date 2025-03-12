@@ -499,7 +499,18 @@
                 <!-- Accounts (Parent Menu with Transactions and Other Sub-Menus) -->
                 <li class="nav-item">
                     <a
-                        class="nav-link collapsed"
+                        class="nav-link"
+                        :class="{
+                            collapsed: !isParentActive([
+                                '/transactions',
+                                '/business/types',
+                                '/expense/types',
+                                '/income/types',
+                                '/income-statements',
+                                '/reports',
+                                '/loan-management',
+                            ]),
+                        }"
                         data-bs-target="#accounts-nav"
                         data-bs-toggle="collapse"
                         href="#"
@@ -511,6 +522,17 @@
                     <ul
                         id="accounts-nav"
                         class="nav-content collapse"
+                        :class="{
+                            show: isParentActive([
+                                '/transactions',
+                                '/business/types',
+                                '/expense/types',
+                                '/income/types',
+                                '/income-statements',
+                                '/reports',
+                                '/loan-management',
+                            ]),
+                        }"
                         data-bs-parent="#sidebar-nav"
                     >
                         <li>
@@ -582,6 +604,7 @@
                         </li>
                     </ul>
                 </li>
+
                 <!-- End Accounts Section -->
 
                 <!-- Software Users (Separate from Accounts) -->
@@ -595,11 +618,10 @@
                         <span>Software Users</span>
                     </a>
                 </li>
-
-                <!-- Settings Menu -->
                 <li class="nav-item">
                     <a
-                        class="nav-link collapsed"
+                        class="nav-link"
+                        :class="{ collapsed: !isParentActive(['/languages']) }"
                         data-bs-target="#settings-nav"
                         data-bs-toggle="collapse"
                         href="#"
@@ -611,6 +633,7 @@
                     <ul
                         id="settings-nav"
                         class="nav-content collapse"
+                        :class="{ show: isParentActive(['/languages']) }"
                         data-bs-parent="#sidebar-nav"
                     >
                         <!-- Languages (Only for Super Admin) -->
@@ -625,7 +648,7 @@
                         </li>
                     </ul>
                 </li>
-                <!-- End Settings -->
+
                 <li class="nav-item">
                     <a
                         class="nav-link collapsed"
@@ -638,7 +661,16 @@
                 </li>
                 <li class="nav-item">
                     <a
-                        class="nav-link collapsed"
+                        class="nav-link"
+                        :class="{
+                            collapsed: !isParentActive([
+                                '/introduction',
+                                '/books',
+                                '/bayanaat',
+                                '/islamic-names',
+                                '/questions-answers',
+                            ]),
+                        }"
                         data-bs-target="#darul-iftah-nav"
                         data-bs-toggle="collapse"
                         href="#"
@@ -650,6 +682,15 @@
                     <ul
                         id="darul-iftah-nav"
                         class="nav-content collapse"
+                        :class="{
+                            show: isParentActive([
+                                '/introduction',
+                                '/books',
+                                '/bayanaat',
+                                '/islamic-names',
+                                '/questions-answers',
+                            ]),
+                        }"
                         data-bs-parent="#sidebar-nav"
                     >
                         <li>
@@ -784,6 +825,15 @@ export default {
     },
 
     methods: {
+        // Checks if the current route starts with the given path
+        isActive(route) {
+            return window.location.pathname.startsWith(route);
+        },
+        isParentActive(routes) {
+            return routes.some((route) =>
+                window.location.pathname.startsWith(route)
+            );
+        },
         submit() {
             let formData = new FormData();
             // Helper function to handle null, undefined, or empty values
@@ -966,10 +1016,6 @@ export default {
                 .catch((error) => {
                     console.error(error);
                 });
-        },
-        // Checks if the current route starts with the given path
-        isActive(route) {
-            return window.location.pathname.startsWith(route);
         },
 
         logout() {
