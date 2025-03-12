@@ -151,18 +151,23 @@
                                                 translate("Islamic Date")
                                             }}</label
                                         >
-                                        
+
+                                        <!-- <Datepicker v-model="hijriDate" calendar="islamic" /> -->
+
                                         <Datepicker
-                                        month-picker
-                                            autoApply
-                                            :enable-time-picker="false"
-                                            :class="{
-                                                'invalid-bg': formErrors.islamic_date,
-                                            }"
                                             v-model="form.islamic_date"
-                                        >
-                                        </Datepicker>
-                                         
+                                            :enable-time-picker="false"
+                                            @update:modelValue="convertToHijri"
+                                            autoApply
+                                        />
+                                        <!-- Display the Converted Hijri Date -->
+                                        <!-- <input 
+      type="text" 
+      v-model="hijriDate" 
+      readonly 
+      placeholder="Hijri Date" 
+    /> -->
+
                                         <div
                                             v-if="formErrors.islamic_date"
                                             class="invalid-feedback"
@@ -182,7 +187,8 @@
                                             autoApply
                                             :enable-time-picker="false"
                                             :class="{
-                                                'invalid-bg': formErrors.english_date,
+                                                'invalid-bg':
+                                                    formErrors.english_date,
                                             }"
                                             v-model="form.english_date"
                                         >
@@ -241,6 +247,7 @@
 
 <script>
 import Master from "../Layout/Master.vue";
+
 import axios from "axios";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
@@ -248,15 +255,18 @@ import "@vuepic/vue-datepicker/dist/main.css";
 import { QuillEditor } from "@vueup/vue-quill";
 
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import moment from "moment-hijri"; // Import Hijri conversion library
 
 export default {
     layout: Master,
     components: {
         QuillEditor,
-        Datepicker
+        Datepicker,
     },
     data() {
         return {
+            gregorianDate: null, // Selected Gregorian date
+            hijriDate: "", // Converted Hijri date
             bayanaat: [],
             form: {
                 id: "",
@@ -274,6 +284,11 @@ export default {
         this.fetchBayanaat();
     },
     methods: {
+        convertToHijri(date) {
+            this.form.islamic_date = date
+                ? moment(date).format("iYYYY/iM/iD")
+                : "";
+        },
         fetchBayanaat() {
             axios
                 .get(route("api.bayanaat.fetch"))
@@ -291,6 +306,12 @@ export default {
         submit() {
             this.formStatus = 0;
 
+            // Convert the English date to MySQL format before submitting
+    if (this.form.english_date) {
+        this.form.english_date = moment(this.form.english_date).format("YYYY-MM-DD");
+    }
+
+    
             axios
                 .post(route("api.bayanaat.store"), this.form)
                 .then(() => {

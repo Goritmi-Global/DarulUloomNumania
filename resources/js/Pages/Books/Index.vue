@@ -55,13 +55,23 @@
                                 >
                                     <td>{{ index + 1 }}</td>
                                     <td>{{ book.title }}</td>
-
-                                    <td>{{ book.image }}</td>
+                                    <td>
+                                        <ImageZooming
+                                            :file="
+                                                book.image ??
+                                                '/images/default.jpg'
+                                            "
+                                            :width="100"
+                                        />
+                                    </td>
+                                   
                                     <td>{{ book.download_link }}</td>
                                     <td v-html="book.description"></td>
                                     <td>
                                         <button
                                             class="btn btn-sm"
+                                            data-bs-toggle="modal"
+                    data-bs-target="#updateRecordModal"
                                             @click="showEntry(book)"
                                         >
                                             <i class="bi bi-pencil"></i>
@@ -142,6 +152,51 @@
                                             {{ formErrors.download_link[0] }}
                                         </div>
                                     </div>
+                                    <div class="col-12">
+                                        <label
+                                            for="download_link"
+                                            class="form-label"
+                                            >{{
+                                                translate("Image")
+                                            }}</label
+                                        >
+                                        <br>
+                                        <CropperOffCanvas
+                                            @croppedImg="croppedImgPassToForm"
+                                            accept=".jpg,.jpeg,.png"
+                                        />
+                                        <br />
+                               
+                                        <img
+                                            v-if="form.image"
+                                            :src="
+                                                form.image ??
+                                                '/images/default.jpg'
+                                            "
+                                            :width="100"
+                                        />
+                                        
+                                        <img
+                                            v-else-if="existing_image"
+                                            :src="
+                                                existing_image ??
+                                                '/images/default.jpg'
+                                            "
+                                            :width="100"
+                                        />
+                                        <img
+                                            v-else
+                                            :src="'/images/default.jpg'"
+                                            :width="100"
+                                        />
+
+                                        <div
+                                            v-if="formErrors.image"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.image[0] }}
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="col-md-12">
@@ -209,6 +264,7 @@ export default {
             },
             formErrors: {},
             formStatus: 1,
+            existing_image: '',
         };
     },
     created() {
@@ -226,12 +282,11 @@ export default {
                 });
         },
         showEntry(book) {
-            this.form = { ...book };
-            const modal = new bootstrap.Modal(
-                document.getElementById("updateRecordModal")
-            );
-            modal.show();
-        },
+    this.form = { ...book };
+
+    // If the book has an image, store it in existing_image
+    this.existing_image = book.image || null;
+},
         submit() {
             this.formStatus = 0;
             axios
@@ -268,6 +323,9 @@ export default {
                 english_date: "",
                 content: "",
             };
+        },
+        croppedImgPassToForm(img) {
+            this.form.image = img;
         },
     },
 };
