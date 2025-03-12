@@ -1,0 +1,239 @@
+<template>
+    <main id="main" class="main">
+        <div class="pagetitle d-flex justify-content-between">
+            <div>
+                <h1 class="theme-text-color">{{ translate("Introduction") }}</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/dashboard">{{ translate("Darul Oloom") }}</a>
+                        </li>
+                        <li class="breadcrumb-item">{{ translate("Introduction") }}</li>
+                        <li class="breadcrumb-item active">{{ translate("Index") }}</li>
+                    </ol>
+                </nav>
+            </div>
+            <div>
+                <button
+                    class="btn btn-success mt-3"
+                    data-bs-toggle="modal"
+                    data-bs-target="#updateRecordModal"
+                    @click="clearFields"
+                >
+                    <i class="bi bi-plus-lg"></i> {{ translate("New Introduction") }}
+                </button>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title theme-text-color">{{ translate("All Introductions") }}</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">{{ translate("Title") }}</th>
+                                    <th scope="col">{{ translate("Description") }}</th>
+                                    <th scope="col">{{ translate("Action") }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(intro, index) in introductions" :key="intro.id">
+                                    <th scope="row">{{ index + 1 }}</th>
+                                    <td>{{ intro.title }}</td>
+                                    <td>{{ intro.description }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button
+                                                class="btn btn-sm fs-6"
+                                                title="Edit"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#updateRecordModal"
+                                                @click="showEntry(intro.id)"
+                                            >
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button
+                                                class="btn btn-sm text-danger"
+                                                title="Delete"
+                                                @click="deleteThis(intro.id)"
+                                            >
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal for Creating/Updating Introduction -->
+            <div
+                class="modal fade"
+                id="updateRecordModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-primary" v-if="form.id">
+                                {{ translate("Edit Introduction") }}
+                            </h5>
+                            <h5 class="modal-title text-primary" v-else>
+                                {{ translate("New Introduction Entry") }}
+                            </h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card card-body p-3">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label for="title" class="form-label">{{ translate("Title") }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="title"
+                                            v-model="form.title"
+                                            :class="{ 'invalid-bg': formErrors.title }"
+                                        />
+                                        <div v-if="formErrors.title" class="invalid-feedback">
+                                            {{ formErrors.title[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="description" class="form-label">{{ translate("Description") }}</label>
+                                        <textarea
+                                            class="form-control"
+                                            id="description"
+                                            v-model="form.description"
+                                            rows="4"
+                                            :class="{ 'invalid-bg': formErrors.description }"
+                                        ></textarea>
+                                        <div v-if="formErrors.description" class="invalid-feedback">
+                                            {{ formErrors.description[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <button
+                                            type="submit"
+                                            class="btn btn-success"
+                                            v-if="formStatus === 1"
+                                            @click="submit"
+                                        >
+                                            {{ translate("Save") }}
+                                        </button>
+                                        <button class="btn btn-success" type="button" disabled v-else>
+                                            {{ translate("Saving") }}
+                                            <span class="spinner-border spinner-border-sm"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button
+                    hidden
+                    data-bs-toggle="modal"
+                    data-bs-target="#customermodal"
+                    ref="closeModal"
+                ></button>
+            </div>
+        </section>
+    </main>
+</template>
+
+<script>
+import axios from "axios";
+import Master from "../Layout/Master.vue";
+
+export default {
+    layout: Master,
+    data() {
+        return {
+            introductions: [],
+            form: {
+                id: "",
+                title: "",
+                description: "",
+            },
+            formErrors: [],
+            formStatus: 1, // 1 = ready, 0 = saving
+        };
+    },
+    created() {
+        this.fetchIntroductions();
+    },
+    methods: {
+        fetchIntroductions() {
+            axios
+                .get(route("api.introduction.fetch"))
+                .then((response) => {
+                    this.introductions = response.data;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+        showEntry(entry_id) {
+            axios
+                .get(route("api.introduction.show", entry_id))
+                .then((response) => {
+                    this.form.id = response.data.id;
+                    this.form.title = response.data.title;
+                    this.form.description = response.data.description;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+        submit() {
+            this.formStatus = 0;
+
+            axios
+                .post(route("api.introduction.store"), this.form)
+                .then(() => {
+                    this.formStatus = 1;
+                    toastr.success(translate("Introduction saved successfully."));
+                    this.fetchIntroductions();
+                    this.$refs.closeModal.click();
+                })
+                .catch((error) => {
+                    this.formStatus = 1;
+                    this.formErrors = error.response.data.errors || {};
+                    toastr.error(error.response.data.message);
+                });
+        },
+        deleteThis(id) {
+            axios
+                .delete(route("api.introduction.delete", id))
+                .then(() => {
+                    this.fetchIntroductions();
+                    toastr.success(translate("Introduction deleted successfully."));
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+        clearFields() {
+            this.form.id = "";
+            this.form.title = "";
+            this.form.description = "";
+            this.formErrors = [];
+        },
+    },
+};
+</script>

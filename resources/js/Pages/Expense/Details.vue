@@ -6,7 +6,7 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/">Alsmi</a>
+                            <a href="/">Darul Oloom</a>
                         </li>
                         <li class="breadcrumb-item">Expense</li>
                         <li class="breadcrumb-item active">Details</li>

@@ -77,6 +77,7 @@
                         </ul>
                         <!-- End Profile Dropdown Items -->
                     </li>
+
                     <!-- End Search Icon-->
 
                     <li class="nav-item dropdown pe-3">
@@ -482,100 +483,191 @@
 
         <!-- ======= Sidebar ======= -->
         <aside id="sidebar" class="sidebar">
-    <ul class="sidebar-nav" id="sidebar-nav">
-        <!-- Dashboard -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" :class="{ active: isActive('/dashboard') }" href="/dashboard">
-                <i class="bi bi-house-door"></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
+            <ul class="sidebar-nav" id="sidebar-nav">
+                <!-- Dashboard -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/dashboard') }"
+                        href="/dashboard"
+                    >
+                        <i class="bi bi-house-door"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
 
-        <!-- Accounts (Parent Menu with Transactions and Other Sub-Menus) -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#accounts-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-person-circle"></i>
-                <span>Accounts</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="accounts-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                    <a :class="{ active: isActive('/transactions') }" href="/transactions">
-                        <i class="bi bi-cash"></i>
-                        <span>Transactions</span>
+                <!-- Accounts (Parent Menu with Transactions and Other Sub-Menus) -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link collapsed"
+                        data-bs-target="#accounts-nav"
+                        data-bs-toggle="collapse"
+                        href="#"
+                    >
+                        <i class="bi bi-person-circle"></i>
+                        <span>Accounts</span>
+                        <i class="bi bi-chevron-down ms-auto"></i>
                     </a>
+                    <ul
+                        id="accounts-nav"
+                        class="nav-content collapse"
+                        data-bs-parent="#sidebar-nav"
+                    >
+                        <li>
+                            <a
+                                :class="{ active: isActive('/transactions') }"
+                                href="/transactions"
+                            >
+                                <i class="bi bi-cash"></i>
+                                <span>Transactions</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                :class="{ active: isActive('/business/types') }"
+                                href="/business/types"
+                            >
+                                <i class="bi bi-briefcase"></i>
+                                <span>Business Types</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                :class="{ active: isActive('/expense/types') }"
+                                href="/expense/types"
+                            >
+                                <i class="bi bi-dash-circle"></i>
+                                <span>Expense Types</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                :class="{ active: isActive('/income/types') }"
+                                href="/income/types"
+                            >
+                                <i class="bi bi-plus-circle"></i>
+                                <span>Income Types</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                :class="{
+                                    active: isActive('/income-statements'),
+                                }"
+                                href="/income-statements"
+                            >
+                                <i class="bi bi-file-earmark-text"></i>
+                                <span>Income Statements</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                :class="{ active: isActive('/reports') }"
+                                href="/reports"
+                            >
+                                <i class="bi bi-bar-chart-line"></i>
+                                <span>Reports</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                :class="{
+                                    active: isActive('/loan-management'),
+                                }"
+                                href="/loan-management"
+                            >
+                                <i class="bi bi-cash-coin"></i>
+                                <span>Loan Management</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <a :class="{ active: isActive('/business/types') }" href="/business/types">
-                        <i class="bi bi-briefcase"></i>
-                        <span>Business Types</span>
-                    </a>
-                </li>
-                <li>
-                    <a :class="{ active: isActive('/expense/types') }" href="/expense/types">
-                        <i class="bi bi-dash-circle"></i>
-                        <span>Expense Types</span>
-                    </a>
-                </li>
-                <li>
-                    <a :class="{ active: isActive('/income/types') }" href="/income/types">
-                        <i class="bi bi-plus-circle"></i>
-                        <span>Income Types</span>
-                    </a>
-                </li>
-                <li>
-                    <a :class="{ active: isActive('/income-statements') }" href="/income-statements">
-                        <i class="bi bi-file-earmark-text"></i>
-                        <span>Income Statements</span>
-                    </a>
-                </li>
-                <li>
-                    <a :class="{ active: isActive('/reports') }" href="/reports">
-                        <i class="bi bi-bar-chart-line"></i>
-                        <span>Reports</span>
-                    </a>
-                </li>
-                <li>
-                    <a :class="{ active: isActive('/loan-management') }" href="/loan-management">
-                        <i class="bi bi-cash-coin"></i>
-                        <span>Loan Management</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <!-- End Accounts Section -->
+                <!-- End Accounts Section -->
 
-        <!-- Software Users (Separate from Accounts) -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" :class="{ active: isActive('/users') }" href="/users">
-                <i class="bi bi-people"></i>
-                <span>Software Users</span>
-            </a>
-        </li>
-
-        <!-- Settings Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#settings-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-gear"></i>
-                <span>Settings</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="settings-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <!-- Languages (Only for Super Admin) -->
-                <li>
-                    <a :class="{ active: isActive('/languages') }" href="/languages">
-                        <i class="bi bi-translate"></i>
-                        <span>{{ translate("Languages") }}</span>
+                <!-- Software Users (Separate from Accounts) -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/users') }"
+                        href="/users"
+                    >
+                        <i class="bi bi-people"></i>
+                        <span>Software Users</span>
                     </a>
                 </li>
+
+                <!-- Settings Menu -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link collapsed"
+                        data-bs-target="#settings-nav"
+                        data-bs-toggle="collapse"
+                        href="#"
+                    >
+                        <i class="bi bi-gear"></i>
+                        <span>Settings</span>
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul
+                        id="settings-nav"
+                        class="nav-content collapse"
+                        data-bs-parent="#sidebar-nav"
+                    >
+                        <!-- Languages (Only for Super Admin) -->
+                        <li>
+                            <a
+                                :class="{ active: isActive('/languages') }"
+                                href="/languages"
+                            >
+                                <i class="bi bi-translate"></i>
+                                <span>{{ translate("Languages") }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End Settings -->
+                <li class="nav-item">
+    <a class="nav-link collapsed" :class="{ active: isActive('/students') }" href="/students">
+        <i class="bi bi-people-fill"></i>
+        <span>Enrolled Student</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link collapsed" :class="{ active: isActive('/introduction') }" href="/introduction">
+        <i class="bi bi-info-circle"></i>
+        <span>Introduction</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link collapsed" :class="{ active: isActive('/books') }" href="/books">
+        <i class="bi bi-book"></i>
+        <span>Books</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link collapsed" :class="{ active: isActive('/bayanaat') }" href="/bayanaat">
+        <i class="bi bi-mic"></i>
+        <span>Bayanaat</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link collapsed" :class="{ active: isActive('/islamic-names') }" href="/islamic-names">
+        <i class="bi bi-person-badge"></i>
+        <span>Islamic Names</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link collapsed" :class="{ active: isActive('/questions-answers') }" href="/questions-answers">
+        <i class="bi bi-question-circle"></i>
+        <span>Questions & Answers</span>
+    </a>
+</li>
+
                  
+                 
+                
             </ul>
-        </li>
-        <!-- End Settings -->
-    </ul>
-</aside>
-
-
+        </aside>
 
         <!-- End Sidebar-->
 
@@ -584,7 +676,7 @@
         <!-- ======= Footer ======= -->
         <footer id="footer" class="footer">
             <div class="copyright">
-                &copy; Copyright <strong><span>Alsmi</span></strong
+                &copy; Copyright <strong><span>Darul Oloom</span></strong
                 >. All Rights Reserved
             </div>
             <div class="credits">

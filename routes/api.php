@@ -10,7 +10,12 @@ use App\Http\Controllers\IncomeStatementController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CommonDataController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\IntroductionController;
+use App\Http\Controllers\BayanaatController;    
+use App\Http\Controllers\IslamicNameController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -113,6 +118,38 @@ Route::middleware(['web'])->group(function () {
      Route::post('/make/default/language', [LanguageController::class, 'make_default_language'])->name('api.make.default.language');
      Route::get('/fetch/default/language', [LanguageController::class, 'fetch_default_language'])->name('api.fetch.default.language');
      Route::get('/languages/data', [LanguageController::class, 'languages_data'])->name('api.languages.data');
+
+
+
+// introduction controller
+Route::get('/introduction/fetch', [IntroductionController::class, 'fetch'])->name('api.introduction.fetch');
+Route::get('/introduction/show/{id}', [IntroductionController::class, 'show'])->name('api.introduction.show');
+Route::post('/introduction/store', [IntroductionController::class, 'store'])->name('api.introduction.store');
+Route::delete('/introduction/delete/{id}', [IntroductionController::class, 'destroy'])->name('api.introduction.delete');
+
+// Books controller
+Route::get('/books', [BookController::class, 'fetch'])->name('api.books.fetch');
+Route::post('/books', [BookController::class, 'store'])->name('api.books.store');
+Route::get('/books/{id}', [BookController::class, 'show'])->name('api.books.show');
+Route::put('/books/{id}', [BookController::class, 'update'])->name('api.books.update');
+Route::delete('/books/{id}', [BookController::class, 'destroy'])->name('api.books.delete');
+
+
+// Bayanat
+Route::get('/bayanaat', [BayanaatController::class, 'fetch'])->name('api.bayanaat.fetch');
+Route::post('/bayanaat', [BayanaatController::class, 'store'])->name('api.bayanaat.store');
+Route::get('/bayanaat/{id}', [BayanaatController::class, 'show'])->name('api.bayanaat.show');
+Route::put('/bayanaat/{id}', [BayanaatController::class, 'update'])->name('api.bayanaat.update');
+Route::delete('/bayanaat/{id}', [BayanaatController::class, 'destroy'])->name('api.bayanaat.delete');
+
+
+// Islamic names 
+Route::get('/islamic-names', [IslamicNameController::class, 'fetch'])->name('api.islamic-names.fetch');
+Route::post('/islamic-names', [IslamicNameController::class, 'store'])->name('api.islamic-names.store');
+Route::get('/islamic-names/{id}', [IslamicNameController::class, 'show'])->name('api.islamic-names.show');
+Route::put('/islamic-names/{id}', [IslamicNameController::class, 'update'])->name('api.islamic-names.update');
+Route::delete('/islamic-names/{id}', [IslamicNameController::class, 'destroy'])->name('api.islamic-names.delete');
+
 
  });
 

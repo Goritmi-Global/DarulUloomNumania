@@ -5,7 +5,7 @@
                 <h1 class="theme-text-color">{{ person_name }}</h1>
                 <nav>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Alsmi</a></li>
+                        <li class="breadcrumb-item"><a href="/">Darul Oloom</a></li>
                         <li class="breadcrumb-item">Accounts</li>
                         <li class="breadcrumb-item active">Details</li>
                     </ol>
