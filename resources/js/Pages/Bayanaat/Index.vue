@@ -151,16 +151,18 @@
                                                 translate("Islamic Date")
                                             }}</label
                                         >
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="islamic_date"
-                                            v-model="form.islamic_date"
+                                        
+                                        <Datepicker
+                                        month-picker
+                                            autoApply
+                                            :enable-time-picker="false"
                                             :class="{
-                                                'invalid-bg':
-                                                    formErrors.islamic_date,
+                                                'invalid-bg': formErrors.islamic_date,
                                             }"
-                                        />
+                                            v-model="form.islamic_date"
+                                        >
+                                        </Datepicker>
+                                         
                                         <div
                                             v-if="formErrors.islamic_date"
                                             class="invalid-feedback"
@@ -176,16 +178,15 @@
                                                 translate("English Date")
                                             }}</label
                                         >
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            id="english_date"
-                                            v-model="form.english_date"
+                                        <Datepicker
+                                            autoApply
+                                            :enable-time-picker="false"
                                             :class="{
-                                                'invalid-bg':
-                                                    formErrors.english_date,
+                                                'invalid-bg': formErrors.english_date,
                                             }"
-                                        />
+                                            v-model="form.english_date"
+                                        >
+                                        </Datepicker>
                                         <div
                                             v-if="formErrors.english_date"
                                             class="invalid-feedback"
@@ -241,6 +242,8 @@
 <script>
 import Master from "../Layout/Master.vue";
 import axios from "axios";
+import Datepicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 
 import { QuillEditor } from "@vueup/vue-quill";
 
@@ -250,6 +253,7 @@ export default {
     layout: Master,
     components: {
         QuillEditor,
+        Datepicker
     },
     data() {
         return {
