@@ -48,7 +48,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(book, index) in books" :key="book.id">
+                                <tr
+                                    v-for="(book, index) in books"
+                                    :key="book.id"
+                                >
                                     <td>{{ index + 1 }}</td>
                                     <td>{{ book.title }}</td>
                                     <td>{{ book.description }}</td>
@@ -185,21 +188,19 @@ export default {
                 .then(() => {
                     this.$refs.closeModal.click();
                     this.formStatus = 1;
-                    toastr.success(
-                        translate("Book saved successfully.")
-                    );
+                    toastr.success(this.translate("Book saved successfully."));
                     this.fetchBooks();
                 })
                 .catch((error) => {
-    this.formStatus = 1;
-    if (error.response && error.response.data) {
-        this.formErrors = error.response.data.errors || {};
-        toastr.error(error.response.data.message);
-    } else {
-        toastr.error("An unexpected error occurred.");
-    }
-});
-},
+                    this.formStatus = 1;
+                    if (error.response && error.response.data) {
+                        this.formErrors = error.response.data.errors || {};
+                        toastr.error(error.response.data.message);
+                    } else {
+                        toastr.error("An unexpected error occurred.");
+                    }
+                });
+        },
         deleteBook(id) {
             if (confirm("Are you sure you want to delete this book?")) {
                 axios

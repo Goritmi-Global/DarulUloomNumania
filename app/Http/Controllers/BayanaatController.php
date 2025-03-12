@@ -1,11 +1,11 @@
 <?php
- 
 namespace App\Http\Controllers;
 
 use App\Models\Bayanaat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+
 class BayanaatController extends Controller
 {
     public function index()
@@ -20,51 +20,28 @@ class BayanaatController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
+            'title'        => 'required|string|max:255',
+            'author'       => 'required|string|max:255',
             'islamic_date' => 'required|string|max:255',
             'english_date' => 'required|date',
             // 'content' => 'required|string'
         ]);
 
-        if($request->id)
-        {
+        if ($request->id) {
             $bayanaat = Bayanaat::findOrFail($request->id);
-        }else
-        {
+        } else {
 
-            $bayanaat = new Bayanaat();
+            $bayanaat     = new Bayanaat();
             $bayanaat->id = Str::orderedUuid();
         }
-        $bayanaat->title = $request->title;
-        $bayanaat->author = $request->author;
+        $bayanaat->title        = $request->title;
+        $bayanaat->author       = $request->author;
         $bayanaat->islamic_date = $request->islamic_date;
         $bayanaat->english_date = $request->english_date;
-        $bayanaat->content = $request->content;
+        $bayanaat->content      = $request->content;
         $bayanaat->save();
 
         return response()->json(['message' => 'Bayanaat saved successfully.'], 200);
-    }
-
-    public function show($id)
-    {
-        return response()->json(Bayanaat::findOrFail($id));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'islamic_date' => 'required|string|max:255',
-            'english_date' => 'required|date',
-            'content' => 'required|string'
-        ]);
-
-        $bayanaat = Bayanaat::findOrFail($id);
-        $bayanaat->update($request->all());
-
-        return response()->json(['message' => 'Bayanaat updated successfully.'], 200);
     }
 
     public function destroy($id)
