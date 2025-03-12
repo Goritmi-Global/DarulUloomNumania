@@ -5,7 +5,8 @@ namespace App\Http\Middleware;
 use Auth;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-
+use App\Models\Translation;
+use Carbon\Carbon;
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -46,17 +47,21 @@ class HandleInertiaRequests extends Middleware
 
         if (auth()->check()) {
             $User = auth()->user();
-            // if ($User->image) {
-            //     $upload = Upload::where('id', $User->image)->first();
-            //     if ($upload) {
-            //         $User->image = $upload->file_name ? get_storage_url($upload->file_name) : '';
-            //     }
-            // }
+        } else {
+            $User = (object) [
+                'first_name' => 'Admin',
+                'last_name'  => '',
+            ];
         }
+
+        
+        $default_language = getDefaultLanguage();
+        $lang_data = Translation::where('lang', $default_language)->pluck('lang_value', 'lang_key');
 
         return array_merge(parent::share($request), [
             'auth_token' => $auth_token,
-            'user'             => $User ?? auth()->user(),
+            'user'             => $User,
+            'lang_data' => $lang_data,
         ]);
 
         

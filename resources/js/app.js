@@ -3,6 +3,9 @@ import { InertiaProgress } from "@inertiajs/progress";
 import { createInertiaApp, Link } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 
+import axios from "axios";
+window.axios = axios; 
+
 import toastr from "toastr";
 window.toastr = toastr;
 toastr.options = {
@@ -38,6 +41,30 @@ createInertiaApp({
                 "IncomeExpenseCreateComponent",
                 IncomeExpenseCreateComponent
             )
+            .mixin({
+                methods: {
+                    route,
+                    translate(value) {
+                        let tras = this.$page.props.lang_data[value];
+
+                        if (typeof tras !== "undefined") {
+                            // checking if the translation found than use it.
+                            return tras;
+                            // return 'Translated';
+                        } else {
+                            if (value) {
+                                // console.log(value);
+                                axios.post(
+                                    route("api.missing-translations.store"),
+                                    { value }
+                                );
+                            }
+                        }
+
+                        return value;
+                    },
+                },
+            })
             .mount(el);
     },
 });

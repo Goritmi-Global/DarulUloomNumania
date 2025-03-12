@@ -11,6 +11,7 @@ use App\Http\Controllers\IncomeExpenseController;
 use App\Http\Controllers\IncomeStatementController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CommonDataController;
+use App\Http\Controllers\LanguageController;
  
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -36,7 +37,7 @@ Route::get('/', [HomeController::class, 'index'])->name('/');
 
 Route::get('/login', [HomeController::class, 'index'])->name('login');
 
-Route::middleware(['auth:sanctum'])->group(function () {
+// Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::get('/profile/show/{id}', [UserController::class, 'profile_show'])->name('api.profile.show');
@@ -80,7 +81,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/download-report-excel',[ReportController::class,'report_exportTo_excel'])->name('download-report-excel');
     Route::post('/download-income-statement-pdf', [IncomeStatementController::class, 'downloadIncomeStatementPDF'])->name('download-income-statement-pdf');
 
-});
+    // languages Routes
+    Route::get('/languages', [LanguageController::class, 'index'])->name('languages');
+    Route::get('/languages/add', [LanguageController::class, 'languages_add'])->name('languages.add');
+    Route::get('/languages/edit/{id}', [LanguageController::class, 'languages_edit'])->name('languages.edit');
+    Route::get('/translations/show/{id}', [LanguageController::class, 'translations_show'])->name('translations.show');
+
+
+// });
 
 
 

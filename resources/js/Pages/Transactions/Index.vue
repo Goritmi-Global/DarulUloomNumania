@@ -13,7 +13,7 @@
                     </ol>
                 </nav>
             </div>
-            <!-- <div>
+            <div>
                 <button
                     class="btn btn-success mt-3"
                     data-bs-toggle="modal"
@@ -23,7 +23,7 @@
                 >
                     <i class="bi bi-plus-lg"></i> New Transaction
                 </button>
-            </div> -->
+            </div>
         </div>
 
         <section class="section">

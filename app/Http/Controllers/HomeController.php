@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Country;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -259,5 +260,28 @@ class HomeController extends Controller
         $User->save();
         return 'success';
     }
+
+    public function countries_pluck()
+    {
+        $country = Country::pluck('name', 'id');
+        return $country;
+    }
+
+    
+    public function countriesWithCodePluck()
+    {
+        return Country::pluck('name', 'iso2');
+    }
+
+    // public function states_pluck($country_of_birth_id)
+    // {
+    //     $country = State::where('country_id', $country_of_birth_id)->pluck('name', 'id');
+    //     return $country;
+    // }
+    // public function cities_pluck($state_id)
+    // {
+    //     $cities = City::where('state_id', $state_id)->pluck('name', 'id');
+    //     return $cities;
+    // }
 
 }

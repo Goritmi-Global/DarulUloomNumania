@@ -10,6 +10,7 @@ use App\Http\Controllers\IncomeStatementController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CommonDataController;
+use App\Http\Controllers\LanguageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,6 +25,15 @@ use App\Http\Controllers\CommonDataController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+Route::get('/countries/pluck', [HomeController::class, 'countries_pluck'])->name('api.countries.pluck');
+Route::get('/countries/code/pluck', [HomeController::class, 'countriesWithCodePluck'])->name('api.countries.code.pluck');
+Route::get('/states/pluck/{country_of_birth_id}', [HomeController::class, 'states_pluck'])->name('api.states.pluck');
+Route::get('/cities/pluck/{state_id}', [HomeController::class, 'cities_pluck'])->name('api.cities.pluck');
+
+Route::get('/translate', [LanguageController::class, 'translate'])->name('api.translate');
+Route::post('/missing/translations/store', [LanguageController::class, 'missing_translations_store'])->name('api.missing-translations.store');
+
 Route::post('login', [HomeController::class, 'login'])->name('api.login');
 Route::middleware(['web'])->group(function () {
     Route::post('/logout', [HomeController::class, 'logout_user'])->name('api.logout');
@@ -85,4 +95,27 @@ Route::middleware(['web'])->group(function () {
     // income statements reports 
     Route::post('/transaction/income/statements/fetch', [IncomeStatementController::class, 'transactions_reports_fetch'])->name('api.transaction.income.statements.fetch');             // Fetch all transaction entries
 
+
+     // languages
+     Route::get('/all/languages', [LanguageController::class, 'languages_index'])->name('api.all.languages');
+     Route::get('/languages', [LanguageController::class, 'languages'])->name('languages');
+     Route::post('/languages/store', [LanguageController::class, 'languages_store'])->name('api.languages.store');
+     Route::get('/languages/show/{id}', [LanguageController::class, 'languages_show'])->name('api.languages.show');
+     Route::post('/languages/update', [LanguageController::class, 'languages_update'])->name('api.languages.update');
+     Route::delete('/languages/delete/{id}', [LanguageController::class, 'languages_delete'])->name('api.languages.delete');
+
+     Route::post('/translations/show', [LanguageController::class, 'translations'])->name('api.translations.show');
+     Route::post('/translations/store', [LanguageController::class, 'translations_store'])->name('api.translations.store');
+     Route::post('/translations/search', [LanguageController::class, 'translations_search'])->name('api.translations.search');
+     Route::delete('/translation/delete/{id}', [LanguageController::class, 'translation_delete'])->name('translation.delete');
+
+     // changing default language
+     Route::post('/make/default/language', [LanguageController::class, 'make_default_language'])->name('api.make.default.language');
+     Route::get('/fetch/default/language', [LanguageController::class, 'fetch_default_language'])->name('api.fetch.default.language');
+     Route::get('/languages/data', [LanguageController::class, 'languages_data'])->name('api.languages.data');
+
  });
+
+ // front end changing default language
+Route::post('/user/default/language', [LanguageController::class, 'make_frontend_default_language'])->name('api.user.default.language');
+Route::get('/front_end/languages/data', [LanguageController::class, 'frontend_languages_data'])->name('api.front_end.languages.data');

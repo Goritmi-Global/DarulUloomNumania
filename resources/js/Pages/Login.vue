@@ -39,6 +39,7 @@
                                             height="100"
                                             alt="logo"
                                         />
+                                        <!-- <h1 class="text-transform-capital">Darul Uloom Numania</h1>  -->
                                     </a>
                                 </div>
                                 <div class="card-body">
@@ -213,7 +214,7 @@ export default {
                 })
                 .catch((error) => {
                     this.formStatus = 1;
-                    this.form.reset("password");
+                    // this.form.reset("password");
                     toastr.error(error.response.data.message);
                     if (error.response.data.errors) {
                         this.formErrors = error.response.data.errors;
@@ -294,8 +295,9 @@ export default {
 <style scope>
 .bg-template {
     position: relative;
-    background: url('/images/alshahamahospital.jpg') no-repeat center center fixed;
+    /* background: url('/images/alshahamahospital.jpg') no-repeat center center fixed; */
     background-size: cover;
+    background: white;
 }
 
 .bg-template::before {
@@ -339,6 +341,9 @@ export default {
 }
 .text-primary {
     color: #012970 !important;
+}
+.text-transform-capital {
+    text-transform: capitalize;
 }
 
 </style>
