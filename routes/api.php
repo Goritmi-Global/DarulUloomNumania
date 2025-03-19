@@ -13,6 +13,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StudentsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,6 +53,10 @@ Route::middleware(['web'])->group(function () {
     Route::delete('/users/delete/{id}', [UserController::class, 'delete'])->name('api.users.delete');
     Route::get('/users/show/{id}', [UserController::class, 'show'])->name('api.users.show');
     Route::post('/users/update', [UserController::class, 'users_update'])->name('api.users.update');
+
+    // Students...
+    Route::get('/students/fetch', [StudentsController::class, 'students'])->name('api.students.fetch');
+   
 
                                                                                                     // Bank routes
     Route::get('/bank/fetch', [BankController::class, 'fetch'])->name('api.bank.fetch');            // Fetch all banks
@@ -157,3 +162,6 @@ Route::middleware(['web'])->group(function () {
 // front end changing default language
 Route::post('/user/default/language', [LanguageController::class, 'make_frontend_default_language'])->name('api.user.default.language');
 Route::get('/front_end/languages/data', [LanguageController::class, 'frontend_languages_data'])->name('api.front_end.languages.data');
+
+
+Route::post('/students/store', [StudentsController::class, 'store'])->name('api.student.store');

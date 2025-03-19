@@ -15,6 +15,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\BayanaatController;
 use App\Http\Controllers\IslamicNameController;
 use App\Http\Controllers\QuestionAnswerController;
+use App\Http\Controllers\ExternalWebstieController;
 
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
@@ -36,7 +37,7 @@ Route::get('/storage-link', function () {
     return "Storage link has been created successfully!";
 });
 
-Route::get('/', [HomeController::class, 'index'])->name('/');
+ 
 
 Route::get('/login', [HomeController::class, 'index'])->name('login');
 
@@ -113,3 +114,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
 });
+
+
+
+Route::get('/student/enroll', [StudentsController::class, 'create'])->name('student.enroll');
+Route::get('/', [ExternalWebstieController::class, 'Index'])->name('/');
+Route::get('/about', [ExternalWebstieController::class, 'about'])->name('/about');
+Route::get('/events', [ExternalWebstieController::class, 'events'])->name('/events');
+Route::get('/contact', [ExternalWebstieController::class, 'contact'])->name('/contact');

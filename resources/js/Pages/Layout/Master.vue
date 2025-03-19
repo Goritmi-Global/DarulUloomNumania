@@ -615,7 +615,7 @@
                         href="/users"
                     >
                         <i class="bi bi-people"></i>
-                        <span>Software Users</span>
+                        <span>{{ translate("Software Users")}}</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -627,7 +627,7 @@
                         href="#"
                     >
                         <i class="bi bi-gear"></i>
-                        <span>Settings</span>
+                        <span>{{ translate("Settings") }}</span>
                         <i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul
@@ -656,7 +656,7 @@
                         href="/students"
                     >
                         <i class="bi bi-people-fill"></i>
-                        <span>Enrolled Student</span>
+                        <span>{{ translate("Enrolled Student")}}</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -676,7 +676,7 @@
                         href="#"
                     >
                         <i class="bi bi-person-circle"></i>
-                        <span>Darul Iftah</span>
+                        <span>{{ translate("Darul Iftah")}}</span>
                         <i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul
@@ -698,7 +698,7 @@
                                 :class="{ active: isActive('/introduction') }"
                                 href="/introduction"
                             >
-                                <i class="bi bi-info-circle"></i> Introduction
+                                <i class="bi bi-info-circle"></i> {{ translate("Introduction")}}
                             </a>
                         </li>
                         <li>
@@ -706,7 +706,7 @@
                                 :class="{ active: isActive('/books') }"
                                 href="/books"
                             >
-                                <i class="bi bi-book"></i> Books
+                                <i class="bi bi-book"></i> {{ translate("Books")}}
                             </a>
                         </li>
                         <li>
@@ -714,7 +714,7 @@
                                 :class="{ active: isActive('/bayanaat') }"
                                 href="/bayanaat"
                             >
-                                <i class="bi bi-mic"></i> Bayanaat
+                                <i class="bi bi-mic"></i> {{ translate("Bayanaat")}}
                             </a>
                         </li>
                         <li>
@@ -722,7 +722,7 @@
                                 :class="{ active: isActive('/islamic-names') }"
                                 href="/islamic-names"
                             >
-                                <i class="bi bi-person-badge"></i> Islamic Names
+                                <i class="bi bi-person-badge"></i> {{ translate("Islamic Names")}}
                             </a>
                         </li>
                         <li>
@@ -732,8 +732,7 @@
                                 }"
                                 href="/questions-answers"
                             >
-                                <i class="bi bi-question-circle"></i> Questions
-                                & Answers
+                                <i class="bi bi-question-circle"></i> {{ translate("Questions & Answers")}}
                             </a>
                         </li>
                     </ul>
@@ -1047,6 +1046,7 @@ export default {
 </style>
 
 <style>
+
 @import "@vueform/multiselect/themes/default.css";
 /* custom style that should be moved into the custom.css file later */
 .section-title {

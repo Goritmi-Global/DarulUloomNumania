@@ -284,4 +284,11 @@ class HomeController extends Controller
     //     return $cities;
     // }
 
+
+    // Front end 
+
+    public function states_pluck($country_of_birth_id)
+    {
+        return Inertia::render('Enrollment/Enroll');
+    }
 }

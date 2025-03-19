@@ -25,7 +25,7 @@
                     @click="clearFields"
                 >
                     <i class="bi bi-plus-lg"></i>
-                    {{ translate("New Bayanaat") }}
+                    {{ translate("New Bayan") }}
                 </button>
             </div>
         </div>
@@ -89,9 +89,9 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 v-if="form.id">
-                                {{ translate("Edit Bayanaat") }}
+                                {{ translate("Edit Bayan") }}
                             </h5>
-                            <h5 v-else>{{ translate("New Bayanaat") }}</h5>
+                            <h5 v-else>{{ translate("New Bayan") }}</h5>
                             <button
                                 class="btn-close"
                                 ref="closeModal"
@@ -143,38 +143,7 @@
                                             {{ formErrors.author[0] }}
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <label
-                                            for="islamic_date"
-                                            class="form-label"
-                                            >{{
-                                                translate("Islamic Date")
-                                            }}</label
-                                        >
-
-                                        <!-- <Datepicker v-model="hijriDate" calendar="islamic" /> -->
-
-                                        <Datepicker
-                                            v-model="form.islamic_date"
-                                            :enable-time-picker="false"
-                                            @update:modelValue="convertToHijri"
-                                            autoApply
-                                        />
-                                        <!-- Display the Converted Hijri Date -->
-                                        <!-- <input 
-      type="text" 
-      v-model="hijriDate" 
-      readonly 
-      placeholder="Hijri Date" 
-    /> -->
-
-                                        <div
-                                            v-if="formErrors.islamic_date"
-                                            class="invalid-feedback"
-                                        >
-                                            {{ formErrors.islamic_date[0] }}
-                                        </div>
-                                    </div>
+                                   
                                     <div class="col-12">
                                         <label
                                             for="english_date"
@@ -191,6 +160,7 @@
                                                     formErrors.english_date,
                                             }"
                                             v-model="form.english_date"
+                                            @update:modelValue="convertToHijri"
                                         >
                                         </Datepicker>
                                         <div
@@ -200,6 +170,31 @@
                                             {{ formErrors.english_date[0] }}
                                         </div>
                                     </div>
+                                    <div class="col-12">
+                                        <label
+                                            for="islamic_date"
+                                            class="form-label"
+                                            >{{
+                                                translate("Islamic Date")
+                                            }}</label
+                                        >
+
+                                        <Datepicker
+                                            v-model="form.islamic_date"
+                                            :enable-time-picker="false"
+                                            autoApply
+                                            :disabled="true"
+                                            :input-props="{ readonly: true }"
+                                        />
+
+                                        <div
+                                            v-if="formErrors.islamic_date"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.islamic_date[0] }}
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="col-md-12">
                                     <label for="content" class="form-label">{{
@@ -307,11 +302,12 @@ export default {
             this.formStatus = 0;
 
             // Convert the English date to MySQL format before submitting
-    if (this.form.english_date) {
-        this.form.english_date = moment(this.form.english_date).format("YYYY-MM-DD");
-    }
+            if (this.form.english_date) {
+                this.form.english_date = moment(this.form.english_date).format(
+                    "YYYY-MM-DD"
+                );
+            }
 
-    
             axios
                 .post(route("api.bayanaat.store"), this.form)
                 .then(() => {
