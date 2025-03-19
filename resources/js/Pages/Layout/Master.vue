@@ -14,7 +14,14 @@
             </div>
 
             <!-- End Search Bar -->
-
+            <a
+            class="nav-link nav-icon ms-2"
+            :href="route('/')"
+            target="_blank"
+            title="Browse Website"
+        >
+            <i class="bi bi-globe"></i>
+        </a>
             <nav class="header-nav ms-auto">
                 <ul class="d-flex align-items-center">
                     <!-- <li class="nav-item d-block d-lg-none">
@@ -1141,5 +1148,13 @@ export default {
 }
 .c-text-theme {
     color: #012970 !important;
+}
+.multiselect-option.is-selected {
+    background: #012970 !important;
+    color: var(--ms-option-color-selected, #fff);
+}
+.multiselect-option.is-selected.is-pointed {
+    background: #012970 !important;
+    color: var(--ms-option-color-selected, #fff);
 }
 </style>

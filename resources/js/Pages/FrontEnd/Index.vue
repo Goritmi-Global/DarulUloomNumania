@@ -3,18 +3,17 @@
         <!-- Hero Section -->
         <section class="hero-section text-center py-5 text-white">
             <div class="container">
-                <h1 class="display-4">Welcome to Our Madrasa</h1>
+                <h1 class="display-4">{{ translate("Welcome to Jamia Darol Uloom Noumania Utmanzo") }}</h1>
                 <p class="lead">
-                    Providing quality Islamic education with modern learning
-                    techniques.
+                    {{ translate("Providing quality Islamic education with modern learning techniques") }}.
                 </p>
             </div>
         </section>
 
         <section class="courses-section py-2 bg-light">
             <div class="container">
-                <h1 class="display-4 p-3 theme-text-color">Our Courses</h1>
-                <div class="row">
+                <h1 class="display-4 p-3 theme-text-color">{{ translate("Our Courses") }}</h1>
+                <div class="row g-2">
                     <div
                         class="col-md-4 d-flex align-items-stretch"
                         v-for="(course, index) in courses"
@@ -32,7 +31,7 @@
                                     {{ course.description }}
                                 </p>
                                 <a href="#" class="btn btn-primary"
-                                    >Enroll Now</a
+                                    >{{ translate("Enroll Now") }}</a
                                 >
                             </div>
                         </div>
@@ -43,8 +42,8 @@
 
         <section class="bayanaat-section py-2">
             <div class="container">
-                <h1 class="display-4 p-3 theme-text-color">Latest Bayanaat</h1>
-                <div class="row">
+                <h1 class="display-4 p-3 theme-text-color">{{ translate("Latest Bayanaat") }}</h1>
+                <div class="row g-2">
                     <div
                         class="col-md-4 d-flex align-items-stretch"
                         v-for="(video, index) in bayanaat"
@@ -70,13 +69,12 @@
         <!-- Admission Open Section -->
         <section class="admission-section text-center py-5 text-white">
             <div class="container">
-                <h2>Admissions Open</h2>
+                <h2>{{ translate("Admissions Open") }}</h2>
                 <p>
-                    Register now and start your journey towards Islamic
-                    knowledge.
+                    {{ translate("Register now and start your journey towards Islamic knowledge") }}.
                 </p>
                 <a href="/student/enroll" class="btn btn-light btn-lg"
-                    >Apply Now</a
+                    >{{ translate("Apply Now") }}</a
                 >
             </div>
         </section>

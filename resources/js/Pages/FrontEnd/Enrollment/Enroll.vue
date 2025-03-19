@@ -3,10 +3,9 @@
         <!-- Hero Section -->
         <section class="hero-section text-center py-5 text-white">
             <div class="container">
-                <h1 class="display-4">New Students Enrollment</h1>
+                <h1 class="display-4">{{ translate("New Student Enrollment") }}</h1>
                 <p class="lead">
-                    Providing quality Islamic education with modern learning
-                    techniques.
+                    {{translate("Providing quality Islamic education with modern learning techniques")}}.
                 </p>
             </div>
         </section>
@@ -107,13 +106,13 @@
                     </section>
                 </div>
                 <div class="col-md-6">
-                    <h1 class="display-4 p-3 mt-3 theme-text-color">Enroll</h1>
+                    <h1 class="display-4 p-3 mt-3 theme-text-color">{{ translate("Enroll") }}</h1>
 
                     <section class="section bg-white">
                         <div class="card shadow-sm border-0 shadow-lg">
                             <div class="card-body p-4">
                                 <div class="row g-3">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label class="form-label">{{
                                             translate("Apply For")
                                         }}</label>
@@ -122,7 +121,7 @@
                                             :options="filterOptions"
                                             :placeholder="
                                                 translate(
-                                                    'Select Course/Package'
+                                                    'Select Course'
                                                 )
                                             "
                                             :searchable="true"
@@ -140,27 +139,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <label class="form-label">{{
-                                            translate("Phone Number")
-                                        }}</label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            v-model="form.phone_number"
-                                            placeholder="+92 300 1234567"
-                                            :class="{
-                                                'is-invalid':
-                                                    formErrors.phone_number,
-                                            }"
-                                        />
-                                        <div
-                                            v-if="formErrors.phone_number"
-                                            class="text-danger"
-                                        >
-                                            {{ formErrors.phone_number[0] }}
-                                        </div>
-                                    </div>
+                                    
 
                                     <div class="col-md-6">
                                         <label class="form-label">{{
@@ -224,6 +203,28 @@
 
                                     <div class="col-md-6">
                                         <label class="form-label">{{
+                                            translate("Phone Number")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.phone_number"
+                                            placeholder="+92 300 1234567"
+                                            :class="{
+                                                'is-invalid':
+                                                    formErrors.phone_number,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.phone_number"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.phone_number[0] }}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-12">
+                                        <label class="form-label">{{
                                             translate("Primary Education")
                                         }}</label>
                                         <input
@@ -241,7 +242,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label class="form-label">{{
                                             translate("Additional Abilities")
                                         }}</label>
@@ -296,7 +297,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="text-center mt-4">
+                                    <div class="mt-4">
                                         <button
                                             type="submit"
                                             class="btn btn-success px-4"
@@ -389,7 +390,20 @@ export default {
             currentStudent: "",
             currentCourse: "",
             students: [],
-            filterOptions: ["Hifz", "Tafseer", "Qirat", "Dars-e-Nizami"],
+            filterOptions: [
+  "دورہ حدیث",
+  "درجہ اولیٰ",
+  "درجہ ثانیہ",
+  "درجہ ثالثہ",
+  "درجہ رابعہ",
+  "درجہ خامسہ",
+  "درجہ سادسہ",
+  "درجہ سابعہ",
+  "تحصّص باللغات",
+  "تحصّص بالفقہ",
+  "ایک سال اور دو سال",
+  "متوسطا"
+],
             form: {
                 id: "",
                 apply_for: "",

@@ -56,9 +56,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //  Cashbook
     Route::get('/transactions', [TransactionController::class, 'Index'])->name('transactions');
     //  Banks
-    Route::get('/banks', [BankController::class, 'Index'])->name('banks');
-    //  Accounts
-    Route::get('/accounts', [AccountController::class, 'index'])->name('accounts');
+ 
+ 
     //  Accounts
     Route::get('/expense/types', [IncomeExpenseController::class, 'expense_index'])->name('expense.types');
     Route::get('/income/expense/details/{type}/{id}', [IncomeExpenseController::class, 'income_expense_details'])->name('income.expanse.details');

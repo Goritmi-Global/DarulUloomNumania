@@ -22,7 +22,7 @@ class StudentsController extends Controller
     }
     public function create()
     { 
-        return Inertia::render('FrontEnd/Enrollment/Create');
+        return Inertia::render('FrontEnd/Enrollment/Enroll');
     }
     public function edit($id)
     {
@@ -45,6 +45,7 @@ class StudentsController extends Controller
             'dob' => 'required|date',
             'permanent_address' => 'required',
             'current_address' => 'required',
+            'phone_number' => 'required',
             'primary_education' => 'required',
             'additional_ability' => 'required',
         ]);
@@ -63,6 +64,7 @@ class StudentsController extends Controller
         $student->name = $request->name;
         $student->father = $request->father;
         $student->dob = $request->dob;
+        $student->phone_number = $request->phone_number;
         $student->permanent_address = $request->permanent_address;
         $student->current_address = $request->current_address;
         $student->primary_education = $request->primary_education;

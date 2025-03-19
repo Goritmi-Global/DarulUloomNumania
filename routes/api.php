@@ -58,16 +58,9 @@ Route::middleware(['web'])->group(function () {
     Route::get('/students/fetch', [StudentsController::class, 'students'])->name('api.students.fetch');
    
 
-                                                                                                    // Bank routes
-    Route::get('/bank/fetch', [BankController::class, 'fetch'])->name('api.bank.fetch');            // Fetch all banks
-    Route::post('/bank/store', [BankController::class, 'store'])->name('api.bank.store');           // Create or update a bank
-    Route::get('/bank/show/{id}', [BankController::class, 'show'])->name('api.bank.show');          // Show a specific bank
-    Route::delete('/bank/delete/{id}', [BankController::class, 'delete'])->name('api.bank.delete'); // Delete a specific bank
-    Route::get('/bank/pluck', [BankController::class, 'pluck'])->name('api.bank.pluck');            // Fetch bank names and IDs
+ 
                                                                                                     // Account routes
-    Route::get('/fetch/account/details/', [AccountController::class, 'fetch'])->name('api.fetch.account.details');
-    Route::get('/fetch/consumers/{consumer_type}', [AccountController::class, 'fetch_consumers'])->name('api.fetch.consumers');
-    Route::post('/account/data/store', [AccountController::class, 'accounts_data_save'])->name('api.account.data.store');
+    
 
                                                                                                                           // Cashbook routes
     Route::post('/transaction/fetch', [TransactionController::class, 'fetch'])->name('api.transaction.fetch');            // Fetch all transaction entries
@@ -165,3 +158,8 @@ Route::get('/front_end/languages/data', [LanguageController::class, 'frontend_la
 
 
 Route::post('/students/store', [StudentsController::class, 'store'])->name('api.student.store');
+// API's For Mobile
+Route::get('/madrasa/introduction', [IntroductionController::class, 'fetch'])->name('api.madrasa.introduction');
+Route::get('/madrasa/books', [BookController::class, 'fetch'])->name('api.madrasa.books');
+Route::get('/madrasa/bayanaat', [BayanaatController::class, 'fetch'])->name('api.madrasa.bayanaat');
+Route::get('/madrasa/islamic/names', [IslamicNameController::class, 'fetch'])->name('api.madrasa.islamic.names');
