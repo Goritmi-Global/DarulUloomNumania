@@ -820,15 +820,7 @@ export default {
         this.pluckBussinessTypes();
     },
 
-    computed: {
-        // Keeps Loan Management open if any sub-route is active
-        isLoanManagementActive() {
-            return (
-                window.location.pathname.startsWith("/persons") ||
-                window.location.pathname.startsWith("/business/types")
-            );
-        },
-    },
+     
 
     methods: {
         // Checks if the current route starts with the given path

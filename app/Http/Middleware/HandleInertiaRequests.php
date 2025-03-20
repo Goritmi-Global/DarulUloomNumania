@@ -59,6 +59,7 @@ class HandleInertiaRequests extends Middleware
         $lang_data = Translation::where('lang', $default_language)->pluck('lang_value', 'lang_key');
 
         return array_merge(parent::share($request), [
+            'default_language' => $default_language,
             'auth_token' => $auth_token,
             'user'             => $User,
             'lang_data' => $lang_data,
