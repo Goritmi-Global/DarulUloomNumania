@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 12, 2025 at 08:19 PM
+-- Generation Time: Mar 20, 2025 at 01:17 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -28,22 +28,23 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `bayanaats` (
-  `id` varchar(255) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `author` varchar(255) NOT NULL,
-  `islamic_date` varchar(255) NOT NULL,
+  `id` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `author` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `islamic_date` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `english_date` date NOT NULL,
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `bayanaats`
 --
 
 INSERT INTO `bayanaats` (`id`, `title`, `author`, `islamic_date`, `english_date`, `content`, `created_at`, `updated_at`) VALUES
-('9e6aa8b1-1782-46f5-9bb7-6db306aa635a', 'Bang', 'Bang Atuhoer', 'band date', '2040-09-11', '<p><strong>A quick </strong><strong style=\"color: rgb(0, 138, 0);\">brown fox jumps</strong><strong> over the </strong><strong style=\"color: rgb(230, 0, 0);\">lazy </strong><strong>dog. This is a small program</strong></p>', '2025-03-12 19:55:39', '2025-03-12 20:00:38');
+('9e6aa8b1-1782-46f5-9bb7-6db306aa635a', 'Bang', 'Bang Atuhoer', '1446/9/26', '2040-09-12', '<p><strong>A quick </strong><strong style=\"color: rgb(0, 138, 0);\">brown fox jumps</strong><strong> over the </strong><strong style=\"color: rgb(230, 0, 0);\">lazy </strong><strong>dog. This is a small program</strong></p>', '2025-03-12 19:55:39', '2025-03-12 22:08:40'),
+('9e6ad868-8e94-454f-bca5-e8f509e5cc7f', 'Life of Muhammad Saw', 'Mufi Israr Khan', '1470/5/20', '2048-03-05', '<p><strong>A quick </strong><strong style=\"color: rgb(0, 138, 0);\">brown fox</strong><strong style=\"color: rgb(0, 138, 0); background-color: rgb(230, 0, 0);\"> jumps</strong><strong style=\"background-color: rgb(230, 0, 0);\"> over the </strong><strong style=\"color: rgb(230, 0, 0); background-color: rgb(230, 0, 0);\">lazy </strong><strong style=\"background-color: rgb(230, 0, 0);\">dog. Thi</strong><strong>s is a small program</strong></p>', '2025-03-12 22:09:04', '2025-03-12 22:22:50');
 
 -- --------------------------------------------------------
 
@@ -52,21 +53,22 @@ INSERT INTO `bayanaats` (`id`, `title`, `author`, `islamic_date`, `english_date`
 --
 
 CREATE TABLE `books` (
-  `id` varchar(255) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `download_link` varchar(255) DEFAULT NULL,
+  `id` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `download_link` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `books`
 --
 
 INSERT INTO `books` (`id`, `title`, `description`, `image`, `download_link`, `created_at`, `updated_at`) VALUES
-('9e6a9253-9805-4943-9c6b-515dae424581', 'My Book', 'Islamic Life', 'hhtps::;asdfasf', 'asf', '2025-03-12 18:53:06', '2025-03-12 18:55:54');
+('9e6a9253-9805-4943-9c6b-515dae424581', 'My Book', '<p><span class=\"ql-font-serif\" style=\"color: rgb(230, 0, 0);\">Islamic Life An dthe future </span></p>', '35', 'download link', '2025-03-12 18:53:06', '2025-03-12 22:14:20'),
+('9e6be568-222b-4547-bb67-a24b1e4b4f93', 'Islamic Book 1', '<p>This is an <strong style=\"color: rgb(230, 0, 0);\">islamic </strong><span class=\"ql-size-large\">book</span></p>', NULL, NULL, '2025-03-13 10:41:14', '2025-03-13 10:41:14');
 
 -- --------------------------------------------------------
 
@@ -75,11 +77,11 @@ INSERT INTO `books` (`id`, `title`, `description`, `image`, `download_link`, `cr
 --
 
 CREATE TABLE `business_types` (
-  `id` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `id` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `business_types`
@@ -148674,22 +148676,23 @@ INSERT INTO `countries` (`id`, `name`, `iso3`, `iso2`, `numeric_code`, `phone_co
 --
 
 CREATE TABLE `expenses` (
-  `id` varchar(255) NOT NULL,
-  `transaction_id` varchar(255) NOT NULL,
-  `expense_type_id` varchar(255) NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `transaction_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `expense_type_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `transaction_date` datetime NOT NULL,
   `amount` decimal(15,2) NOT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `expenses`
 --
 
 INSERT INTO `expenses` (`id`, `transaction_id`, `expense_type_id`, `transaction_date`, `amount`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('9e64b774-b623-4aaf-abef-9e89e35a9960', '9e64b774-b322-4f47-be0c-9d39c9cd89a5', '9e0146e4-b4d9-4b77-8f86-4ebe12f91042', '2025-03-10 00:00:00', 25000.00, '2025-03-10 02:01:57', '2025-03-10 02:01:57', NULL);
+('9e64b774-b623-4aaf-abef-9e89e35a9960', '9e64b774-b322-4f47-be0c-9d39c9cd89a5', '9e0146e4-b4d9-4b77-8f86-4ebe12f91042', '2025-03-10 00:00:00', 25000.00, '2025-03-10 02:01:57', '2025-03-10 02:01:57', NULL),
+('9e6be425-46c6-4937-8e76-722e0594481b', '9e6be424-1e73-4387-a64b-669b756572e9', '9e0146e4-b4d9-4b77-8f86-4ebe12f91042', '2025-03-13 00:00:00', 125000.00, '2025-03-13 15:37:43', '2025-03-13 15:37:43', NULL);
 
 -- --------------------------------------------------------
 
@@ -148704,7 +148707,7 @@ CREATE TABLE `expense_types` (
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `expense_types`
@@ -148733,7 +148736,7 @@ CREATE TABLE `incomes` (
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `incomes`
@@ -148755,7 +148758,7 @@ CREATE TABLE `income_types` (
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `income_types`
@@ -148778,7 +148781,7 @@ CREATE TABLE `introductions` (
   `description` text NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `introductions`
@@ -148803,7 +148806,7 @@ CREATE TABLE `islamic_names` (
   `reference` text NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `islamic_names`
@@ -148834,7 +148837,8 @@ CREATE TABLE `languages` (
 
 INSERT INTO `languages` (`id`, `name`, `code`, `rtl`, `status`, `created_at`, `updated_at`) VALUES
 ('9e66e005-4dfc-40f1-88f1-5c741da9e2a5', 'Urdu', 'PK', 0, 1, '2025-03-10 22:47:02', '2025-03-10 22:48:40'),
-('9e66e116-9081-4537-abc2-561ca1ff07ee', 'English', 'GB', 0, 1, '2025-03-10 22:50:02', '2025-03-10 22:50:02');
+('9e66e116-9081-4537-abc2-561ca1ff07ee', 'English', 'GB', 0, 1, '2025-03-10 22:50:02', '2025-03-10 22:50:02'),
+('9e6be501-5605-482e-bb5e-9b1b830c5298', 'Arabic', 'SA', 0, 1, '2025-03-13 10:40:07', '2025-03-13 10:40:07');
 
 -- --------------------------------------------------------
 
@@ -148857,13 +148861,13 @@ CREATE TABLE `migrations` (
 CREATE TABLE `money_give_to` (
   `id` varchar(255) NOT NULL,
   `transaction_id` varchar(255) NOT NULL,
-  `person_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `person_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `transaction_date` datetime NOT NULL,
   `amount` decimal(15,2) NOT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -148874,13 +148878,20 @@ CREATE TABLE `money_give_to` (
 CREATE TABLE `money_taken_from` (
   `id` varchar(255) NOT NULL,
   `transaction_id` varchar(255) NOT NULL,
-  `person_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `person_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `transaction_date` datetime NOT NULL,
   `amount` decimal(15,2) NOT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `money_taken_from`
+--
+
+INSERT INTO `money_taken_from` (`id`, `transaction_id`, `person_id`, `transaction_date`, `amount`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('9e6be4af-b93f-4f12-9df3-8cf79687d4fb', '9e6be4af-ac00-4da1-84f1-5d24e7851a7f', '9e6be485-70ef-47b5-8a17-d989d61eede0', '2025-03-13 00:00:00', 250000.00, '2025-03-13 15:39:14', '2025-03-13 15:39:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -148968,7 +148979,18 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (48, 'App\\Models\\User', 1, 'webToken', 'cdd3791cf83225b08c1cba4ee747223db4e08686940314b7743eb516a4098a25', '[\"*\"]', NULL, NULL, '2025-03-10 22:38:49', '2025-03-10 22:38:49'),
 (49, 'App\\Models\\User', 1, 'webToken', '092b91bdc3a22dfbb78cf3c5a647f0354404bea11e0466c6b2eeaf5ee4d3ae80', '[\"*\"]', NULL, NULL, '2025-03-12 11:02:11', '2025-03-12 11:02:11'),
 (50, 'App\\Models\\User', 1, 'webToken', 'f26e7fad7357394379fee59ccf60100af5f4ebd973ad4b3eec73ea5ffbdd94ac', '[\"*\"]', NULL, NULL, '2025-03-12 11:56:14', '2025-03-12 11:56:14'),
-(51, 'App\\Models\\User', 1, 'webToken', 'd77977f3c1c4e1c6ca277548d685ac5478f9c5984d6a2a1da0bd915d58e5b3ce', '[\"*\"]', NULL, NULL, '2025-03-12 18:16:26', '2025-03-12 18:16:26');
+(51, 'App\\Models\\User', 1, 'webToken', 'd77977f3c1c4e1c6ca277548d685ac5478f9c5984d6a2a1da0bd915d58e5b3ce', '[\"*\"]', NULL, NULL, '2025-03-12 18:16:26', '2025-03-12 18:16:26'),
+(52, 'App\\Models\\User', 1, 'webToken', 'e5086bf708ac80c950a91c498b091401f0f849443e563ac888b4af119c540758', '[\"*\"]', NULL, NULL, '2025-03-12 21:13:56', '2025-03-12 21:13:56'),
+(53, 'App\\Models\\User', 1, 'webToken', '670038b8005f838f2867ceddbba46297e0c7abec457f7c49fe1d8a2cf370eea8', '[\"*\"]', NULL, NULL, '2025-03-12 21:14:01', '2025-03-12 21:14:01'),
+(54, 'App\\Models\\User', 1, 'webToken', '7f0a9962174f9c22feff2765824bca643190d5aff554499835977e653281bc34', '[\"*\"]', NULL, NULL, '2025-03-13 09:16:20', '2025-03-13 09:16:20'),
+(55, 'App\\Models\\User', 1, 'webToken', 'c53d7d335c6a79fba74c3d377a0d47a22babe9b3e4a29aec9db5aa50002db956', '[\"*\"]', NULL, NULL, '2025-03-13 10:53:11', '2025-03-13 10:53:11'),
+(56, 'App\\Models\\User', 1, 'webToken', 'e7ac00fd5f936114c098075e3a5564c2cbe7232993d1eeafcefcfb0f2956eb64', '[\"*\"]', NULL, NULL, '2025-03-13 10:54:41', '2025-03-13 10:54:41'),
+(57, 'App\\Models\\User', 1, 'webToken', 'b23cda5ed83b7933ea9fd144350077f0fc6365a921e4308e5bdee8c1edebf82c', '[\"*\"]', NULL, NULL, '2025-03-13 10:58:06', '2025-03-13 10:58:06'),
+(58, 'App\\Models\\User', 1, 'webToken', '0d852ed766aee8a3b528aedf330114df1bbf8a04eb334006b185bedc132bcc4a', '[\"*\"]', NULL, NULL, '2025-03-13 14:27:54', '2025-03-13 14:27:54'),
+(59, 'App\\Models\\User', 1, 'webToken', '42fe2b69b7aec22044a39242b81526ebea5119e792135c9b1d884ca2653a50c3', '[\"*\"]', NULL, NULL, '2025-03-13 19:22:56', '2025-03-13 19:22:56'),
+(60, 'App\\Models\\User', 1, 'webToken', 'bf865614a91362ec99b23708f0c730885d10a4ceb5a5f911c6d47150b2fdecfd', '[\"*\"]', NULL, NULL, '2025-03-19 18:32:11', '2025-03-19 18:32:11'),
+(61, 'App\\Models\\User', 1, 'webToken', 'e50d76fea83251831189f784585e629f2df20b9461cc46b60b7323f56ed6ae41', '[\"*\"]', NULL, NULL, '2025-03-19 21:04:19', '2025-03-19 21:04:19'),
+(62, 'App\\Models\\User', 1, 'webToken', '2faa1805fabbeb496ffdc5d0d97fadcf9c8ef9e1449020dad693ce9987ff1f98', '[\"*\"]', NULL, NULL, '2025-03-19 21:06:10', '2025-03-19 21:06:10');
 
 -- --------------------------------------------------------
 
@@ -148982,7 +149004,7 @@ CREATE TABLE `persons` (
   `contact` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `persons`
@@ -148991,7 +149013,8 @@ CREATE TABLE `persons` (
 INSERT INTO `persons` (`id`, `name`, `contact`, `created_at`, `updated_at`) VALUES
 ('9e62803a-7db4-4517-9056-163d84e9f7e9', 'Ali Nawaz', '3124585455', '2025-03-08 18:35:53', '2025-03-08 18:35:53'),
 ('9e6286bc-c260-456c-96cb-8a51f4bd9d83', 'Umar Gul', '1245845555', '2025-03-08 18:54:05', '2025-03-08 18:54:05'),
-('9e6286c9-320e-4cc1-97f6-5cf664996f45', 'Jihan Zeb', '1245845885', '2025-03-08 18:54:13', '2025-03-08 18:54:13');
+('9e6286c9-320e-4cc1-97f6-5cf664996f45', 'Jihan Zeb', '1245845885', '2025-03-08 18:54:13', '2025-03-08 18:54:13'),
+('9e6be485-70ef-47b5-8a17-d989d61eede0', 'Muhib Ullah', '312458554', '2025-03-13 10:38:46', '2025-03-13 10:38:46');
 
 -- --------------------------------------------------------
 
@@ -149012,7 +149035,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `type`, `value`, `created_at`, `updated_at`) VALUES
-('9e66fbad-f9a5-4eb1-84c8-bba0216874c4', 'default_language', 'PK', '2025-03-11 00:04:23', '2025-03-12 20:09:11');
+('9e66fbad-f9a5-4eb1-84c8-bba0216874c4', 'default_language', 'GB', '2025-03-11 00:04:23', '2025-03-19 22:18:12');
 
 -- --------------------------------------------------------
 
@@ -154008,6 +154031,37 @@ INSERT INTO `states` (`id`, `name`, `country_id`, `country_code`, `country_name`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
+  `id` varchar(255) NOT NULL,
+  `apply_for` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `father` varchar(255) NOT NULL,
+  `phone_number` varchar(255) DEFAULT NULL,
+  `dob` date NOT NULL,
+  `permanent_address` text NOT NULL,
+  `current_address` text NOT NULL,
+  `primary_education` varchar(255) NOT NULL,
+  `additional_ability` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`id`, `apply_for`, `name`, `father`, `phone_number`, `dob`, `permanent_address`, `current_address`, `primary_education`, `additional_ability`, `created_at`, `updated_at`) VALUES
+('2b67d0fc-7695-4732-9660-487c210130ce', 'ایک سال اور دو سال', 'عبدالرحمن', 'سلیم الدین', NULL, '2025-03-21', 'اسلام آباد، پاکستان', 'راولپنڈی، پاکستان', 'میٹرک', 'عربی زبان، تقریر', '2025-03-19 21:45:51', '2025-03-19 21:45:51'),
+('4f70673f-2c38-4326-9a44-05b373b2337a', 'دورہ حدیث', 'محمد علی', 'احمد خان', NULL, '2025-03-20', 'لاہور، پاکستان', 'کراچی، پاکستان', 'مڈل', 'حفظ القرآن، خطاطی', '2025-03-19 21:43:59', '2025-03-19 21:43:59'),
+('b8443659-f061-4516-9603-0b5ae58666f1', 'ایک سال اور دو سال', 'Ali Hassan', 'Zafar Iqbal', NULL, '2025-03-20', 'Faisalabad, Pakistan', 'Lahore, Pakistan', 'High School', 'Memorization of Quran, Public Speaking', '2025-03-19 21:45:02', '2025-03-19 21:45:02'),
+('f7befb30-92d8-409f-b999-34ba7f4b016f', 'ایک سال اور دو سال', 'عثمان غنی', 'عبدالرحیم', '031245858999', '2025-03-20', 'پشاور، پاکستان', 'کوئٹہ، پاکستان', 'انٹرمیڈیٹ', 'نعت خوانی، تدریس', '2025-03-19 21:47:31', '2025-03-19 21:47:31');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `transactions`
 --
 
@@ -154026,7 +154080,7 @@ CREATE TABLE `transactions` (
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `transactions`
@@ -154034,7 +154088,9 @@ CREATE TABLE `transactions` (
 
 INSERT INTO `transactions` (`id`, `cash_in`, `cash_out`, `transaction_date`, `ref_no`, `method`, `remarks`, `user_id`, `receipt_image`, `transaction_type`, `business_type_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 ('9e64b774-b322-4f47-be0c-9d39c9cd89a5', NULL, 25000.00, '2025-03-10', '1', 'Bank', 'Description 1', 1, NULL, 'Expense', '9e62804e-58cf-4860-a2a7-acb36adb3ce5', '2025-03-10 02:01:57', '2025-03-10 02:01:57', NULL),
-('9e64b793-f363-42f9-8c6a-5b6e42d7185f', 25000.00, NULL, '2025-03-10', '12', 'Bank', 'Electrisity 1', 1, NULL, 'Income', '9e62804e-58cf-4860-a2a7-acb36adb3ce5', '2025-03-10 02:02:18', '2025-03-10 02:02:18', NULL);
+('9e64b793-f363-42f9-8c6a-5b6e42d7185f', 25000.00, NULL, '2025-03-10', '12', 'Bank', 'Electrisity 1', 1, NULL, 'Income', '9e62804e-58cf-4860-a2a7-acb36adb3ce5', '2025-03-10 02:02:18', '2025-03-10 02:02:18', NULL),
+('9e6be424-1e73-4387-a64b-669b756572e9', NULL, 125000.00, '2025-03-13', '12324', 'Bank', 'langar', 1, '36', 'Expense', '9e62804e-58cf-4860-a2a7-acb36adb3ce5', '2025-03-13 15:37:43', '2025-03-13 15:37:43', NULL),
+('9e6be4af-ac00-4da1-84f1-5d24e7851a7f', 250000.00, NULL, '2025-03-13', '1234565', 'Bank', 'Zakat', 1, NULL, 'Borrow', NULL, '2025-03-13 15:39:14', '2025-03-13 15:39:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -154079,25 +154135,25 @@ INSERT INTO `translations` (`id`, `lang`, `lang_key`, `lang_value`, `created_at`
 ('9e66e01e-02ea-4764-8b16-aa2c64f23f03', 'US', 'Edit', 'Edit', '2025-03-10 22:47:19', '2025-03-10 22:47:19'),
 ('9e66e02e-e1f6-4c29-884d-772a7517d889', 'PK', 'Languages', 'زبانیں', '2025-03-10 22:47:30', '2025-03-11 00:05:07'),
 ('9e66e02e-e65d-4972-875f-bfa8984702ee', 'PK', 'Language', 'زبان', '2025-03-10 22:47:30', '2025-03-11 00:05:23'),
-('9e66e02e-e798-4fe7-aa80-7ffd88586c6e', 'PK', 'Code', 'Code', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-e8d5-4704-97c1-61522ea4d41a', 'PK', 'Name', 'Name', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-e9b6-4bab-937e-1acc17800542', 'PK', 'Status', 'Status', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-ea88-4631-a3f6-350475cedf90', 'PK', 'Are you sure', 'Are you sure', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-eb57-4cd6-94c9-6a355b8b5a4a', 'PK', 'Close', 'Close', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-ec14-43a4-9235-8f911aa453dd', 'PK', 'Yes, delete it', 'Yes, delete it', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-ecd3-49ab-8743-035504e84bda', 'PK', 'Default Language', 'Default Language', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-ed94-4751-873d-c9b6b32744de', 'PK', 'Choose default language', 'Choose default language', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-ee5c-478c-9e44-c1f9280f6d47', 'PK', 'Save', 'Save', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-ef1d-42af-91c5-55cfc9691f6f', 'PK', 'Add New Language', 'Add New Language', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-efe4-4190-bc56-e94e35bd8ac2', 'PK', 'OFF', 'OFF', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-f0a7-4a33-980c-a4c60937aa0c', 'PK', 'Choose Status', 'Choose Status', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-f14e-4510-969b-3c1a83ca1fd9', 'PK', 'Country', 'Country', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-f209-483b-889e-288e2d54b63b', 'PK', 'ON', 'ON', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-f2b6-4b9d-a11c-836e42785ad0', 'PK', 'Choose country', 'Choose country', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-f36c-4228-954a-3f209e7a1916', 'PK', 'Language added successfully', 'Language added successfully', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-f409-4526-a892-cff2c0c852d9', 'PK', 'Translations', 'Translations', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-f515-4640-8927-a26e0294bfcb', 'PK', 'Delete', 'Delete', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
-('9e66e02e-f62d-421f-bffa-51ec09633dc0', 'PK', 'Edit', 'Edit', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
+('9e66e02e-e798-4fe7-aa80-7ffd88586c6e', 'PK', 'Code', 'کوڈ', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-e8d5-4704-97c1-61522ea4d41a', 'PK', 'Name', 'نام', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-e9b6-4bab-937e-1acc17800542', 'PK', 'Status', 'حالت', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-ea88-4631-a3f6-350475cedf90', 'PK', 'Are you sure', 'کیا تمہیں یقین ہے؟', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-eb57-4cd6-94c9-6a355b8b5a4a', 'PK', 'Close', 'بند کرو', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-ec14-43a4-9235-8f911aa453dd', 'PK', 'Yes, delete it', 'ہاں، اسے حذف کر دو', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-ecd3-49ab-8743-035504e84bda', 'PK', 'Default Language', 'طے شدہ زبان', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-ed94-4751-873d-c9b6b32744de', 'PK', 'Choose default language', 'طے شدہ زبان منتخب کریں', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-ee5c-478c-9e44-c1f9280f6d47', 'PK', 'Save', 'محفوظ کریں', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-ef1d-42af-91c5-55cfc9691f6f', 'PK', 'Add New Language', 'نئی زبان شامل کریں', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-efe4-4190-bc56-e94e35bd8ac2', 'PK', 'OFF', 'بند', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-f0a7-4a33-980c-a4c60937aa0c', 'PK', 'Choose Status', 'اسٹیٹس منتخب کریں', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-f14e-4510-969b-3c1a83ca1fd9', 'PK', 'Country', 'ملک', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-f209-483b-889e-288e2d54b63b', 'PK', 'ON', 'چالو', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-f2b6-4b9d-a11c-836e42785ad0', 'PK', 'Choose country', 'ملک منتخب کریں', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-f36c-4228-954a-3f209e7a1916', 'PK', 'Language added successfully', 'زبان کامیابی سے شامل کی گئی', '2025-03-10 22:47:30', '2025-03-12 22:28:22'),
+('9e66e02e-f409-4526-a892-cff2c0c852d9', 'PK', 'Translations', 'ترجمے', '2025-03-10 22:47:30', '2025-03-12 22:30:03'),
+('9e66e02e-f515-4640-8927-a26e0294bfcb', 'PK', 'Delete', 'حذف کریں', '2025-03-10 22:47:30', '2025-03-12 22:30:03'),
+('9e66e02e-f62d-421f-bffa-51ec09633dc0', 'PK', 'Edit', 'ترمیم کریں', '2025-03-10 22:47:30', '2025-03-12 22:30:03'),
 ('9e66e02f-6b65-4691-b96e-34010c61d39a', 'US', 'Key', 'Key', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
 ('9e66e030-1007-4f8a-98d9-349e335d8a0d', 'US', 'Value', 'Value', '2025-03-10 22:47:30', '2025-03-10 22:47:30'),
 ('9e66e030-3b0d-4e9b-8dae-055827febd0d', 'US', 'Are you sure?', 'Are you sure?', '2025-03-10 22:47:31', '2025-03-10 22:47:31'),
@@ -154105,13 +154161,13 @@ INSERT INTO `translations` (`id`, `lang`, `lang_key`, `lang_value`, `created_at`
 ('9e66e030-928c-4951-9141-430c12c23317', 'US', 'Home', 'Home', '2025-03-10 22:47:31', '2025-03-10 22:47:31'),
 ('9e66e030-b7f9-4475-96af-db1f05a6fb41', 'US', 'Yes, delete it!', 'Yes, delete it!', '2025-03-10 22:47:31', '2025-03-10 22:47:31'),
 ('9e66e031-28f1-4531-8081-17571f422633', 'US', 'Go to Languages', 'Go to Languages', '2025-03-10 22:47:31', '2025-03-10 22:47:31'),
-('9e66e03b-dac4-4b81-a22a-b51d1a79af21', 'PK', 'Key', 'Key', '2025-03-10 22:47:38', '2025-03-10 22:47:38'),
-('9e66e03b-de95-47f7-8030-a5b8acc06bcb', 'PK', 'Value', 'Value', '2025-03-10 22:47:38', '2025-03-10 22:47:38'),
-('9e66e03b-dfc0-427b-bd65-be86b2632d85', 'PK', 'Are you sure?', 'Are you sure?', '2025-03-10 22:47:38', '2025-03-10 22:47:38'),
-('9e66e03b-e0db-4724-b298-29fba28dff23', 'PK', 'Search Translations', 'Search Translations', '2025-03-10 22:47:38', '2025-03-10 22:47:38'),
-('9e66e03b-e1f6-40e4-9fb0-d296a228bdb0', 'PK', 'Home', 'Home', '2025-03-10 22:47:38', '2025-03-10 22:47:38'),
-('9e66e03b-e304-450f-8108-425351fd4539', 'PK', 'Yes, delete it!', 'Yes, delete it!', '2025-03-10 22:47:38', '2025-03-10 22:47:38'),
-('9e66e03b-e412-4ce1-87dd-a536422a232b', 'PK', 'Go to Languages', 'Go to Languages', '2025-03-10 22:47:38', '2025-03-10 22:47:38'),
+('9e66e03b-dac4-4b81-a22a-b51d1a79af21', 'PK', 'Key', 'کلید', '2025-03-10 22:47:38', '2025-03-12 22:30:03'),
+('9e66e03b-de95-47f7-8030-a5b8acc06bcb', 'PK', 'Value', 'قدر', '2025-03-10 22:47:38', '2025-03-12 22:30:03'),
+('9e66e03b-dfc0-427b-bd65-be86b2632d85', 'PK', 'Are you sure?', 'کیا تمہیں یقین ہے؟', '2025-03-10 22:47:38', '2025-03-12 22:30:03'),
+('9e66e03b-e0db-4724-b298-29fba28dff23', 'PK', 'Search Translations', 'ترجمے تلاش کریں', '2025-03-10 22:47:38', '2025-03-12 22:30:03'),
+('9e66e03b-e1f6-40e4-9fb0-d296a228bdb0', 'PK', 'Home', 'ہوم', '2025-03-10 22:47:38', '2025-03-12 22:30:03'),
+('9e66e03b-e304-450f-8108-425351fd4539', 'PK', 'Yes, delete it!', 'ہاں، اسے حذف کریں!', '2025-03-10 22:47:38', '2025-03-12 22:30:03'),
+('9e66e03b-e412-4ce1-87dd-a536422a232b', 'PK', 'Go to Languages', 'زبانوں پر جائیں', '2025-03-10 22:47:38', '2025-03-12 22:30:03'),
 ('9e66fbbb-9827-4f3f-b006-8535bd955f1b', 'GB', 'Languages', 'Languages', '2025-03-11 00:04:32', '2025-03-11 00:04:32'),
 ('9e66fbbb-9cc2-400e-9b96-078b110220b9', 'GB', 'Language', 'Language', '2025-03-11 00:04:32', '2025-03-11 00:04:32'),
 ('9e66fbbb-9db8-467c-9396-ef0c50ca32f4', 'GB', 'Code', 'Code', '2025-03-11 00:04:32', '2025-03-11 00:04:32'),
@@ -154208,40 +154264,40 @@ INSERT INTO `translations` (`id`, `lang`, `lang_key`, `lang_value`, `created_at`
 ('9e6a8973-9297-47b1-8da8-8f596c951719', 'GB', 'Saving', 'Saving', '2025-03-12 18:28:17', '2025-03-12 18:28:17'),
 ('9e6a8ad7-fb66-4f5a-b298-559d86f50a47', 'US', 'Edit Introduction', 'Edit Introduction', '2025-03-12 18:32:11', '2025-03-12 18:32:11'),
 ('9e6a8ad7-fe6f-441b-bc57-8d28cd11f50d', 'GB', 'Edit Introduction', 'Edit Introduction', '2025-03-12 18:32:11', '2025-03-12 18:32:11'),
-('9e6a8ce1-7098-41f1-a5ee-e826311aaec5', 'PK', 'Translations added successfully', 'Translations added successfully', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-752b-4890-b26c-be1942c84ecc', 'PK', 'Introduction', 'Introduction', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
+('9e6a8ce1-7098-41f1-a5ee-e826311aaec5', 'PK', 'Translations added successfully', 'ترجمے کامیابی سے شامل کیے گئے', '2025-03-12 18:37:53', '2025-03-12 22:30:03'),
+('9e6a8ce1-752b-4890-b26c-be1942c84ecc', 'PK', 'Introduction', 'تعارف', '2025-03-12 18:37:53', '2025-03-12 22:30:03'),
 ('9e6a8ce1-7636-449c-b680-0adc5150dc6b', 'PK', 'Alsmi', 'Alsmi', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
 ('9e6a8ce1-7746-4bd2-bae4-f21888533c2f', 'PK', 'Index', 'Index', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-7821-46be-b63b-cbfe8e778758', 'PK', 'New Introduction', 'New Introduction', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-78fc-433f-8920-29204a76f6ab', 'PK', 'All Introductions', 'All Introductions', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-79e2-4520-8127-4913f4671720', 'PK', 'Description', 'Description', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-7acb-47e6-bb22-f0ea4c87eda1', 'PK', 'Title', 'Title', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-7c02-40af-a08c-722bbef85115', 'PK', 'New Introduction Entry', 'New Introduction Entry', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-7d0e-4bc7-9c5e-f53857551da2', 'PK', 'Action', 'Action', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-7e25-4dbb-8683-d88bcf20aded', 'PK', 'Books', 'Books', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-7f31-488f-8b93-945d984fefdf', 'PK', 'New Book', 'New Book', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-8052-47a9-8b20-5ca136fdaaf9', 'PK', 'All Books', 'All Books', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-8198-4366-b7d2-47fd87bf6a5e', 'PK', 'Image', 'Image', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-82d8-4474-aeed-6f93acc8e9e3', 'PK', 'Download', 'Download', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-83de-4065-a00e-ce1d555cf559', 'PK', 'Bayanaat', 'Bayanaat', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-84e2-42a7-a5ea-a6ce50c5e7c7', 'PK', 'New Bayanaat', 'New Bayanaat', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-864f-4a14-ab94-223a57a389d1', 'PK', 'Author', 'Author', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-8744-4ebf-857b-230a7c1d481a', 'PK', 'All Bayanaat', 'All Bayanaat', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-8878-4f29-a970-2b4b1af4ab12', 'PK', 'English Date', 'English Date', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-8992-4695-9f41-dac0e3b538b6', 'PK', 'Islamic Date', 'Islamic Date', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-8aad-4e52-8acf-84267161e943', 'PK', 'Actions', 'Actions', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-8ba7-4bc0-b6d1-1aa9c108c6e9', 'PK', 'Islamic Names', 'Islamic Names', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-8c9f-4a4d-9171-7f3a60a379a0', 'PK', 'New Islamic Name', 'New Islamic Name', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-8d86-470e-b947-169dae0fbeb8', 'PK', 'Meaning', 'Meaning', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-8eb5-4a19-9164-510e4f48d8d9', 'PK', 'All Islamic Names', 'All Islamic Names', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-8fb4-47d7-8f04-1f01b1c02da9', 'PK', 'Roman', 'Roman', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
+('9e6a8ce1-7821-46be-b63b-cbfe8e778758', 'PK', 'New Introduction', 'نیا تعارف', '2025-03-12 18:37:53', '2025-03-12 22:30:03'),
+('9e6a8ce1-78fc-433f-8920-29204a76f6ab', 'PK', 'All Introductions', 'تمام تعارف', '2025-03-12 18:37:53', '2025-03-12 22:30:03'),
+('9e6a8ce1-79e2-4520-8127-4913f4671720', 'PK', 'Description', 'تفصیل', '2025-03-12 18:37:53', '2025-03-12 22:30:03'),
+('9e6a8ce1-7acb-47e6-bb22-f0ea4c87eda1', 'PK', 'Title', 'عنوان', '2025-03-12 18:37:53', '2025-03-12 22:30:03'),
+('9e6a8ce1-7c02-40af-a08c-722bbef85115', 'PK', 'New Introduction Entry', 'نئی تعارفی اندراج', '2025-03-12 18:37:53', '2025-03-12 22:31:20'),
+('9e6a8ce1-7d0e-4bc7-9c5e-f53857551da2', 'PK', 'Action', 'عمل', '2025-03-12 18:37:53', '2025-03-12 22:31:20'),
+('9e6a8ce1-7e25-4dbb-8683-d88bcf20aded', 'PK', 'Books', 'کتابیں', '2025-03-12 18:37:53', '2025-03-12 22:31:20'),
+('9e6a8ce1-7f31-488f-8b93-945d984fefdf', 'PK', 'New Book', 'نئی کتاب', '2025-03-12 18:37:53', '2025-03-12 22:31:20'),
+('9e6a8ce1-8052-47a9-8b20-5ca136fdaaf9', 'PK', 'All Books', 'تمام کتابیں', '2025-03-12 18:37:53', '2025-03-12 22:31:20'),
+('9e6a8ce1-8198-4366-b7d2-47fd87bf6a5e', 'PK', 'Image', 'تصویر', '2025-03-12 18:37:53', '2025-03-12 22:31:20'),
+('9e6a8ce1-82d8-4474-aeed-6f93acc8e9e3', 'PK', 'Download', 'ڈاؤن لوڈ', '2025-03-12 18:37:53', '2025-03-12 22:31:20'),
+('9e6a8ce1-83de-4065-a00e-ce1d555cf559', 'PK', 'Bayanaat', 'بیانات', '2025-03-12 18:37:53', '2025-03-12 22:31:20'),
+('9e6a8ce1-84e2-42a7-a5ea-a6ce50c5e7c7', 'PK', 'New Bayanaat', 'نیا بیان', '2025-03-12 18:37:53', '2025-03-12 22:31:20'),
+('9e6a8ce1-864f-4a14-ab94-223a57a389d1', 'PK', 'Author', 'مصنف', '2025-03-12 18:37:53', '2025-03-12 22:31:20'),
+('9e6a8ce1-8744-4ebf-857b-230a7c1d481a', 'PK', 'All Bayanaat', 'تمام بیانات', '2025-03-12 18:37:53', '2025-03-12 22:31:43'),
+('9e6a8ce1-8878-4f29-a970-2b4b1af4ab12', 'PK', 'English Date', 'انگریزی تاریخ', '2025-03-12 18:37:53', '2025-03-12 22:31:43'),
+('9e6a8ce1-8992-4695-9f41-dac0e3b538b6', 'PK', 'Islamic Date', 'اسلامی تاریخ', '2025-03-12 18:37:53', '2025-03-12 22:31:43'),
+('9e6a8ce1-8aad-4e52-8acf-84267161e943', 'PK', 'Actions', 'اعمال', '2025-03-12 18:37:53', '2025-03-12 22:31:43'),
+('9e6a8ce1-8ba7-4bc0-b6d1-1aa9c108c6e9', 'PK', 'Islamic Names', 'اسلامی نام', '2025-03-12 18:37:53', '2025-03-12 22:33:40'),
+('9e6a8ce1-8c9f-4a4d-9171-7f3a60a379a0', 'PK', 'New Islamic Name', 'نیا اسلامی نام', '2025-03-12 18:37:53', '2025-03-12 22:33:40'),
+('9e6a8ce1-8d86-470e-b947-169dae0fbeb8', 'PK', 'Meaning', 'معنی', '2025-03-12 18:37:53', '2025-03-12 22:33:40'),
+('9e6a8ce1-8eb5-4a19-9164-510e4f48d8d9', 'PK', 'All Islamic Names', 'تمام اسلامی نام', '2025-03-12 18:37:53', '2025-03-12 22:33:40'),
+('9e6a8ce1-8fb4-47d7-8f04-1f01b1c02da9', 'PK', 'Roman', 'رومانوی', '2025-03-12 18:37:53', '2025-03-12 22:33:40'),
 ('9e6a8ce1-9085-4c04-af14-d5ccb5b12f45', 'PK', 'Inflection', 'اعراب', '2025-03-12 18:37:53', '2025-03-12 20:09:04'),
-('9e6a8ce1-916e-476f-b916-5af5a5a38c93', 'PK', 'Reference', 'Reference', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-924e-4bbb-aaa0-7d0df3ff53e9', 'PK', 'Type', 'Type', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-9326-4c68-885f-78f5f59e8eea', 'PK', 'Edit Book', 'Edit Book', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-93f7-449f-817e-8e209405bad2', 'PK', 'Darul Oloom', 'Darul Oloom', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-9509-4322-a05e-f03a0134ebfc', 'PK', 'Saving', 'Saving', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
-('9e6a8ce1-9638-4fbf-9c29-e4b2cc4f15d9', 'PK', 'Edit Introduction', 'Edit Introduction', '2025-03-12 18:37:53', '2025-03-12 18:37:53'),
+('9e6a8ce1-916e-476f-b916-5af5a5a38c93', 'PK', 'Reference', 'حوالہ', '2025-03-12 18:37:53', '2025-03-12 22:33:40'),
+('9e6a8ce1-924e-4bbb-aaa0-7d0df3ff53e9', 'PK', 'Type', 'قسم', '2025-03-12 18:37:53', '2025-03-12 22:33:40'),
+('9e6a8ce1-9326-4c68-885f-78f5f59e8eea', 'PK', 'Edit Book', 'کتاب میں ترمیم کریں', '2025-03-12 18:37:53', '2025-03-12 22:33:40'),
+('9e6a8ce1-93f7-449f-817e-8e209405bad2', 'PK', 'Darul Oloom', 'دار العلوم', '2025-03-12 18:37:53', '2025-03-12 22:33:40'),
+('9e6a8ce1-9509-4322-a05e-f03a0134ebfc', 'PK', 'Saving', 'محفوظ کر رہا ہے', '2025-03-12 18:37:53', '2025-03-12 22:33:40'),
+('9e6a8ce1-9638-4fbf-9c29-e4b2cc4f15d9', 'PK', 'Edit Introduction', 'تعارف میں ترمیم کریں', '2025-03-12 18:37:53', '2025-03-12 22:33:40'),
 ('9e6a94e6-667b-4835-9ad6-f6c1dad99a99', 'US', 'Content', 'Content', '2025-03-12 19:00:18', '2025-03-12 19:00:18'),
 ('9e6a94e6-6bb3-4a21-9d76-fdb460b96bb7', 'GB', 'Content', 'Content', '2025-03-12 19:00:18', '2025-03-12 19:00:18'),
 ('9e6a965b-37e4-4daf-abca-3663be98f3a2', 'US', 'Edit Bayanaat', 'Edit Bayanaat', '2025-03-12 19:04:22', '2025-03-12 19:04:22'),
@@ -154292,7 +154348,642 @@ INSERT INTO `translations` (`id`, `lang`, `lang_key`, `lang_value`, `created_at`
 ('9e6aadc8-31a1-441c-905d-11b23b8ce889', 'US', 'Islamic Name saved successfully.', 'Islamic Name saved successfully.', '2025-03-12 20:09:53', '2025-03-12 20:09:53'),
 ('9e6aadc8-35cb-4ca4-b17b-765561eb35de', 'PK', 'Islamic Name saved successfully.', 'Islamic Name saved successfully.', '2025-03-12 20:09:53', '2025-03-12 20:09:53'),
 ('9e6aae05-5538-4941-b3ee-2b8a83c67971', 'US', 'Islamic Name deleted successfully.', 'Islamic Name deleted successfully.', '2025-03-12 20:10:33', '2025-03-12 20:10:33'),
-('9e6aae05-59c7-4d10-8c85-e7807c3c8ec7', 'PK', 'Islamic Name deleted successfully.', 'Islamic Name deleted successfully.', '2025-03-12 20:10:33', '2025-03-12 20:10:33');
+('9e6aae05-59c7-4d10-8c85-e7807c3c8ec7', 'PK', 'Islamic Name deleted successfully.', 'Islamic Name deleted successfully.', '2025-03-12 20:10:33', '2025-03-12 20:10:33'),
+('9e6ab70b-9eca-4f90-9732-08ef87273e53', 'US', 'Book saved successfully.', 'Book saved successfully.', '2025-03-12 20:35:47', '2025-03-12 20:35:47'),
+('9e6ab70b-a294-45d9-a7c4-d1ccaf72e1ec', 'PK', 'Book saved successfully.', 'Book saved successfully.', '2025-03-12 20:35:47', '2025-03-12 20:35:47'),
+('9e6ab7de-c509-428e-b92d-2b00d3adb30e', 'US', 'Download Link', 'Download Link', '2025-03-12 20:38:05', '2025-03-12 20:38:05'),
+('9e6ab7de-c974-49ff-a627-e6431814352c', 'PK', 'Download Link', 'Download Link', '2025-03-12 20:38:05', '2025-03-12 20:38:05'),
+('9e6ad7eb-0b30-451a-88e5-7daf639d5bdd', 'US', 'Please correct the errors and try again.', 'Please correct the errors and try again.', '2025-03-12 22:07:42', '2025-03-12 22:07:42'),
+('9e6ad7eb-18bf-44ad-83d0-2943627bca2c', 'PK', 'Please correct the errors and try again.', 'Please correct the errors and try again.', '2025-03-12 22:07:42', '2025-03-12 22:07:42'),
+('9e6ad8fd-3cee-4ea6-a8e9-54727d203865', 'US', 'k', 'k', '2025-03-12 22:10:41', '2025-03-12 22:10:41'),
+('9e6ad8fd-40fd-4080-ac0d-48923a0314e3', 'PK', 'k', 'k', '2025-03-12 22:10:41', '2025-03-12 22:10:41'),
+('9e6ad8fe-d31e-434d-b745-473b64bd3006', 'US', 'Im', 'Im', '2025-03-12 22:10:43', '2025-03-12 22:10:43'),
+('9e6ad8fe-d877-4a01-8437-a24f860b2531', 'PK', 'Im', 'Im', '2025-03-12 22:10:43', '2025-03-12 22:10:43'),
+('9e6ad8fe-dfba-4fa3-8750-e7b5364f63e9', 'US', 'I', 'I', '2025-03-12 22:10:43', '2025-03-12 22:10:43'),
+('9e6ad8fe-e62a-430d-b8a6-999cbed97cf7', 'PK', 'I', 'I', '2025-03-12 22:10:43', '2025-03-12 22:10:43'),
+('9e6ad8ff-cbe9-4dcb-843b-02bf21df8dfd', 'US', 'Ima', 'Ima', '2025-03-12 22:10:43', '2025-03-12 22:10:43'),
+('9e6ad8ff-d0ec-4574-90ef-f6f0c797f810', 'PK', 'Ima', 'Ima', '2025-03-12 22:10:43', '2025-03-12 22:10:43'),
+('9e6add75-4e7a-4434-91cf-a3da4e0b9fa8', 'US', 'New Bayanaa', 'New Bayanaa', '2025-03-12 22:23:11', '2025-03-12 22:23:11'),
+('9e6add75-5543-4c1a-9791-e366cbe2ebdb', 'PK', 'New Bayanaa', 'New Bayanaa', '2025-03-12 22:23:11', '2025-03-12 22:23:11'),
+('9e6add75-730f-45b6-843f-ab097a5bdea1', 'US', 'New Bayana', 'New Bayana', '2025-03-12 22:23:11', '2025-03-12 22:23:11'),
+('9e6add75-7817-4159-9910-cdffbd9e7b7b', 'PK', 'New Bayana', 'New Bayana', '2025-03-12 22:23:11', '2025-03-12 22:23:11'),
+('9e6add75-d4a9-4d6e-9650-1494a85b30d5', 'US', 'New Bayan', 'New Bayan', '2025-03-12 22:23:12', '2025-03-12 22:23:12'),
+('9e6add75-d9ac-4142-81d7-8573b6a181da', 'PK', 'New Bayan', 'New Bayan', '2025-03-12 22:23:12', '2025-03-12 22:23:12'),
+('9e6add7a-c98f-446a-98a1-412e55e0c76b', 'US', 'All Bayanaa', 'All Bayanaa', '2025-03-12 22:23:15', '2025-03-12 22:23:15'),
+('9e6add7a-cd80-42e2-8067-8dbbff8a3b87', 'PK', 'All Bayanaa', 'All Bayanaa', '2025-03-12 22:23:15', '2025-03-12 22:23:15'),
+('9e6add7b-59f6-47de-bd53-8de42ae4914f', 'US', 'All Bayana', 'All Bayana', '2025-03-12 22:23:15', '2025-03-12 22:23:15'),
+('9e6add7b-5e99-4791-8b88-2363f8fa2f63', 'PK', 'All Bayana', 'All Bayana', '2025-03-12 22:23:15', '2025-03-12 22:23:15'),
+('9e6add7b-fd17-48c5-ab39-06dd80578ae8', 'US', 'All Bayan', 'All Bayan', '2025-03-12 22:23:16', '2025-03-12 22:23:16'),
+('9e6add7c-006f-4870-ae67-fc7748da4a53', 'PK', 'All Bayan', 'All Bayan', '2025-03-12 22:23:16', '2025-03-12 22:23:16'),
+('9e6add9f-3fb5-4646-b16f-fe6e6a985ed1', 'US', 'Edit Bayanaa', 'Edit Bayanaa', '2025-03-12 22:23:39', '2025-03-12 22:23:39'),
+('9e6add9f-4368-4c1a-8aa2-064a228e19c4', 'PK', 'Edit Bayanaa', 'Edit Bayanaa', '2025-03-12 22:23:39', '2025-03-12 22:23:39'),
+('9e6add9f-dd31-4690-aaaa-6893cbbd2478', 'US', 'Edit Bayana', 'Edit Bayana', '2025-03-12 22:23:39', '2025-03-12 22:23:39'),
+('9e6add9f-e460-4bb0-9d1f-16f25c03d411', 'PK', 'Edit Bayana', 'Edit Bayana', '2025-03-12 22:23:39', '2025-03-12 22:23:39'),
+('9e6adda0-8d64-4754-8ffc-75fca86c7520', 'US', 'Edit Bayan', 'Edit Bayan', '2025-03-12 22:23:40', '2025-03-12 22:23:40'),
+('9e6adda0-90f7-462f-bf69-477f4630003d', 'PK', 'Edit Bayan', 'Edit Bayan', '2025-03-12 22:23:40', '2025-03-12 22:23:40'),
+('9e6addb5-7869-49a2-bb93-f5afc80be8cf', 'US', 'New Bayanat', 'New Bayanat', '2025-03-12 22:23:53', '2025-03-12 22:23:53'),
+('9e6addb5-7cd0-4363-bf2d-aba4819896a9', 'PK', 'New Bayanat', 'New Bayanat', '2025-03-12 22:23:53', '2025-03-12 22:23:53'),
+('9e6addb5-ea9e-4c4f-b8c2-cdff1364d78c', 'US', 'New Bayant', 'New Bayant', '2025-03-12 22:23:54', '2025-03-12 22:23:54'),
+('9e6addb5-ee85-45c5-b261-06581f34076b', 'PK', 'New Bayant', 'New Bayant', '2025-03-12 22:23:54', '2025-03-12 22:23:54'),
+('9e6ae18b-bb30-401c-8896-4d2de3b338e9', 'US', 'Enrolled Student', 'Enrolled Student', '2025-03-12 22:34:37', '2025-03-12 22:34:37'),
+('9e6ae18b-bfd9-42d6-a034-1bc48ca65b51', 'PK', 'Enrolled Student', 'داخل شدہ طالب علم', '2025-03-12 22:34:37', '2025-03-12 22:36:37'),
+('9e6ae18b-cabf-4e4d-89c3-a2d15427171d', 'US', 'Settings', 'Settings', '2025-03-12 22:34:37', '2025-03-12 22:34:37'),
+('9e6ae18b-cf8d-4b89-8b92-5e185dbe9c0f', 'PK', 'Settings', 'ترتیبات', '2025-03-12 22:34:37', '2025-03-12 22:36:24'),
+('9e6ae1b7-66ed-4753-a795-9d4b0d165bd5', 'US', 'Questions & Answers', 'Questions & Answers', '2025-03-12 22:35:06', '2025-03-12 22:35:06'),
+('9e6ae1b7-6da8-4dbc-aa8a-60501a5147cc', 'PK', 'Questions & Answers', 'سوالات و جوابات', '2025-03-12 22:35:06', '2025-03-12 22:36:58'),
+('9e6ae1d2-4c35-4e03-9944-2c0843a92215', 'US', 'Darul Iftah', 'Darul Iftah', '2025-03-12 22:35:23', '2025-03-12 22:35:23'),
+('9e6ae1d2-54c2-4cc5-b12c-382ef99ec0d4', 'PK', 'Darul Iftah', 'دار الافتاء', '2025-03-12 22:35:23', '2025-03-12 22:36:15'),
+('9e6ae1ed-aea4-4da0-b258-a69443f820fb', 'US', 'Software Users', 'Software Users', '2025-03-12 22:35:41', '2025-03-12 22:35:41'),
+('9e6ae1ed-b3d2-46a0-99bf-f74cdbe3d55b', 'PK', 'Software Users', 'سافٹ ویئر صارفین', '2025-03-12 22:35:41', '2025-03-12 22:36:01'),
+('9e6bcf58-00c5-47ab-852e-6477b40ab7ea', 'US', 'Language deleted successfully', 'Language deleted successfully', '2025-03-13 09:39:33', '2025-03-13 09:39:33'),
+('9e6bcf58-15c8-4558-a83c-030a41fb5df1', 'GB', 'Language deleted successfully', 'Language deleted successfully', '2025-03-13 09:39:33', '2025-03-13 09:39:33'),
+('9e6be4e7-db80-4eb3-8b3c-d2b2c3ebd1da', 'PK', 'Language deleted successfully', 'Language deleted successfully', '2025-03-13 10:39:50', '2025-03-13 10:39:50'),
+('9e6be50f-a12e-4b4d-8dec-439d8a102d33', 'SA', 'Languages', 'Languages', '2025-03-13 10:40:16', '2025-03-13 10:40:16'),
+('9e6be50f-a55a-4df4-915f-6661a6d9638a', 'SA', 'Language', 'Language', '2025-03-13 10:40:16', '2025-03-13 10:40:16'),
+('9e6be50f-a666-452a-8a96-3ab1b715184d', 'SA', 'Code', 'Code', '2025-03-13 10:40:16', '2025-03-13 10:40:16'),
+('9e6be50f-a7a9-4400-a6ea-7b5513160be8', 'SA', 'Name', 'Name', '2025-03-13 10:40:16', '2025-03-13 10:40:16'),
+('9e6be50f-a8f3-460b-bafe-c043cb9e4a47', 'SA', 'Status', 'Status', '2025-03-13 10:40:16', '2025-03-13 10:40:16'),
+('9e6be50f-aa47-4b94-bf52-2db38e2f7fd8', 'SA', 'Are you sure', 'Are you sure', '2025-03-13 10:40:16', '2025-03-13 10:40:16'),
+('9e6be50f-ab48-4a09-944e-cae90babfcb1', 'SA', 'Close', 'Close', '2025-03-13 10:40:16', '2025-03-13 10:40:16'),
+('9e6be50f-ac2f-43d2-bb08-3e79fae561c9', 'SA', 'Yes, delete it', 'Yes, delete it', '2025-03-13 10:40:16', '2025-03-13 10:40:16'),
+('9e6be50f-ad14-4f5f-94f1-ec5efd21ab4f', 'SA', 'Default Language', 'Default Language', '2025-03-13 10:40:16', '2025-03-13 10:40:16'),
+('9e6be50f-adf5-4b9e-99fe-9ef3b8be96c0', 'SA', 'Choose default language', 'Choose default language', '2025-03-13 10:40:16', '2025-03-13 10:40:16'),
+('9e6be50f-af1b-4bc7-8cb1-324fdc43a0a4', 'SA', 'Save', 'Save', '2025-03-13 10:40:16', '2025-03-13 10:40:16'),
+('9e6be50f-b032-4751-922a-b58fca7bc8c8', 'SA', 'Add New Language', 'Add New Language', '2025-03-13 10:40:16', '2025-03-13 10:40:16'),
+('9e6be50f-b139-4165-88d4-b330bbed4307', 'SA', 'OFF', 'OFF', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-b231-44ac-be70-2b3f12c0c70b', 'SA', 'Choose Status', 'Choose Status', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-b33d-44f6-8ef3-b67198df8448', 'SA', 'Country', 'Country', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-b446-4927-9082-250214d36fad', 'SA', 'ON', 'ON', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-b567-4c01-8a0b-3f08c6410069', 'SA', 'Choose country', 'Choose country', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-b689-4fed-ad48-8cb2e71593cb', 'SA', 'Language added successfully', 'Language added successfully', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-b795-4ac8-9e0b-0f1962c8a100', 'SA', 'Translations', 'Translations', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-b8a1-428e-961c-b6ed1133f72c', 'SA', 'Delete', 'Delete', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-b9a5-4f33-8795-9cedf81b5d2c', 'SA', 'Edit', 'Edit', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-baca-457c-b574-10abfe9cc3e5', 'SA', 'Key', 'Key', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-bc0f-4eaa-a44e-ad6c189cf0da', 'SA', 'Value', 'Value', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-bd0a-4254-8ca9-03985b84b799', 'SA', 'Are you sure?', 'Are you sure?', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-bdf3-4953-9249-34096971e880', 'SA', 'Search Translations', 'Search Translations', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-bede-4f77-b5b6-1c9a30837203', 'SA', 'Home', 'Home', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-bfc9-448b-9695-f94ef32d9ff0', 'SA', 'Yes, delete it!', 'Yes, delete it!', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-c0b6-4c34-a26c-3c389b90f6a6', 'SA', 'Go to Languages', 'Go to Languages', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-c1c0-45eb-a7c0-678e2f9070a2', 'SA', 'Translations added successfully', 'Translations added successfully', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-c2db-4c04-94be-baf69246bd05', 'SA', 'Introduction', 'Introduction', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-c3d7-4a62-b26e-d7bc09255e5e', 'SA', 'Alsmi', 'Alsmi', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-c4ca-4807-ba51-aa2049b64c8e', 'SA', 'Index', 'Index', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-c5c5-431d-9cb6-c7876f071bb5', 'SA', 'New Introduction', 'New Introduction', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-c6b1-46b2-92f3-932e4ea6967b', 'SA', 'All Introductions', 'All Introductions', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-c78f-4e41-afd1-186cb3d65385', 'SA', 'Description', 'Description', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-c894-48e4-9d74-641f1edd5dc4', 'SA', 'Title', 'Title', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-c986-4900-bad9-d96a21ba93db', 'SA', 'New Introduction Entry', 'New Introduction Entry', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-ca48-477e-b957-d77238b2780e', 'SA', 'Action', 'Action', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-cb2e-4332-8efc-e0a03568b789', 'SA', 'Books', 'Books', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-cbf9-40d6-8ddd-caa65d331f79', 'SA', 'New Book', 'New Book', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-ccc8-410e-877f-4d3e6cb5bd60', 'SA', 'All Books', 'All Books', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-cda4-4437-83fd-64e067e9eeab', 'SA', 'Image', 'Image', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-ce8a-4397-9196-e7a41d79f42f', 'SA', 'Download', 'Download', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-cfac-4032-b5ce-9514e290e54b', 'SA', 'Bayanaat', 'Bayanaat', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-d085-4527-bc00-1711da1d8f97', 'SA', 'New Bayanaat', 'New Bayanaat', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-d15b-4d2b-8aed-238271c121b2', 'SA', 'Author', 'Author', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-d223-4b3f-934c-c436eb704ca5', 'SA', 'All Bayanaat', 'All Bayanaat', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-d309-4938-b000-1eefaf568fb9', 'SA', 'English Date', 'English Date', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-d3d2-4f50-afe6-002008374cda', 'SA', 'Islamic Date', 'Islamic Date', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-d4a3-41c8-a4f0-ca86e7dc100f', 'SA', 'Actions', 'Actions', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-d59d-4393-acae-55206eeb6e16', 'SA', 'Islamic Names', 'Islamic Names', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-d68d-4094-8979-30aa2f29c96f', 'SA', 'New Islamic Name', 'New Islamic Name', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-d765-4b6a-a601-2031b71542df', 'SA', 'Meaning', 'Meaning', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-d83c-44a5-9243-5a1eacf4c3ed', 'SA', 'All Islamic Names', 'All Islamic Names', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-d90f-4578-8eda-18cab232eb40', 'SA', 'Roman', 'Roman', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-d9f1-4ae8-b31b-f3117f64d618', 'SA', 'Inflection', 'Inflection', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-dada-499b-8ecc-d2dbd7d62771', 'SA', 'Reference', 'Reference', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-dd04-4b83-982b-fec9e9109036', 'SA', 'Type', 'Type', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-de34-4212-9afb-634fc9abe3bf', 'SA', 'Edit Book', 'Edit Book', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-df8c-4e75-ace1-dcef543cef32', 'SA', 'Darul Oloom', 'Darul Oloom', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-e0ec-4cb2-9b84-769f978c4c7b', 'SA', 'Saving', 'Saving', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-e262-4e1f-ac87-9282d88677c8', 'SA', 'Edit Introduction', 'Edit Introduction', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-e3c1-4cb4-bf59-98e09472b9e4', 'SA', 'Content', 'Content', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-e51b-426d-b607-35b6e6d07971', 'SA', 'Edit Bayanaat', 'Edit Bayanaat', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-e66d-474b-a914-e1c4b9ef5057', 'SA', 'X', 'X', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-e77c-4f94-8345-ddb474a4a2c0', 'SA', 'Xp', 'Xp', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-e8d9-4f3e-8732-5a03e577db69', 'SA', 'Xo', 'Xo', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-e9fd-4434-b0aa-be648a615642', 'SA', 'Xon', 'Xon', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-eae9-4099-9917-bf1c23cf29ef', 'SA', 'Xonte', 'Xonte', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-ebcf-4919-a5e3-73d1af79deaa', 'SA', 'Xonten', 'Xonten', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-ecb2-4be8-9ca9-016d95d18a0f', 'SA', 'Xontent', 'Xontent', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-edae-488a-b733-380909ebf3fc', 'SA', 'ontent', 'ontent', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-eeb1-4493-a15a-6bc5840b393c', 'SA', 'Contenst', 'Contenst', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-efe2-4b3c-bf22-df03380b8bae', 'SA', 'Contents', 'Contents', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-f0e2-4f0c-841f-9cb1e578d352', 'SA', 'Bayan saved successfully.', 'Bayan saved successfully.', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-f1cc-4800-8e86-3671d0df3080', 'SA', 'Failed to delete bayan.', 'Failed to delete bayan.', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-f2b4-48ef-9747-8de020c953dd', 'SA', 'New Islamic Name Entry', 'New Islamic Name Entry', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-f3a1-44e6-a57e-b529a3bbc0ef', 'SA', 'Edit Islamic Name', 'Edit Islamic Name', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-f486-4523-974c-a269b5f56b8b', 'SA', 'Islamic Name saved successfully.', 'Islamic Name saved successfully.', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-f572-4999-9f74-35dd3947bd9a', 'SA', 'Islamic Name deleted successfully.', 'Islamic Name deleted successfully.', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-f69f-45a7-b692-f5e140968834', 'SA', 'Book saved successfully.', 'Book saved successfully.', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-f7ce-4377-bb71-7503742c5ab7', 'SA', 'Download Link', 'Download Link', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-f931-4cf6-b5bc-b5326a402ff0', 'SA', 'Please correct the errors and try again.', 'Please correct the errors and try again.', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-fa57-41ff-ad6d-bdaa99387d29', 'SA', 'k', 'k', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-fb4b-452d-acd0-529e897e9f3d', 'SA', 'Im', 'Im', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-fc5f-48c2-ae2e-db04b685f780', 'SA', 'I', 'I', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-fd73-4991-9483-2492dcbe5f73', 'SA', 'Ima', 'Ima', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-feaa-4687-8d9d-ab111039ef0a', 'SA', 'New Bayanaa', 'New Bayanaa', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be50f-ff69-4443-a60d-06ba0f240a51', 'SA', 'New Bayana', 'New Bayana', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-0023-4aa0-b598-11f16eda3a0e', 'SA', 'New Bayan', 'New Bayan', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-00dc-46d2-b38d-0aee73835735', 'SA', 'All Bayanaa', 'All Bayanaa', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-0191-4b76-9daa-207e7a7a6e7f', 'SA', 'All Bayana', 'All Bayana', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-026a-4c14-ae5b-991d6668c38d', 'SA', 'All Bayan', 'All Bayan', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-037a-4433-ac52-c3e3bba25cfd', 'SA', 'Edit Bayanaa', 'Edit Bayanaa', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-0442-4583-a245-c978e7d9f458', 'SA', 'Edit Bayana', 'Edit Bayana', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-051d-48d7-bae1-cead20c92c27', 'SA', 'Edit Bayan', 'Edit Bayan', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-05e6-46a5-97a0-a66b61e63bfb', 'SA', 'New Bayanat', 'New Bayanat', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-06a0-495b-8752-6b064a04e36f', 'SA', 'New Bayant', 'New Bayant', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-0766-4bb5-bfc8-64e1be4e4426', 'SA', 'Enrolled Student', 'Enrolled Student', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-0831-442d-a568-13250c176bdc', 'SA', 'Settings', 'Settings', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-090b-49ad-9435-49e226270b73', 'SA', 'Questions & Answers', 'Questions & Answers', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-0a27-4b88-9e37-85883ccf541b', 'SA', 'Darul Iftah', 'Darul Iftah', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-0b04-4cb9-8f66-e27922c3cc89', 'SA', 'Software Users', 'Software Users', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e6be510-0bd8-4432-8c6a-a580328a8ea7', 'SA', 'Language deleted successfully', 'Language deleted successfully', '2025-03-13 10:40:17', '2025-03-13 10:40:17'),
+('9e78abf0-770a-404f-ae8d-a284959d793e', 'US', 'Student Enrollment', 'Student Enrollment', '2025-03-19 19:06:19', '2025-03-19 19:06:19'),
+('9e78abf0-7712-44fb-8973-43fb67eb6ff6', 'US', 'Student Enrollment', 'Student Enrollment', '2025-03-19 19:06:19', '2025-03-19 19:06:19'),
+('9e78abf1-67f8-4bf6-9bd6-a3329b1bb55a', 'GB', 'Student Enrollment', 'Student Enrollment', '2025-03-19 19:06:19', '2025-03-19 19:06:19'),
+('9e78abf1-67fe-4910-9abc-821c396703e2', 'GB', 'Student Enrollment', 'Student Enrollment', '2025-03-19 19:06:19', '2025-03-19 19:06:19'),
+('9e78abf2-240d-41e3-98b8-23820cda1c30', 'US', 'New Enrollment', 'New Enrollment', '2025-03-19 19:06:20', '2025-03-19 19:06:20'),
+('9e78abf2-2491-404b-b3ca-2e0083eb656f', 'US', 'All Enrolled Students', 'All Enrolled Students', '2025-03-19 19:06:20', '2025-03-19 19:06:20'),
+('9e78abf2-2c2d-46b0-80e7-0ca3286ee7d3', 'GB', 'New Enrollment', 'New Enrollment', '2025-03-19 19:06:20', '2025-03-19 19:06:20'),
+('9e78abf2-2c85-41b2-9653-29925a4827d2', 'GB', 'All Enrolled Students', 'All Enrolled Students', '2025-03-19 19:06:20', '2025-03-19 19:06:20'),
+('9e78abf2-d6e0-49a8-8a99-04af4b91e2c1', 'US', 'DOB', 'DOB', '2025-03-19 19:06:20', '2025-03-19 19:06:20'),
+('9e78abf2-dc68-4102-a2e6-26cb9f1386ba', 'GB', 'DOB', 'DOB', '2025-03-19 19:06:20', '2025-03-19 19:06:20'),
+('9e78abf2-ddb7-48d7-ae02-ef5033aa9de1', 'US', 'Father', 'Father', '2025-03-19 19:06:20', '2025-03-19 19:06:20'),
+('9e78abf2-e2b8-4f2f-afa1-5a165f85deec', 'GB', 'Father', 'Father', '2025-03-19 19:06:20', '2025-03-19 19:06:20'),
+('9e78abf3-85a6-4682-8407-206dd5b18e7b', 'US', 'Apply For', 'Apply For', '2025-03-19 19:06:21', '2025-03-19 19:06:21'),
+('9e78abf3-8c07-452d-a650-16a097235f14', 'GB', 'Apply For', 'Apply For', '2025-03-19 19:06:21', '2025-03-19 19:06:21'),
+('9e78abf4-2b14-4603-96a0-1ec3bd0bf8ad', 'US', 'New Student Enrollment', 'New Student Enrollment', '2025-03-19 19:06:21', '2025-03-19 19:06:21'),
+('9e78abf4-313e-4f96-b215-41b03d787c84', 'GB', 'New Student Enrollment', 'New Student Enrollment', '2025-03-19 19:06:21', '2025-03-19 19:06:21'),
+('9e78abf5-9b8a-449b-8914-3728096148a3', 'US', 'Current Address', 'Current Address', '2025-03-19 19:06:22', '2025-03-19 19:06:22'),
+('9e78abf5-a2e1-417a-b43b-a4f4ba4bf051', 'GB', 'Current Address', 'Current Address', '2025-03-19 19:06:22', '2025-03-19 19:06:22');
+INSERT INTO `translations` (`id`, `lang`, `lang_key`, `lang_value`, `created_at`, `updated_at`) VALUES
+('9e78abf5-b78f-4213-ab2c-4883a9da9822', 'US', 'Permanent Address', 'Permanent Address', '2025-03-19 19:06:22', '2025-03-19 19:06:22'),
+('9e78abf5-bd85-4609-a651-3ef0f12e5a88', 'GB', 'Permanent Address', 'Permanent Address', '2025-03-19 19:06:22', '2025-03-19 19:06:22'),
+('9e78abf9-9ce5-4f74-9e38-5c54045c6e0d', 'US', 'Primary Education', 'Primary Education', '2025-03-19 19:06:25', '2025-03-19 19:06:25'),
+('9e78abf9-a397-4c0a-987f-e8e26274a81f', 'GB', 'Primary Education', 'Primary Education', '2025-03-19 19:06:25', '2025-03-19 19:06:25'),
+('9e78abfa-663b-496f-a669-017358f2531f', 'US', 'Additional Ability', 'Additional Ability', '2025-03-19 19:06:25', '2025-03-19 19:06:25'),
+('9e78abfa-6eaf-4f2c-a8fa-68a732ce3d6d', 'GB', 'Additional Ability', 'Additional Ability', '2025-03-19 19:06:25', '2025-03-19 19:06:25'),
+('9e78b1fd-c6d8-4cb5-96b0-6f9d681b65fe', 'US', 'Select Course/Package', 'Select Course/Package', '2025-03-19 19:23:14', '2025-03-19 19:23:14'),
+('9e78b1fd-c926-474c-b183-69c15c2d57b9', 'US', 'Student Enrollment Form', 'Student Enrollment Form', '2025-03-19 19:23:14', '2025-03-19 19:23:14'),
+('9e78b1fd-cc16-4d6e-96e9-8269527d490a', 'GB', 'Select Course/Package', 'Select Course/Package', '2025-03-19 19:23:14', '2025-03-19 19:23:14'),
+('9e78b1fd-ceb6-4bcc-8bab-fb221f6b97ce', 'GB', 'Student Enrollment Form', 'Student Enrollment Form', '2025-03-19 19:23:14', '2025-03-19 19:23:14'),
+('9e78b1ff-6806-4a7d-a4cd-9f722fa33655', 'US', 'Additional Abilities', 'Additional Abilities', '2025-03-19 19:23:15', '2025-03-19 19:23:15'),
+('9e78b1ff-6cfb-4ee1-867d-b8ffebf85348', 'GB', 'Additional Abilities', 'Additional Abilities', '2025-03-19 19:23:15', '2025-03-19 19:23:15'),
+('9e78b1ff-6f69-42f4-8d81-06975a0c67d9', 'US', 'Date of Birth', 'Date of Birth', '2025-03-19 19:23:15', '2025-03-19 19:23:15'),
+('9e78b1ff-7580-4e21-b3b0-eceb69e47b73', 'GB', 'Date of Birth', 'Date of Birth', '2025-03-19 19:23:15', '2025-03-19 19:23:15'),
+('9e78b200-1f06-4777-bdd1-aafc738237ad', 'US', 'Enroll Now', 'Enroll Now', '2025-03-19 19:23:16', '2025-03-19 19:23:16'),
+('9e78b200-254e-4b9e-8b7c-d095bd97e90d', 'GB', 'Enroll Now', 'Enroll Now', '2025-03-19 19:23:16', '2025-03-19 19:23:16'),
+('9e78b22d-1a4f-4686-8f4d-5a64a84fb08b', 'US', 'Processing...', 'Processing...', '2025-03-19 19:23:45', '2025-03-19 19:23:45'),
+('9e78b22d-21c4-4825-be81-eb67fe51299e', 'GB', 'Processing...', 'Processing...', '2025-03-19 19:23:45', '2025-03-19 19:23:45'),
+('9e78b5be-c6d7-4a2a-a77f-80872c4d46dd', 'US', 'Fathers Name', 'Fathers Name', '2025-03-19 19:33:44', '2025-03-19 19:33:44'),
+('9e78b5be-cc0e-4c47-b19b-a413cd2d79bb', 'GB', 'Fathers Name', 'Fathers Name', '2025-03-19 19:33:44', '2025-03-19 19:33:44'),
+('9e78b5c3-53cf-4150-bb59-4509859d85f3', 'US', 'Father Name', 'Father Name', '2025-03-19 19:33:47', '2025-03-19 19:33:47'),
+('9e78b5c3-590c-49e0-9ca7-4e6484f3917c', 'GB', 'Father Name', 'Father Name', '2025-03-19 19:33:47', '2025-03-19 19:33:47'),
+('9e78b831-62ad-4e11-9fb5-4fc860910ea8', 'US', 'Phone Number', 'Phone Number', '2025-03-19 19:40:35', '2025-03-19 19:40:35'),
+('9e78b831-6aa5-45a9-8d8a-179fd04405d2', 'GB', 'Phone Number', 'Phone Number', '2025-03-19 19:40:35', '2025-03-19 19:40:35'),
+('9e78bac3-92ff-4c2e-8e1e-72f5f90fed91', 'US', 'Student enrolled successfully.', 'Student enrolled successfully.', '2025-03-19 19:47:46', '2025-03-19 19:47:46'),
+('9e78bac3-996f-4c78-945f-f97e6925f2e5', 'GB', 'Student enrolled successfully.', 'Student enrolled successfully.', '2025-03-19 19:47:46', '2025-03-19 19:47:46'),
+('9e78bae8-73a8-4f77-8289-8b53da03bf79', 'US', 'An unexpected error occurred.', 'An unexpected error occurred.', '2025-03-19 19:48:10', '2025-03-19 19:48:10'),
+('9e78bae8-768c-4b7a-927a-5073d13dbe3a', 'GB', 'An unexpected error occurred.', 'An unexpected error occurred.', '2025-03-19 19:48:10', '2025-03-19 19:48:10'),
+('9e78bb82-d836-497b-a4b9-0e1f3ab767bc', 'US', 'Application Successful', 'Application Successful', '2025-03-19 19:49:51', '2025-03-19 19:49:51'),
+('9e78bb82-e5be-4b5b-b0ab-8175577af8d8', 'GB', 'Application Successful', 'Application Successful', '2025-03-19 19:49:51', '2025-03-19 19:49:51'),
+('9e78bb83-44d8-468a-8e1d-81dd620d19d1', 'US', 'Dear Student', 'Dear Student', '2025-03-19 19:49:52', '2025-03-19 19:49:52'),
+('9e78bb83-47da-4c7f-962f-c39b76306377', 'GB', 'Dear Student', 'Dear Student', '2025-03-19 19:49:52', '2025-03-19 19:49:52'),
+('9e78bb83-4911-40e7-ba60-9dae1fb6e62e', 'US', 'You have successfully applied for this course.', 'You have successfully applied for this course.', '2025-03-19 19:49:52', '2025-03-19 19:49:52'),
+('9e78bb83-4ba7-4b12-8794-8967bb131130', 'GB', 'You have successfully applied for this course.', 'You have successfully applied for this course.', '2025-03-19 19:49:52', '2025-03-19 19:49:52'),
+('9e78bb83-acf7-459a-a018-f82f43029e46', 'US', 'For any queries, contact us at:', 'For any queries, contact us at:', '2025-03-19 19:49:52', '2025-03-19 19:49:52'),
+('9e78bb83-ad2a-414a-a0a1-7fbade26ac5f', 'US', 'The administration will contact you soon.', 'The administration will contact you soon.', '2025-03-19 19:49:52', '2025-03-19 19:49:52'),
+('9e78bb83-b623-4b13-9843-093e3703a8de', 'GB', 'For any queries, contact us at:', 'For any queries, contact us at:', '2025-03-19 19:49:52', '2025-03-19 19:49:52'),
+('9e78bb83-b66c-4350-88ab-e6215e80d2c2', 'GB', 'The administration will contact you soon.', 'The administration will contact you soon.', '2025-03-19 19:49:52', '2025-03-19 19:49:52'),
+('9e78bb84-283e-4fe5-abcb-f25d6857b18e', 'US', 'OK', 'OK', '2025-03-19 19:49:52', '2025-03-19 19:49:52'),
+('9e78bb84-2f6c-4e35-9ad6-3a24a5266c07', 'GB', 'OK', 'OK', '2025-03-19 19:49:52', '2025-03-19 19:49:52'),
+('9e78bdd5-2501-4882-b3ed-3f83981c49eb', 'US', 'You have successfully applied for', 'You have successfully applied for', '2025-03-19 19:56:21', '2025-03-19 19:56:21'),
+('9e78bdd5-28a7-4089-8b82-3b608e807a78', 'GB', 'You have successfully applied for', 'You have successfully applied for', '2025-03-19 19:56:21', '2025-03-19 19:56:21'),
+('9e78bde7-04f1-4e6c-b59e-daa70c5004ca', 'US', 'You have successfully applied for th', 'You have successfully applied for th', '2025-03-19 19:56:32', '2025-03-19 19:56:32'),
+('9e78bde7-0b44-412b-a37b-b5af2c054a55', 'GB', 'You have successfully applied for th', 'You have successfully applied for th', '2025-03-19 19:56:32', '2025-03-19 19:56:32'),
+('9e78bde7-e7f1-4bad-9978-d9dc63654580', 'US', 'You have successfully applied for the', 'You have successfully applied for the', '2025-03-19 19:56:33', '2025-03-19 19:56:33'),
+('9e78bde7-ec76-4469-8276-0b859e9cec28', 'GB', 'You have successfully applied for the', 'You have successfully applied for the', '2025-03-19 19:56:33', '2025-03-19 19:56:33'),
+('9e78bde9-4806-4d63-8fb5-048a20b8af21', 'US', 'You have successfully applied for the c', 'You have successfully applied for the c', '2025-03-19 19:56:34', '2025-03-19 19:56:34'),
+('9e78bde9-4d26-4fcb-8c78-b11a81d30767', 'GB', 'You have successfully applied for the c', 'You have successfully applied for the c', '2025-03-19 19:56:34', '2025-03-19 19:56:34'),
+('9e78bdea-6968-4ae2-add8-ceef4a661efe', 'US', 'You have successfully applied for the co', 'You have successfully applied for the co', '2025-03-19 19:56:35', '2025-03-19 19:56:35'),
+('9e78bdea-6c7a-4e90-a027-d13bec1f9b95', 'GB', 'You have successfully applied for the co', 'You have successfully applied for the co', '2025-03-19 19:56:35', '2025-03-19 19:56:35'),
+('9e78bdeb-d553-4041-91d9-87ff689b026e', 'US', 'You have successfully applied for the cou', 'You have successfully applied for the cou', '2025-03-19 19:56:36', '2025-03-19 19:56:36'),
+('9e78bdeb-d8ee-490b-ba5b-c2b795583110', 'GB', 'You have successfully applied for the cou', 'You have successfully applied for the cou', '2025-03-19 19:56:36', '2025-03-19 19:56:36'),
+('9e78bdec-485c-4c55-b8ae-c7e5308d9148', 'US', 'You have successfully applied for the cour', 'You have successfully applied for the cour', '2025-03-19 19:56:36', '2025-03-19 19:56:36'),
+('9e78bdec-4a90-4886-b1be-f1d5e9cf6fc6', 'GB', 'You have successfully applied for the cour', 'You have successfully applied for the cour', '2025-03-19 19:56:36', '2025-03-19 19:56:36'),
+('9e78bded-3d86-4747-998c-ac08745f5cfe', 'US', 'You have successfully applied for the course', 'You have successfully applied for the course', '2025-03-19 19:56:37', '2025-03-19 19:56:37'),
+('9e78bded-4118-4b15-9ccf-342b15d6cc1b', 'GB', 'You have successfully applied for the course', 'You have successfully applied for the course', '2025-03-19 19:56:37', '2025-03-19 19:56:37'),
+('9e78bdef-6cfc-4e7c-8a4b-eae09319ba1f', 'US', 'You have successfully applied for the course of', 'You have successfully applied for the course of', '2025-03-19 19:56:38', '2025-03-19 19:56:38'),
+('9e78bdef-6fc1-40a4-a701-d2a3cce5ff1e', 'GB', 'You have successfully applied for the course of', 'You have successfully applied for the course of', '2025-03-19 19:56:38', '2025-03-19 19:56:38'),
+('9e78bdf2-0aed-4938-8f17-3b587cdd8027', 'US', 'Dear', 'Dear', '2025-03-19 19:56:40', '2025-03-19 19:56:40'),
+('9e78bdf2-1043-4d6f-b284-c524f9d112e2', 'GB', 'Dear', 'Dear', '2025-03-19 19:56:40', '2025-03-19 19:56:40'),
+('9e78d00a-014f-40ec-b992-d94b06b3ab5d', 'US', 'Course Duration', 'Course Duration', '2025-03-19 20:47:15', '2025-03-19 20:47:15'),
+('9e78d00a-014f-4b80-a95c-4fcc91057359', 'US', 'Course Duration', 'Course Duration', '2025-03-19 20:47:15', '2025-03-19 20:47:15'),
+('9e78d00a-0a6f-428d-ab0e-60f09a71236e', 'GB', 'Course Duration', 'Course Duration', '2025-03-19 20:47:15', '2025-03-19 20:47:15'),
+('9e78d00a-0a81-44c5-9364-2c736cace600', 'GB', 'Course Duration', 'Course Duration', '2025-03-19 20:47:15', '2025-03-19 20:47:15'),
+('9e78d00b-1362-4782-9635-2c9b5d9cba97', 'US', 'Each course has a duration ranging from 6 months to 3 years, depending on the subject matter.', 'Each course has a duration ranging from 6 months to 3 years, depending on the subject matter.', '2025-03-19 20:47:16', '2025-03-19 20:47:16'),
+('9e78d00b-16a8-4464-931a-385291d3ea73', 'GB', 'Each course has a duration ranging from 6 months to 3 years, depending on the subject matter.', 'Each course has a duration ranging from 6 months to 3 years, depending on the subject matter.', '2025-03-19 20:47:16', '2025-03-19 20:47:16'),
+('9e78d00b-1d95-45f0-98a5-f72509ae2d1a', 'US', 'Course Requirements', 'Course Requirements', '2025-03-19 20:47:16', '2025-03-19 20:47:16'),
+('9e78d00b-2163-4715-b681-bdb9e74881a0', 'GB', 'Course Requirements', 'Course Requirements', '2025-03-19 20:47:16', '2025-03-19 20:47:16'),
+('9e78d00b-83e7-4cd8-827e-01becac20666', 'US', 'Commitment to daily learning and practice', 'Commitment to daily learning and practice', '2025-03-19 20:47:16', '2025-03-19 20:47:16'),
+('9e78d00b-87f7-4d0f-8ba6-ff45c2b03533', 'GB', 'Commitment to daily learning and practice', 'Commitment to daily learning and practice', '2025-03-19 20:47:16', '2025-03-19 20:47:16'),
+('9e78d00b-90b4-43c2-a3c3-33a73fccb599', 'US', 'Basic understanding of Arabic (optional but recommended)', 'Basic understanding of Arabic (optional but recommended)', '2025-03-19 20:47:16', '2025-03-19 20:47:16'),
+('9e78d00b-9369-4e8b-9298-0aeac6479d5c', 'GB', 'Basic understanding of Arabic (optional but recommended)', 'Basic understanding of Arabic (optional but recommended)', '2025-03-19 20:47:16', '2025-03-19 20:47:16'),
+('9e78d00b-e554-4d14-9dd2-5efda794f139', 'US', 'Ability to read and write in Urdu or English', 'Ability to read and write in Urdu or English', '2025-03-19 20:47:17', '2025-03-19 20:47:17'),
+('9e78d00b-e98d-46da-af71-f7879685d2f0', 'GB', 'Ability to read and write in Urdu or English', 'Ability to read and write in Urdu or English', '2025-03-19 20:47:17', '2025-03-19 20:47:17'),
+('9e78d00c-4796-4de8-ae87-49fcc5e6ccef', 'US', 'Our institution provides a well-structured curriculum with experienced teachers and modern facilities to ensure a holistic Islamic education.', 'Our institution provides a well-structured curriculum with experienced teachers and modern facilities to ensure a holistic Islamic education.', '2025-03-19 20:47:17', '2025-03-19 20:47:17'),
+('9e78d00c-4c70-4e60-a6e4-45a6073feaec', 'GB', 'Our institution provides a well-structured curriculum with experienced teachers and modern facilities to ensure a holistic Islamic education.', 'Our institution provides a well-structured curriculum with experienced teachers and modern facilities to ensure a holistic Islamic education.', '2025-03-19 20:47:17', '2025-03-19 20:47:17'),
+('9e78d00c-5101-489c-8252-84be8f369662', 'US', 'Madrassa Role', 'Madrassa Role', '2025-03-19 20:47:17', '2025-03-19 20:47:17'),
+('9e78d00c-547e-4961-9d6c-798810a04d6b', 'GB', 'Madrassa Role', 'Madrassa Role', '2025-03-19 20:47:17', '2025-03-19 20:47:17'),
+('9e78d1ef-2ec5-4e99-a137-4c3d7a8adfdb', 'US', 'R', 'R', '2025-03-19 20:52:33', '2025-03-19 20:52:33'),
+('9e78d1ef-35fa-47bd-9c8a-375ca8cf2770', 'GB', 'R', 'R', '2025-03-19 20:52:33', '2025-03-19 20:52:33'),
+('9e78d1f2-3015-4906-bae2-bb365ac3f126', 'US', 'Rule', 'Rule', '2025-03-19 20:52:35', '2025-03-19 20:52:35'),
+('9e78d1f2-3613-4d5e-a3d9-43d02710506b', 'GB', 'Rule', 'Rule', '2025-03-19 20:52:35', '2025-03-19 20:52:35'),
+('9e78d1f6-ee78-4883-8ffb-5f6a755984da', 'US', 'Rule R', 'Rule R', '2025-03-19 20:52:38', '2025-03-19 20:52:38'),
+('9e78d1f6-f32b-4a31-aa16-b52bf386f7ca', 'GB', 'Rule R', 'Rule R', '2025-03-19 20:52:38', '2025-03-19 20:52:38'),
+('9e78d1f8-bf33-4ec2-8f59-9849b608698e', 'US', 'Rule Re', 'Rule Re', '2025-03-19 20:52:40', '2025-03-19 20:52:40'),
+('9e78d1f8-c7db-401c-93b9-cd6035aee52d', 'GB', 'Rule Re', 'Rule Re', '2025-03-19 20:52:40', '2025-03-19 20:52:40'),
+('9e78d1fc-ae4c-4202-9e81-58fa7496a356', 'US', 'Rule Regulatio', 'Rule Regulatio', '2025-03-19 20:52:42', '2025-03-19 20:52:42'),
+('9e78d1fc-b5bb-486a-ae81-7aa810b97dde', 'GB', 'Rule Regulatio', 'Rule Regulatio', '2025-03-19 20:52:42', '2025-03-19 20:52:42'),
+('9e78d3ea-c6e8-4bf7-83c6-4e372c798e1f', 'US', 'Rule Regulations', 'Rule Regulations', '2025-03-19 20:58:06', '2025-03-19 20:58:06'),
+('9e78d3ea-cdf7-45b7-a50b-417533f20b04', 'GB', 'Rule Regulations', 'Rule Regulations', '2025-03-19 20:58:06', '2025-03-19 20:58:06'),
+('9e78d88b-5615-433b-ac84-d6ec7f25aebe', 'US', 'DO', 'DO', '2025-03-19 21:11:02', '2025-03-19 21:11:02'),
+('9e78d88b-59ed-4d70-99a2-5e3984bc3952', 'GB', 'DO', 'DO', '2025-03-19 21:11:02', '2025-03-19 21:11:02'),
+('9e78d88b-b522-41cb-9df0-313cc8f7f9d6', 'US', 'D', 'D', '2025-03-19 21:11:02', '2025-03-19 21:11:02'),
+('9e78d88b-b877-435d-a2fe-7a5fa4b16219', 'GB', 'D', 'D', '2025-03-19 21:11:02', '2025-03-19 21:11:02'),
+('9e78d88c-e8a7-4de8-bf29-9cea0bacd23c', 'US', 'P', 'P', '2025-03-19 21:11:03', '2025-03-19 21:11:03'),
+('9e78d88c-eba9-4e92-891e-81010777567e', 'GB', 'P', 'P', '2025-03-19 21:11:03', '2025-03-19 21:11:03'),
+('9e78d88d-3893-4275-8cad-54b78531b765', 'US', 'Ph', 'Ph', '2025-03-19 21:11:03', '2025-03-19 21:11:03'),
+('9e78d88d-3c91-4208-ac32-7eec764b2cd0', 'GB', 'Ph', 'Ph', '2025-03-19 21:11:03', '2025-03-19 21:11:03'),
+('9e78d88d-75a8-4e15-b5ae-2130990ec402', 'US', 'Pho', 'Pho', '2025-03-19 21:11:04', '2025-03-19 21:11:04'),
+('9e78d88d-78a2-4ed0-8219-04237d7e6699', 'GB', 'Pho', 'Pho', '2025-03-19 21:11:04', '2025-03-19 21:11:04'),
+('9e78d88d-a14f-48c4-8de9-218e5cf9ad94', 'US', 'Phon', 'Phon', '2025-03-19 21:11:04', '2025-03-19 21:11:04'),
+('9e78d88d-a404-4e80-9512-34dffd70445f', 'GB', 'Phon', 'Phon', '2025-03-19 21:11:04', '2025-03-19 21:11:04'),
+('9e78d88d-e549-44f7-98ce-a90ff705fb6b', 'US', 'Phone', 'Phone', '2025-03-19 21:11:04', '2025-03-19 21:11:04'),
+('9e78d88d-e911-49c6-8438-16c5184e5ccb', 'GB', 'Phone', 'Phone', '2025-03-19 21:11:04', '2025-03-19 21:11:04'),
+('9e78d890-d74c-4ae8-b286-e52dd36eb2b8', 'US', 'Phone#', 'Phone#', '2025-03-19 21:11:06', '2025-03-19 21:11:06'),
+('9e78d890-da64-441b-9077-4f026e518b5e', 'GB', 'Phone#', 'Phone#', '2025-03-19 21:11:06', '2025-03-19 21:11:06'),
+('9e78d8a9-7526-4dc3-a287-953340704673', 'US', 'permanent_address', 'permanent_address', '2025-03-19 21:11:22', '2025-03-19 21:11:22'),
+('9e78d8a9-7911-4ce7-bf0d-9a2277d69899', 'GB', 'permanent_address', 'permanent_address', '2025-03-19 21:11:22', '2025-03-19 21:11:22'),
+('9e78d8b5-f9d8-4871-b203-c8654e2bb0e6', 'US', 'current_address', 'current_address', '2025-03-19 21:11:30', '2025-03-19 21:11:30'),
+('9e78d8b6-01e4-43a8-9088-cb1fc00da21c', 'GB', 'current_address', 'current_address', '2025-03-19 21:11:30', '2025-03-19 21:11:30'),
+('9e78d8bc-b0be-405f-acdd-5be7f0b3999b', 'US', 'primary_education', 'primary_education', '2025-03-19 21:11:35', '2025-03-19 21:11:35'),
+('9e78d8bc-b4d9-4fef-8dce-d5af0c14d537', 'GB', 'primary_education', 'primary_education', '2025-03-19 21:11:35', '2025-03-19 21:11:35'),
+('9e78d8ca-68f8-4eb6-aaf1-baa97433594b', 'US', 'additional_ability', 'additional_ability', '2025-03-19 21:11:44', '2025-03-19 21:11:44'),
+('9e78d8ca-6f0b-476b-9395-313bd0d2e36a', 'GB', 'additional_ability', 'additional_ability', '2025-03-19 21:11:44', '2025-03-19 21:11:44'),
+('9e78d8cc-5d6e-48df-9687-4cdb20b32606', 'US', 'additional_ ability', 'additional_ ability', '2025-03-19 21:11:45', '2025-03-19 21:11:45'),
+('9e78d8cc-6360-4aea-a2b9-7d20165eec61', 'GB', 'additional_ ability', 'additional_ ability', '2025-03-19 21:11:45', '2025-03-19 21:11:45'),
+('9e78d8cf-df74-4546-99a0-6255ecba2852', 'US', 'additional ability', 'additional ability', '2025-03-19 21:11:47', '2025-03-19 21:11:47'),
+('9e78d8cf-e501-44f3-914f-c6b372251985', 'GB', 'additional ability', 'additional ability', '2025-03-19 21:11:47', '2025-03-19 21:11:47'),
+('9e78d8d1-bb1a-4260-be4e-b401ff68b8c7', 'US', 'primary education', 'primary education', '2025-03-19 21:11:48', '2025-03-19 21:11:48'),
+('9e78d8d1-c06d-443a-b407-71945f9deb36', 'GB', 'primary education', 'primary education', '2025-03-19 21:11:48', '2025-03-19 21:11:48'),
+('9e78d8d3-1f2e-4df9-a799-29b1468a6a3d', 'US', 'current address', 'current address', '2025-03-19 21:11:49', '2025-03-19 21:11:49'),
+('9e78d8d3-255b-48f2-94d1-75f42b66dc94', 'GB', 'current address', 'current address', '2025-03-19 21:11:49', '2025-03-19 21:11:49'),
+('9e78d8d4-3657-405e-bc30-cf34e0f9d0b6', 'US', 'urrent address', 'urrent address', '2025-03-19 21:11:50', '2025-03-19 21:11:50'),
+('9e78d8d4-3da8-475f-9579-4172f48935a3', 'GB', 'urrent address', 'urrent address', '2025-03-19 21:11:50', '2025-03-19 21:11:50'),
+('9e78d8da-a012-450f-a1a7-a8bb61196871', 'US', 'permanent address', 'permanent address', '2025-03-19 21:11:54', '2025-03-19 21:11:54'),
+('9e78d8da-a47a-4f92-b470-99d32519f626', 'GB', 'permanent address', 'permanent address', '2025-03-19 21:11:54', '2025-03-19 21:11:54'),
+('9e78d8e3-b99a-4c71-a3c9-1dd7f568ba27', 'US', 'Vurrent address', 'Vurrent address', '2025-03-19 21:12:00', '2025-03-19 21:12:00'),
+('9e78d8e3-bcf1-4527-8875-28dc670e7f7b', 'GB', 'Vurrent address', 'Vurrent address', '2025-03-19 21:12:00', '2025-03-19 21:12:00'),
+('9e78d8e7-2b21-4096-b379-028407f2fa58', 'US', 'Current address', 'Current address', '2025-03-19 21:12:02', '2025-03-19 21:12:02'),
+('9e78d8e7-2eba-4e25-b621-5340a47ff03d', 'GB', 'Current address', 'Current address', '2025-03-19 21:12:02', '2025-03-19 21:12:02'),
+('9e78d8e9-0e9f-4f9b-9395-04f2df809b14', 'US', 'Sdditional ability', 'Sdditional ability', '2025-03-19 21:12:04', '2025-03-19 21:12:04'),
+('9e78d8e9-135d-4bd1-aca9-0c288bb20b02', 'GB', 'Sdditional ability', 'Sdditional ability', '2025-03-19 21:12:04', '2025-03-19 21:12:04'),
+('9e78d8ea-de8b-46ef-8a9b-fcbeeb47d72f', 'US', 'dditional ability', 'dditional ability', '2025-03-19 21:12:05', '2025-03-19 21:12:05'),
+('9e78d8ea-e353-471d-9b4c-575c50ebe4d9', 'GB', 'dditional ability', 'dditional ability', '2025-03-19 21:12:05', '2025-03-19 21:12:05'),
+('9e78d8ec-284a-4b26-aa46-2e0a76ecabbe', 'US', 'Additional ability', 'Additional ability', '2025-03-19 21:12:06', '2025-03-19 21:12:06'),
+('9e78d8ec-2c18-4100-b4c3-75fa25b1465a', 'GB', 'Additional ability', 'Additional ability', '2025-03-19 21:12:06', '2025-03-19 21:12:06'),
+('9e78d8ed-d16d-4ed0-8ffb-1bf1f67535e0', 'US', 'ermanent address', 'ermanent address', '2025-03-19 21:12:07', '2025-03-19 21:12:07'),
+('9e78d8ed-d5e8-4526-a58e-e23dbdcca869', 'GB', 'ermanent address', 'ermanent address', '2025-03-19 21:12:07', '2025-03-19 21:12:07'),
+('9e78d8ee-5a7f-408f-9a43-062d22fddc2c', 'US', 'rimary education', 'rimary education', '2025-03-19 21:12:07', '2025-03-19 21:12:07'),
+('9e78d8ee-5fff-430a-a8ec-cb82eb92e49b', 'GB', 'rimary education', 'rimary education', '2025-03-19 21:12:07', '2025-03-19 21:12:07'),
+('9e78d8ef-8ae9-477e-99c1-b64ff1175561', 'US', 'Permanent address', 'Permanent address', '2025-03-19 21:12:08', '2025-03-19 21:12:08'),
+('9e78d8ef-911a-44fd-bb3f-6ad3d9233f49', 'GB', 'Permanent address', 'Permanent address', '2025-03-19 21:12:08', '2025-03-19 21:12:08'),
+('9e78d8ef-b2fd-444c-a0b8-df1ac10bf3b5', 'US', 'Primary education', 'Primary education', '2025-03-19 21:12:08', '2025-03-19 21:12:08'),
+('9e78d8ef-b650-46e9-b2d0-9dc3acf5af36', 'GB', 'Primary education', 'Primary education', '2025-03-19 21:12:08', '2025-03-19 21:12:08'),
+('9e78dc80-f55a-47f2-88f7-5bf9c578c68f', 'US', 'E', 'E', '2025-03-19 21:22:07', '2025-03-19 21:22:07'),
+('9e78dc80-fa4a-4207-88de-280e3bfcffac', 'GB', 'E', 'E', '2025-03-19 21:22:07', '2025-03-19 21:22:07'),
+('9e78dc81-e57b-4af5-ba43-13e6df2a93d5', 'US', 'En', 'En', '2025-03-19 21:22:07', '2025-03-19 21:22:07'),
+('9e78dc81-e8fc-473e-911e-182a9e2b738b', 'GB', 'En', 'En', '2025-03-19 21:22:07', '2025-03-19 21:22:07'),
+('9e78dc82-148d-4815-9805-e582b5aa79f3', 'US', 'Enr', 'Enr', '2025-03-19 21:22:07', '2025-03-19 21:22:07'),
+('9e78dc82-184f-4a70-ab16-14952e81fd61', 'GB', 'Enr', 'Enr', '2025-03-19 21:22:07', '2025-03-19 21:22:07'),
+('9e78dc82-7008-40dd-8f2e-2950495d4b25', 'US', 'Enrp', 'Enrp', '2025-03-19 21:22:08', '2025-03-19 21:22:08'),
+('9e78dc82-74b6-424c-ad47-86762695a536', 'GB', 'Enrp', 'Enrp', '2025-03-19 21:22:08', '2025-03-19 21:22:08'),
+('9e78dc83-0c71-4496-9587-c4d2ca5bd850', 'US', 'Enrp;', 'Enrp;', '2025-03-19 21:22:08', '2025-03-19 21:22:08'),
+('9e78dc83-1199-4f15-a154-f2fe80e650e5', 'GB', 'Enrp;', 'Enrp;', '2025-03-19 21:22:08', '2025-03-19 21:22:08'),
+('9e78dc83-391b-407e-b02e-c9256eac4b50', 'US', 'Enrp;;', 'Enrp;;', '2025-03-19 21:22:08', '2025-03-19 21:22:08'),
+('9e78dc83-3cc6-4a8e-b0ec-db87f57ee3ec', 'GB', 'Enrp;;', 'Enrp;;', '2025-03-19 21:22:08', '2025-03-19 21:22:08'),
+('9e78dc84-f24d-49fe-a495-a72520924160', 'US', 'Enro', 'Enro', '2025-03-19 21:22:09', '2025-03-19 21:22:09'),
+('9e78dc84-f4cf-463f-880c-a13ab036d108', 'GB', 'Enro', 'Enro', '2025-03-19 21:22:09', '2025-03-19 21:22:09'),
+('9e78dc85-4dd1-4657-a809-98d697fbaa4e', 'US', 'Enrol', 'Enrol', '2025-03-19 21:22:09', '2025-03-19 21:22:09'),
+('9e78dc85-503b-4490-8a91-89ec85faafb0', 'GB', 'Enrol', 'Enrol', '2025-03-19 21:22:09', '2025-03-19 21:22:09'),
+('9e78dc85-8247-4fc5-b153-e7c8ef0c44bb', 'US', 'Enroll', 'Enroll', '2025-03-19 21:22:10', '2025-03-19 21:22:10'),
+('9e78dc85-85f7-457c-908d-b27ee9c29c24', 'GB', 'Enroll', 'Enroll', '2025-03-19 21:22:10', '2025-03-19 21:22:10'),
+('9e78dc85-cab0-4151-94ff-7c5c9a48760e', 'US', 'Enrolle', 'Enrolle', '2025-03-19 21:22:10', '2025-03-19 21:22:10'),
+('9e78dc85-cec8-475d-a37b-9ea755b3ced8', 'GB', 'Enrolle', 'Enrolle', '2025-03-19 21:22:10', '2025-03-19 21:22:10'),
+('9e78dc86-15a3-42f7-bacd-7089e7114c43', 'US', 'Enrolled', 'Enrolled', '2025-03-19 21:22:10', '2025-03-19 21:22:10'),
+('9e78dc86-1924-4373-8aa0-e4b9a7573313', 'GB', 'Enrolled', 'Enrolled', '2025-03-19 21:22:10', '2025-03-19 21:22:10'),
+('9e78dc86-6cf2-48cf-b71e-685ed2308b0c', 'US', 'Enrolled S', 'Enrolled S', '2025-03-19 21:22:10', '2025-03-19 21:22:10'),
+('9e78dc86-7073-43db-97a7-35c1a5929afc', 'GB', 'Enrolled S', 'Enrolled S', '2025-03-19 21:22:10', '2025-03-19 21:22:10'),
+('9e78dc86-baf4-4cfa-8d1a-eb928aa85a02', 'US', 'Enrolled St', 'Enrolled St', '2025-03-19 21:22:10', '2025-03-19 21:22:10'),
+('9e78dc86-bd66-4207-816c-10acf9f50782', 'GB', 'Enrolled St', 'Enrolled St', '2025-03-19 21:22:10', '2025-03-19 21:22:10'),
+('9e78dc87-10cc-46ec-8071-8e3760ae77ac', 'US', 'Enrolled Stu', 'Enrolled Stu', '2025-03-19 21:22:11', '2025-03-19 21:22:11'),
+('9e78dc87-13e9-4572-b6c3-39adf015577a', 'GB', 'Enrolled Stu', 'Enrolled Stu', '2025-03-19 21:22:11', '2025-03-19 21:22:11'),
+('9e78dc87-4f6b-4a9e-8a36-27aac2463af7', 'US', 'Enrolled Stud', 'Enrolled Stud', '2025-03-19 21:22:11', '2025-03-19 21:22:11'),
+('9e78dc87-5253-461c-9a2c-e1e3cd0edc19', 'GB', 'Enrolled Stud', 'Enrolled Stud', '2025-03-19 21:22:11', '2025-03-19 21:22:11'),
+('9e78dc87-9ad0-4715-aa87-26492dfb3035', 'US', 'Enrolled Stude', 'Enrolled Stude', '2025-03-19 21:22:11', '2025-03-19 21:22:11'),
+('9e78dc87-9e39-49ef-a0c2-8dbb06a73243', 'GB', 'Enrolled Stude', 'Enrolled Stude', '2025-03-19 21:22:11', '2025-03-19 21:22:11'),
+('9e78dc87-c596-4a0e-845c-4e6d2c773530', 'US', 'Enrolled Studetn', 'Enrolled Studetn', '2025-03-19 21:22:11', '2025-03-19 21:22:11'),
+('9e78dc87-c7b0-46f4-899d-9cefc7fd088a', 'GB', 'Enrolled Studetn', 'Enrolled Studetn', '2025-03-19 21:22:11', '2025-03-19 21:22:11'),
+('9e78dc88-1b41-496c-b657-db817418fb85', 'US', 'Enrolled Studetns', 'Enrolled Studetns', '2025-03-19 21:22:11', '2025-03-19 21:22:11'),
+('9e78dc88-1f84-4938-9ad5-c2f3daf2d9a3', 'GB', 'Enrolled Studetns', 'Enrolled Studetns', '2025-03-19 21:22:11', '2025-03-19 21:22:11'),
+('9e78dc89-bad7-49a3-8f27-ed72f4d6cfa5', 'US', 'Enrolled Studen', 'Enrolled Studen', '2025-03-19 21:22:12', '2025-03-19 21:22:12'),
+('9e78dc89-bdb5-4d9e-98cc-5001d7e53614', 'GB', 'Enrolled Studen', 'Enrolled Studen', '2025-03-19 21:22:12', '2025-03-19 21:22:12'),
+('9e78dc8a-11cc-4f05-b8c9-4362298b1f80', 'US', 'Enrolled Students', 'Enrolled Students', '2025-03-19 21:22:13', '2025-03-19 21:22:13'),
+('9e78dc8a-159e-48c3-ba14-8be0c2d55078', 'GB', 'Enrolled Students', 'Enrolled Students', '2025-03-19 21:22:13', '2025-03-19 21:22:13'),
+('9e78dd77-6cad-4e14-8514-e433967011f5', 'US', 'Applied Date', 'Applied Date', '2025-03-19 21:24:48', '2025-03-19 21:24:48'),
+('9e78dd77-70cc-4650-bcdb-b1174cf701b0', 'GB', 'Applied Date', 'Applied Date', '2025-03-19 21:24:48', '2025-03-19 21:24:48'),
+('9e78e247-a090-440c-a9a9-64ec53f8e034', 'PK', 'Student Enrollment', 'Student Enrollment', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-31a5-4cb7-8073-37b8df60c024', 'PK', 'New Enrollment', 'New Enrollment', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-3330-429f-9c11-4a4207569e77', 'PK', 'All Enrolled Students', 'All Enrolled Students', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-34cc-490e-a556-63ad76604db8', 'PK', 'DOB', 'DOB', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-3688-49f4-83cf-ed4459a2e77a', 'PK', 'Father', 'Father', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-381f-492c-8ec8-ab02d45ac495', 'PK', 'Apply For', 'داخلہ کے لیے درخواست', '2025-03-19 21:38:16', '2025-03-19 21:50:36'),
+('9e78e248-39b7-4792-86b2-3ee0e392f9c3', 'PK', 'New Student Enrollment', 'نئے طلبہ کا داخلہ', '2025-03-19 21:38:16', '2025-03-19 21:53:57'),
+('9e78e248-3b0f-4d93-80d4-57a0da4e4ab2', 'PK', 'Current Address', 'موجودہ پتہ', '2025-03-19 21:38:16', '2025-03-19 21:56:16'),
+('9e78e248-3c48-4837-a705-08de95eb7b0f', 'PK', 'Permanent Address', 'مستقل پتہ', '2025-03-19 21:38:16', '2025-03-19 21:56:08'),
+('9e78e248-3db0-435f-88af-5118102a5255', 'PK', 'Primary Education', 'ابتدائی تعلیم', '2025-03-19 21:38:16', '2025-03-19 21:57:37'),
+('9e78e248-3f30-442c-808d-5414f3e47f7e', 'PK', 'Additional Ability', 'اضافی صلاحیتیں', '2025-03-19 21:38:16', '2025-03-19 21:55:56'),
+('9e78e248-4088-48be-8f2d-f1b1cc15b103', 'PK', 'Select Course/Package', 'Select Course/Package', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-41ed-4353-98f9-ce5b2a3a50aa', 'PK', 'Student Enrollment Form', 'Student Enrollment Form', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-4335-4427-b8bc-5f7dfd809417', 'PK', 'Additional Abilities', 'اضافی صلاحیتیں', '2025-03-19 21:38:16', '2025-03-19 21:55:56'),
+('9e78e248-4490-45bb-894a-efb8b58d732f', 'PK', 'Date of Birth', 'تاریخ پیدائش', '2025-03-19 21:38:16', '2025-03-19 21:55:20'),
+('9e78e248-45b6-42fe-8034-a2c8b6ea83b3', 'PK', 'Enroll Now', 'ابھی داخلہ لیں', '2025-03-19 21:38:16', '2025-03-19 21:56:36'),
+('9e78e248-46b2-4685-87fc-cb3ee4b12e36', 'PK', 'Processing...', 'Processing...', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-47bf-48aa-8a6d-4149293d51be', 'PK', 'Fathers Name', 'Fathers Name', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-48c4-44d1-8604-f4e0a54f36dc', 'PK', 'Father Name', 'والد کا نام', '2025-03-19 21:38:16', '2025-03-19 21:55:11'),
+('9e78e248-4a01-47b5-ab50-a29aa63c2d77', 'PK', 'Phone Number', 'فون نمبر', '2025-03-19 21:38:16', '2025-03-19 21:55:31'),
+('9e78e248-4b42-4196-b885-df75b5a18ffb', 'PK', 'Student enrolled successfully.', 'Student enrolled successfully.', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-4c56-4cbd-988a-7f62b262bb7b', 'PK', 'An unexpected error occurred.', 'An unexpected error occurred.', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-4d42-48fd-a4d8-1f6556eafa07', 'PK', 'Application Successful', 'Application Successful', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-4e36-4332-9c4c-0268a05d2c89', 'PK', 'Dear Student', 'Dear Student', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-4f23-4305-b5cd-be9c51ee172d', 'PK', 'You have successfully applied for this course.', 'You have successfully applied for this course.', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-503e-4f57-b205-0eceb0ca7ac1', 'PK', 'For any queries, contact us at:', 'For any queries, contact us at:', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-5189-4e55-903d-a23c0e28c391', 'PK', 'The administration will contact you soon.', 'The administration will contact you soon.', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-5290-48c6-a153-2eeee060e02a', 'PK', 'OK', 'OK', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-5389-4af9-83c1-d310e04d10ed', 'PK', 'You have successfully applied for', 'You have successfully applied for', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-547c-4a03-884f-08cbfdc7a1a4', 'PK', 'You have successfully applied for th', 'You have successfully applied for th', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-5567-4315-b686-4ef103dd91ba', 'PK', 'You have successfully applied for the', 'You have successfully applied for the', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-565d-4742-98aa-9450ad6863f2', 'PK', 'You have successfully applied for the c', 'You have successfully applied for the c', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-57a6-471c-8e56-a73bfe609f02', 'PK', 'You have successfully applied for the co', 'You have successfully applied for the co', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-58cb-4a28-83b5-7ce6da1f2b4c', 'PK', 'You have successfully applied for the cou', 'You have successfully applied for the cou', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-59bc-4247-9f1b-1e8df2b4a8f2', 'PK', 'You have successfully applied for the cour', 'You have successfully applied for the cour', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-5ab8-41a7-997f-2edf68ad5bda', 'PK', 'You have successfully applied for the course', 'You have successfully applied for the course', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-5bbd-494e-ab5d-e8d421b134c2', 'PK', 'You have successfully applied for the course of', 'You have successfully applied for the course of', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-5cb4-4836-931d-cc138a9f3b0b', 'PK', 'Dear', 'Dear', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-5dd1-4613-a94a-5e593aee7c9b', 'PK', 'Course Duration', 'کورس کا دورانیہ', '2025-03-19 21:38:16', '2025-03-19 21:54:50'),
+('9e78e248-5f63-4542-b5ee-7c03743194a8', 'PK', 'Each course has a duration ranging from 6 months to 3 years, depending on the subject matter.', 'ہر کورس کا دورانیہ 6 ماہ سے 3 سال تک ہوتا ہے، جو مضمون کی نوعیت پر منحصر ہے۔', '2025-03-19 21:38:16', '2025-03-19 21:54:54'),
+('9e78e248-6059-48b5-8205-95f3004a6512', 'PK', 'Course Requirements', 'داخلے کے لیے ضروریات', '2025-03-19 21:38:16', '2025-03-19 21:55:03'),
+('9e78e248-6151-4bf6-8bb6-87debbb35705', 'PK', 'Commitment to daily learning and practice', 'Commitment to daily learning and practice', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-6244-40be-b127-7c2393948eab', 'PK', 'Basic understanding of Arabic (optional but recommended)', 'Basic understanding of Arabic (optional but recommended)', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-6333-4e23-a21c-f74d5842c54a', 'PK', 'Ability to read and write in Urdu or English', 'Ability to read and write in Urdu or English', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-645d-4d71-80d5-64eefdaf9eec', 'PK', 'Our institution provides a well-structured curriculum with experienced teachers and modern facilities to ensure a holistic Islamic education.', 'Our institution provides a well-structured curriculum with experienced teachers and modern facilities to ensure a holistic Islamic education.', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-6597-4882-a0ec-fb1829f431e6', 'PK', 'Madrassa Role', 'Madrassa Role', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-6696-4f9a-a96c-e1074a48ff70', 'PK', 'R', 'R', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-6788-4730-a548-d60759889a48', 'PK', 'Rule', 'Rule', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-687b-4383-9023-43803af58876', 'PK', 'Rule R', 'Rule R', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-6995-441e-87a9-f360d198dc1f', 'PK', 'Rule Re', 'Rule Re', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-6ae3-4923-8c10-247259bc8127', 'PK', 'Rule Regulatio', 'Rule Regulatio', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-6c34-4e5a-8bca-691090d594f5', 'PK', 'Rule Regulations', 'قواعد و ضوابط', '2025-03-19 21:38:16', '2025-03-19 21:54:31'),
+('9e78e248-6d59-424e-8995-b2a5e6131cca', 'PK', 'DO', 'DO', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-6e75-42e1-9e20-ce85fdb08c80', 'PK', 'D', 'D', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-6f8a-49dc-818a-59fee6b9f2ca', 'PK', 'P', 'P', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-70ac-4b96-a634-0cd7516d5ed7', 'PK', 'Ph', 'Ph', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-7206-43e5-b316-327a8b521d01', 'PK', 'Pho', 'Pho', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-7315-411f-8ced-54421691059c', 'PK', 'Phon', 'Phon', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-7418-4959-a831-a83a5b755644', 'PK', 'Phone', 'فون نمبر', '2025-03-19 21:38:16', '2025-03-19 21:55:32'),
+('9e78e248-752b-48b2-b466-5d71bdc26475', 'PK', 'Phone#', 'فون نمبر', '2025-03-19 21:38:16', '2025-03-19 21:55:31'),
+('9e78e248-7631-4f4c-9f51-2ced5b12fa0c', 'PK', 'permanent_address', 'permanent_address', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-7736-4256-aee5-4bde432ca6a5', 'PK', 'current_address', 'current_address', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-786f-40eb-af7d-01abb155c78d', 'PK', 'primary_education', 'primary_education', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-7984-4bdd-879f-5c8a2bb07f00', 'PK', 'additional_ability', 'additional_ability', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-7a8a-4532-b274-79a04b6f08db', 'PK', 'additional_ ability', 'additional_ ability', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-7b9e-4e0e-aff5-2b7f8662e5bc', 'PK', 'additional ability', 'اضافی صلاحیتیں', '2025-03-19 21:38:16', '2025-03-19 21:55:56'),
+('9e78e248-7c93-4e59-bc10-334f8ad10767', 'PK', 'primary education', 'ابتدائی تعلیم', '2025-03-19 21:38:16', '2025-03-19 21:57:37'),
+('9e78e248-7dc3-4832-818f-3cc5921afc92', 'PK', 'current address', 'موجودہ پتہ', '2025-03-19 21:38:16', '2025-03-19 21:56:16'),
+('9e78e248-7f3d-49c0-996c-190e59e4e1f2', 'PK', 'urrent address', 'urrent address', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-8057-4d89-9eb6-13aa601194b6', 'PK', 'permanent address', 'مستقل پتہ', '2025-03-19 21:38:16', '2025-03-19 21:56:08'),
+('9e78e248-8164-48fd-9374-52f4cb77ef5e', 'PK', 'Vurrent address', 'Vurrent address', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-8279-490b-8682-3c5ab96dcbcf', 'PK', 'Current address', 'موجودہ پتہ', '2025-03-19 21:38:16', '2025-03-19 21:56:16'),
+('9e78e248-837b-4322-9b2c-b170d006b2e7', 'PK', 'Sdditional ability', 'Sdditional ability', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-849b-435a-babe-fd41769d1cf8', 'PK', 'dditional ability', 'dditional ability', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-85c6-447b-a374-6b868116f3d1', 'PK', 'Additional ability', 'اضافی صلاحیتیں', '2025-03-19 21:38:16', '2025-03-19 21:55:56'),
+('9e78e248-86c7-421c-905d-b9cd9ee7a4ee', 'PK', 'ermanent address', 'ermanent address', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-87c7-47cd-9ba1-47096d9e2ff4', 'PK', 'rimary education', 'rimary education', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-88c7-48c0-be12-a2ea1b414e0a', 'PK', 'Permanent address', 'مستقل پتہ', '2025-03-19 21:38:16', '2025-03-19 21:56:08'),
+('9e78e248-89c0-4e1c-beed-609dc5a31645', 'PK', 'Primary education', 'ابتدائی تعلیم', '2025-03-19 21:38:16', '2025-03-19 21:57:37'),
+('9e78e248-8abf-4ed8-88e6-1fade9e55d84', 'PK', 'E', 'E', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-8bff-4749-8c17-f53ea4e4327b', 'PK', 'En', 'En', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-8d16-4741-994b-d4a3c1490853', 'PK', 'Enr', 'Enr', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-8e14-4e46-be88-7e69b43948af', 'PK', 'Enrp', 'Enrp', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-8f11-48a2-a538-fabf23789676', 'PK', 'Enrp;', 'Enrp;', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-9004-4a6d-bb59-cf0c2fa4aacd', 'PK', 'Enrp;;', 'Enrp;;', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-90f5-47a9-9c3e-35d14f2284bc', 'PK', 'Enro', 'Enro', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-921f-4d5a-bdd8-e7bac9c81c23', 'PK', 'Enrol', 'Enrol', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-9329-4766-8eeb-6b6030460da2', 'PK', 'Enroll', 'داخلہ لیں', '2025-03-19 21:38:16', '2025-03-19 21:57:15'),
+('9e78e248-9430-4d5b-96de-78ab7e6b94e2', 'PK', 'Enrolle', 'داخلہ لیں', '2025-03-19 21:38:16', '2025-03-19 21:57:15'),
+('9e78e248-9515-47ea-898c-22bd180b8ff2', 'PK', 'Enrolled', 'Enrolled', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-960a-4f41-84ea-194bd76bb2a4', 'PK', 'Enrolled S', 'Enrolled S', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-96fc-447d-812b-647a7d67de3a', 'PK', 'Enrolled St', 'Enrolled St', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-9813-46f5-9d39-d372f8b19286', 'PK', 'Enrolled Stu', 'Enrolled Stu', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-994a-4d42-b7a4-7eb5b021c151', 'PK', 'Enrolled Stud', 'Enrolled Stud', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-9a57-4938-b919-bf433c61e309', 'PK', 'Enrolled Stude', 'Enrolled Stude', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-9b58-4042-ab1e-3b7ee519d94d', 'PK', 'Enrolled Studetn', 'Enrolled Studetn', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-9c4f-4dc6-8a00-dc584f2b1239', 'PK', 'Enrolled Studetns', 'Enrolled Studetns', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-9d45-47f0-affe-6e3ed92049b1', 'PK', 'Enrolled Studen', 'Enrolled Studen', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-9e4a-460d-b0f4-7a752b65ea47', 'PK', 'Enrolled Students', 'Enrolled Students', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e248-9f82-4e7a-b1e1-c6fd521f1f3a', 'PK', 'Applied Date', 'Applied Date', '2025-03-19 21:38:16', '2025-03-19 21:38:16'),
+('9e78e2c7-ced7-4bd7-a4b3-b787d066391b', 'US', 'Select Course/', 'Select Course/', '2025-03-19 21:39:40', '2025-03-19 21:39:40'),
+('9e78e2c7-d889-43c4-abbc-5f17af94feca', 'GB', 'Select Course/', 'Select Course/', '2025-03-19 21:39:40', '2025-03-19 21:39:40'),
+('9e78e2c8-4335-4746-8461-e3077e990b72', 'US', 'Select Course', 'Select Course', '2025-03-19 21:39:40', '2025-03-19 21:39:40'),
+('9e78e2c8-461d-429c-92bc-a8b7b44ebfff', 'GB', 'Select Course', 'Select Course', '2025-03-19 21:39:40', '2025-03-19 21:39:40'),
+('9e78e667-77a6-4f87-9935-5a872fd839d4', 'PK', 'Select Course/', 'Select Course/', '2025-03-19 21:49:48', '2025-03-19 21:49:48'),
+('9e78e667-7ceb-4243-b57f-15a415173fd1', 'PK', 'Select Course', 'کورس منتخب کریں', '2025-03-19 21:49:48', '2025-03-19 21:51:01'),
+('9e78e74c-0585-4ca8-ae13-4b3292076a6b', 'US', 'Providing quality Islamic education with modern learning techniques', 'Providing quality Islamic education with modern learning techniques', '2025-03-19 21:52:17', '2025-03-19 21:52:17'),
+('9e78e74c-0a73-4c21-9c5a-eb44fe0841d2', 'PK', 'Providing quality Islamic education with modern learning techniques', 'جدید تعلیمی تکنیکوں کے ساتھ معیاری اسلامی تعلیم فراہم کرنا۔', '2025-03-19 21:52:17', '2025-03-19 21:54:20'),
+('9e78ec64-d0f0-46ed-8d6c-83a80d977fd1', 'US', 'Welcome to Our Madrasa', 'Welcome to Our Madrasa', '2025-03-19 22:06:32', '2025-03-19 22:06:32'),
+('9e78ec64-d5dc-45d3-946d-bc446fb3d038', 'GB', 'Welcome to Our Madrasa', 'Welcome to Our Madrasa', '2025-03-19 22:06:32', '2025-03-19 22:06:32'),
+('9e78ec6a-d0b1-4b3a-8016-88d9b5d07629', 'US', 'Welcome to J', 'Welcome to J', '2025-03-19 22:06:36', '2025-03-19 22:06:36'),
+('9e78ec6a-d102-4091-a75c-4f3b015f6da1', 'US', 'Welcome to J', 'Welcome to J', '2025-03-19 22:06:36', '2025-03-19 22:06:36'),
+('9e78ec6a-d4db-4c71-a512-3a407792063b', 'GB', 'Welcome to J', 'Welcome to J', '2025-03-19 22:06:36', '2025-03-19 22:06:36'),
+('9e78ec6a-d63c-455f-93b5-5c587a73c464', 'GB', 'Welcome to J', 'Welcome to J', '2025-03-19 22:06:36', '2025-03-19 22:06:36'),
+('9e78ec6b-684e-415e-89c4-2ddb40694a24', 'US', 'Welcome to Ja', 'Welcome to Ja', '2025-03-19 22:06:37', '2025-03-19 22:06:37'),
+('9e78ec6b-6b25-4d80-bdc0-90308ca84fc9', 'US', 'Welcome to Ja', 'Welcome to Ja', '2025-03-19 22:06:37', '2025-03-19 22:06:37'),
+('9e78ec6b-6c10-4898-aec2-07fe42ff4b19', 'GB', 'Welcome to Ja', 'Welcome to Ja', '2025-03-19 22:06:37', '2025-03-19 22:06:37'),
+('9e78ec6b-6eff-4dbc-8c5f-2949c8afe4dc', 'GB', 'Welcome to Ja', 'Welcome to Ja', '2025-03-19 22:06:37', '2025-03-19 22:06:37'),
+('9e78ec6c-1144-4108-ab46-5315c8fb6a0f', 'US', 'Welcome to Jam', 'Welcome to Jam', '2025-03-19 22:06:37', '2025-03-19 22:06:37'),
+('9e78ec6c-14ca-4faa-86cb-56d94b950cf3', 'GB', 'Welcome to Jam', 'Welcome to Jam', '2025-03-19 22:06:37', '2025-03-19 22:06:37'),
+('9e78ec6c-1841-435c-b8ad-a056c4f1883e', 'US', 'Welcome to Jam', 'Welcome to Jam', '2025-03-19 22:06:37', '2025-03-19 22:06:37'),
+('9e78ec6c-1c0f-4283-acfd-7d1fb3c57711', 'GB', 'Welcome to Jam', 'Welcome to Jam', '2025-03-19 22:06:37', '2025-03-19 22:06:37'),
+('9e78ec6c-88fa-48a9-aa17-5c46c3894178', 'US', 'Welcome to Jami', 'Welcome to Jami', '2025-03-19 22:06:38', '2025-03-19 22:06:38'),
+('9e78ec6c-8d2a-4d99-acd7-4a03d1bf1161', 'GB', 'Welcome to Jami', 'Welcome to Jami', '2025-03-19 22:06:38', '2025-03-19 22:06:38'),
+('9e78ec6c-8e7c-40e2-8a43-f7a31efe529e', 'US', 'Welcome to Jami', 'Welcome to Jami', '2025-03-19 22:06:38', '2025-03-19 22:06:38'),
+('9e78ec6c-93e6-4988-9300-a72dcb787dd2', 'GB', 'Welcome to Jami', 'Welcome to Jami', '2025-03-19 22:06:38', '2025-03-19 22:06:38'),
+('9e78ec6d-23f6-4350-8715-efd505f914cc', 'US', 'Welcome to Jamia', 'Welcome to Jamia', '2025-03-19 22:06:38', '2025-03-19 22:06:38'),
+('9e78ec6d-262f-428b-b1d6-b7e33f698e7c', 'GB', 'Welcome to Jamia', 'Welcome to Jamia', '2025-03-19 22:06:38', '2025-03-19 22:06:38'),
+('9e78ec6d-dc97-4c80-91d1-d5bfb8d7b716', 'US', 'Welcome to Jamia D', 'Welcome to Jamia D', '2025-03-19 22:06:38', '2025-03-19 22:06:38'),
+('9e78ec6d-e1b2-49ce-bff4-4bf977cd11e5', 'GB', 'Welcome to Jamia D', 'Welcome to Jamia D', '2025-03-19 22:06:38', '2025-03-19 22:06:38'),
+('9e78ec6e-6ffc-4ce5-b454-b7448745792f', 'US', 'Welcome to Jamia Dar', 'Welcome to Jamia Dar', '2025-03-19 22:06:39', '2025-03-19 22:06:39'),
+('9e78ec6e-6ffd-461c-8bb3-0c2c4c502d81', 'US', 'Welcome to Jamia Da', 'Welcome to Jamia Da', '2025-03-19 22:06:39', '2025-03-19 22:06:39'),
+('9e78ec6e-7260-41da-a84e-465deaac6d34', 'GB', 'Welcome to Jamia Dar', 'Welcome to Jamia Dar', '2025-03-19 22:06:39', '2025-03-19 22:06:39'),
+('9e78ec6e-7285-40d0-9fc9-86b73adc2d73', 'GB', 'Welcome to Jamia Da', 'Welcome to Jamia Da', '2025-03-19 22:06:39', '2025-03-19 22:06:39'),
+('9e78ec6f-41c2-4767-9864-ee6b4e473810', 'US', 'Welcome to Jamia Daro', 'Welcome to Jamia Daro', '2025-03-19 22:06:39', '2025-03-19 22:06:39'),
+('9e78ec6f-4461-4d2f-aa8e-3b2c8cc4bce8', 'GB', 'Welcome to Jamia Daro', 'Welcome to Jamia Daro', '2025-03-19 22:06:39', '2025-03-19 22:06:39'),
+('9e78ec6f-4692-415b-8381-0267855478d9', 'US', 'Welcome to Jamia Daro', 'Welcome to Jamia Daro', '2025-03-19 22:06:39', '2025-03-19 22:06:39'),
+('9e78ec6f-4bb6-4d81-8ded-14a2abf13a52', 'GB', 'Welcome to Jamia Daro', 'Welcome to Jamia Daro', '2025-03-19 22:06:39', '2025-03-19 22:06:39'),
+('9e78ec6f-c300-49ea-ba86-e8896e892f4a', 'US', 'Welcome to Jamia Darol', 'Welcome to Jamia Darol', '2025-03-19 22:06:40', '2025-03-19 22:06:40'),
+('9e78ec6f-c3cd-4789-949c-9548c7233dd6', 'US', 'Welcome to Jamia Darol', 'Welcome to Jamia Darol', '2025-03-19 22:06:40', '2025-03-19 22:06:40'),
+('9e78ec6f-c60b-480d-9bd8-98149c8c53fa', 'GB', 'Welcome to Jamia Darol', 'Welcome to Jamia Darol', '2025-03-19 22:06:40', '2025-03-19 22:06:40'),
+('9e78ec6f-c720-4550-ad83-2aace2c3bfc0', 'GB', 'Welcome to Jamia Darol', 'Welcome to Jamia Darol', '2025-03-19 22:06:40', '2025-03-19 22:06:40'),
+('9e78ec71-4a2d-4c07-9256-3b3123d78b97', 'US', 'Welcome to Jamia Darol U', 'Welcome to Jamia Darol U', '2025-03-19 22:06:41', '2025-03-19 22:06:41'),
+('9e78ec71-512a-4468-a425-0b06e4a06eda', 'GB', 'Welcome to Jamia Darol U', 'Welcome to Jamia Darol U', '2025-03-19 22:06:41', '2025-03-19 22:06:41'),
+('9e78ec72-06d8-414c-9f0c-bd1ea1c72619', 'US', 'Welcome to Jamia Darol Ul', 'Welcome to Jamia Darol Ul', '2025-03-19 22:06:41', '2025-03-19 22:06:41'),
+('9e78ec72-0b33-4f6e-b1df-e4cd526f820e', 'US', 'Welcome to Jamia Darol Ul', 'Welcome to Jamia Darol Ul', '2025-03-19 22:06:41', '2025-03-19 22:06:41'),
+('9e78ec72-0d48-47d8-be8c-774dc6ff8607', 'GB', 'Welcome to Jamia Darol Ul', 'Welcome to Jamia Darol Ul', '2025-03-19 22:06:41', '2025-03-19 22:06:41'),
+('9e78ec72-119c-4ac7-ba1e-ae3d86fa1720', 'GB', 'Welcome to Jamia Darol Ul', 'Welcome to Jamia Darol Ul', '2025-03-19 22:06:41', '2025-03-19 22:06:41'),
+('9e78ec72-f8e8-4e5f-96c0-bcf1e502c995', 'US', 'Welcome to Jamia Darol Ulo', 'Welcome to Jamia Darol Ulo', '2025-03-19 22:06:42', '2025-03-19 22:06:42'),
+('9e78ec72-fc33-4b6d-b9a2-a5b1a36eef23', 'US', 'Welcome to Jamia Darol Ulo', 'Welcome to Jamia Darol Ulo', '2025-03-19 22:06:42', '2025-03-19 22:06:42'),
+('9e78ec73-0284-40bb-a9a8-89cfd9abdf30', 'GB', 'Welcome to Jamia Darol Ulo', 'Welcome to Jamia Darol Ulo', '2025-03-19 22:06:42', '2025-03-19 22:06:42'),
+('9e78ec73-1cf2-457e-8e0c-989a2c6873ce', 'GB', 'Welcome to Jamia Darol Ulo', 'Welcome to Jamia Darol Ulo', '2025-03-19 22:06:42', '2025-03-19 22:06:42'),
+('9e78ec74-27f6-4102-9af7-b7a5df655cdb', 'US', 'Welcome to Jamia Darol Uloo', 'Welcome to Jamia Darol Uloo', '2025-03-19 22:06:43', '2025-03-19 22:06:43'),
+('9e78ec74-340f-43f5-a2c4-4d73f0150fe1', 'GB', 'Welcome to Jamia Darol Uloo', 'Welcome to Jamia Darol Uloo', '2025-03-19 22:06:43', '2025-03-19 22:06:43'),
+('9e78ec75-18a6-444e-b074-6c1617258a7a', 'US', 'Welcome to Jamia Darol Uloom', 'Welcome to Jamia Darol Uloom', '2025-03-19 22:06:43', '2025-03-19 22:06:43'),
+('9e78ec75-1e9a-4148-b5a7-34ddf671c599', 'GB', 'Welcome to Jamia Darol Uloom', 'Welcome to Jamia Darol Uloom', '2025-03-19 22:06:43', '2025-03-19 22:06:43'),
+('9e78ec75-1efe-4ec2-be16-4b4e17b36aca', 'US', 'Welcome to Jamia Darol Uloom', 'Welcome to Jamia Darol Uloom', '2025-03-19 22:06:43', '2025-03-19 22:06:43'),
+('9e78ec75-250e-40b2-9030-46b3ee7acd76', 'GB', 'Welcome to Jamia Darol Uloom', 'Welcome to Jamia Darol Uloom', '2025-03-19 22:06:43', '2025-03-19 22:06:43'),
+('9e78ec76-aca8-4641-a8ae-f6345a81b6b7', 'US', 'Welcome to Jamia Darol Uloom Utm', 'Welcome to Jamia Darol Uloom Utm', '2025-03-19 22:06:44', '2025-03-19 22:06:44'),
+('9e78ec76-adc6-4da0-8daa-1b0cdd22f393', 'US', 'Welcome to Jamia Darol Uloom Utm', 'Welcome to Jamia Darol Uloom Utm', '2025-03-19 22:06:44', '2025-03-19 22:06:44'),
+('9e78ec76-b12e-430f-9095-019b0589e735', 'GB', 'Welcome to Jamia Darol Uloom Utm', 'Welcome to Jamia Darol Uloom Utm', '2025-03-19 22:06:44', '2025-03-19 22:06:44'),
+('9e78ec76-b22b-465f-9ec3-ce073a226628', 'GB', 'Welcome to Jamia Darol Uloom Utm', 'Welcome to Jamia Darol Uloom Utm', '2025-03-19 22:06:44', '2025-03-19 22:06:44'),
+('9e78ec78-cd09-4796-b64e-815315f611f7', 'US', 'Welcome to Jamia Darol Uloom U', 'Welcome to Jamia Darol Uloom U', '2025-03-19 22:06:46', '2025-03-19 22:06:46'),
+('9e78ec78-d10e-4360-be43-e8505566b670', 'GB', 'Welcome to Jamia Darol Uloom U', 'Welcome to Jamia Darol Uloom U', '2025-03-19 22:06:46', '2025-03-19 22:06:46'),
+('9e78ec7b-5876-457e-ba46-918e29dfef04', 'US', 'Welcome to Jamia Darol Uloom S', 'Welcome to Jamia Darol Uloom S', '2025-03-19 22:06:47', '2025-03-19 22:06:47'),
+('9e78ec7b-5dc6-4469-94c8-e4d1d2ac1298', 'GB', 'Welcome to Jamia Darol Uloom S', 'Welcome to Jamia Darol Uloom S', '2025-03-19 22:06:47', '2025-03-19 22:06:47'),
+('9e78ec7c-f182-49d6-acf5-b4f203e4e4a5', 'US', 'Welcome to Jamia Darol Uloom N', 'Welcome to Jamia Darol Uloom N', '2025-03-19 22:06:48', '2025-03-19 22:06:48'),
+('9e78ec7c-f7d6-45f0-bdd6-a12b5c35a3aa', 'GB', 'Welcome to Jamia Darol Uloom N', 'Welcome to Jamia Darol Uloom N', '2025-03-19 22:06:48', '2025-03-19 22:06:48'),
+('9e78ec7d-b7a4-43eb-9f50-78a63b64f601', 'US', 'Welcome to Jamia Darol Uloom No', 'Welcome to Jamia Darol Uloom No', '2025-03-19 22:06:49', '2025-03-19 22:06:49'),
+('9e78ec7d-bd33-4224-88e5-a9fabd48e026', 'GB', 'Welcome to Jamia Darol Uloom No', 'Welcome to Jamia Darol Uloom No', '2025-03-19 22:06:49', '2025-03-19 22:06:49'),
+('9e78ec7e-6c21-42f3-84ea-a64fed07ec97', 'US', 'Welcome to Jamia Darol Uloom Nom', 'Welcome to Jamia Darol Uloom Nom', '2025-03-19 22:06:49', '2025-03-19 22:06:49'),
+('9e78ec7e-724a-40b1-b1b8-d24777e60659', 'GB', 'Welcome to Jamia Darol Uloom Nom', 'Welcome to Jamia Darol Uloom Nom', '2025-03-19 22:06:49', '2025-03-19 22:06:49');
+INSERT INTO `translations` (`id`, `lang`, `lang_key`, `lang_value`, `created_at`, `updated_at`) VALUES
+('9e78ec80-11ed-43ae-b041-81db7adea2b4', 'US', 'Welcome to Jamia Darol Uloom Nou', 'Welcome to Jamia Darol Uloom Nou', '2025-03-19 22:06:50', '2025-03-19 22:06:50'),
+('9e78ec80-16c7-41d4-85d0-411b904495e4', 'GB', 'Welcome to Jamia Darol Uloom Nou', 'Welcome to Jamia Darol Uloom Nou', '2025-03-19 22:06:50', '2025-03-19 22:06:50'),
+('9e78ec80-cc83-47c7-aadc-a0b4ba4abd1d', 'US', 'Welcome to Jamia Darol Uloom Nouma', 'Welcome to Jamia Darol Uloom Nouma', '2025-03-19 22:06:51', '2025-03-19 22:06:51'),
+('9e78ec80-d28d-4d71-bc2c-80b9f370347c', 'GB', 'Welcome to Jamia Darol Uloom Nouma', 'Welcome to Jamia Darol Uloom Nouma', '2025-03-19 22:06:51', '2025-03-19 22:06:51'),
+('9e78ec80-d5ee-4044-99f0-8b7f29db0332', 'US', 'Welcome to Jamia Darol Uloom Nouma', 'Welcome to Jamia Darol Uloom Nouma', '2025-03-19 22:06:51', '2025-03-19 22:06:51'),
+('9e78ec80-dbd6-4df0-8216-fdd0e7f0bf9f', 'GB', 'Welcome to Jamia Darol Uloom Nouma', 'Welcome to Jamia Darol Uloom Nouma', '2025-03-19 22:06:51', '2025-03-19 22:06:51'),
+('9e78ec82-5b5e-4800-a606-430c9182ef12', 'US', 'Welcome to Jamia Darol Uloom Noumai', 'Welcome to Jamia Darol Uloom Noumai', '2025-03-19 22:06:52', '2025-03-19 22:06:52'),
+('9e78ec82-60d7-44ee-8697-5084d411d0c7', 'GB', 'Welcome to Jamia Darol Uloom Noumai', 'Welcome to Jamia Darol Uloom Noumai', '2025-03-19 22:06:52', '2025-03-19 22:06:52'),
+('9e78ec83-a65f-4085-a209-0b5e55789a8c', 'US', 'Welcome to Jamia Darol Uloom Nouman', 'Welcome to Jamia Darol Uloom Nouman', '2025-03-19 22:06:53', '2025-03-19 22:06:53'),
+('9e78ec83-a666-4a31-acf3-4ec4e62013eb', 'US', 'Welcome to Jamia Darol Uloom Nouman', 'Welcome to Jamia Darol Uloom Nouman', '2025-03-19 22:06:53', '2025-03-19 22:06:53'),
+('9e78ec83-aa72-4f72-8db6-76d9dcc4cce9', 'GB', 'Welcome to Jamia Darol Uloom Nouman', 'Welcome to Jamia Darol Uloom Nouman', '2025-03-19 22:06:53', '2025-03-19 22:06:53'),
+('9e78ec83-aaa7-472e-985c-af1448bdf7b7', 'GB', 'Welcome to Jamia Darol Uloom Nouman', 'Welcome to Jamia Darol Uloom Nouman', '2025-03-19 22:06:53', '2025-03-19 22:06:53'),
+('9e78ec84-3461-4dbf-b226-5ed29771d5ce', 'US', 'Welcome to Jamia Darol Uloom Noumania', 'Welcome to Jamia Darol Uloom Noumania', '2025-03-19 22:06:53', '2025-03-19 22:06:53'),
+('9e78ec84-3499-480e-8c7e-c5e6ab3350c9', 'US', 'Welcome to Jamia Darol Uloom Noumania', 'Welcome to Jamia Darol Uloom Noumania', '2025-03-19 22:06:53', '2025-03-19 22:06:53'),
+('9e78ec84-3925-4c00-84a2-0b9deecc26a4', 'GB', 'Welcome to Jamia Darol Uloom Noumania', 'Welcome to Jamia Darol Uloom Noumania', '2025-03-19 22:06:53', '2025-03-19 22:06:53'),
+('9e78ec84-3950-4c6e-bea3-2b9c2c99363c', 'GB', 'Welcome to Jamia Darol Uloom Noumania', 'Welcome to Jamia Darol Uloom Noumania', '2025-03-19 22:06:53', '2025-03-19 22:06:53'),
+('9e78ec85-106e-4c8f-acb8-9f9dd1c39e16', 'US', 'Welcome to Jamia Darol Uloom Noumania U', 'Welcome to Jamia Darol Uloom Noumania U', '2025-03-19 22:06:54', '2025-03-19 22:06:54'),
+('9e78ec85-1074-4432-b5b2-264f710c51e5', 'US', 'Welcome to Jamia Darol Uloom Noumania U', 'Welcome to Jamia Darol Uloom Noumania U', '2025-03-19 22:06:54', '2025-03-19 22:06:54'),
+('9e78ec85-1569-4f8c-8603-a76d2379ebb6', 'GB', 'Welcome to Jamia Darol Uloom Noumania U', 'Welcome to Jamia Darol Uloom Noumania U', '2025-03-19 22:06:54', '2025-03-19 22:06:54'),
+('9e78ec85-156b-4b2e-aaf0-23fe1d56d777', 'GB', 'Welcome to Jamia Darol Uloom Noumania U', 'Welcome to Jamia Darol Uloom Noumania U', '2025-03-19 22:06:54', '2025-03-19 22:06:54'),
+('9e78ec85-86cd-4957-8803-3d84b454b546', 'US', 'Welcome to Jamia Darol Uloom Noumania Ut', 'Welcome to Jamia Darol Uloom Noumania Ut', '2025-03-19 22:06:54', '2025-03-19 22:06:54'),
+('9e78ec85-86f0-439b-91ca-2e3de0ca8789', 'US', 'Welcome to Jamia Darol Uloom Noumania Ut', 'Welcome to Jamia Darol Uloom Noumania Ut', '2025-03-19 22:06:54', '2025-03-19 22:06:54'),
+('9e78ec85-8bf7-490b-83e4-58cb73d94fcd', 'GB', 'Welcome to Jamia Darol Uloom Noumania Ut', 'Welcome to Jamia Darol Uloom Noumania Ut', '2025-03-19 22:06:54', '2025-03-19 22:06:54'),
+('9e78ec85-8c37-4256-a088-c07edc75689b', 'GB', 'Welcome to Jamia Darol Uloom Noumania Ut', 'Welcome to Jamia Darol Uloom Noumania Ut', '2025-03-19 22:06:54', '2025-03-19 22:06:54'),
+('9e78ec86-04e4-47ae-aa04-7258733976de', 'US', 'Welcome to Jamia Darol Uloom Noumania Utm', 'Welcome to Jamia Darol Uloom Noumania Utm', '2025-03-19 22:06:54', '2025-03-19 22:06:54'),
+('9e78ec86-04fc-44d1-8145-9fda35aadc5f', 'US', 'Welcome to Jamia Darol Uloom Noumania Utm', 'Welcome to Jamia Darol Uloom Noumania Utm', '2025-03-19 22:06:54', '2025-03-19 22:06:54'),
+('9e78ec86-0984-4b47-b0e6-1f9abab5faa1', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utm', 'Welcome to Jamia Darol Uloom Noumania Utm', '2025-03-19 22:06:54', '2025-03-19 22:06:54'),
+('9e78ec86-09bb-4b2c-98fb-7c1a7f93113f', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utm', 'Welcome to Jamia Darol Uloom Noumania Utm', '2025-03-19 22:06:54', '2025-03-19 22:06:54'),
+('9e78ec86-805a-4b88-b4c4-11caeeece5b7', 'US', 'Welcome to Jamia Darol Uloom Noumania Utma', 'Welcome to Jamia Darol Uloom Noumania Utma', '2025-03-19 22:06:55', '2025-03-19 22:06:55'),
+('9e78ec86-805b-4c85-8897-538e0f136651', 'US', 'Welcome to Jamia Darol Uloom Noumania Utma', 'Welcome to Jamia Darol Uloom Noumania Utma', '2025-03-19 22:06:55', '2025-03-19 22:06:55'),
+('9e78ec86-861b-4811-8f3e-17f561e01399', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utma', 'Welcome to Jamia Darol Uloom Noumania Utma', '2025-03-19 22:06:55', '2025-03-19 22:06:55'),
+('9e78ec86-8670-4350-8c5d-97c5807c1e43', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utma', 'Welcome to Jamia Darol Uloom Noumania Utma', '2025-03-19 22:06:55', '2025-03-19 22:06:55'),
+('9e78ec87-1d84-4046-80a5-81418bcdcee3', 'US', 'Welcome to Jamia Darol Uloom Noumania Utmaz', 'Welcome to Jamia Darol Uloom Noumania Utmaz', '2025-03-19 22:06:55', '2025-03-19 22:06:55'),
+('9e78ec87-21b7-4fb1-91aa-8cb0fdd84259', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utmaz', 'Welcome to Jamia Darol Uloom Noumania Utmaz', '2025-03-19 22:06:55', '2025-03-19 22:06:55'),
+('9e78ec87-23d3-47ba-a73e-3cf2268dac36', 'US', 'Welcome to Jamia Darol Uloom Noumania Utmaz', 'Welcome to Jamia Darol Uloom Noumania Utmaz', '2025-03-19 22:06:55', '2025-03-19 22:06:55'),
+('9e78ec87-2a78-44c6-85b4-07fa33b6521c', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utmaz', 'Welcome to Jamia Darol Uloom Noumania Utmaz', '2025-03-19 22:06:55', '2025-03-19 22:06:55'),
+('9e78ec87-d543-4be1-805d-b0ded4480461', 'US', 'Welcome to Jamia Darol Uloom Noumania Utmazn', 'Welcome to Jamia Darol Uloom Noumania Utmazn', '2025-03-19 22:06:55', '2025-03-19 22:06:55'),
+('9e78ec87-d59d-48f5-825a-7dfb7db908ad', 'US', 'Welcome to Jamia Darol Uloom Noumania Utmazn', 'Welcome to Jamia Darol Uloom Noumania Utmazn', '2025-03-19 22:06:55', '2025-03-19 22:06:55'),
+('9e78ec87-da5d-4cd3-b92b-400c8346df7d', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utmazn', 'Welcome to Jamia Darol Uloom Noumania Utmazn', '2025-03-19 22:06:55', '2025-03-19 22:06:55'),
+('9e78ec87-da8d-49a7-99ca-aaebab22e7c5', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utmazn', 'Welcome to Jamia Darol Uloom Noumania Utmazn', '2025-03-19 22:06:55', '2025-03-19 22:06:55'),
+('9e78ec89-21b8-4ef3-b5b2-b2e0b017f617', 'US', 'Welcome to Jamia Darol Uloom Noumania Utman', 'Welcome to Jamia Darol Uloom Noumania Utman', '2025-03-19 22:06:56', '2025-03-19 22:06:56'),
+('9e78ec89-2754-4c48-b83f-0de4c60c8bf1', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utman', 'Welcome to Jamia Darol Uloom Noumania Utman', '2025-03-19 22:06:56', '2025-03-19 22:06:56'),
+('9e78ec89-2a1e-46e1-87e5-c3bc909ceba0', 'US', 'Welcome to Jamia Darol Uloom Noumania Utman', 'Welcome to Jamia Darol Uloom Noumania Utman', '2025-03-19 22:06:56', '2025-03-19 22:06:56'),
+('9e78ec89-316f-43b7-924e-4a0e84b50d35', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utman', 'Welcome to Jamia Darol Uloom Noumania Utman', '2025-03-19 22:06:56', '2025-03-19 22:06:56'),
+('9e78ec89-e926-4f0d-9a1d-e79c14248df7', 'US', 'Welcome to Jamia Darol Uloom Noumania Utmanz', 'Welcome to Jamia Darol Uloom Noumania Utmanz', '2025-03-19 22:06:57', '2025-03-19 22:06:57'),
+('9e78ec89-ed77-4a16-b877-e1bbd1597098', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utmanz', 'Welcome to Jamia Darol Uloom Noumania Utmanz', '2025-03-19 22:06:57', '2025-03-19 22:06:57'),
+('9e78ec89-edd0-4662-be35-c7e3c32b648c', 'US', 'Welcome to Jamia Darol Uloom Noumania Utmanz', 'Welcome to Jamia Darol Uloom Noumania Utmanz', '2025-03-19 22:06:57', '2025-03-19 22:06:57'),
+('9e78ec89-f261-4e5a-80ce-0f8bdefa9b92', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utmanz', 'Welcome to Jamia Darol Uloom Noumania Utmanz', '2025-03-19 22:06:57', '2025-03-19 22:06:57'),
+('9e78ec8a-86b5-41f2-9776-750c754d6a58', 'US', 'Welcome to Jamia Darol Uloom Noumania Utmanzo', 'Welcome to Jamia Darol Uloom Noumania Utmanzo', '2025-03-19 22:06:57', '2025-03-19 22:06:57'),
+('9e78ec8a-8a33-461d-8673-0a45431d9ecf', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utmanzo', 'Welcome to Jamia Darol Uloom Noumania Utmanzo', '2025-03-19 22:06:57', '2025-03-19 22:06:57'),
+('9e78ec8a-8d6e-4da0-b094-293b42815ad3', 'US', 'Welcome to Jamia Darol Uloom Noumania Utmanzo', 'Welcome to Jamia Darol Uloom Noumania Utmanzo', '2025-03-19 22:06:57', '2025-03-19 22:06:57'),
+('9e78ec8a-91fc-438b-b320-986dfa2a35b9', 'GB', 'Welcome to Jamia Darol Uloom Noumania Utmanzo', 'Welcome to Jamia Darol Uloom Noumania Utmanzo', '2025-03-19 22:06:57', '2025-03-19 22:06:57'),
+('9e78ed1d-9667-443e-9298-61bd92007fd1', 'US', 'Latest Bayanaat', 'Latest Bayanaat', '2025-03-19 22:08:34', '2025-03-19 22:08:34'),
+('9e78ed1d-9b88-4b41-8f7d-a3884d93d7ea', 'PK', 'Latest Bayanaat', 'تازہ ترین بیانات', '2025-03-19 22:08:34', '2025-03-19 22:11:36'),
+('9e78ed1d-c898-4404-80f4-366205a3c48c', 'US', 'Admissions Open', 'Admissions Open', '2025-03-19 22:08:34', '2025-03-19 22:08:34'),
+('9e78ed1d-cc7b-4748-8ebf-9aa840b14897', 'PK', 'Admissions Open', 'داخلے جاری ہیں', '2025-03-19 22:08:34', '2025-03-19 22:10:59'),
+('9e78ed1e-2933-4cca-bf6f-8a8c6550b7a3', 'US', 'Register now and start your journey towards Islamic knowledge', 'Register now and start your journey towards Islamic knowledge', '2025-03-19 22:08:34', '2025-03-19 22:08:34'),
+('9e78ed1e-2e53-4593-afaa-55cd660ce749', 'PK', 'Register now and start your journey towards Islamic knowledge', 'ابھی رجسٹر کریں اور اپنے اسلامی علم کے سفر کا آغاز کریں۔', '2025-03-19 22:08:34', '2025-03-19 22:11:12'),
+('9e78ed1e-ce8b-43cd-9e02-5000eff1657a', 'US', 'Apply Now', 'Apply Now', '2025-03-19 22:08:34', '2025-03-19 22:08:34'),
+('9e78ed1e-d38c-4a95-ba33-24a21cff08b7', 'PK', 'Apply Now', 'ابھی درخواست دیں', '2025-03-19 22:08:34', '2025-03-19 22:10:26'),
+('9e78ed42-7ede-45fb-bf62-d38dfa4a8f51', 'PK', 'Welcome to Our Madrasa', 'Welcome to Our Madrasa', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-81fa-4bed-9487-f239f57bebf4', 'PK', 'Welcome to J', 'Welcome to J', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-8356-441a-a180-e1d58f96f88b', 'PK', 'Welcome to Ja', 'Welcome to Ja', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-84bf-4074-ab21-46eb558ae2b3', 'PK', 'Welcome to Jam', 'Welcome to Jam', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-865c-4448-9804-5579cf93a848', 'PK', 'Welcome to Jami', 'Welcome to Jami', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-87c1-4e8f-af06-7d6926c504e0', 'PK', 'Welcome to Jamia', 'Welcome to Jamia', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-88b7-43ea-94d4-d12ce97866af', 'PK', 'Welcome to Jamia D', 'Welcome to Jamia D', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-8998-4994-8afc-b217ad9c8bea', 'PK', 'Welcome to Jamia Dar', 'Welcome to Jamia Dar', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-8a85-47d0-bea6-c44713e4e3f8', 'PK', 'Welcome to Jamia Da', 'Welcome to Jamia Da', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-8b7c-4052-8861-8ba5810de997', 'PK', 'Welcome to Jamia Daro', 'Welcome to Jamia Daro', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-8cfa-47db-b2c5-7b7d68140a65', 'PK', 'Welcome to Jamia Darol', 'Welcome to Jamia Darol', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-8e9b-467e-aa56-fddb13dc7797', 'PK', 'Welcome to Jamia Darol U', 'Welcome to Jamia Darol U', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-8fc6-4236-861e-1c8960b268b2', 'PK', 'Welcome to Jamia Darol Ul', 'Welcome to Jamia Darol Ul', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-918f-49c6-aa27-e7499ac9262c', 'PK', 'Welcome to Jamia Darol Ulo', 'Welcome to Jamia Darol Ulo', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-9350-4814-9edd-6f98b73f3dea', 'PK', 'Welcome to Jamia Darol Uloo', 'Welcome to Jamia Darol Uloo', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-947b-4e71-a41e-2ce33b514ed1', 'PK', 'Welcome to Jamia Darol Uloom', 'Welcome to Jamia Darol Uloom', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-9604-4412-a610-cc6e3357126d', 'PK', 'Welcome to Jamia Darol Uloom Utm', 'Welcome to Jamia Darol Uloom Utm', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-9785-4a21-8fbc-fb324035e734', 'PK', 'Welcome to Jamia Darol Uloom U', 'Welcome to Jamia Darol Uloom U', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-98a7-4ff4-8a8b-19588719a24c', 'PK', 'Welcome to Jamia Darol Uloom S', 'Welcome to Jamia Darol Uloom S', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-99e4-4fb4-b1b9-2083a173f7ff', 'PK', 'Welcome to Jamia Darol Uloom N', 'Welcome to Jamia Darol Uloom N', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-9af0-4d4e-a717-bea9223662e8', 'PK', 'Welcome to Jamia Darol Uloom No', 'Welcome to Jamia Darol Uloom No', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-9c28-4973-b4e1-6aa940276cfd', 'PK', 'Welcome to Jamia Darol Uloom Nom', 'Welcome to Jamia Darol Uloom Nom', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-9d58-4a24-912b-aca94529912f', 'PK', 'Welcome to Jamia Darol Uloom Nou', 'Welcome to Jamia Darol Uloom Nou', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-9e86-4533-88a4-901d9de6d7ae', 'PK', 'Welcome to Jamia Darol Uloom Nouma', 'Welcome to Jamia Darol Uloom Nouma', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-a019-4716-86c2-648f933a2f89', 'PK', 'Welcome to Jamia Darol Uloom Noumai', 'Welcome to Jamia Darol Uloom Noumai', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-a12c-499c-9f85-d6a2bf61e100', 'PK', 'Welcome to Jamia Darol Uloom Nouman', 'Welcome to Jamia Darol Uloom Nouman', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-a2b7-47f5-ac8f-6a82e66bb133', 'PK', 'Welcome to Jamia Darol Uloom Noumania', 'Welcome to Jamia Darol Uloom Noumania', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-a457-47cc-8b18-e1ad52fb5613', 'PK', 'Welcome to Jamia Darol Uloom Noumania U', 'Welcome to Jamia Darol Uloom Noumania U', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-a5e0-4d97-b4af-33752555b591', 'PK', 'Welcome to Jamia Darol Uloom Noumania Ut', 'Welcome to Jamia Darol Uloom Noumania Ut', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-a76d-4e39-b981-7f8955060791', 'PK', 'Welcome to Jamia Darol Uloom Noumania Utm', 'Welcome to Jamia Darol Uloom Noumania Utm', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-a8fd-4d60-a593-804f325f84ad', 'PK', 'Welcome to Jamia Darol Uloom Noumania Utma', 'Welcome to Jamia Darol Uloom Noumania Utma', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-aaa9-43ac-aba5-fbe24418dfd2', 'PK', 'Welcome to Jamia Darol Uloom Noumania Utmaz', 'Welcome to Jamia Darol Uloom Noumania Utmaz', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-aca2-4f8b-9ed0-fa52ab910ee7', 'PK', 'Welcome to Jamia Darol Uloom Noumania Utmazn', 'Welcome to Jamia Darol Uloom Noumania Utmazn', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-ae75-421e-8323-2c5272af1ef2', 'PK', 'Welcome to Jamia Darol Uloom Noumania Utman', 'Welcome to Jamia Darol Uloom Noumania Utman', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-b011-4829-a7c7-5919ab5d7346', 'PK', 'Welcome to Jamia Darol Uloom Noumania Utmanz', 'Welcome to Jamia Darol Uloom Noumania Utmanz', '2025-03-19 22:08:58', '2025-03-19 22:08:58'),
+('9e78ed42-b1a9-417a-899f-a1d5fa25eea5', 'PK', 'Welcome to Jamia Darol Uloom Noumania Utmanzo', 'جامعہ دار العلوم نومانیہ اتمانزو میں خوش آمدید', '2025-03-19 22:08:58', '2025-03-19 22:09:08'),
+('9e78ee4b-45cf-492f-ba45-e39bab6707b9', 'US', 'Our Courses', 'Our Courses', '2025-03-19 22:11:51', '2025-03-19 22:11:51'),
+('9e78ee4b-4929-4852-9648-90820323ce62', 'PK', 'Our Courses', 'ہمارے کورسز', '2025-03-19 22:11:51', '2025-03-19 22:12:02'),
+('9e78eefa-91cb-49fd-aeb3-b6543aa62c28', 'US', 'About', 'About', '2025-03-19 22:13:46', '2025-03-19 22:13:46'),
+('9e78eefa-92b4-4d67-aec8-b7a473880e42', 'US', 'Contact', 'Contact', '2025-03-19 22:13:46', '2025-03-19 22:13:46'),
+('9e78eefa-973d-43dd-b05e-b86793572954', 'PK', 'About', 'ہمارے بارے میں', '2025-03-19 22:13:46', '2025-03-19 22:14:26'),
+('9e78eefa-97c6-4b0f-87c7-0e0734f37133', 'PK', 'Contact', 'رابطہ', '2025-03-19 22:13:46', '2025-03-19 22:14:18'),
+('9e78eefb-286c-47e0-8e56-1137d44a416f', 'US', 'Events', 'Events', '2025-03-19 22:13:47', '2025-03-19 22:13:47'),
+('9e78eefb-2d29-449e-ba7c-a43e13ec8caf', 'PK', 'Events', 'تقریبات', '2025-03-19 22:13:47', '2025-03-19 22:14:59');
 
 -- --------------------------------------------------------
 
@@ -154341,7 +155032,9 @@ INSERT INTO `uploads` (`id`, `file_original_name`, `file_name`, `file_size`, `ex
 (28, 'lpLwpeHg3uIANcpAcBRIGmG5mnBA3qkr5OfOzzMO.png', 'TransactionReceipts/lpLwpeHg3uIANcpAcBRIGmG5mnBA3qkr5OfOzzMO.png', NULL, 'png', 'image/png', '2025-02-27 12:26:30', '2025-02-27 12:26:30', NULL),
 (29, 'zmR9neCTBFWWftEIqODVIpImvjEqUQAoC0BTtsdN.png', 'TransactionReceipts/zmR9neCTBFWWftEIqODVIpImvjEqUQAoC0BTtsdN.png', NULL, 'png', 'image/png', '2025-02-28 05:27:26', '2025-02-28 05:27:26', NULL),
 (30, 'YzXn7UqT4kSk44f4s194hOyf7s4EoNgvfmgxjqGM.png', 'TransactionReceipts/YzXn7UqT4kSk44f4s194hOyf7s4EoNgvfmgxjqGM.png', NULL, 'png', 'image/png', '2025-02-28 05:28:12', '2025-02-28 05:28:12', NULL),
-(34, 'Gi3zFIMjqFKoIO0yNieau0m5iMR05WsaFBSmqWXs.png', 'TransactionReceipts/Gi3zFIMjqFKoIO0yNieau0m5iMR05WsaFBSmqWXs.png', NULL, 'png', 'image/png', '2025-03-09 20:59:10', '2025-03-09 20:59:10', NULL);
+(34, 'Gi3zFIMjqFKoIO0yNieau0m5iMR05WsaFBSmqWXs.png', 'TransactionReceipts/Gi3zFIMjqFKoIO0yNieau0m5iMR05WsaFBSmqWXs.png', NULL, 'png', 'image/png', '2025-03-09 20:59:10', '2025-03-09 20:59:10', NULL),
+(35, 'Nu3DRlifvb6gJ0dJIkTxgVcV00UseKdmKrQwrOUX.png', 'BooksImages/Nu3DRlifvb6gJ0dJIkTxgVcV00UseKdmKrQwrOUX.png', NULL, 'png', 'image/png', '2025-03-12 22:14:20', '2025-03-12 22:14:20', NULL),
+(36, '9tTbmbFrTkylRyMLAZmoredTvhnc4sexlUfEWUsc.png', 'TransactionReceipts/9tTbmbFrTkylRyMLAZmoredTvhnc4sexlUfEWUsc.png', NULL, 'png', 'image/png', '2025-03-13 10:37:43', '2025-03-13 10:37:43', NULL);
 
 -- --------------------------------------------------------
 
@@ -154508,6 +155201,12 @@ ALTER TABLE `states`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `transactions`
 --
 ALTER TABLE `transactions`
@@ -154547,13 +155246,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `uploads`
 --
 ALTER TABLE `uploads`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `users`
