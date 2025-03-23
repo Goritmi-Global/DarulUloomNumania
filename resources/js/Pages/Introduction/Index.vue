@@ -22,8 +22,8 @@
                 </nav>
             </div>
 
-            <div v-if="!introductions || introductions.length === 0">
-            <!-- <div> -->
+            <div>
+                <!-- <div> -->
                 <button
                     class="btn btn-success mt-3"
                     data-bs-toggle="modal"
@@ -194,7 +194,6 @@
                         </div>
                     </div>
                 </div>
-                 
             </div>
         </section>
     </main>
@@ -244,20 +243,18 @@ export default {
                     this.$refs.closeModal.click();
                     this.formStatus = 1;
                     toastr.success(
-                        translate("Introduction saved successfully.")
+                        this.translate("Introduction saved successfully.")
                     );
                     this.fetchIntroductions();
                 })
-                .catch((error) => {
-    this.formStatus = 1;
-    if (error.response && error.response.data) {
-        this.formErrors = error.response.data.errors || {};
-        toastr.error(error.response.data.message);
-    } else {
-        toastr.error("An unexpected error occurred.");
-    }
-});
 
+                .catch((error) => {
+                    this.formStatus = 1;
+                    this.formErrors = error.response?.data?.errors || {};
+                    toastr.error(
+                        error.response?.data?.message || "An error occurred."
+                    );
+                });
         },
         deleteThis(id) {
             axios

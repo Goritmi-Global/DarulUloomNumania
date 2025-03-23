@@ -25,19 +25,19 @@ class IntroductionController extends Controller
             'title'       => 'required|string|max:255',
             'description' => 'required|string',
         ]);
-
         if ($request->id) {
-            $record = Introduction::findOrFail($request->id);
+            $record = Introduction::where('id',$request->id)->first();
         } else {
-
+            
             $record     = new Introduction();
             $record->id = Str::orderedUuid();
         }
         $record->title       = $request->title;
         $record->description = $request->description;
         $record->save();
+        return response()->json(['message' => 'Islamic Name saved successfully.'], 200);
 
-        return response()->json(['message' => 'Introduction saved successfully.'], 200);
+        return 'success';
     }
 
     public function destroy($id)
