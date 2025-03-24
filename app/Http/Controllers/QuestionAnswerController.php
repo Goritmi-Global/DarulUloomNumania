@@ -1,17 +1,106 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\QuestionAnswer;
+use App\Models\Question;
+use App\Models\Answer;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class QuestionAnswerController extends Controller
 {
     public function index()
     {
-        return Inertia::render('QuestionsAnswers/Index', [
-            'questionsAnswers' => QuestionAnswer::all()
+        // $introductions = Introduction::all();
+        return Inertia::render('QuestionsAnswers/Index');
+    }
+    public function fetchQuestions()
+    {
+        $questions = Question::all();
+        return $questions;
+    }
+
+    public function store(Request $request)
+{
+    $request->validate([
+        'question_id'        => 'required|exists:questions,id',
+        'answer_short_form'  => 'required|string|max:255',
+        'answer_full_form'   => 'required|string',
+        'approved_by_mufti'  => 'nullable|string|max:255',
+    ]);
+
+    Answer::create($request->all());
+
+    return response()->json(['message' => 'Answer submitted successfully.'], 201);
+}
+
+    public function destroy($id)
+    {
+        Introduction::findOrFail($id)->delete();
+        return response()->json(['message' => 'Introduction deleted successfully.'], 200);
+    }
+
+    // front end
+    public function ask_question()
+    {
+        return Inertia::render('FrontEnd/AskQuestion');
+    }
+
+    public function saveQuestion(Request $request)
+    {
+       
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'email'       => 'required|email|max:255',
+            'subject'     => 'required|string|max:255',
+            'description' => 'required|string',
         ]);
+
+        $record     = new Question();
+        $record->id = Str::uuid(); // Assigning a UUID if creating a new record
+
+        $record->name        = $request->name;
+        $record->email       = $request->email;
+        $record->subject     = $request->subject;
+        $record->description = $request->description;
+        $record->date        = Carbon::now(); // Store current date
+        $record->save();
+
+        return 'success';
+    }
+
+    public function answerStore(Request $request)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'question_id'      => 'required|exists:questions,id',
+            'answer_short_form' => 'required|string|max:255',
+            'answer_full_form'  => 'required|string',
+            'approved_by_mufti' => 'nullable|string|max:255',
+        ]);
+
+        // Create a new answer record
+        $answer = new Answer();
+        $answer->id                = Str::uuid();
+        $answer->question_id        = $request->question_id;
+        $answer->answer_short_form  = $request->answer_short_form;
+        $answer->answer_full_form   = $request->answer_full_form;
+        $answer->approved_by_mufti  = $request->approved_by_mufti; 
+        if($request->approved_by_mufti)
+        {
+            $question = Question::find($request->question_id);
+            $question->status = 2;
+            $question->save();
+        }else
+        {
+            $question = Question::find($request->question_id);
+            $question->status = 1;
+            $question->save();
+        }
+        $answer->date        = Carbon::now(); // Store current date
+        $answer->save();
+
+        return response()->json(['message' => 'Answer stored successfully!'], 201);
     }
 }

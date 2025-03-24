@@ -14,6 +14,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\QuestionAnswerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -150,6 +151,11 @@ Route::middleware(['web'])->group(function () {
         Route::delete('/{id}', [IslamicNameController::class, 'destroy'])->name('api.islamic-names.delete'); // Delete a name
     });
 
+    // qeustions and anser
+    Route::get('/api/question/fetch', [QuestionAnswerController::class, 'fetchQuestions'])->name('api.question.fetch');
+Route::post('/api/answer/store', [QuestionAnswerController::class, 'answerStore'])->name('api.answer.store');
+
+
 });
 
 // front end changing default language
@@ -163,3 +169,4 @@ Route::get('/madrasa/introduction', [IntroductionController::class, 'fetch'])->n
 Route::get('/madrasa/books', [BookController::class, 'fetch'])->name('api.madrasa.books');
 Route::get('/madrasa/bayanaat', [BayanaatController::class, 'fetch'])->name('api.madrasa.bayanaat');
 Route::get('/madrasa/islamic/names', [IslamicNameController::class, 'fetch'])->name('api.madrasa.islamic.names');
+Route::post('/question/store', [QuestionAnswerController::class, 'saveQuestion'])->name('api.question.store');

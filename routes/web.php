@@ -121,3 +121,4 @@ Route::get('/', [ExternalWebstieController::class, 'Index'])->name('/');
 Route::get('/about', [ExternalWebstieController::class, 'about'])->name('/about');
 Route::get('/events', [ExternalWebstieController::class, 'events'])->name('/events');
 Route::get('/contact', [ExternalWebstieController::class, 'contact'])->name('/contact');
+Route::get('/ask/question', [QuestionAnswerController::class, 'ask_question'])->name('ask.question');

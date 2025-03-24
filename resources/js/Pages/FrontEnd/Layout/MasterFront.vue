@@ -85,6 +85,14 @@
                     <li class="nav-item">
                         <a
                             class="nav-link"
+                            href="/ask/question"
+                            :class="{ active: isActive('/ask/question') }"
+                            >{{ translate("Ask Question") }}</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
                             href="/student/enroll"
                             :class="{ active: isActive('/student/enroll') }"
                             >{{ translate("Enroll") }}</a
