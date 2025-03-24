@@ -26,24 +26,31 @@
                     <h5 class="card-title theme-text-color">
                         {{ translate("All Asked Questions") }}
                     </h5>
-                    
+
                     <div class="accordion" id="questionsAccordion">
                         <div
                             class="accordion-item"
                             v-for="(question, index) in questions"
                             :key="question.id"
                         >
-                            <h2 class="accordion-header" :id="'heading' + index">
+                            <h2
+                                class="accordion-header"
+                                :id="'heading' + index"
+                            >
                                 <button
-                                    class="accordion-button"
+                                    class="accordion-button collapsed"
                                     type="button"
                                     data-bs-toggle="collapse"
                                     :data-bs-target="'#collapse' + index"
                                     aria-expanded="true"
                                     :aria-controls="'collapse' + index"
                                 >
-                                    <strong>{{ question.subject }}</strong> - {{ question.name }}
-                                    <span class="ms-3 badge" :class="getStatusClass(question.status)">
+                                    <strong>{{ question.subject }}</strong> -
+                                    {{ question.name }}
+                                    <span
+                                        class="ms-auto badge"
+                                        :class="getStatusClass(question.status)"
+                                    >
                                         {{ getStatusText(question.status) }}
                                     </span>
                                 </button>
@@ -56,19 +63,109 @@
                                 data-bs-parent="#questionsAccordion"
                             >
                                 <div class="accordion-body">
-                                    <p><strong>Email:</strong> {{ question.email }}</p>
-                                    <p><strong>Subject:</strong> {{ question.subject }}</p>
-                                    <p><strong>Date:</strong> {{ question.date }}</p>
-                                    <p><strong>Description:</strong> {{ question.description }}</p>
+                                    <p>
+                                        <strong
+                                            >{{ translate("Email") }}:</strong
+                                        >
+                                        {{ question.email }}
+                                    </p>
+                                    <p>
+                                        <strong
+                                            >{{ translate("Subject") }}:</strong
+                                        >
+                                        {{ question.subject }}
+                                    </p>
+                                    <p>
+                                        <strong
+                                            >{{ translate("Date") }}:</strong
+                                        >
+                                        {{ question.date }}
+                                    </p>
+                                    <p>
+                                        <strong
+                                            >{{
+                                                translate("Description")
+                                            }}:</strong
+                                        >
+                                        {{ question.description }}
+                                    </p>
 
-                                    <button
-                                        class="btn btn-success"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#replyModal"
-                                        @click="openReplyModal(question)"
+                                    <hr />
+                                    <div
+                                        class="d-flex justify-content-between align-items-center"
                                     >
-                                        {{ translate("Reply") }}
-                                    </button>
+                                        <h4 class="text-primary">
+                                            {{
+                                                translate("Response from Mufti")
+                                            }}
+                                        </h4>
+
+                                        <i
+                                            class="bi bi-pencil text-success"
+                                            v-if="question.answer"
+                                            :title="translate('Edit Answer')"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#replyModal"
+                                            @click="
+                                                openReplyModal(
+                                                    question,
+                                                    question.answer
+                                                )
+                                            "
+                                        ></i>
+                                    </div>
+
+                                    <div v-if="question.answer">
+                                        <p>
+                                            <strong
+                                                >{{
+                                                    translate("Short Answer")
+                                                }}:</strong
+                                            >
+                                            {{
+                                                question.answer
+                                                    .answer_short_form
+                                            }}
+                                        </p>
+                                        <p>
+                                            <strong
+                                                >{{
+                                                    translate("Full Answer")
+                                                }}:</strong
+                                            >
+                                            {{
+                                                question.answer.answer_full_form
+                                            }}
+                                        </p>
+                                        <p
+                                            v-if="
+                                                question.answer
+                                                    .approved_by_mufti
+                                            "
+                                        >
+                                            <strong
+                                                >{{
+                                                    translate("Approved By")
+                                                }}:</strong
+                                            >
+                                            {{
+                                                question.answer
+                                                    .approved_by_mufti
+                                            }}
+                                        </p>
+                                    </div>
+                                    <div v-else>
+                                        <button
+                                            class="btn btn-success"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#replyModal"
+                                            @click="
+                                                openReplyModal(question, null)
+                                            "
+                                        >
+                                            {{ translate("Reply") }}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +185,13 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-primary">
-                                {{ translate("Reply to Question") }}
+                                {{
+                                    translate(
+                                        replyForm.id
+                                            ? "Edit Answer"
+                                            : "Reply to Question"
+                                    )
+                                }}
                             </h5>
                             <button
                                 ref="closeModal"
@@ -102,26 +205,39 @@
                             <div class="card card-body p-3">
                                 <div class="row g-3">
                                     <div class="col-12">
-                                        <label for="answer_short_form" class="form-label">
+                                        <label
+                                            for="answer_short_form"
+                                            class="form-label"
+                                        >
                                             {{ translate("Short Answer") }}
                                         </label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             id="answer_short_form"
-                                            v-model="replyForm.answer_short_form"
-                                            :class="{ 'invalid-bg': replyErrors.answer_short_form }"
+                                            v-model="
+                                                replyForm.answer_short_form
+                                            "
+                                            :class="{
+                                                'invalid-bg':
+                                                    replyErrors.answer_short_form,
+                                            }"
                                         />
                                         <div
                                             v-if="replyErrors.answer_short_form"
                                             class="invalid-feedback"
                                         >
-                                            {{ replyErrors.answer_short_form[0] }}
+                                            {{
+                                                replyErrors.answer_short_form[0]
+                                            }}
                                         </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <label for="answer_full_form" class="form-label">
+                                        <label
+                                            for="answer_full_form"
+                                            class="form-label"
+                                        >
                                             {{ translate("Full Answer") }}
                                         </label>
                                         <textarea
@@ -129,25 +245,39 @@
                                             id="answer_full_form"
                                             v-model="replyForm.answer_full_form"
                                             rows="4"
-                                            :class="{ 'invalid-bg': replyErrors.answer_full_form }"
+                                            :class="{
+                                                'invalid-bg':
+                                                    replyErrors.answer_full_form,
+                                            }"
                                         ></textarea>
                                         <div
                                             v-if="replyErrors.answer_full_form"
                                             class="invalid-feedback"
                                         >
-                                            {{ replyErrors.answer_full_form[0] }}
+                                            {{
+                                                replyErrors.answer_full_form[0]
+                                            }}
                                         </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <label for="approved_by_mufti" class="form-label">
-                                            {{ translate("Approved By Mufti (Optional)") }}
+                                        <label
+                                            for="approved_by_mufti"
+                                            class="form-label"
+                                        >
+                                            {{
+                                                translate(
+                                                    "Approved By Mufti (Optional)"
+                                                )
+                                            }}
                                         </label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             id="approved_by_mufti"
-                                            v-model="replyForm.approved_by_mufti"
+                                            v-model="
+                                                replyForm.approved_by_mufti
+                                            "
                                         />
                                     </div>
 
@@ -158,7 +288,13 @@
                                             v-if="replyStatus === 1"
                                             @click="submitReply"
                                         >
-                                            {{ translate("Submit Reply") }}
+                                            {{
+                                                translate(
+                                                    replyForm.id
+                                                        ? "Update Reply"
+                                                        : "Submit Reply"
+                                                )
+                                            }}
                                         </button>
                                         <button
                                             class="btn btn-success"
@@ -192,6 +328,7 @@ export default {
         return {
             questions: [],
             replyForm: {
+                id: "", // Holds the answer ID for editing
                 question_id: "",
                 answer_short_form: "",
                 answer_full_form: "",
@@ -208,18 +345,37 @@ export default {
         fetchQuestions() {
             axios
                 .get(route("api.question.fetch"))
-                .then((response) => { 
-                    this.questions = response.data;
+                .then((response) => {
+                    this.questions = response.data.map((q) => ({
+                        ...q,
+                        answer: q.answer || null, // Include answer if exists
+                    }));
                 })
                 .catch((error) => {
                     console.error(error);
                 });
         },
-        openReplyModal(question) {
+        openReplyModal(question, answer) {
+            // Clear all fields first
+            this.replyForm = {
+                id: "",
+                question_id: "",
+                answer_short_form: "",
+                answer_full_form: "",
+                approved_by_mufti: "",
+            };
+            this.replyErrors = [];
+            this.replyForm.id = answer ? answer.id : "";
             this.replyForm.question_id = question.id;
-            this.replyForm.answer_short_form = "";
-            this.replyForm.answer_full_form = "";
-            this.replyForm.approved_by_mufti = "";
+            this.replyForm.answer_short_form = answer
+                ? answer.answer_short_form
+                : "";
+            this.replyForm.answer_full_form = answer
+                ? answer.answer_full_form
+                : "";
+            this.replyForm.approved_by_mufti = answer
+                ? answer.approved_by_mufti
+                : "";
             this.replyErrors = [];
         },
         submitReply() {
@@ -260,3 +416,8 @@ export default {
     },
 };
 </script>
+<style scoped>
+.bi-pencil {
+    cursor: pointer;
+}
+</style>

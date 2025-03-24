@@ -17,9 +17,11 @@ class QuestionAnswerController extends Controller
     }
     public function fetchQuestions()
     {
-        $questions = Question::all();
+        $questions =Question::with('answer')->orderByDesc('date')->get();
         return $questions;
     }
+    
+
 
     public function store(Request $request)
 {
@@ -79,10 +81,17 @@ class QuestionAnswerController extends Controller
             'answer_full_form'  => 'required|string',
             'approved_by_mufti' => 'nullable|string|max:255',
         ]);
-
+ 
         // Create a new answer record
-        $answer = new Answer();
-        $answer->id                = Str::uuid();
+        if($request->id)
+        {
+            $answer= Answer::find($request->id);
+        }else
+        {
+
+            $answer = new Answer();
+            $answer->id                = Str::uuid();
+        }
         $answer->question_id        = $request->question_id;
         $answer->answer_short_form  = $request->answer_short_form;
         $answer->answer_full_form   = $request->answer_full_form;
