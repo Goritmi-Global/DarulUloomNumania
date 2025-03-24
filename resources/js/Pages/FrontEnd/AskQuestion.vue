@@ -5,7 +5,11 @@
             <div class="container">
                 <h1 class="display-4">{{ translate("Ask a Question") }}</h1>
                 <p class="lead">
-                    {{ translate("Have a question? Send us a message, and we will respond as soon as possible.") }}
+                    {{
+                        translate(
+                            "Have a question? Send us a message, and we will respond as soon as possible."
+                        )
+                    }}
                 </p>
             </div>
         </section>
@@ -51,26 +55,112 @@
                             <div class="row g-2">
                                 <div class="col-md-12">
                                     <div class="card shadow-sm">
-                                        <div class="card-header bg-primary text-white">
+                                        <div
+                                            class="card-header bg-primary text-white"
+                                        >
                                             {{ translate("Question Details") }}
                                         </div>
                                         <div class="card-body">
-                                            <p><strong>{{ translate("Subject") }}:</strong> {{ question.subject }}</p>
-                                            <p><strong>{{ translate("Full Question") }}:</strong> {{ question.description }}</p>
-                                            <p><strong>{{ translate("Question Date") }}:</strong> {{ formatDate(question.date) }}</p>
+                                            <p>
+                                                <strong
+                                                    >{{
+                                                        translate("Subject")
+                                                    }}:</strong
+                                                >
+                                                {{ question.subject }}
+                                            </p>
+                                            <p>
+                                                <strong
+                                                    >{{
+                                                        translate(
+                                                            "Full Question"
+                                                        )
+                                                    }}:</strong
+                                                >
+                                                {{ question.description }}
+                                            </p>
+                                            <p>
+                                                <strong
+                                                    >{{
+                                                        translate(
+                                                            "Question Date"
+                                                        )
+                                                    }}:</strong
+                                                >
+                                                {{ formatDate(question.date) }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="card shadow-sm">
-                                        <div class="card-header bg-success text-white">
+                                        <div
+                                            class="card-header bg-success text-white"
+                                        >
                                             {{ translate("Answer Details") }}
                                         </div>
                                         <div class="card-body">
-                                            <p><strong>{{ translate("Short Answer") }}:</strong> {{ question.answer?.answer_short_form || translate("Not Available") }}</p>
-                                            <p><strong>{{ translate("Full Answer") }}:</strong> {{ question.answer?.answer_full_form || translate("Not Available") }}</p>
-                                            <p><strong>{{ translate("Approved By Mufti") }}:</strong> {{ question.answer?.approved_by_mufti || translate("Not Available") }}</p>
-                                            <p><strong>{{ translate("Answer Date") }}:</strong> {{ question.answer ? formatDate(question.answer.date) : translate("Not Available") }}</p>
+                                            <p>
+                                                <strong
+                                                    >{{
+                                                        translate(
+                                                            "Short Answer"
+                                                        )
+                                                    }}:</strong
+                                                >
+                                                {{
+                                                    question.answer
+                                                        ?.answer_short_form ||
+                                                    translate("Not Available")
+                                                }}
+                                            </p>
+                                            <p>
+                                                <strong
+                                                    >{{
+                                                        translate(
+                                                            "Full Answer"
+                                                        )
+                                                    }}:</strong
+                                                >
+                                                {{
+                                                    question.answer
+                                                        ?.answer_full_form ||
+                                                    translate("Not Available")
+                                                }}
+                                            </p>
+                                            <p>
+                                                <strong
+                                                    >{{
+                                                        translate(
+                                                            "Approved By Mufti"
+                                                        )
+                                                    }}:</strong
+                                                >
+                                                {{
+                                                    question.answer
+                                                        ?.approved_by_mufti ||
+                                                    translate("Not Available")
+                                                }}
+                                            </p>
+                                            <p>
+                                                <strong
+                                                    >{{
+                                                        translate(
+                                                            "Answer Date"
+                                                        )
+                                                    }}:</strong
+                                                >
+                                                {{
+                                                    question.answer
+                                                        ? formatDate(
+                                                              question.answer
+                                                                  .date
+                                                          )
+                                                        : translate(
+                                                              "Not Available"
+                                                          )
+                                                }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -82,10 +172,18 @@
 
             <!-- Pagination -->
             <div class="d-flex justify-content-center my-4">
-                <button class="btn btn-success mx-1" @click="prevPage" :disabled="!pagination.prev">
+                <button
+                    class="btn btn-success mx-1"
+                    @click="prevPage"
+                    :disabled="!pagination.prev"
+                >
                     {{ translate("Previous") }}
                 </button>
-                <button class="btn btn-success mx-1" @click="nextPage" :disabled="!pagination.next">
+                <button
+                    class="btn btn-success mx-1"
+                    @click="nextPage"
+                    :disabled="!pagination.next"
+                >
                     {{ translate("Next") }}
                 </button>
             </div>
@@ -95,63 +193,115 @@
         <section class="contact-details py-5 bg-light">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-md-10"> <!-- Made form slightly wider -->
+                    <div class="col-md-10">
+                        <!-- Made form slightly wider -->
                         <div class="card card-body shadow-sm">
-                            <h2 class="theme-text-color text-center">{{ translate("Ask Your Question") }}</h2>
+                            <h2 class="theme-text-color text-center">
+                                {{ translate("Ask Your Question") }}
+                            </h2>
                             <form @submit.prevent="submit">
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">{{ translate("Full Name") }}</label>
+                                    <label for="name" class="form-label">{{
+                                        translate("Full Name")
+                                    }}</label>
                                     <input
                                         type="text"
                                         class="form-control"
                                         id="name"
                                         v-model="form.name"
-                                        :class="{ 'invalid-bg': formErrors.name }"
+                                        :class="{
+                                            'invalid-bg': formErrors.name,
+                                        }"
                                     />
-                                    <div v-if="formErrors.name" class="invalid-feedback">{{ formErrors.name }}</div>
+                                    <div
+                                        v-if="formErrors.name"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ formErrors.name }}
+                                    </div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">{{ translate("Email Address") }}</label>
+                                    <label for="email" class="form-label">{{
+                                        translate("Email Address")
+                                    }}</label>
                                     <input
                                         type="email"
                                         class="form-control"
                                         id="email"
                                         v-model="form.email"
-                                        :class="{ 'invalid-bg': formErrors.email }"
+                                        :class="{
+                                            'invalid-bg': formErrors.email,
+                                        }"
                                     />
-                                    <div v-if="formErrors.email" class="invalid-feedback">{{ formErrors.email }}</div>
+                                    <div
+                                        v-if="formErrors.email"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ formErrors.email }}
+                                    </div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="subject" class="form-label">{{ translate("Subject") }}</label>
+                                    <label for="subject" class="form-label">{{
+                                        translate("Subject")
+                                    }}</label>
                                     <input
                                         type="text"
                                         class="form-control"
                                         id="subject"
                                         v-model="form.subject"
-                                        :class="{ 'invalid-bg': formErrors.subject }"
+                                        :class="{
+                                            'invalid-bg': formErrors.subject,
+                                        }"
                                     />
-                                    <div v-if="formErrors.subject" class="invalid-feedback">{{ formErrors.subject }}</div>
+                                    <div
+                                        v-if="formErrors.subject"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ formErrors.subject }}
+                                    </div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="description" class="form-label">{{ translate("Question Description") }}</label>
+                                    <label
+                                        for="description"
+                                        class="form-label"
+                                        >{{
+                                            translate("Question Description")
+                                        }}</label
+                                    >
                                     <textarea
                                         class="form-control"
                                         id="description"
                                         v-model="form.description"
                                         rows="4"
-                                        :class="{ 'invalid-bg': formErrors.description }"
+                                        :class="{
+                                            'invalid-bg':
+                                                formErrors.description,
+                                        }"
                                     ></textarea>
-                                    <div v-if="formErrors.description" class="invalid-feedback">{{ formErrors.description }}</div>
+                                    <div
+                                        v-if="formErrors.description"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ formErrors.description }}
+                                    </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-success w-100" :disabled="formStatus === 0">
-                                    <span v-if="formStatus === 1">{{ translate("Submit") }}</span>
+                                <button
+                                    type="submit"
+                                    class="btn btn-success w-100"
+                                    :disabled="formStatus === 0"
+                                >
+                                    <span v-if="formStatus === 1">{{
+                                        translate("Submit")
+                                    }}</span>
                                     <span v-else>
                                         {{ translate("Submitting...") }}
-                                        <span class="spinner-border spinner-border-sm"></span>
+                                        <span
+                                            class="spinner-border spinner-border-sm"
+                                        ></span>
                                     </span>
                                 </button>
                             </form>
@@ -162,7 +312,6 @@
         </section>
     </main>
 </template>
-
 
 <script>
 import axios from "axios";
@@ -192,31 +341,37 @@ export default {
         validateForm() {
             this.formErrors = {}; // Clear previous errors
             let isValid = true;
+            let errorMessages = []; // Store all errors
 
             if (!this.form.name.trim()) {
                 this.formErrors.name = "Full Name is required.";
                 isValid = false;
-                toastr.error("Full Name is required.");
+                errorMessages.push("Full Name is required.");
             }
             if (!this.form.email.trim()) {
                 this.formErrors.email = "Email Address is required.";
                 isValid = false;
-                toastr.error("Email is required.");
+                errorMessages.push("Email Address is required.");
             } else if (!/\S+@\S+\.\S+/.test(this.form.email)) {
                 this.formErrors.email = "Invalid email format.";
                 isValid = false;
-                toastr.error("Invalid email format.");
+                errorMessages.push("Invalid email format.");
             }
             if (!this.form.subject.trim()) {
                 this.formErrors.subject = "Subject is required.";
                 isValid = false;
-                toastr.error("Subject is required.");
+                errorMessages.push("Subject is required.");
             }
             if (!this.form.description.trim()) {
                 this.formErrors.description =
                     "Question Description is required.";
                 isValid = false;
-                toastr.error("Question Description is required.");
+                errorMessages.push("Question Description is required.");
+            }
+
+            // Show only one toastr message for all errors
+            if (errorMessages.length > 0) {
+                toastr.error(errorMessages.join("<br>")); // Display all errors in a single toastr
             }
 
             return isValid;
@@ -234,16 +389,16 @@ export default {
                     this.formStatus = 1;
                     this.formErrors = {};
                     toastr.success(
-                        "Your question has been submitted successfully."
+                        this.translate(
+                            "Your question has been submitted successfully. We will respond you soon!"
+                        )
                     );
+
                     this.clearFields();
                 })
                 .catch((error) => {
                     this.formStatus = 1;
-                    this.formErrors = error.response?.data?.errors || {};
-                    toastr.error(
-                        error.response?.data?.message || "An error occurred."
-                    );
+                    this.formErrors = error.response.data.errors || {};
                 });
         },
         clearFields() {

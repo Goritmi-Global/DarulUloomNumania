@@ -3,9 +3,15 @@
         <!-- Hero Section -->
         <section class="hero-section text-center py-5 text-white">
             <div class="container">
-                <h1 class="display-4">{{ translate("New Student Enrollment") }}</h1>
+                <h1 class="display-4">
+                    {{ translate("New Student Enrollment") }}
+                </h1>
                 <p class="lead">
-                    {{translate("Providing quality Islamic education with modern learning techniques")}}.
+                    {{
+                        translate(
+                            "Providing quality Islamic education with modern learning techniques"
+                        )
+                    }}.
                 </p>
             </div>
         </section>
@@ -106,7 +112,9 @@
                     </section>
                 </div>
                 <div class="col-md-6">
-                    <h1 class="display-4 p-3 mt-3 theme-text-color">{{ translate("Enroll") }}</h1>
+                    <h1 class="display-4 p-3 mt-3 theme-text-color">
+                        {{ translate("Enroll") }}
+                    </h1>
 
                     <section class="section bg-white">
                         <div class="card shadow-sm border-0 shadow-lg">
@@ -120,9 +128,7 @@
                                             v-model="form.apply_for"
                                             :options="filterOptions"
                                             :placeholder="
-                                                translate(
-                                                    'Select Course'
-                                                )
+                                                translate('Select Course')
                                             "
                                             :searchable="true"
                                             :multiple="true"
@@ -138,8 +144,6 @@
                                             {{ formErrors.apply_for[0] }}
                                         </div>
                                     </div>
-
-                                    
 
                                     <div class="col-md-6">
                                         <label class="form-label">{{
@@ -222,7 +226,7 @@
                                             {{ formErrors.phone_number[0] }}
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md-12">
                                         <label class="form-label">{{
                                             translate("Primary Education")
@@ -391,19 +395,19 @@ export default {
             currentCourse: "",
             students: [],
             filterOptions: [
-  "دورہ حدیث",
-  "درجہ اولیٰ",
-  "درجہ ثانیہ",
-  "درجہ ثالثہ",
-  "درجہ رابعہ",
-  "درجہ خامسہ",
-  "درجہ سادسہ",
-  "درجہ سابعہ",
-  "تحصّص باللغات",
-  "تحصّص بالفقہ",
-  "ایک سال اور دو سال",
-  "متوسطا"
-],
+                "دورہ حدیث",
+                "درجہ اولیٰ",
+                "درجہ ثانیہ",
+                "درجہ ثالثہ",
+                "درجہ رابعہ",
+                "درجہ خامسہ",
+                "درجہ سادسہ",
+                "درجہ سابعہ",
+                "تحصّص باللغات",
+                "تحصّص بالفقہ",
+                "ایک سال اور دو سال",
+                "متوسطا",
+            ],
             form: {
                 id: "",
                 apply_for: "",
@@ -513,12 +517,10 @@ export default {
 }
 .card {
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-    
 }
 
 .card:hover {
     opacity: 1;
     transform: translateY(-5px);
 }
-
 </style>

@@ -180,6 +180,7 @@
 </template>
 
 <script>
+
 export default {
     created() {
         this.fatchLanguages();
@@ -242,6 +243,10 @@ export default {
 </script>
 
 <style>
+@import url("public/backend/assets/vendor/bootstrap/css/bootstrap.min.css");
+ 
+
+@import "toastr";
 @import url("public/backend/assets/vendor/bootstrap/css/bootstrap.min.css");
 /* Primary Color */
 :root {
