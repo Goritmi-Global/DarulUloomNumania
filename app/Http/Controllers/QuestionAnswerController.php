@@ -112,4 +112,23 @@ class QuestionAnswerController extends Controller
 
         return response()->json(['message' => 'Answer stored successfully!'], 201);
     }
+
+    public function getApprovedQuestions(Request $request)
+{
+    $search = $request->query('search');
+
+    // dd("etes");
+    $query = Question::with('answer')->where('status', 2); // Only approved questions
+
+    if ($search) {
+        $query->where(function($q) use ($search) {
+            $q->where('subject', 'LIKE', "%{$search}%")
+              ->orWhere('description', 'LIKE', "%{$search}%");
+        });
+    }
+
+    $questions = $query->paginate(20); // Show 5 records per page
+    return response()->json($questions);
+}
+
 }
