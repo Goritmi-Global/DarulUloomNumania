@@ -138,49 +138,132 @@
                         >{{ translate("Enroll") }}</a
                     >
                 </li>
+                <li
+                    class="nav-item dropdown languages"
+                    v-if="languages && languages.length"
+                >
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="javascript:void(0)"
+                        id="languageDropdown"
+                        role="button"
+                        @click="toggleLangMenu"
+                    >
+                        {{ user_language_name }}
+                    </a>
+                    <ul
+                        v-if="langMenuOpen"
+                        class="dropdown-menu dropdown-menu-end c-global-radius"
+                        aria-labelledby="languageDropdown"
+                    >
+                        <li
+                            v-for="(language, index) in languages"
+                            :key="index"
+                            :class="[
+                                language.code == $page.props.default_language
+                                    ? 'lang-active'
+                                    : '',
+                            ]"
+                        >
+                            <a
+                                class="dropdown-item"
+                                href="javascript:void(0)"
+                                @click="changeLang(language.code)"
+                            >
+                                {{ language.name }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
 
         <slot></slot>
 
-        <footer
-            class="footer d-flex flex-column align-items-center py-3 bg-light"
-        >
-            <div class="footer-content text-center">
-                <p class="mb-1">
-                    &copy; {{ new Date().getFullYear() }}
-                    <strong>Darul Uloom</strong>. All Rights Reserved.
-                </p>
-                <p class="mb-2">
-                    Designed by
-                    <a
-                        href="https://goritmi.co.uk"
-                        target="_blank"
-                        class="text-primary"
-                        >Goritmi Ltd</a
-                    >
-                </p>
-            </div>
-            <div class="footer-social d-flex justify-content-center">
-                <a href="#" class="mx-2 text-primary"
-                    ><i class="bi bi-facebook"></i
-                ></a>
-                <a href="#" class="mx-2 text-primary"
-                    ><i class="bi bi-twitter"></i
-                ></a>
-                <a href="#" class="mx-2 text-primary"
-                    ><i class="bi bi-instagram"></i
-                ></a>
-                <a href="#" class="mx-2 text-primary"
-                    ><i class="bi bi-linkedin"></i
-                ></a>
+        <!-- ======= Footer ======= -->
+        <footer id="footer" class="footer">
+            <div class="container">
+                <!-- Footer Top Section -->
+                <div class="footer-top">
+                    <div class="row">
+                        <!-- Contact Info Section -->
+                        <div class="col-lg-6 col-md-6 footer-contact">
+                            <h3>Darul Oloom</h3>
+                            <p>
+                                <strong>Phone:</strong> +1 234 567 890<br />
+                                <strong>Email:</strong>
+                                info@daruloolom.com<br />
+                            </p>
+                            <div class="footer-social">
+                                <a
+                                    href="https://facebook.com"
+                                    target="_blank"
+                                    class="facebook"
+                                    ><i class="bi bi-facebook"></i
+                                ></a>
+                                <a
+                                    href="https://twitter.com"
+                                    target="_blank"
+                                    class="twitter ms-3"
+                                    ><i class="bi bi-twitter"></i
+                                ></a>
+                                <a
+                                    href="https://instagram.com"
+                                    target="_blank"
+                                    class="instagram ms-3"
+                                    ><i class="bi bi-instagram"></i
+                                ></a>
+                                <a
+                                    href="https://linkedin.com"
+                                    target="_blank"
+                                    class="linkedin ms-3"
+                                    ><i class="bi bi-linkedin"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <!-- Quick Links Section -->
+                        <div class="col-lg-6 col-md-6 footer-links">
+                            <h4>Quick Links</h4>
+                            <ul type="none">
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/about">About</a></li>
+                                <li><a href="/contact">Contact</a></li>
+                                <li><a href="/events">Events</a></li>
+                                <li><a href="/student/enroll">Enroll</a></li>
+                            </ul>
+                        </div>
+                        <!-- Newsletter Section -->
+                        <!-- <div class="col-lg-4 col-md-6 footer-newsletter">
+                            <h4>Join Our Newsletter</h4>
+                            <p>Get updates on events and announcements.</p>
+                            <form action="#" method="post">
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Enter your email"
+                                    required
+                                />
+                                <button type="submit">Subscribe</button>
+                            </form>
+                        </div> -->
+                    </div>
+                </div>
+
+                <!-- Footer Bottom Section -->
+                <div class="footer-bottom">
+                    <p>
+                        &copy; Copyright
+                        <strong><span>Darul Oloom</span></strong
+                        >. All Rights Reserved | Designed by
+                        <a href="https://goritmi.co.uk">Goritim Ltd</a>
+                    </p>
+                </div>
             </div>
         </footer>
     </div>
 </template>
 
 <script>
-
 export default {
     created() {
         this.fatchLanguages();
@@ -196,7 +279,18 @@ export default {
             languages: [],
         };
     },
+    mounted() {
+        let bootstrapJs = document.createElement("script");
+        bootstrapJs.setAttribute(
+            "src",
+            "/backend/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"
+        );
+        document.head.appendChild(bootstrapJs);
 
+        let mainJs = document.createElement("script");
+        mainJs.setAttribute("src", "/backend/assets/js/main.js");
+        document.head.appendChild(mainJs);
+    },
     methods: {
         isActive(route) {
             return window.location.pathname === route;
@@ -244,7 +338,12 @@ export default {
 
 <style>
 @import url("public/backend/assets/vendor/bootstrap/css/bootstrap.min.css");
- 
+@import url("public/backend/assets/vendor/bootstrap-icons/bootstrap-icons.css");
+@import url("public/backend/assets/vendor/boxicons/css/boxicons.min.css");
+@import url("public/backend/assets/vendor/remixicon/remixicon.css");
+@import url("public/backend/assets/vendor/simple-datatables/style.css");
+
+@import url("public/backend/assets/vendor/bootstrap-icons/bootstrap-icons.css");
 
 @import "toastr";
 @import url("public/backend/assets/vendor/bootstrap/css/bootstrap.min.css");
@@ -289,14 +388,14 @@ export default {
     margin: 0 15px;
 }
 
-.lang-active a {
+/* .lang-active a {
     color: white !important;
-}
+} */
 .lang-active a,
 .lang-active a:hover {
     /* background-color: white !important; */
     color: white !important;
-    background-color: #012970 !important;
+    background-color: rgb(134, 154, 196) !important;
 }
 
 .languages ul a {
@@ -346,9 +445,9 @@ export default {
 .footer {
     background: #f8f9fa;
     padding: 10px;
-    text-align: center;
+  
     font-size: 14px;
-    margin-top: 20px;
+    
 }
 
 @media (max-width: 768px) {
@@ -398,10 +497,9 @@ export default {
 
 .footer {
     width: 100%;
-    background: #f8f9fa;
-    text-align: center;
+    background: white; 
     font-size: 14px;
-    margin-top: 20px;
+    
 }
 .footer-content p {
     margin: 0;
@@ -437,4 +535,87 @@ export default {
     padding: 0 15px;
     border-radius: 0;
 }
+.footer-top {
+    margin-bottom: 30px;
+}
+
+.footer-contact p {
+    color: #012970;
+}
+
+.footer-contact h3 {
+    color: #012970;
+    font-weight: bold;
+}
+
+.footer-social a {
+    font-size: 20px;
+    color: #012970;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+    color: #f8d4d4;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links ul li {
+    margin: 5px 0;
+}
+
+.footer-links ul li a {
+    color: #012970;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-links ul li a:hover {
+    color: #f8d4d4;
+}
+
+.footer-newsletter form input {
+    padding: 10px;
+    width: 70%;
+    border: 1px solid #012970;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.footer-newsletter form button {
+    padding: 10px 20px;
+    background-color: #012970;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.footer-newsletter form button:hover {
+    background-color: #f8d4d4;
+    color: #012970;
+}
+
+.footer-bottom {
+    background-color: #f8f9fa;
+    padding: 10px;
+    color: #012970;
+    font-size: 14px;
+    text-align: center;
+}
+
+.footer-bottom a {
+    color: #012970;
+    text-decoration: none;
+}
+
+.footer-bottom a:hover {
+    color: #f8d4d4;
+}
+
 </style>
