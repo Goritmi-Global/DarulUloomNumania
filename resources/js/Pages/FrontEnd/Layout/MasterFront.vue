@@ -5,7 +5,7 @@
             class="header fixed-top d-flex align-items-center justify-content-between px-3"
         >
             <a href="/" class="logo d-flex align-items-center">
-                <img src="/images/logo.png" alt="Logo" />
+                <img src="/images/logo.jpg" alt="Logo" />
             </a>
 
             <nav class="nav">

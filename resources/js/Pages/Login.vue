@@ -35,7 +35,7 @@
                                 <div class="d-flex justify-content-center py-4">
                                     <a :href="route('/')">
                                         <img
-                                            src="/images/logo.png"
+                                            src="/images/logo.jpg"
                                             height="100"
                                             alt="logo"
                                         />

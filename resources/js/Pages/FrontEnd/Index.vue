@@ -3,10 +3,12 @@
         <!-- Hero Section -->
         <section class="hero-section text-center py-5 text-white">
             <div class="container">
-                <h1 class="display-4">{{ translate("Welcome to Jamia Darol Uloom Noumania Utmanzo") }}</h1>
+                <h1 class="display-4">{{ translate("Welcome to Jamia Darol Uloom Noumania Utmanzai") }}</h1>
+                <h2>{{ translate("Charsadda Khyber PakhtunKhwa Pakistan") }}</h2>
+<!--                 
                 <p class="lead">
                     {{ translate("Providing quality Islamic education with modern learning techniques") }}.
-                </p>
+                </p> -->
             </div>
         </section>
 

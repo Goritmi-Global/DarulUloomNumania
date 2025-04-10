@@ -6,7 +6,7 @@
                     :href="route('dashboard')"
                     class="logo d-flex align-items-center"
                 >
-                    <img src="/images/logo.png" height="150" alt="" />
+                    <img src="/images/logo.jpg" height="150" alt="" />
                     <!-- <span class="d-none d-lg-block theme-text-color">Darul Ul Oloom</span> -->
                 </a>
 
