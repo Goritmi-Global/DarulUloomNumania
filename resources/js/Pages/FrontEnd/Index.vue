@@ -3,9 +3,17 @@
         <!-- Hero Section -->
         <section class="hero-section text-center py-5 text-white">
             <div class="container">
-                <h1 class="display-4">{{ translate("Welcome to Jamia Darol Uloom Noumania Utmanzai") }}</h1>
-                <h2>{{ translate("Charsadda Khyber PakhtunKhwa Pakistan") }}</h2>
-<!--                 
+                <h1 class="display-4">
+                    {{
+                        translate(
+                            "Welcome to Jamia Darol Uloom Noumania Utmanzai"
+                        )
+                    }}
+                </h1>
+                <h2>
+                    {{ translate("Charsadda Khyber PakhtunKhwa Pakistan") }}
+                </h2>
+                <!--                 
                 <p class="lead">
                     {{ translate("Providing quality Islamic education with modern learning techniques") }}.
                 </p> -->
@@ -14,7 +22,9 @@
 
         <section class="courses-section py-2 bg-light">
             <div class="container">
-                <h1 class="display-4 p-3 theme-text-color">{{ translate("Our Courses") }}</h1>
+                <h1 class="display-4 p-3 theme-text-color">
+                    {{ translate("Our Courses") }}
+                </h1>
                 <div class="row g-2">
                     <div
                         class="col-md-4 d-flex align-items-stretch"
@@ -32,9 +42,9 @@
                                 <p class="card-text">
                                     {{ course.description }}
                                 </p>
-                                <a href="#" class="btn btn-primary"
-                                    >{{ translate("Enroll Now") }}</a
-                                >
+                                <a href="#" class="btn btn-primary">{{
+                                    translate("Enroll Now")
+                                }}</a>
                             </div>
                         </div>
                     </div>
@@ -44,7 +54,9 @@
 
         <section class="bayanaat-section py-2">
             <div class="container">
-                <h1 class="display-4 p-3 theme-text-color">{{ translate("Latest Bayanaat") }}</h1>
+                <h1 class="display-4 p-3 theme-text-color">
+                    {{ translate("Latest Bayanaat") }}
+                </h1>
                 <div class="row g-2">
                     <div
                         class="col-md-4 d-flex align-items-stretch"
@@ -73,11 +85,15 @@
             <div class="container">
                 <h2>{{ translate("Admissions Open") }}</h2>
                 <p>
-                    {{ translate("Register now and start your journey towards Islamic knowledge") }}.
+                    {{
+                        translate(
+                            "Register now and start your journey towards Islamic knowledge"
+                        )
+                    }}.
                 </p>
-                <a href="/student/enroll" class="btn btn-light btn-lg"
-                    >{{ translate("Apply Now") }}</a
-                >
+                <a href="/student/enroll" class="btn btn-light btn-lg">{{
+                    translate("Apply Now")
+                }}</a>
             </div>
         </section>
     </main>
@@ -136,8 +152,6 @@ export default {
 </script>
 
 <style>
-
-
 /* General Styles */
 .hero-section,
 .admission-section {
@@ -205,5 +219,4 @@ export default {
     flex-direction: column;
     justify-content: space-between;
 }
-
 </style>
