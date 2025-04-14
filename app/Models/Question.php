@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
     use HasFactory;
+    public $incrementing=false;
     public function answer()
 {
     return $this->hasOne(Answer::class, 'question_id', 'id');
