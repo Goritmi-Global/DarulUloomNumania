@@ -37,45 +37,76 @@ class StudentsController extends Controller
     }
    
     public function store(Request $request)
-    {  
-        $request->validate([
-            'apply_for' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'father' => 'required|string|max:255',
-            'dob' => 'required|date',
-            'permanent_address' => 'required',
-            'current_address' => 'required',
-            'phone_number' => 'required',
-            'primary_education' => 'required',
-            'additional_ability' => 'required',
-        ]);
-    
-        if ($request->id) {
-            // Find existing student
-            $student = Student::where('id', $request->id)->first();
-        } else {
-            // Create a new student record
-            $student = new Student();
-            $student->id = Str::uuid(); // Generate unique ID
-        }
-    
-        // Assign values from request
-        $student->apply_for = $request->apply_for;
-        $student->name = $request->name;
-        $student->father = $request->father;
-        $student->dob = $request->dob;
-        $student->phone_number = $request->phone_number;
-        $student->permanent_address = $request->permanent_address;
-        $student->current_address = $request->current_address;
-        $student->primary_education = $request->primary_education;
-        $student->additional_ability = $request->additional_ability;
-    
-        // Save record
-        $student->save();
-    
-        return response()->json([
-            'message' => $request->id ? 'Student updated successfully' : 'Student enrolled successfully'
-        ]);
-    }
+{
+   
+    $request->validate([
+        'apply_for' => 'required',
+        'name' => 'required|string|max:255',
+        'father' => 'required|string|max:255',
+        'dob' => 'required|date',
+        'cnic' => 'nullable|string|max:255',
+        'country' => 'required',
+        'province' => 'nullable',
+        'phone_number' => 'required|string|max:255',
+        'whatsapp' => 'nullable|string|max:255',
+
+        'guardian_name' => 'nullable|string|max:255',
+        'guardian_cnic' => 'nullable|string|max:255',
+        'guardian_mobile' => 'nullable|string|max:255',
+
+        'previous_madrasa' => 'nullable|string|max:255',
+        'previous_class' => 'nullable|string|max:255',
+        'total_marks' => 'nullable|string|max:255',
+        'obtained_marks' => 'nullable|string|max:255',
+
+        'primary_education' => 'required|string|max:255',
+        'additional_ability' => 'required|string|max:255',
+
+        'permanent_address' => 'required|string',
+        'current_address' => 'required|string',
+    ]);
+ 
+    $student = $request->id
+        ? Student::findOrFail($request->id)
+        : new Student(['id' => Str::uuid()]);
+
+    // Personal Information
+    $student->apply_for = $request->apply_for;
+    $student->name = $request->name;
+    $student->father = $request->father;
+    $student->dob = $request->dob;
+    $student->cnic = $request->cnic;
+    $student->country = $request->country;
+    $student->province = $request->province;
+    $student->phone_number = $request->phone_number;
+    $student->whatsapp = $request->whatsapp;
+
+    // Guardian Info
+    $student->guardian_name = $request->guardian_name;
+    $student->guardian_cnic = $request->guardian_cnic;
+    $student->guardian_mobile = $request->guardian_mobile;
+
+    // Academic Info
+    $student->previous_madrasa = $request->previous_madrasa;
+    $student->previous_class = $request->previous_class;
+    $student->total_marks = $request->total_marks;
+    $student->obtained_marks = $request->obtained_marks;
+    $student->primary_education = $request->primary_education;
+    $student->additional_ability = $request->additional_ability;
+
+    // Address
+    $student->permanent_address = $request->permanent_address;
+    $student->current_address = $request->current_address;
+
+    // Save
+    $student->save();
+
+    return response()->json([
+        'message' => $request->id
+            ? 'Student updated successfully'
+            : 'Student enrolled successfully'
+    ]);
+}
+
 
 }

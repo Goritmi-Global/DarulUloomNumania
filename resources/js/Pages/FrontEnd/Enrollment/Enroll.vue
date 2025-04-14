@@ -120,6 +120,7 @@
                         <div class="card shadow-sm border-0 shadow-lg">
                             <div class="card-body p-4">
                                 <div class="row g-3">
+                                    <!-- Apply For -->
                                     <div class="col-md-12">
                                         <label class="form-label">{{
                                             translate("Apply For")
@@ -145,6 +146,7 @@
                                         </div>
                                     </div>
 
+                                    <!-- Name -->
                                     <div class="col-md-6">
                                         <label class="form-label">{{
                                             translate("Name")
@@ -165,9 +167,10 @@
                                         </div>
                                     </div>
 
+                                    <!-- Father's Name -->
                                     <div class="col-md-6">
                                         <label class="form-label">{{
-                                            translate("Father Name")
+                                            translate("Fathers Name")
                                         }}</label>
                                         <input
                                             type="text"
@@ -185,6 +188,28 @@
                                         </div>
                                     </div>
 
+                                    <!-- CNIC -->
+                                    <div class="col-md-6">
+                                        <label class="form-label">{{
+                                            translate("CNIC Number")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.cnic"
+                                            :class="{
+                                                'is-invalid': formErrors.cnic,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.cnic"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.cnic[0] }}
+                                        </div>
+                                    </div>
+
+                                    <!-- DOB -->
                                     <div class="col-md-6">
                                         <label class="form-label">{{
                                             translate("Date of Birth")
@@ -205,6 +230,62 @@
                                         </div>
                                     </div>
 
+                                    <!-- Country & Province Dropdowns -->
+                                    <div class="col-md-6">
+                                        <label class="form-label">{{
+                                            translate("Country")
+                                        }}</label>
+
+                                        <Multiselect
+                                            v-model="form.country"
+                                            :options="countryList"
+                                            :placeholder="
+                                                translate('Select country')
+                                            "
+                                            :searchable="true"
+                                            :multiple="true"
+                                            :class="{
+                                                'is-invalid':
+                                                    formErrors.country,
+                                            }"
+                                        />
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">{{
+                                            translate("Province")
+                                        }}</label>
+                                        <Multiselect
+                                            v-if="form.country == 'Pakistan'"
+                                            v-model="form.province"
+                                            :options="pakProvinceOptions"
+                                            :placeholder="
+                                                translate('Select province')
+                                            "
+                                            :searchable="true"
+                                            :multiple="true"
+                                            :class="{
+                                                'is-invalid':
+                                                    formErrors.province,
+                                            }"
+                                        />
+                                        <Multiselect
+                                            v-if="form.country == 'Afghanistan'"
+                                            v-model="form.province"
+                                            :options="afgProvinceOptions"
+                                            :placeholder="
+                                                translate('Select province')
+                                            "
+                                            :searchable="true"
+                                            :multiple="true"
+                                            :class="{
+                                                'is-invalid':
+                                                    formErrors.province,
+                                            }"
+                                        />
+                                    </div>
+
+                                    <!-- Phone & WhatsApp -->
                                     <div class="col-md-6">
                                         <label class="form-label">{{
                                             translate("Phone Number")
@@ -214,93 +295,202 @@
                                             class="form-control"
                                             v-model="form.phone_number"
                                             placeholder="+92 300 1234567"
-                                            :class="{
-                                                'is-invalid':
-                                                    formErrors.phone_number,
-                                            }"
                                         />
-                                        <div
-                                            v-if="formErrors.phone_number"
-                                            class="text-danger"
-                                        >
-                                            {{ formErrors.phone_number[0] }}
-                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">{{
+                                            translate("WhatsApp Number")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.whatsapp"
+                                            placeholder="+92 300 1234567"
+                                        />
+                                    </div>
+
+                                    <!-- Guardian Info -->
+                                    <div class="col-md-6">
+                                        <label class="form-label">{{
+                                            translate("Guardians Name")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.guardian_name"
+                                        />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">{{
+                                            translate("Guardians CNIC")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.guardian_cnic"
+                                        />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">{{
+                                            translate("Guardians Mobile")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.guardian_mobile"
+                                        />
+                                    </div>
+
+                                    <!-- Academic Info -->
+                                    <div class="col-md-12">
+                                        <label class="form-label">{{
+                                            translate("Previous Madrasa Name")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.previous_madrasa"
+                                        />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">{{
+                                            translate("Previous Class")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.previous_class"
+                                        />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">{{
+                                            translate("Total Marks")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.total_marks"
+                                        />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">{{
+                                            translate("Obtained Marks")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.obtained_marks"
+                                        />
                                     </div>
 
                                     <div class="col-md-12">
                                         <label class="form-label">{{
-                                            translate("Primary Education")
+                                            translate("Secular Education")
                                         }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             v-model="form.primary_education"
                                         />
-                                        <div
-                                            v-if="formErrors.primary_education"
-                                            class="text-danger"
-                                        >
-                                            {{
-                                                formErrors.primary_education[0]
-                                            }}
-                                        </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <label class="form-label">{{
-                                            translate("Additional Abilities")
+                                            translate(
+                                                "Additional Qualifications"
+                                            )
                                         }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             v-model="form.additional_ability"
                                         />
-                                        <div
-                                            v-if="formErrors.additional_ability"
-                                            class="text-danger"
-                                        >
-                                            {{
-                                                formErrors.additional_ability[0]
-                                            }}
-                                        </div>
                                     </div>
 
+                                    <!-- Addresses -->
                                     <div class="col-md-12">
                                         <label class="form-label">{{
                                             translate("Permanent Address")
                                         }}</label>
                                         <textarea
                                             class="form-control"
-                                            v-model="form.permanent_address"
                                             rows="2"
+                                            v-model="form.permanent_address"
                                         ></textarea>
-                                        <div
-                                            v-if="formErrors.permanent_address"
-                                            class="text-danger"
-                                        >
-                                            {{
-                                                formErrors.permanent_address[0]
-                                            }}
-                                        </div>
                                     </div>
-
                                     <div class="col-md-12">
                                         <label class="form-label">{{
                                             translate("Current Address")
                                         }}</label>
                                         <textarea
                                             class="form-control"
-                                            v-model="form.current_address"
                                             rows="2"
+                                            v-model="form.current_address"
                                         ></textarea>
-                                        <div
-                                            v-if="formErrors.current_address"
-                                            class="text-danger"
-                                        >
-                                            {{ formErrors.current_address[0] }}
-                                        </div>
                                     </div>
 
+                                    <!-- Conditional Document Uploads -->
+                                    <div class="col-md-12">
+                                        <label class="form-label">{{
+                                            translate("Upload Documents")
+                                        }}</label>
+                                        <div v-if="form.country === 'Pakistan'">
+                                            <input
+                                                type="file"
+                                                @change="
+                                                    handleFileUpload(
+                                                        $event,
+                                                        'cnic_front'
+                                                    )
+                                                "
+                                            />
+                                            CNIC Front<br />
+                                            <input
+                                                type="file"
+                                                @change="
+                                                    handleFileUpload(
+                                                        $event,
+                                                        'cnic_back'
+                                                    )
+                                                "
+                                            />
+                                            CNIC Back
+                                        </div>
+                                        <div v-else>
+                                            <input
+                                                type="file"
+                                                @change="
+                                                    handleFileUpload(
+                                                        $event,
+                                                        'passport'
+                                                    )
+                                                "
+                                            />
+                                            Passport<br />
+                                            <input
+                                                type="file"
+                                                @change="
+                                                    handleFileUpload(
+                                                        $event,
+                                                        'visa'
+                                                    )
+                                                "
+                                            />
+                                            Visa
+                                        </div>
+                                        <input
+                                            type="file"
+                                            @change="
+                                                handleFileUpload(
+                                                    $event,
+                                                    'verification_letter'
+                                                )
+                                            "
+                                        />
+                                        Verification Letter
+                                    </div>
+
+                                    <!-- Submit -->
                                     <div class="mt-4">
                                         <button
                                             type="submit"
@@ -411,16 +601,62 @@ export default {
             form: {
                 id: "",
                 apply_for: "",
-                phone_number: "",
                 name: "",
                 father: "",
                 dob: "",
-                permanent_address: "",
+                cnic: "",
+                country: "",
+                province: "",
                 current_address: "",
+                permanent_address: "",
+                phone_number: "",
+                whatsapp_number: "",
+
+                // Guardian Info
+                guardian_name: "",
+                guardian_cnic: "",
+                guardian_phone: "",
+
+                // Academic Info
+                desired_class: "",
+                previous_madrasa: "",
+                previous_class: "",
+                total_marks: "",
+                obtained_marks: "",
                 primary_education: "",
                 additional_ability: "",
+
+                // Document Uploads
+                cnic_front: null,
+                cnic_back: null,
+                passport: null,
+                visa: null,
+                verification_letter: null,
+
+                // Payment
+                payment_confirmed: false,
             },
+            countryList: ["Pakistan", "Afghanistan"],
+
+            pakProvinceOptions: [
+                "Punjab",
+                "Sindh",
+                "Khyber Pakhtunkhwa",
+                "Balochistan",
+                "Gilgit-Baltistan",
+                "Azad Jammu and Kashmir",
+            ],
+            afgProvinceOptions: [
+                "Kabul",
+                "Herat",
+                "Kandahar",
+                "Mazar-i-Sharif",
+                "Jalalabad",
+                "Bamiyan",
+                "Badakhshan",
+            ],
             formErrors: [],
+
             formStatus: 1,
             showModal: false,
         };
@@ -430,8 +666,18 @@ export default {
             this.currentStudent = this.form.name;
             this.currentCourse = this.form.apply_for;
             this.formStatus = 0;
+
+            const formData = new FormData();
+            for (let key in this.form) {
+                if (this.form[key] !== null) {
+                    formData.append(key, this.form[key]);
+                }
+            }
+
             axios
-                .post(route("api.student.store"), this.form)
+                .post(route("api.student.store"), formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                })
                 .then(() => {
                     this.formStatus = 1;
                     this.clearForm();
@@ -455,20 +701,43 @@ export default {
                     }
                 });
         },
+
         clearForm() {
             this.form = {
                 id: "",
                 apply_for: "",
-                phone_number: "",
                 name: "",
                 father: "",
                 dob: "",
-                permanent_address: "",
+                cnic: "",
+                country: "",
+                province: "",
                 current_address: "",
+                permanent_address: "",
+                phone_number: "",
+                whatsapp_number: "",
+
+                guardian_name: "",
+                guardian_cnic: "",
+                guardian_phone: "",
+
+                desired_class: "",
+                previous_madrasa: "",
+                previous_class: "",
+                total_marks: "",
+                obtained_marks: "",
                 primary_education: "",
                 additional_ability: "",
+
+                cnic_front: null,
+                cnic_back: null,
+                passport: null,
+                visa: null,
+                verification_letter: null,
+
+                payment_confirmed: false,
             };
-            this.formErrors = {}; // Reset errors
+            this.formErrors = {};
         },
     },
 };
