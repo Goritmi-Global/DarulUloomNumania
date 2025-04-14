@@ -356,7 +356,7 @@ export default {
                 });
         },
         openReplyModal(question, answer) {
-        console.log(question, answer);
+            console.log(question, answer);
             // Clear all fields first
             this.replyForm = {
                 id: "",
