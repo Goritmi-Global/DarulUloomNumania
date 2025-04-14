@@ -54,8 +54,7 @@
                                         {{ getStatusText(question.status) }}
                                     </span>
                                 </button>
-                            </h2>
-
+                            </h2> 
                             <div
                                 :id="'collapse' + index"
                                 class="accordion-collapse collapse"
