@@ -34,15 +34,7 @@ class IncomeExpenseController extends Controller
             $records = IncomeType::all();
 
         }
-        foreach($records as $record)
-            {
-                $business_type = BusinessType::where('id',$record->business_type)->first();
-                if($business_type)
-                { 
-                    $record->related_business_type = $business_type->name;
-                }
-                // dd($record->related_business_type);
-            }
+        
         return $records;
     }
 
@@ -50,8 +42,7 @@ class IncomeExpenseController extends Controller
     public function store(Request $request)
     { 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'business_type' => 'required',
+            'name' => 'required|string|max:255', 
         ]);
 
         if ($request->id) {
@@ -75,8 +66,7 @@ class IncomeExpenseController extends Controller
         }
 
         // Set values
-        $record->name = $request->name;
-        $record->business_type = $request->business_type;
+        $record->name = $request->name; 
 
         // $record->status = 1;
 

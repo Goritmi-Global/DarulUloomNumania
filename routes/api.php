@@ -71,9 +71,9 @@ Route::middleware(['web'])->group(function () {
     Route::get('/transaction/pluck', [TransactionController::class, 'pluck'])->name('api.transaction.pluck');             // (Optional) Fetch transaction data for dropdowns or other purposes
 
                                                                                                                                            // /Income Expense routes
-    Route::post('/income/expense/store', [IncomeExpenseController::class, 'store'])->name('api.income.expense.store');                     // Fetch all transaction entries
-    Route::get('/income/expense/fetch/{process}', [IncomeExpenseController::class, 'fetch'])->name('api.income.expense.fetch');            // Fetch all transaction entries
+                        // Fetch all transaction entries
     Route::post('/income/expense/store', [IncomeExpenseController::class, 'store'])->name('api.income.expense.store');                     // Create or update a transaction entry
+    Route::get('/income/expense/fetch/{process}', [IncomeExpenseController::class, 'fetch'])->name('api.income.expense.fetch');            // Fetch all transaction entries
     Route::get('/income/expense/show/{id}/{process}', [IncomeExpenseController::class, 'show'])->name('api.income.expense.show');          // Show a specific transaction entry
     Route::delete('/income/expense/delete/{id}/{process}', [IncomeExpenseController::class, 'delete'])->name('api.income.expense.delete'); // Delete a specific transaction entry
     Route::get('/expense/pluck', [IncomeExpenseController::class, 'pluck'])->name('api.expense.pluck');

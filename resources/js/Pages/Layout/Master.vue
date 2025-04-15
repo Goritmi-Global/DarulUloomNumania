@@ -194,7 +194,7 @@
                                 <span>Transactions</span>
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a
                                 :class="{ active: isActive('/business/types') }"
                                 href="/business/types"
@@ -202,7 +202,7 @@
                                 <i class="bi bi-briefcase"></i>
                                 <span>Business Types</span>
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a
                                 :class="{ active: isActive('/expense/types') }"

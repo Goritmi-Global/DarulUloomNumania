@@ -36,9 +36,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Business Type</th>
-
+                                    <th scope="col">Name</th> 
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -60,9 +58,6 @@
                                         >
                                             {{ income.name }}
                                         </Link>
-                                    </td>
-                                    <td>
-                                        {{ income.related_business_type }}
                                     </td>
 
                                     <td>
@@ -140,26 +135,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12">
-                                        <label for="name" class="form-label">
-                                            Bussines type</label
-                                        >
-                                        <div class="col-auto">
-                                            <Multiselect
-                                                v-model="form.business_type"
-                                                :options="businessTypesOptions"
-                                                :searchable="true"
-                                                placeholder="Filter By"
-                                            />
-                                        </div>
-                                        <div
-                                            v-if="formErrors.business_type"
-                                            class="invalid-feedback"
-                                        >
-                                            {{ formErrors.business_type[0] }}
-                                        </div>
-                                    </div>
-
                                     <div class="mt-3">
                                         <button
                                             type="submit"
@@ -213,7 +188,6 @@ export default {
                 id: "",
                 name: "",
                 process: this.process,
-                business_type:'',
             },
             businessTypesOptions: [],
             formErrors: [],
@@ -242,7 +216,6 @@ export default {
                 .then((response) => {
                     this.form.id = response.data.id;
                     this.form.name = response.data.name;
-                    this.form.business_type = response.data.business_type;
                 })
                 .catch((error) => {
                     toastr.error(error);
@@ -281,7 +254,7 @@ export default {
         clearFields() {
             this.form.id = "";
             this.form.name = "";
-            this.form.business_type = "";
+
             this.formErrors = [];
         },
         pluckBussinessTypes() {
