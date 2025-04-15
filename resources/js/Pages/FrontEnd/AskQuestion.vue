@@ -64,7 +64,9 @@
                                             <p>
                                                 <strong
                                                     >{{
-                                                        translate("Question Short Form")
+                                                        translate(
+                                                            "Question Short Form"
+                                                        )
                                                     }}:</strong
                                                 >
                                                 {{ question.subject }}
@@ -108,11 +110,13 @@
                                                         )
                                                     }}:</strong
                                                 >
-                                                {{
-                                                    question.answer
-                                                        ?.answer_short_form ||
-                                                    translate("Not Available")
-                                                }}
+                                                <span
+                                                    v-html="
+                                                        question.answer
+                                                            .answer_short_form
+                                                    "
+                                                    class="ms-1"
+                                                ></span>
                                             </p>
                                             <p>
                                                 <strong
@@ -122,11 +126,13 @@
                                                         )
                                                     }}:</strong
                                                 >
-                                                {{
-                                                    question.answer
-                                                        ?.answer_full_form ||
-                                                    translate("Not Available")
-                                                }}
+                                                <span
+                                                    v-html="
+                                                        question.answer
+                                                            .answer_full_form
+                                                    "
+                                                    class="ms-1"
+                                                ></span>
                                             </p>
                                             <p>
                                                 <strong

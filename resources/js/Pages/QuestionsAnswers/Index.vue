@@ -66,11 +66,14 @@
                                 >
                                     <td>{{ question.subject }}</td>
                                     <td>
-                                        {{
-                                            question.answer
-                                                ?.answer_short_form ||
-                                            translate("No answer yet")
-                                        }}
+
+                                        <span
+                                        v-html="
+                                            question.answer.answer_short_form
+                                        " 
+                                    ></span>
+
+                                        
                                     </td>
                                     <td>
                                         <span
@@ -108,9 +111,9 @@
                                             style="cursor: pointer"
                                         ></i>
                                         <DeleteModal
-                                                :deleteId="question.id"
-                                                @deleteThis="deleteThis"
-                                            ></DeleteModal>
+                                            :deleteId="question.id"
+                                            @deleteThis="deleteThis"
+                                        ></DeleteModal>
                                     </td>
                                 </tr>
                             </tbody>
@@ -179,65 +182,58 @@
                         </div>
                         <div class="modal-body">
                             <div class="card card-body p-3">
-                                <div class="row g-3">
-                                    <div class="col-12">
-                                        <label
-                                            for="answer_short_form"
-                                            class="form-label"
-                                        >
-                                            {{ translate("Short Answer") }}
-                                        </label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="answer_short_form"
-                                            v-model="
-                                                replyForm.answer_short_form
-                                            "
-                                            :class="{
-                                                'invalid-bg':
-                                                    replyErrors.answer_short_form,
-                                            }"
-                                        />
-                                        <div
-                                            v-if="replyErrors.answer_short_form"
-                                            class="invalid-feedback"
-                                        >
-                                            {{
-                                                replyErrors.answer_short_form[0]
-                                            }}
-                                        </div>
-                                    </div>
+                                <div class="col-12">
+                                    <b
+                                        for="answer_short_form"
+                                        class="form-label"
+                                    >
+                                        {{ translate("Short Answer") }}
+                                    </b>
 
-                                    <div class="col-12">
-                                        <label
-                                            for="answer_full_form"
-                                            class="form-label"
-                                        >
-                                            {{ translate("Full Answer") }}
-                                        </label>
-                                        <textarea
-                                            class="form-control"
-                                            id="answer_full_form"
-                                            v-model="replyForm.answer_full_form"
-                                            rows="4"
-                                            :class="{
-                                                'invalid-bg':
-                                                    replyErrors.answer_full_form,
-                                            }"
-                                        ></textarea>
-                                        <div
-                                            v-if="replyErrors.answer_full_form"
-                                            class="invalid-feedback"
-                                        >
-                                            {{
-                                                replyErrors.answer_full_form[0]
-                                            }}
-                                        </div>
-                                    </div>
+                                    <QuillEditor
+                                        v-model:content="
+                                            replyForm.answer_short_form
+                                        "
+                                        contentType="html"
+                                        toolbar="full"
+                                        theme="snow"
+                                    />
 
+                                    <div
+                                        v-if="replyErrors.answer_short_form"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ replyErrors.answer_short_form[0] }}
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-2">
+                                    <b
+                                        for="answer_full_form"
+                                        class="form-label"
+                                    >
+                                        {{ translate("Full Answer") }}
+                                    </b>
+
+                                    <QuillEditor
+                                        v-model:content="
+                                            replyForm.answer_full_form
+                                        "
+                                        contentType="html"
+                                        toolbar="full"
+                                        theme="snow"
+                                    />
+
+                                    <div
+                                        v-if="replyErrors.answer_full_form"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ replyErrors.answer_full_form[0] }}
+                                    </div>
+                                </div>
+                                <div class="row g-3 mt-2">
                                     <div class="col-12">
-                                        <label
+                                        <b
                                             for="approved_by_mufti"
                                             class="form-label"
                                         >
@@ -246,7 +242,7 @@
                                                     "Approved By Mufti (Optional)"
                                                 )
                                             }}
-                                        </label>
+                                        </b>
                                         <input
                                             type="text"
                                             class="form-control"
@@ -257,29 +253,20 @@
                                         />
                                     </div>
 
-
                                     <div class="col-12">
-                                        <label
+                                        <b
                                             for="fitwa_number"
                                             class="form-label"
                                         >
-                                            {{
-                                                translate(
-                                                    "Fitwan Number"
-                                                )
-                                            }}
-                                        </label>
+                                            {{ translate("Fitwan Number") }}
+                                        </b>
                                         <input
                                             type="text"
                                             class="form-control"
                                             id="fitwa_number"
-                                            v-model="
-                                                replyForm.fitwa_number
-                                            "
+                                            v-model="replyForm.fitwa_number"
                                         />
                                     </div>
-
-                                    
 
                                     <div class="mt-3">
                                         <button
@@ -362,20 +349,27 @@
                                             translate("Short Answer")
                                         }}:</strong
                                     >
-                                    {{
-                                        selectedQuestion?.answer
-                                            ?.answer_short_form
-                                    }}
+                                    <span
+                                        v-html="
+                                            selectedQuestion.answer.answer_short_form
+                                        "
+                                        class="ms-1"
+                                    ></span>
                                 </p>
+
                                 <p>
                                     <strong
                                         >{{ translate("Full Answer") }}:</strong
                                     >
-                                    {{
-                                        selectedQuestion?.answer
-                                            ?.answer_full_form
-                                    }}
+                                    <span
+                                        v-html="
+                                            selectedQuestion?.answer
+                                                ?.answer_full_form
+                                        "
+                                        class="ms-1"
+                                    ></span>
                                 </p>
+
                                 <p
                                     v-if="
                                         selectedQuestion?.answer
@@ -392,17 +386,15 @@
                                 </p>
                                 <p
                                     v-if="
-                                        selectedQuestion?.answer
-                                            ?.fitwa_number
+                                        selectedQuestion?.answer?.fitwa_number
                                     "
                                 >
                                     <strong
-                                        >{{ translate("Fitwa number") }}:</strong
+                                        >{{
+                                            translate("Fitwa number")
+                                        }}:</strong
                                     >
-                                    {{
-                                        selectedQuestion?.answer
-                                            ?.fitwa_number
-                                    }}
+                                    {{ selectedQuestion?.answer?.fitwa_number }}
                                 </p>
                             </div>
                             <div v-else>
@@ -421,9 +413,13 @@
 <script>
 import axios from "axios";
 import Master from "../Layout/Master.vue";
-
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 export default {
     layout: Master,
+    components: {
+        QuillEditor,
+    },
     data() {
         return {
             questions: [],
@@ -522,9 +518,7 @@ export default {
             this.replyForm.approved_by_mufti = answer
                 ? answer.approved_by_mufti
                 : "";
-            this.replyForm.fitwa_number = answer
-                ? answer.fitwa_number
-                : "";
+            this.replyForm.fitwa_number = answer ? answer.fitwa_number : "";
             this.replyErrors = [];
         },
         submitReply() {
@@ -570,13 +564,14 @@ export default {
                 .delete(route("api.question.delete", id))
                 .then(() => {
                     this.fetchQuestions();
-                    toastr.success(this.translate("Question deleted successfully."));
+                    toastr.success(
+                        this.translate("Question deleted successfully.")
+                    );
                 })
                 .catch((error) => {
                     console.error(error);
                 });
         },
-
     },
 };
 </script>
