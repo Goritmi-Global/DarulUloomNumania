@@ -42,6 +42,18 @@
                     <h5 class="card-title theme-text-color">
                         {{ translate("All Introductions") }}
                     </h5>
+                    <!-- Search Input -->
+                    <div class="mb-3">
+                        <input
+                            type="text"
+                            v-model="searchQuery"
+                            class="form-control"
+                            :placeholder="
+                                translate('Search by title or author')
+                            "
+                        />
+                    </div>
+
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -60,7 +72,9 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    v-for="(intro, index) in introductions"
+                                    v-for="(
+                                        intro, index
+                                    ) in paginatedIntroductions"
                                     :key="intro.id"
                                 >
                                     <th scope="row">{{ index + 1 }}</th>
@@ -90,6 +104,35 @@
                             </tbody>
                         </table>
                     </div>
+                    <!-- Pagination -->
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li
+                                class="page-item"
+                                :class="{ disabled: currentPage === 1 }"
+                            >
+                                <button
+                                    class="page-link"
+                                    @click="changePage(currentPage - 1)"
+                                >
+                                    {{ translate("Previous") }}
+                                </button>
+                            </li>
+                            <li
+                                class="page-item"
+                                :class="{
+                                    disabled: currentPage === totalPages,
+                                }"
+                            >
+                                <button
+                                    class="page-link"
+                                    @click="changePage(currentPage + 1)"
+                                >
+                                    {{ translate("Next") }}
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
 
@@ -215,8 +258,31 @@ export default {
             },
             formErrors: [],
             formStatus: 1, // 1 = ready, 0 = saving
+            searchQuery: "",
+            currentPage: 1,
+            perPage: 5,
         };
     },
+    computed: {
+        filteredIntroductions() {
+            const q = this.searchQuery.toLowerCase();
+            return this.introductions.filter((intro) => {
+                return (
+                    intro.title.toLowerCase().includes(q) ||
+                    intro.description.toLowerCase().includes(q)
+                );
+            });
+        },
+        paginatedIntroductions() {
+            const start = (this.currentPage - 1) * this.perPage;
+            const end = start + this.perPage;
+            return this.filteredIntroductions.slice(start, end);
+        },
+        totalPages() {
+            return Math.ceil(this.filteredIntroductions.length / this.perPage);
+        },
+    },
+
     created() {
         this.fetchIntroductions();
     },
