@@ -130,4 +130,17 @@ class QuestionAnswerController extends Controller
     return response()->json($questions);
 }
 
+
+public function delete($id)
+    {  
+        $question = Question::find($id);
+        $answer = Answer::where('question_id', $id)->first();
+        if ($answer) {
+            $answer->delete();
+        }
+        $question->delete();
+        return 'success';
+
+    }
+
 }

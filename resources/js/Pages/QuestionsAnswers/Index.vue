@@ -107,6 +107,10 @@
                                             :title="translate('Reply')"
                                             style="cursor: pointer"
                                         ></i>
+                                        <DeleteModal
+                                                :deleteId="question.id"
+                                                @deleteThis="deleteThis"
+                                            ></DeleteModal>
                                     </td>
                                 </tr>
                             </tbody>
@@ -518,6 +522,18 @@ export default {
                 ? "bg-warning text-dark"
                 : "bg-success text-white";
         },
+        deleteThis(id) {
+            axios
+                .delete(route("api.question.delete", id))
+                .then(() => {
+                    this.fetchQuestions();
+                    toastr.success(this.translate("Question deleted successfully."));
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+
     },
 };
 </script>

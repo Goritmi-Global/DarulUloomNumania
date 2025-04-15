@@ -10,11 +10,11 @@ use App\Http\Controllers\IncomeStatementController;
 use App\Http\Controllers\IntroductionController;
 use App\Http\Controllers\IslamicNameController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\QuestionAnswerController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\StudentsController;
-use App\Http\Controllers\QuestionAnswerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,11 +57,6 @@ Route::middleware(['web'])->group(function () {
 
     // Students...
     Route::get('/students/fetch', [StudentsController::class, 'students'])->name('api.students.fetch');
-   
-
- 
-                                                                                                    // Account routes
-    
 
                                                                                                                           // Cashbook routes
     Route::post('/transaction/fetch', [TransactionController::class, 'fetch'])->name('api.transaction.fetch');            // Fetch all transaction entries
@@ -71,7 +66,7 @@ Route::middleware(['web'])->group(function () {
     Route::get('/transaction/pluck', [TransactionController::class, 'pluck'])->name('api.transaction.pluck');             // (Optional) Fetch transaction data for dropdowns or other purposes
 
                                                                                                                                            // /Income Expense routes
-                        // Fetch all transaction entries
+                                                                                                                                           // Fetch all transaction entries
     Route::post('/income/expense/store', [IncomeExpenseController::class, 'store'])->name('api.income.expense.store');                     // Create or update a transaction entry
     Route::get('/income/expense/fetch/{process}', [IncomeExpenseController::class, 'fetch'])->name('api.income.expense.fetch');            // Fetch all transaction entries
     Route::get('/income/expense/show/{id}/{process}', [IncomeExpenseController::class, 'show'])->name('api.income.expense.show');          // Show a specific transaction entry
@@ -153,15 +148,14 @@ Route::middleware(['web'])->group(function () {
 
     // qeustions and anser
     Route::get('/api/question/fetch', [QuestionAnswerController::class, 'fetchQuestions'])->name('api.question.fetch');
-Route::post('/api/answer/store', [QuestionAnswerController::class, 'answerStore'])->name('api.answer.store');
-
+    Route::post('/api/answer/store', [QuestionAnswerController::class, 'answerStore'])->name('api.answer.store');
+    Route::delete('/api/question/delete/{id}', [QuestionAnswerController::class, 'delete'])->name('api.question.delete');
 
 });
 
 // front end changing default language
 Route::post('/user/default/language', [LanguageController::class, 'make_frontend_default_language'])->name('api.user.default.language');
 Route::get('/front_end/languages/data', [LanguageController::class, 'frontend_languages_data'])->name('api.front_end.languages.data');
-
 
 Route::post('/students/store', [StudentsController::class, 'store'])->name('api.student.store');
 // API's For Mobile
@@ -172,5 +166,3 @@ Route::get('/madrasa/islamic/names', [IslamicNameController::class, 'fetch'])->n
 Route::post('/question/store', [QuestionAnswerController::class, 'saveQuestion'])->name('api.question.store');
 // Route::get('/show/questions/approved', [QuestionController::class, 'getApprovedQuestions'])->name('api.show.questions.approved');
 Route::get('/questions/approved', [QuestionAnswerController::class, 'getApprovedQuestions'])->name('api.questions.approved');
-
-
