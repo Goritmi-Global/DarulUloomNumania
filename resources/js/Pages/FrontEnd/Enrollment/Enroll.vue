@@ -428,68 +428,6 @@
                                             v-model="form.current_address"
                                         ></textarea>
                                     </div>
-
-                                    <!-- Conditional Document Uploads -->
-                                    <div class="col-md-12">
-                                        <label class="form-label">{{
-                                            translate("Upload Documents")
-                                        }}</label>
-                                        <div v-if="form.country === 'Pakistan'">
-                                            <input
-                                                type="file"
-                                                @change="
-                                                    handleFileUpload(
-                                                        $event,
-                                                        'cnic_front'
-                                                    )
-                                                "
-                                            />
-                                            CNIC Front<br />
-                                            <input
-                                                type="file"
-                                                @change="
-                                                    handleFileUpload(
-                                                        $event,
-                                                        'cnic_back'
-                                                    )
-                                                "
-                                            />
-                                            CNIC Back
-                                        </div>
-                                        <div v-else>
-                                            <input
-                                                type="file"
-                                                @change="
-                                                    handleFileUpload(
-                                                        $event,
-                                                        'passport'
-                                                    )
-                                                "
-                                            />
-                                            Passport<br />
-                                            <input
-                                                type="file"
-                                                @change="
-                                                    handleFileUpload(
-                                                        $event,
-                                                        'visa'
-                                                    )
-                                                "
-                                            />
-                                            Visa
-                                        </div>
-                                        <input
-                                            type="file"
-                                            @change="
-                                                handleFileUpload(
-                                                    $event,
-                                                    'verification_letter'
-                                                )
-                                            "
-                                        />
-                                        Verification Letter
-                                    </div>
-
                                     <!-- Submit -->
                                     <div class="mt-4">
                                         <button
@@ -605,7 +543,7 @@ export default {
                 father: "",
                 dob: "",
                 cnic: "",
-                country: "",
+                country: "Pakistan",
                 province: "",
                 current_address: "",
                 permanent_address: "",
@@ -627,11 +565,11 @@ export default {
                 additional_ability: "",
 
                 // Document Uploads
-                cnic_front: null,
-                cnic_back: null,
-                passport: null,
-                visa: null,
-                verification_letter: null,
+                // cnic_front: null,
+                // cnic_back: null,
+                // passport: null,
+                // visa: null,
+                // verification_letter: null,
 
                 // Payment
                 payment_confirmed: false,
