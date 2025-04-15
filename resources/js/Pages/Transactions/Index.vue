@@ -723,7 +723,7 @@ export default {
             ExpenseTypesOptions: [],
             IncomeTypesOptions: [],
             methodTypesOpions: ["Bank", "Cash"],
-            processTypeOptions: ["Expense", "Income", "Borrow", "Lend"],
+            processTypeOptions: ["Expense", "Income"],
             monthsOptions: [
                 { value: 1, label: "January" },
                 { value: 2, label: "February" },
