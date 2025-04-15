@@ -8,8 +8,12 @@
                         <li class="breadcrumb-item">
                             <a href="/dashboard">{{ translate("Home") }}</a>
                         </li>
-                        <li class="breadcrumb-item">{{ translate("Bayanaat") }}</li>
-                        <li class="breadcrumb-item active">{{ translate("Index") }}</li>
+                        <li class="breadcrumb-item">
+                            {{ translate("Bayanaat") }}
+                        </li>
+                        <li class="breadcrumb-item active">
+                            {{ translate("Index") }}
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -38,7 +42,9 @@
                             type="text"
                             v-model="searchQuery"
                             class="form-control"
-                            :placeholder="translate('Search by title or author')"
+                            :placeholder="
+                                translate('Search by title or author')
+                            "
                         />
                     </div>
 
@@ -61,7 +67,13 @@
                                     v-for="(bayan, index) in paginatedBayanaat"
                                     :key="bayan.id"
                                 >
-                                    <td>{{ (currentPage - 1) * pageSize + index + 1 }}</td>
+                                    <td>
+                                        {{
+                                            (currentPage - 1) * pageSize +
+                                            index +
+                                            1
+                                        }}
+                                    </td>
                                     <td>{{ bayan.title }}</td>
                                     <td>{{ bayan.author }}</td>
                                     <td>{{ bayan.islamic_date }}</td>
@@ -93,13 +105,27 @@
                     <!-- Pagination -->
                     <nav>
                         <ul class="pagination justify-content-center">
-                            <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                <button class="page-link" @click="changePage(currentPage - 1)">
+                            <li
+                                class="page-item"
+                                :class="{ disabled: currentPage === 1 }"
+                            >
+                                <button
+                                    class="page-link"
+                                    @click="changePage(currentPage - 1)"
+                                >
                                     {{ translate("Previous") }}
                                 </button>
                             </li>
-                            <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                <button class="page-link" @click="changePage(currentPage + 1)">
+                            <li
+                                class="page-item"
+                                :class="{
+                                    disabled: currentPage === totalPages,
+                                }"
+                            >
+                                <button
+                                    class="page-link"
+                                    @click="changePage(currentPage + 1)"
+                                >
                                     {{ translate("Next") }}
                                 </button>
                             </li>
@@ -113,7 +139,9 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 v-if="form.id">{{ translate("Edit Bayan") }}</h5>
+                            <h5 v-if="form.id">
+                                {{ translate("Edit Bayan") }}
+                            </h5>
                             <h5 v-else>{{ translate("New Bayan") }}</h5>
                             <button
                                 class="btn-close"
@@ -125,46 +153,80 @@
                             <div class="card card-body p-3">
                                 <div class="row g-3">
                                     <div class="col-12">
-                                        <label for="title" class="form-label">{{ translate("Title") }}</label>
+                                        <label for="title" class="form-label">{{
+                                            translate("Title")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             id="title"
                                             v-model="form.title"
-                                            :class="{ 'invalid-bg': formErrors.title }"
+                                            :class="{
+                                                'invalid-bg': formErrors.title,
+                                            }"
                                         />
-                                        <div v-if="formErrors.title" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.title"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.title[0] }}
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label for="author" class="form-label">{{ translate("Author") }}</label>
+                                        <label
+                                            for="author"
+                                            class="form-label"
+                                            >{{ translate("Author") }}</label
+                                        >
                                         <input
                                             type="text"
                                             class="form-control"
                                             id="author"
                                             v-model="form.author"
-                                            :class="{ 'invalid-bg': formErrors.author }"
+                                            :class="{
+                                                'invalid-bg': formErrors.author,
+                                            }"
                                         />
-                                        <div v-if="formErrors.author" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.author"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.author[0] }}
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label for="english_date" class="form-label">{{ translate("English Date") }}</label>
+                                        <label
+                                            for="english_date"
+                                            class="form-label"
+                                            >{{
+                                                translate("English Date")
+                                            }}</label
+                                        >
                                         <Datepicker
                                             autoApply
                                             :enable-time-picker="false"
-                                            :class="{ 'invalid-bg': formErrors.english_date }"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.english_date,
+                                            }"
                                             v-model="form.english_date"
                                             @update:modelValue="convertToHijri"
                                         />
-                                        <div v-if="formErrors.english_date" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.english_date"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.english_date[0] }}
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label for="islamic_date" class="form-label">{{ translate("Islamic Date") }}</label>
+                                        <label
+                                            for="islamic_date"
+                                            class="form-label"
+                                            >{{
+                                                translate("Islamic Date")
+                                            }}</label
+                                        >
                                         <Datepicker
                                             v-model="form.islamic_date"
                                             :enable-time-picker="false"
@@ -172,14 +234,19 @@
                                             :disabled="true"
                                             :input-props="{ readonly: true }"
                                         />
-                                        <div v-if="formErrors.islamic_date" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.islamic_date"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.islamic_date[0] }}
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 mt-3">
-                                    <label for="content" class="form-label">{{ translate("Content") }}</label>
+                                    <label for="content" class="form-label">{{
+                                        translate("Content")
+                                    }}</label>
                                     <QuillEditor
                                         v-model:content="form.content"
                                         contentType="html"
@@ -197,9 +264,16 @@
                                     >
                                         {{ translate("Save") }}
                                     </button>
-                                    <button class="btn btn-success" type="button" disabled v-else>
+                                    <button
+                                        class="btn btn-success"
+                                        type="button"
+                                        disabled
+                                        v-else
+                                    >
                                         {{ translate("Saving") }}
-                                        <span class="spinner-border spinner-border-sm"></span>
+                                        <span
+                                            class="spinner-border spinner-border-sm"
+                                        ></span>
                                     </button>
                                 </div>
                             </div>
@@ -272,7 +346,9 @@ export default {
     },
     methods: {
         convertToHijri(date) {
-            this.form.islamic_date = date ? moment(date).format("iYYYY/iM/iD") : "";
+            this.form.islamic_date = date
+                ? moment(date).format("iYYYY/iM/iD")
+                : "";
         },
         fetchBayanaat() {
             axios
@@ -291,7 +367,9 @@ export default {
         submit() {
             this.formStatus = 0;
             if (this.form.english_date) {
-                this.form.english_date = moment(this.form.english_date).format("YYYY-MM-DD");
+                this.form.english_date = moment(this.form.english_date).format(
+                    "YYYY-MM-DD"
+                );
             }
             axios
                 .post(route("api.bayanaat.store"), this.form)
@@ -306,9 +384,15 @@ export default {
                     this.formStatus = 1;
                     if (error.response && error.response.data) {
                         this.formErrors = error.response.data.errors || {};
-                        toastr.error(this.translate("Please correct the errors and try again."));
+                        toastr.error(
+                            this.translate(
+                                "Please correct the errors and try again."
+                            )
+                        );
                     } else {
-                        toastr.error(this.translate("An unexpected error occurred."));
+                        toastr.error(
+                            this.translate("An unexpected error occurred.")
+                        );
                     }
                 });
         },
@@ -317,7 +401,9 @@ export default {
                 .delete(route("api.bayanaat.delete", id))
                 .then(() => {
                     this.fetchBayanaat();
-                    toastr.success(this.translate("Bayan deleted successfully."));
+                    toastr.success(
+                        this.translate("Bayan deleted successfully.")
+                    );
                 })
                 .catch((error) => {
                     console.error(error);

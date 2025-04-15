@@ -35,6 +35,17 @@
                     <h5 class="card-title theme-text-color">
                         {{ translate("All Books") }}
                     </h5>
+                    <div class="mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            v-model="searchQuery"
+                            :placeholder="
+                                translate('Search by title or download link')
+                            "
+                        />
+                    </div>
+
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -50,7 +61,7 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    v-for="(book, index) in books"
+                                    v-for="(book, index) in filteredBooks"
                                     :key="book.id"
                                 >
                                     <td>{{ index + 1 }}</td>
@@ -64,14 +75,14 @@
                                             :width="100"
                                         />
                                     </td>
-                                   
+
                                     <td>{{ book.download_link }}</td>
                                     <td v-html="book.description"></td>
                                     <td>
                                         <button
                                             class="btn btn-sm"
                                             data-bs-toggle="modal"
-                    data-bs-target="#updateRecordModal"
+                                            data-bs-target="#updateRecordModal"
                                             @click="showEntry(book)"
                                         >
                                             <i class="bi bi-pencil"></i>
@@ -86,6 +97,35 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <!-- Pagination -->
+                        <nav>
+                            <ul class="pagination justify-content-center">
+                                <li
+                                    class="page-item"
+                                    :class="{ disabled: currentPage === 1 }"
+                                >
+                                    <button
+                                        class="page-link"
+                                        @click="changePage(currentPage - 1)"
+                                    >
+                                        {{ translate("Previous") }}
+                                    </button>
+                                </li>
+                                <li
+                                    class="page-item"
+                                    :class="{
+                                        disabled: currentPage === totalPages,
+                                    }"
+                                >
+                                    <button
+                                        class="page-link"
+                                        @click="changePage(currentPage + 1)"
+                                    >
+                                        {{ translate("Next") }}
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -156,17 +196,15 @@
                                         <label
                                             for="download_link"
                                             class="form-label"
-                                            >{{
-                                                translate("Image")
-                                            }}</label
+                                            >{{ translate("Image") }}</label
                                         >
-                                        <br>
+                                        <br />
                                         <CropperOffCanvas
                                             @croppedImg="croppedImgPassToForm"
                                             accept=".jpg,.jpeg,.png"
                                         />
                                         <br />
-                               
+
                                         <img
                                             v-if="form.image"
                                             :src="
@@ -175,7 +213,7 @@
                                             "
                                             :width="100"
                                         />
-                                        
+
                                         <img
                                             v-else-if="existing_image"
                                             :src="
@@ -264,12 +302,43 @@ export default {
             },
             formErrors: {},
             formStatus: 1,
-            existing_image: '',
+            existing_image: "",
+            searchQuery: "",
+            currentPage: 1,
+            pageSize: 20,
         };
     },
+
     created() {
         this.fetchBooks();
     },
+    computed: {
+        filteredBooks() {
+            if (!this.searchQuery) return this.books;
+            const q = this.searchQuery.toLowerCase();
+            return this.books.filter((book) => {
+                return (
+                    (book.title && book.title.toLowerCase().includes(q)) ||
+                    (book.download_link &&
+                        book.download_link.toLowerCase().includes(q))
+                );
+            });
+        },
+        paginatedBooks() {
+            const start = (this.currentPage - 1) * this.pageSize;
+            return this.filteredBooks.slice(start, start + this.pageSize);
+        },
+        totalPages() {
+            return Math.ceil(this.filteredBooks.length / this.pageSize);
+        },
+    },
+
+    watch: {
+        searchQuery() {
+            this.currentPage = 1;
+        },
+    },
+
     methods: {
         fetchBooks() {
             axios
@@ -282,11 +351,11 @@ export default {
                 });
         },
         showEntry(book) {
-    this.form = { ...book };
+            this.form = { ...book };
 
-    // If the book has an image, store it in existing_image
-    this.existing_image = book.image || null;
-},
+            // If the book has an image, store it in existing_image
+            this.existing_image = book.image || null;
+        },
         submit() {
             this.formStatus = 0;
             axios
@@ -326,6 +395,11 @@ export default {
         },
         croppedImgPassToForm(img) {
             this.form.image = img;
+        },
+        changePage(page) {
+            if (page >= 1 && page <= this.totalPages) {
+                this.currentPage = page;
+            }
         },
     },
 };
