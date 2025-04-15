@@ -473,7 +473,7 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="remarks">Description</label>
+                                        <label for="remarks">{{ translate("Description")}}</label>
                                         <input
                                             type="text"
                                             class="form-control"
@@ -493,7 +493,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-6">
-                                        <label>{{ "Payment Method" }} </label>
+                                        <label>{{ translate("Payment Method") }} </label>
                                         <Multiselect
                                             v-model="form.method"
                                             :options="methodTypesOpions"
@@ -511,7 +511,7 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="type">Reciept No</label>
+                                        <label for="type">{{ translate("Reciept No")}}</label>
                                         <input
                                             type="text"
                                             class="form-control"
@@ -530,7 +530,7 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="date">Date</label>
+                                        <label for="date">{{ translate("Date")}}</label>
                                         <input
                                             type="date"
                                             class="form-control"
@@ -550,7 +550,7 @@
                                     </div>
                                     <div class="col-md-6 col-12">
                                         <label for="receipt_image"
-                                            >Receipt image</label
+                                            >{{ translate("Receipt image")}}</label
                                         >
                                         <br />
                                         <CropperOffCanvas
@@ -768,14 +768,14 @@ export default {
                 (!this.selectedMonth || !this.selectedYear)
             ) {
                 this.FilterErrors =
-                    "Please select both Month and Year for the Monthly filter.";
+                    this.translate("Please select both Month and Year for the Monthly filter.");
                 this.serachingLoading = false;
                 return;
             }
 
             if (this.selectedFilter === "Yearly" && !this.selectedYear) {
                 this.FilterErrors =
-                    "Please select a Year for the Yearly filter.";
+                this.translate("Please select a Year for the Yearly filter.");
                 this.serachingLoading = false;
                 return;
             }
@@ -785,7 +785,7 @@ export default {
                 (!this.startDate || !this.endDate)
             ) {
                 this.FilterErrors =
-                    "Please select both Start Date and End Date for the Custom filter.";
+                this.translate("Please select both Start Date and End Date for the Custom filter.");
                 this.serachingLoading = false;
                 return;
             }
@@ -879,7 +879,7 @@ export default {
                 .then(() => {
                     this.formStatus = 1;
                     this.fetchTransactionEntries();
-                    toastr.success("Transaction entry saved successfully.");
+                    toastr.success(this.translate("Transaction entry saved successfully."));
                     this.$refs.closeModal?.click();
                 })
                 .catch((error) => {
