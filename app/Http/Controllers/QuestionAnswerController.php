@@ -1,12 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Question;
 use App\Models\Answer;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Illuminate\Support\Str;
+use App\Models\Question;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class QuestionAnswerController extends Controller
 {
@@ -17,25 +17,24 @@ class QuestionAnswerController extends Controller
     }
     public function fetchQuestions()
     {
-        $questions =Question::with('answer')->orderByDesc('date')->get();
+        $questions = Question::with('answer')->orderByDesc('date')->get();
         return $questions;
     }
-    
-
 
     public function store(Request $request)
-{
-    $request->validate([
-        'question_id'        => 'required|exists:questions,id',
-        'answer_short_form'  => 'required|string|max:255',
-        'answer_full_form'   => 'required|string',
-        'approved_by_mufti'  => 'nullable|string|max:255',
-    ]);
+    {
+        $request->validate([
+            'question_id'       => 'required|exists:questions,id',
+            'answer_short_form' => 'required|string|max:255',
+            'answer_full_form'  => 'required|string',
+            'approved_by_mufti' => 'nullable|string|max:255',
+            'fitwa_number'      => 'required',
+        ]);
 
-    Answer::create($request->all());
+        Answer::create($request->all());
 
-    return response()->json(['message' => 'Answer submitted successfully.'], 201);
-}
+        return response()->json(['message' => 'Answer submitted successfully.'], 201);
+    }
 
     public function destroy($id)
     {
@@ -50,7 +49,7 @@ class QuestionAnswerController extends Controller
     }
 
     public function saveQuestion(Request $request)
-    { 
+    {
         $request->validate([
             'name'        => 'required|string|max:255',
             'email'       => 'required|email|max:255',
@@ -75,66 +74,63 @@ class QuestionAnswerController extends Controller
     {
         // Validate the incoming request
         $request->validate([
-            'question_id'      => 'required|exists:questions,id',
+            'question_id'       => 'required|exists:questions,id',
             'answer_short_form' => 'required|string|max:255',
             'answer_full_form'  => 'required|string',
             'approved_by_mufti' => 'nullable|string|max:255',
+            'fitwa_number'      => 'required',
         ]);
- 
-        // Create a new answer record
-        if($request->id)
-        {
-            $answer= Answer::find($request->id);
-        }else
-        {
 
-            $answer = new Answer();
-            $answer->id                = Str::uuid();
+        // Create a new answer record
+        if ($request->id) {
+            $answer = Answer::find($request->id);
+        } else {
+
+            $answer     = new Answer();
+            $answer->id = Str::uuid();
         }
-        $answer->question_id        = $request->question_id;
-        $answer->answer_short_form  = $request->answer_short_form;
-        $answer->answer_full_form   = $request->answer_full_form;
-        $answer->approved_by_mufti  = $request->approved_by_mufti; 
-        if($request->approved_by_mufti)
-        {
-            $question = Question::find($request->question_id);
+        $answer->question_id       = $request->question_id;
+        $answer->answer_short_form = $request->answer_short_form;
+        $answer->answer_full_form  = $request->answer_full_form;
+        $answer->approved_by_mufti = $request->approved_by_mufti;
+        $answer->fitwa_number      = $request->fitwa_number;
+        if ($request->approved_by_mufti) {
+            $question         = Question::find($request->question_id);
             $question->status = 2;
             $question->save();
-        }else
-        {
-            $question = Question::find($request->question_id);
+        } else {
+            $question         = Question::find($request->question_id);
             $question->status = 1;
             $question->save();
         }
-        $answer->date        = Carbon::now(); // Store current date
+        $answer->date = Carbon::now(); // Store current date
         $answer->save();
 
         return response()->json(['message' => 'Answer stored successfully!'], 201);
     }
 
     public function getApprovedQuestions(Request $request)
-{
-    $search = $request->query('search');
+    {
+        $search = $request->query('search');
 
-    // dd("etes");
-    $query = Question::with('answer')->where('status', 2); // Only approved questions
+                                                               // dd("etes");
+        $query = Question::with('answer')->where('status', 2); // Only approved questions
 
-    if ($search) {
-        $query->where(function($q) use ($search) {
-            $q->where('subject', 'LIKE', "%{$search}%")
-              ->orWhere('description', 'LIKE', "%{$search}%");
-        });
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('subject', 'LIKE', "%{$search}%")
+                    ->orWhere('description', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $questions = $query->paginate(20); // Show 5 records per page
+        return response()->json($questions);
     }
 
-    $questions = $query->paginate(20); // Show 5 records per page
-    return response()->json($questions);
-}
-
-
-public function delete($id)
-    {  
+    public function delete($id)
+    {
         $question = Question::find($id);
-        $answer = Answer::where('question_id', $id)->first();
+        $answer   = Answer::where('question_id', $id)->first();
         if ($answer) {
             $answer->delete();
         }

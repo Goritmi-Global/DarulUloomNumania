@@ -157,7 +157,7 @@
                 aria-labelledby="replyModalLabel"
                 aria-hidden="true"
             >
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-primary">
@@ -257,6 +257,30 @@
                                         />
                                     </div>
 
+
+                                    <div class="col-12">
+                                        <label
+                                            for="fitwa_number"
+                                            class="form-label"
+                                        >
+                                            {{
+                                                translate(
+                                                    "Fitwan Number"
+                                                )
+                                            }}
+                                        </label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="fitwa_number"
+                                            v-model="
+                                                replyForm.fitwa_number
+                                            "
+                                        />
+                                    </div>
+
+                                    
+
                                     <div class="mt-3">
                                         <button
                                             type="submit"
@@ -299,7 +323,7 @@
                 aria-labelledby="detailsModalLabel"
                 aria-hidden="true"
             >
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-primary">
@@ -366,6 +390,20 @@
                                             ?.approved_by_mufti
                                     }}
                                 </p>
+                                <p
+                                    v-if="
+                                        selectedQuestion?.answer
+                                            ?.fitwa_number
+                                    "
+                                >
+                                    <strong
+                                        >{{ translate("Fitwa number") }}:</strong
+                                    >
+                                    {{
+                                        selectedQuestion?.answer
+                                            ?.fitwa_number
+                                    }}
+                                </p>
                             </div>
                             <div v-else>
                                 <p>
@@ -396,6 +434,7 @@ export default {
                 answer_short_form: "",
                 answer_full_form: "",
                 approved_by_mufti: "",
+                fitwa_number: "",
             },
             replyErrors: [],
             replyStatus: 1, // 1 = ready, 0 = saving
@@ -469,6 +508,7 @@ export default {
                 answer_short_form: "",
                 answer_full_form: "",
                 approved_by_mufti: "",
+                fitwa_number: "",
             };
             this.replyErrors = [];
             this.replyForm.id = answer ? answer.id : "";
@@ -481,6 +521,9 @@ export default {
                 : "";
             this.replyForm.approved_by_mufti = answer
                 ? answer.approved_by_mufti
+                : "";
+            this.replyForm.fitwa_number = answer
+                ? answer.fitwa_number
                 : "";
             this.replyErrors = [];
         },
