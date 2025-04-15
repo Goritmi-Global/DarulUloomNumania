@@ -257,47 +257,7 @@
 
                 <!-- End Accounts Section -->
 
-                <!-- Software Users (Separate from Accounts) -->
-                <li class="nav-item">
-                    <a
-                        class="nav-link collapsed"
-                        :class="{ active: isActive('/users') }"
-                        href="/users"
-                    >
-                        <i class="bi bi-people"></i>
-                        <span>{{ translate("Software Users") }}</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        :class="{ collapsed: !isParentActive(['/languages']) }"
-                        data-bs-target="#settings-nav"
-                        data-bs-toggle="collapse"
-                        href="#"
-                    >
-                        <i class="bi bi-gear"></i>
-                        <span>{{ translate("Settings") }}</span>
-                        <i class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul
-                        id="settings-nav"
-                        class="nav-content collapse"
-                        :class="{ show: isParentActive(['/languages']) }"
-                        data-bs-parent="#sidebar-nav"
-                    >
-                        <!-- Languages (Only for Super Admin) -->
-                        <li>
-                            <a
-                                :class="{ active: isActive('/languages') }"
-                                href="/languages"
-                            >
-                                <i class="bi bi-translate"></i>
-                                <span>{{ translate("Languages") }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                
 
                 <li class="nav-item">
                     <a
@@ -392,6 +352,49 @@
                         </li>
                     </ul>
                 </li>
+
+                <!-- Software Users (Separate from Accounts) -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/users') }"
+                        href="/users"
+                    >
+                        <i class="bi bi-people"></i>
+                        <span>{{ translate("Software Users") }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        :class="{ collapsed: !isParentActive(['/languages']) }"
+                        data-bs-target="#settings-nav"
+                        data-bs-toggle="collapse"
+                        href="#"
+                    >
+                        <i class="bi bi-gear"></i>
+                        <span>{{ translate("Settings") }}</span>
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul
+                        id="settings-nav"
+                        class="nav-content collapse"
+                        :class="{ show: isParentActive(['/languages']) }"
+                        data-bs-parent="#sidebar-nav"
+                    >
+                        <!-- Languages (Only for Super Admin) -->
+                        <li>
+                            <a
+                                :class="{ active: isActive('/languages') }"
+                                href="/languages"
+                            >
+                                <i class="bi bi-translate"></i>
+                                <span>{{ translate("Languages") }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
             </ul>
         </aside>
 
