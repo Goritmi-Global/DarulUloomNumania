@@ -26,83 +26,76 @@
                     <h5 class="card-title theme-text-color">
                         {{ translate("All Asked Questions") }}
                     </h5>
+                    <div class="mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Search..."
+                            v-model="searchQuery"
+                        />
+                    </div>
 
-                    <div class="accordion" id="questionsAccordion">
+                    <div class="table-responsive">
                         <div
-                            class="accordion-item"
-                            v-for="(question, index) in questions"
-                            :key="question.id"
+                            v-if="searchQuery"
+                            class="mt-3 mb-3 badge bg-success text-white"
                         >
-                            <h2
-                                class="accordion-header"
-                                :id="'heading' + index"
+                            <b>
+                                {{ translate("Searched for") }} :
+                                {{ searchQuery }}</b
                             >
-                                <button
-                                    class="accordion-button collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    :data-bs-target="'#collapse' + index"
-                                    aria-expanded="true"
-                                    :aria-controls="'collapse' + index"
+                        </div>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        {{ translate("Question Short Form") }}
+                                    </th>
+                                    <th>{{ translate("Short Answer") }}</th>
+                                    <th>{{ translate("Status") }}</th>
+                                    <th>{{ translate("Actions") }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="(
+                                        question, index
+                                    ) in paginatedQuestions"
+                                    :key="question.id"
                                 >
-                                    <strong>{{ question.subject }}</strong> -
-                                    {{ question.name }}
-                                    <span
-                                        class="ms-auto badge"
-                                        :class="getStatusClass(question.status)"
-                                    >
-                                        {{ getStatusText(question.status) }}
-                                    </span>
-                                </button>
-                            </h2> 
-                            <div
-                                :id="'collapse' + index"
-                                class="accordion-collapse collapse"
-                                :aria-labelledby="'heading' + index"
-                                data-bs-parent="#questionsAccordion"
-                            >
-                                <div class="accordion-body">
-                                    <p>
-                                        <strong
-                                            >{{ translate("Email") }}:</strong
+                                    <td>{{ question.subject }}</td>
+                                    <td>
+                                        {{
+                                            question.answer
+                                                ?.answer_short_form ||
+                                            translate("No answer yet")
+                                        }}
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="ms-auto badge"
+                                            :class="
+                                                getStatusClass(question.status)
+                                            "
                                         >
-                                        {{ question.email }}
-                                    </p>
-                                    <p>
-                                        <strong
-                                            >{{ translate("Subject") }}:</strong
-                                        >
-                                        {{ question.subject }}
-                                    </p>
-                                    <p>
-                                        <strong
-                                            >{{ translate("Date") }}:</strong
-                                        >
-                                        {{ question.date }}
-                                    </p>
-                                    <p>
-                                        <strong
-                                            >{{
-                                                translate("Description")
-                                            }}:</strong
-                                        >
-                                        {{ question.description }}
-                                    </p>
-
-                                    <hr />
-                                    <div
-                                        class="d-flex justify-content-between align-items-center"
-                                    >
-                                        <h4 class="text-primary">
-                                            {{
-                                                translate("Response from Mufti")
-                                            }}
-                                        </h4>
-
+                                            {{ getStatusText(question.status) }}
+                                        </span>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <!-- Details Icon -->
                                         <i
-                                            class="bi bi-pencil text-success"
-                                            v-if="question.answer"
-                                            :title="translate('Edit Answer')"
+                                            class="bi bi-eye text-info fs-5 me-3 cursor-pointer"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#detailsModal"
+                                            @click="openDetailsModal(question)"
+                                            :title="translate('See Details')"
+                                            style="cursor: pointer"
+                                        ></i>
+
+                                        <!-- Reply Icon -->
+                                        <i
+                                            class="bi bi-pencil-square text-success fs-5 cursor-pointer"
                                             data-bs-toggle="modal"
                                             data-bs-target="#replyModal"
                                             @click="
@@ -111,64 +104,44 @@
                                                     question.answer
                                                 )
                                             "
+                                            :title="translate('Reply')"
+                                            style="cursor: pointer"
                                         ></i>
-                                    </div>
-
-                                    <div v-if="question.answer">
-                                        <p>
-                                            <strong
-                                                >{{
-                                                    translate("Short Answer")
-                                                }}:</strong
-                                            >
-                                            {{
-                                                question.answer
-                                                    .answer_short_form
-                                            }}
-                                        </p>
-                                        <p>
-                                            <strong
-                                                >{{
-                                                    translate("Full Answer")
-                                                }}:</strong
-                                            >
-                                            {{
-                                                question.answer.answer_full_form
-                                            }}
-                                        </p>
-                                        <p
-                                            v-if="
-                                                question.answer
-                                                    .approved_by_mufti
-                                            "
-                                        >
-                                            <strong
-                                                >{{
-                                                    translate("Approved By")
-                                                }}:</strong
-                                            >
-                                            {{
-                                                question.answer
-                                                    .approved_by_mufti
-                                            }}
-                                        </p>
-                                    </div>
-                                    <div v-else>
-                                        <button
-                                            class="btn btn-success"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#replyModal"
-                                            @click="
-                                                openReplyModal(question, null)
-                                            "
-                                        >
-                                            {{ translate("Reply") }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+
+                    <!-- Pagination -->
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li
+                                class="page-item"
+                                :class="{ disabled: currentPage === 1 }"
+                            >
+                                <button
+                                    class="page-link"
+                                    @click="currentPage--"
+                                >
+                                    {{ translate("Previous") }}
+                                </button>
+                            </li>
+                            <li
+                                class="page-item"
+                                :class="{
+                                    disabled: currentPage === totalPages,
+                                }"
+                            >
+                                <button
+                                    class="page-link"
+                                    @click="currentPage++"
+                                >
+                                    {{ translate("Next") }}
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
 
@@ -193,7 +166,7 @@
                                 }}
                             </h5>
                             <button
-                                ref="closeModal"
+                                ref="closeReplyModal"
                                 type="button"
                                 class="btn-close"
                                 data-bs-dismiss="modal"
@@ -313,6 +286,92 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Details Modal -->
+            <div
+                class="modal fade"
+                id="detailsModal"
+                tabindex="-1"
+                aria-labelledby="detailsModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-primary">
+                                {{ translate("Question Details") }}
+                            </h5>
+                            <button
+                                ref="closeModal"
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                <strong>{{ translate("Subject") }}:</strong>
+                                {{ selectedQuestion?.subject }}
+                            </p>
+                            <p>
+                                <strong>{{ translate("Description") }}:</strong>
+                                {{ selectedQuestion?.description }}
+                            </p>
+                            <p>
+                                <strong>{{ translate("Email") }}:</strong>
+                                {{ selectedQuestion?.email }}
+                            </p>
+                            <p>
+                                <strong>{{ translate("Date") }}:</strong>
+                                {{ selectedQuestion?.date }}
+                            </p>
+                            <hr />
+                            <div v-if="selectedQuestion?.answer">
+                                <p>
+                                    <strong
+                                        >{{
+                                            translate("Short Answer")
+                                        }}:</strong
+                                    >
+                                    {{
+                                        selectedQuestion?.answer
+                                            ?.answer_short_form
+                                    }}
+                                </p>
+                                <p>
+                                    <strong
+                                        >{{ translate("Full Answer") }}:</strong
+                                    >
+                                    {{
+                                        selectedQuestion?.answer
+                                            ?.answer_full_form
+                                    }}
+                                </p>
+                                <p
+                                    v-if="
+                                        selectedQuestion?.answer
+                                            ?.approved_by_mufti
+                                    "
+                                >
+                                    <strong
+                                        >{{ translate("Approved By") }}:</strong
+                                    >
+                                    {{
+                                        selectedQuestion?.answer
+                                            ?.approved_by_mufti
+                                    }}
+                                </p>
+                            </div>
+                            <div v-else>
+                                <p>
+                                    {{ translate("No answer provided yet.") }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 </template>
@@ -326,6 +385,7 @@ export default {
     data() {
         return {
             questions: [],
+            selectedQuestion: null, // Store selected question for details modal
             replyForm: {
                 id: "", // Holds the answer ID for editing
                 question_id: "",
@@ -335,11 +395,54 @@ export default {
             },
             replyErrors: [],
             replyStatus: 1, // 1 = ready, 0 = saving
+
+            searchQuery: "",
+            currentPage: 1,
+            perPage: 20,
         };
     },
+
     created() {
         this.fetchQuestions();
     },
+    computed: {
+        filteredQuestions() {
+            const query = this.searchQuery.toLowerCase();
+
+            return this.questions.filter((q) => {
+                const status = this.getStatusText(q.status).toLowerCase();
+                const subject = q.subject?.toLowerCase() || "";
+                const description = q.description?.toLowerCase() || "";
+                const shortAns =
+                    q.answer?.answer_short_form?.toLowerCase() || "";
+                const fullAns = q.answer?.answer_full_form?.toLowerCase() || "";
+                const approved =
+                    q.answer?.approved_by_mufti?.toLowerCase() || "";
+
+                return (
+                    status.includes(query) ||
+                    subject.includes(query) ||
+                    description.includes(query) ||
+                    shortAns.includes(query) ||
+                    fullAns.includes(query) ||
+                    approved.includes(query)
+                );
+            });
+        },
+        totalPages() {
+            return Math.ceil(this.filteredQuestions.length / this.perPage);
+        },
+        paginatedQuestions() {
+            const start = (this.currentPage - 1) * this.perPage;
+            return this.filteredQuestions.slice(start, start + this.perPage);
+        },
+    },
+    watch: {
+        searchQuery() {
+            this.currentPage = 1;
+        },
+    },
+
     methods: {
         fetchQuestions() {
             axios
@@ -355,7 +458,6 @@ export default {
                 });
         },
         openReplyModal(question, answer) {
-            console.log(question, answer);
             // Clear all fields first
             this.replyForm = {
                 id: "",
@@ -384,12 +486,12 @@ export default {
             axios
                 .post(route("api.answer.store"), this.replyForm)
                 .then(() => {
-                    this.$refs.closeModal.click();
                     this.replyStatus = 1;
                     toastr.success(
                         this.translate("Reply submitted successfully.")
                     );
                     this.fetchQuestions();
+                    this.$refs.closeReplyModal.click();
                 })
                 .catch((error) => {
                     this.replyStatus = 1;
@@ -398,6 +500,9 @@ export default {
                         error.response?.data?.message || "An error occurred."
                     );
                 });
+        },
+        openDetailsModal(question) {
+            this.selectedQuestion = question; // Store the selected question for modal display
         },
         getStatusText(status) {
             return status === 0
@@ -416,6 +521,7 @@ export default {
     },
 };
 </script>
+
 <style scoped>
 .bi-pencil {
     cursor: pointer;

@@ -64,7 +64,7 @@
                                             <p>
                                                 <strong
                                                     >{{
-                                                        translate("Subject")
+                                                        translate("Question Short Form")
                                                     }}:</strong
                                                 >
                                                 {{ question.subject }}
