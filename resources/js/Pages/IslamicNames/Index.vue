@@ -2,14 +2,20 @@
     <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1 class="theme-text-color">{{ translate("Islamic Names") }}</h1>
+                <h1 class="theme-text-color">
+                    {{ translate("Islamic Names") }}
+                </h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/dashboard">{{ translate("Home") }}</a>
                         </li>
-                        <li class="breadcrumb-item">{{ translate("Islamic Names") }}</li>
-                        <li class="breadcrumb-item active">{{ translate("Index") }}</li>
+                        <li class="breadcrumb-item">
+                            {{ translate("Islamic Names") }}
+                        </li>
+                        <li class="breadcrumb-item active">
+                            {{ translate("Index") }}
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -20,7 +26,8 @@
                     data-bs-target="#updateRecordModal"
                     @click="clearFields"
                 >
-                    <i class="bi bi-plus-lg"></i> {{ translate("New Islamic Name") }}
+                    <i class="bi bi-plus-lg"></i
+                    >{{ translate("New Islamic Name") }}
                 </button>
             </div>
         </div>
@@ -28,7 +35,23 @@
         <section class="section">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title theme-text-color">{{ translate("All Islamic Names") }}</h5>
+                    <h5 class="card-title theme-text-color">
+                        {{ translate("All Islamic Names") }}
+                    </h5>
+
+                    <!-- Search Input -->
+                    <div class="mb-3">
+                        <input
+                            type="text"
+                            v-model="searchQuery"
+                            class="form-control"
+                            :placeholder="
+                                translate('Search by Name or Meaning')
+                            "
+                        />
+                    </div>
+
+                    <!-- Table -->
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -44,7 +67,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(name, index) in islamicNames" :key="name.id">
+                                <tr
+                                    v-for="(name, index) in paginatedNames"
+                                    :key="name.id"
+                                >
                                     <td>{{ index + 1 }}</td>
                                     <td>{{ name.name }}</td>
                                     <td>{{ name.meaning }}</td>
@@ -76,6 +102,36 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <!-- Pagination -->
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li
+                                class="page-item"
+                                :class="{ disabled: currentPage === 1 }"
+                            >
+                                <button
+                                    class="page-link"
+                                    @click="changePage(currentPage - 1)"
+                                >
+                                    {{ translate("Previous") }}
+                                </button>
+                            </li>
+                            <li
+                                class="page-item"
+                                :class="{
+                                    disabled: currentPage === totalPages,
+                                }"
+                            >
+                                <button
+                                    class="page-link"
+                                    @click="changePage(currentPage + 1)"
+                                >
+                                    {{ translate("Next") }}
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
 
@@ -108,49 +164,125 @@
                             <div class="card card-body p-3">
                                 <div class="row g-3">
                                     <div class="col-12">
-                                        <label class="form-label">{{ translate("Name") }}</label>
+                                        <label class="form-label">{{
+                                            translate("Name")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             v-model="form.name"
-                                            :class="{ 'invalid-bg': formErrors.name }"
+                                            :class="{
+                                                'invalid-bg': formErrors.name,
+                                            }"
                                         />
-                                        <div v-if="formErrors.name" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.name"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.name[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <label class="form-label">{{ translate("Meaning") }}</label>
+                                        <label class="form-label">{{
+                                            translate("Meaning")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             v-model="form.meaning"
-                                            :class="{ 'invalid-bg': formErrors.meaning }"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.meaning,
+                                            }"
                                         />
-                                        <div v-if="formErrors.meaning" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.meaning"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.meaning[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <label class="form-label">{{ translate("Roman") }}</label>
-                                        <input type="text" class="form-control" v-model="form.roman" />
+                                        <label class="form-label">{{
+                                            translate("Roman")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.roman"
+                                            :class="{
+                                                'invalid-bg': formErrors.roman,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.roman"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.roman[0] }}
+                                        </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <label class="form-label">{{ translate("Inflection") }}</label>
-                                        <input type="text" class="form-control" v-model="form.inflection" />
+                                        <label class="form-label">{{
+                                            translate("Inflection")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.inflection"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.inflection,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.roman"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.roman[0] }}
+                                        </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <label class="form-label">{{ translate("Type") }}</label>
-                                        <input type="text" class="form-control" v-model="form.type" />
+                                        <label class="form-label">{{
+                                            translate("Type")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.type"
+                                            :class="{
+                                                'invalid-bg': formErrors.type,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.type"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.type[0] }}
+                                        </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <label class="form-label">{{ translate("Reference") }}</label>
-                                        <textarea class="form-control" v-model="form.reference"></textarea>
+                                        <label class="form-label">{{
+                                            translate("Reference")
+                                        }}</label>
+                                        <textarea
+                                            class="form-control"
+                                            v-model="form.reference"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.reference,
+                                            }"
+                                        ></textarea>
+                                        <div
+                                            v-if="formErrors.reference"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.reference[0] }}
+                                        </div>
                                     </div>
 
                                     <div class="mt-3">
@@ -169,19 +301,21 @@
                                             v-else
                                         >
                                             {{ translate("Saving") }}
-                                            <span class="spinner-border spinner-border-sm"></span>
+                                            <span
+                                                class="spinner-border spinner-border-sm"
+                                            ></span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>     
+                </div>
             </div>
+            <!-- Modal code remains the same -->
         </section>
     </main>
 </template>
-
 <script>
 import axios from "axios";
 import Master from "../Layout/Master.vue";
@@ -201,11 +335,38 @@ export default {
                 reference: "",
             },
             formErrors: [],
-            formStatus: 1, // 1 = ready, 0 = saving
+            formStatus: 1,
+            currentPage: 1,
+            pageSize: 20,
+            searchQuery: "", // For search filter
         };
     },
     created() {
         this.fetchIslamicNames();
+    },
+    computed: {
+        // Filtered and paginated names based on search query
+        filteredNames() {
+            return this.islamicNames.filter((name) => {
+                return (
+                    name.name
+                        .toLowerCase()
+                        .includes(this.searchQuery.toLowerCase()) ||
+                    name.meaning
+                        .toLowerCase()
+                        .includes(this.searchQuery.toLowerCase())
+                );
+            });
+        },
+        // Paginate filtered names
+        paginatedNames() {
+            const start = (this.currentPage - 1) * this.pageSize;
+            return this.filteredNames.slice(start, start + this.pageSize);
+        },
+        // Total pages based on filtered names
+        totalPages() {
+            return Math.ceil(this.filteredNames.length / this.pageSize);
+        },
     },
     methods: {
         fetchIslamicNames() {
@@ -223,29 +384,47 @@ export default {
         },
         submit() {
             this.formStatus = 0;
-
             axios
                 .post(route("api.islamic-names.store"), this.form)
                 .then(() => {
                     this.$refs.closeModal.click();
                     this.formStatus = 1;
-                    toastr.success(this.translate("Islamic Name saved successfully."));
-                    this.fetchIslamicNames();
+                    toastr.success(
+                        this.translate("Islamic Name saved successfully.")
+                    );
+                    this.fetchIslamicNames(); // Fetch updated data
                 })
                 .catch((error) => {
                     this.formStatus = 1;
                     this.formErrors = error.response?.data?.errors || {};
-                    toastr.error(error.response?.data?.message || "An error occurred.");
+                    toastr.error(
+                        error.response?.data?.message || "An error occurred."
+                    );
                 });
         },
         deleteName(id) {
             axios.delete(route("api.islamic-names.delete", id)).then(() => {
                 this.fetchIslamicNames();
-                toastr.success(this.translate("Islamic Name deleted successfully."));
+                toastr.success(
+                    this.translate("Islamic Name deleted successfully.")
+                );
             });
         },
+        changePage(page) {
+            if (page >= 1 && page <= this.totalPages) {
+                this.currentPage = page;
+            }
+        },
         clearFields() {
-            this.form = { id: "", name: "", meaning: "", roman: "", inflection: "", type: "", reference: "" };
+            this.form = {
+                id: "",
+                name: "",
+                meaning: "",
+                roman: "",
+                inflection: "",
+                type: "",
+                reference: "",
+            };
             this.formErrors = [];
         },
     },
