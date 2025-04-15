@@ -295,7 +295,16 @@
                                             class="form-control"
                                             v-model="form.phone_number"
                                             placeholder="+92 300 1234567"
+                                            :class="{
+                                                'is-invalid': formErrors.phone_number,
+                                            }"
                                         />
+                                        <div
+                                            v-if="formErrors.phone_number"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.phone_number[0] }}
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">{{
@@ -306,7 +315,16 @@
                                             class="form-control"
                                             v-model="form.whatsapp"
                                             placeholder="+92 300 1234567"
+                                            :class="{
+                                                'is-invalid': formErrors.whatsapp,
+                                            }"
                                         />
+                                        <div
+                                            v-if="formErrors.whatsapp"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.whatsapp[0] }}
+                                        </div>
                                     </div>
 
                                     <!-- Guardian Info -->
@@ -318,7 +336,16 @@
                                             type="text"
                                             class="form-control"
                                             v-model="form.guardian_name"
+                                            :class="{
+                                                'is-invalid': formErrors.guardian_name,
+                                            }"
                                         />
+                                        <div
+                                            v-if="formErrors.guardian_name"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.guardian_name[0] }}
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">{{
@@ -328,7 +355,16 @@
                                             type="text"
                                             class="form-control"
                                             v-model="form.guardian_cnic"
+                                            :class="{
+                                                'is-invalid': formErrors.guardian_cnic,
+                                            }"
                                         />
+                                        <div
+                                            v-if="formErrors.guardian_cnic"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.guardian_cnic[0] }}
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">{{
@@ -338,7 +374,16 @@
                                             type="text"
                                             class="form-control"
                                             v-model="form.guardian_mobile"
+                                            :class="{
+                                                'is-invalid': formErrors.guardian_mobile,
+                                            }"
                                         />
+                                        <div
+                                            v-if="formErrors.guardian_mobile"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.guardian_mobile[0] }}
+                                        </div>
                                     </div>
 
                                     <!-- Academic Info -->
@@ -350,7 +395,16 @@
                                             type="text"
                                             class="form-control"
                                             v-model="form.previous_madrasa"
+                                            :class="{
+                                                'is-invalid': formErrors.previous_madrasa,
+                                            }"
                                         />
+                                        <div
+                                            v-if="formErrors.previous_madrasa"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.previous_madrasa[0] }}
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">{{
@@ -360,27 +414,54 @@
                                             type="text"
                                             class="form-control"
                                             v-model="form.previous_class"
+                                            :class="{
+                                                'is-invalid': formErrors.previous_class,
+                                            }"
                                         />
+                                        <div
+                                            v-if="formErrors.previous_class"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.previous_class[0] }}
+                                        </div>
                                     </div>
                                     <div class="col-md-3">
                                         <label class="form-label">{{
                                             translate("Total Marks")
                                         }}</label>
                                         <input
-                                            type="text"
+                                            type="number"
                                             class="form-control"
                                             v-model="form.total_marks"
+                                            :class="{
+                                                'is-invalid': formErrors.total_marks,
+                                            }"
                                         />
+                                        <div
+                                            v-if="formErrors.total_marks"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.total_marks[0] }}
+                                        </div>
                                     </div>
                                     <div class="col-md-3">
                                         <label class="form-label">{{
                                             translate("Obtained Marks")
                                         }}</label>
                                         <input
-                                            type="text"
+                                            type="number"
                                             class="form-control"
                                             v-model="form.obtained_marks"
+                                            :class="{
+                                                'is-invalid': formErrors.obtained_marks,
+                                            }"
                                         />
+                                        <div
+                                            v-if="formErrors.obtained_marks"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.obtained_marks[0] }}
+                                        </div>
                                     </div>
 
                                     <div class="col-md-12">
@@ -391,7 +472,16 @@
                                             type="text"
                                             class="form-control"
                                             v-model="form.primary_education"
+                                            :class="{
+                                                'is-invalid': formErrors.primary_education,
+                                            }"
                                         />
+                                        <div
+                                            v-if="formErrors.primary_education"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.primary_education[0] }}
+                                        </div>
                                     </div>
 
                                     <div class="col-md-12">
@@ -404,7 +494,16 @@
                                             type="text"
                                             class="form-control"
                                             v-model="form.additional_ability"
+                                            :class="{
+                                                'is-invalid': formErrors.additional_ability,
+                                            }"
                                         />
+                                        <div
+                                            v-if="formErrors.additional_ability"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.additional_ability[0] }}
+                                        </div>
                                     </div>
 
                                     <!-- Addresses -->
@@ -416,7 +515,19 @@
                                             class="form-control"
                                             rows="2"
                                             v-model="form.permanent_address"
+                                            :class="{
+                                                'is-invalid': formErrors.permanent_address,
+                                            }"
                                         ></textarea>
+
+                                      
+                                    
+                                        <div
+                                            v-if="formErrors.permanent_address"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.permanent_address[0] }}
+                                        </div>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="form-label">{{
@@ -426,7 +537,16 @@
                                             class="form-control"
                                             rows="2"
                                             v-model="form.current_address"
+                                            :class="{
+                                                'is-invalid': formErrors.current_address,
+                                            }"
                                         ></textarea>
+                                        <div
+                                            v-if="formErrors.current_address"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.current_address[0] }}
+                                        </div>
                                     </div>
                                     <!-- Submit -->
                                     <div class="mt-4">
@@ -564,15 +684,7 @@ export default {
                 primary_education: "",
                 additional_ability: "",
 
-                // Document Uploads
-                // cnic_front: null,
-                // cnic_back: null,
-                // passport: null,
-                // visa: null,
-                // verification_letter: null,
-
-                // Payment
-                payment_confirmed: false,
+                 
             },
             countryList: ["Pakistan", "Afghanistan"],
 
@@ -667,13 +779,8 @@ export default {
                 primary_education: "",
                 additional_ability: "",
 
-                cnic_front: null,
-                cnic_back: null,
-                passport: null,
-                visa: null,
-                verification_letter: null,
-
-                payment_confirmed: false,
+ 
+ 
             };
             this.formErrors = {};
         },
