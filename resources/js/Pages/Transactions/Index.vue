@@ -2,14 +2,14 @@
     <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1 class="theme-text-color">Transaction</h1>
+                <h1 class="theme-text-color">{{ translate("Transaction")}}</h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/dashboard">Darul Oloom</a>
+                            <a href="/dashboard">{{ translate("Darul Oloo")}}m</a>
                         </li>
-                        <li class="breadcrumb-item">Transaction</li>
-                        <li class="breadcrumb-item active">Index</li>
+                        <li class="breadcrumb-item">{{ translate("Transaction")}}</li>
+                        <li class="breadcrumb-item active">{{ translate("Index")}}</li>
                     </ol>
                 </nav>
             </div>
@@ -21,7 +21,7 @@
                     data-bs-target="#transactionmodal"
                     @click="clearFields"
                 >
-                    <i class="bi bi-plus-lg"></i> New Transaction
+                    <i class="bi bi-plus-lg"></i> {{ translate("New Transaction") }}
                 </button>
             </div>
         </div>
@@ -30,7 +30,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title theme-text-color">
-                        All Transaction Entries
+                        {{ translate("All Transaction Entries") }}
                     </h5>
                     <!-- Filter Section -->
                     <div class="d-flex justify-content-end p-2">
@@ -99,7 +99,7 @@
                                             'Custom',
                                         ]"
                                         :searchable="true"
-                                        placeholder="Filter By"
+                                        :placeholder="translate('Filter By')"
                                         @clear="fetchTransactionEntries"
                                     />
                                 </div>
@@ -116,7 +116,7 @@
                                             :options="yearsOptions"
                                             :searchable="true"
                                             @clear="fetchTransactionEntries"
-                                            placeholder="Select Year"
+                                            :placeholder="translate('Select Year')"
                                         />
                                     </div>
 
@@ -127,7 +127,7 @@
                                             :options="monthsOptions"
                                             :searchable="true"
                                             @clear="fetchTransactionEntries"
-                                            placeholder="Select Month"
+                                            :placeholder="translate('Select Month')"
                                         />
                                     </div>
                                 </div>
@@ -169,7 +169,7 @@
                                         :class="{
                                             'invalid-bg': formErrors.endDate,
                                         }"
-                                        placeholder="End Date"
+                                        :placeholder="translate('End Date')"
                                     />
                                 </div>
 
@@ -214,17 +214,17 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Reciept No</th>
-                                    <th scope="col">Business Type</th>
-                                    <th scope="col">Descriptions</th>
-                                    <th scope="col">Method</th>
-                                    <th scope="col">Type</th>
-                                    <th scope="col">Cash In</th>
-                                    <th scope="col">Cash Out</th>
-                                    <th scope="col">Balance</th>
-                                    <th scope="col">Reciept</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">{{translate('Date') }}</th>
+                                    <th scope="col">{{translate('Reciept No') }}</th>
+                                    <th scope="col">{{translate('Business Type') }}</th>
+                                    <th scope="col">{{translate('Descriptions') }}</th>
+                                    <th scope="col">{{translate('Method') }}</th>
+                                    <th scope="col">{{translate('Type') }}</th>
+                                    <th scope="col">{{translate('Cash In') }}</th>
+                                    <th scope="col">{{translate('Cash Out') }}</th>
+                                    <th scope="col">{{translate('Balance') }}</th>
+                                    <th scope="col">{{translate('Reciept') }}</th>
+                                    <th scope="col">{{translate('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -315,7 +315,7 @@
                                 <small>({{ form.date }})</small>
                             </h5>
                             <h5 class="modal-title text-primary" v-else>
-                                New Transaction Entry
+                                {{ translate("New Transaction Entry") }}
                             </h5>
                             <button
                                 type="button"
@@ -328,7 +328,7 @@
                             <div class="card card-body p-3">
                                 <div class="row g-3">
                                     <div class="col-12 col-md-12 mb-3">
-                                        <label>{{ "Process Type" }} </label>
+                                        <label>{{ translate("Process Type") }} </label>
                                         <Multiselect
                                             v-model="form.process_type"
                                             :options="processTypeOptions"
@@ -356,7 +356,7 @@
                                         class="col-12 col-md-6"
                                         v-if="form.process_type == 'Income'"
                                     >
-                                        <label>{{ "Income Type" }} </label>
+                                        <label>{{   translate("Income Type") }} </label>
                                         <Multiselect
                                             v-model="form.income_type"
                                             :options="IncomeTypesOptions"
@@ -379,7 +379,7 @@
                                         class="col-12 col-md-6"
                                         v-if="form.process_type == 'Expense'"
                                     >
-                                        <label>{{ "Expense Type" }} </label>
+                                        <label>{{ translate("Expense Type") }} </label>
                                         <Multiselect
                                             v-model="form.expense_type"
                                             :options="ExpenseTypesOptions"
@@ -427,7 +427,7 @@
                                             form.process_type == 'Borrow'
                                         "
                                     >
-                                        <label for="cash_in">Cash In</label>
+                                        <label for="cash_in">{{ translate("Cash In")}}</label>
                                         <input
                                             type="text"
                                             class="form-control"
@@ -453,7 +453,7 @@
                                             form.process_type == 'Lend'
                                         "
                                     >
-                                        <label for="cash_out">Cash Out</label>
+                                        <label for="cash_out">{{ translate("Cash Out")}}</label>
                                         <input
                                             type="text"
                                             class="form-control"
