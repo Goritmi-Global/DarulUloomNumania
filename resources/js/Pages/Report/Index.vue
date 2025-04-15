@@ -158,7 +158,7 @@
                                     />
                                 </div>
 
-                                <div class="col-auto">
+                                <!-- <div class="col-auto">
                                     <Multiselect
                                         v-model="filterBusinessType"
                                         :options="businessTypesOptions"
@@ -166,7 +166,7 @@
                                         :searchable="true"
                                         @clear="fetchTransactionEntries"
                                     />
-                                </div>
+                                </div> -->
 
                                 <div class="col-auto">
                                     <button

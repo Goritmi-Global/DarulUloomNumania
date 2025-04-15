@@ -77,8 +77,8 @@ Route::middleware(['web'])->group(function () {
     Route::get('/income/expense/show/{id}/{process}', [IncomeExpenseController::class, 'show'])->name('api.income.expense.show');          // Show a specific transaction entry
     Route::delete('/income/expense/delete/{id}/{process}', [IncomeExpenseController::class, 'delete'])->name('api.income.expense.delete'); // Delete a specific transaction entry
     Route::get('/expense/pluck', [IncomeExpenseController::class, 'pluck'])->name('api.expense.pluck');
-    Route::get('/income/pluck/{business_type_id}', [IncomeExpenseController::class, 'pluckIncome'])->name('api.income.pluck');
-    Route::get('/expense/pluck/{business_type_id}', [IncomeExpenseController::class, 'pluckExpenses'])->name('api.expense.pluck');
+    Route::get('/income/pluck/', [IncomeExpenseController::class, 'pluckIncome'])->name('api.income.pluck');
+    Route::get('/expense/pluck/', [IncomeExpenseController::class, 'pluckExpenses'])->name('api.expense.pluck');
 
     // Business Type Routes
     Route::post('/business/type/save', [CommonDataController::class, 'saveBusinessType'])->name('api.business.types.store');

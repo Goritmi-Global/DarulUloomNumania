@@ -173,7 +173,7 @@
                                     />
                                 </div>
 
-                                <div class="col-auto" >
+                                <!-- <div class="col-auto" >
                                     <Multiselect
                                         v-model="filterBusinessType"
                                         :options="businessTypesOptions"
@@ -182,7 +182,7 @@
                                         @clear="fetchTransactionEntries"
                                     />
                                     
-                                </div>
+                                </div> -->
 
                                 <div class="col-auto">
                                     <button
@@ -333,7 +333,12 @@
                                             v-model="form.process_type"
                                             :options="processTypeOptions"
                                             :searchable="true"
-                                            @select="clearProcessType"
+                                          
+                                            @select="
+                                            pluckExpIncTypes( 
+                                                    form.process_type
+                                                ),clearProcessType()
+                                            "
                                             :class="{
                                                 'invalid-bg':
                                                     formErrors.process_type,
@@ -346,37 +351,7 @@
                                             {{ formErrors.process_type[0] }}
                                         </div>
                                     </div>
-                                    <div
-                                        class="col-12 col-md-12 mb-3"
-                                        v-if="
-                                            form.process_type == 'Income' ||
-                                            form.process_type == 'Expense'
-                                        "
-                                    >
-                                        <label>{{ "Bussiness Type" }} </label>
-                                        <Multiselect
-                                            v-model="form.business_type"
-                                            :options="businessTypesOptions"
-                                            :searchable="true"
-                                            @select="
-                                                pluckExpIncTypes(
-                                                    form.business_type,
-                                                    form.process_type
-                                                )
-                                            "
-                                            :class="{
-                                                'invalid-bg':
-                                                    formErrors.business_type,
-                                            }"
-                                        />
-                                        <div
-                                            class="invalid-feedback animated fadeIn"
-                                            v-if="formErrors.business_type"
-                                        >
-                                            {{ formErrors.business_type[0] }}
-                                        </div>
-                                    </div>
-
+                                   
                                     <div
                                         class="col-12 col-md-6"
                                         v-if="form.process_type == 'Income'"
@@ -385,6 +360,7 @@
                                         <Multiselect
                                             v-model="form.income_type"
                                             :options="IncomeTypesOptions"
+                                             
                                             :searchable="true"
                                             :class="{
                                                 'invalid-bg':
@@ -407,6 +383,7 @@
                                         <Multiselect
                                             v-model="form.expense_type"
                                             :options="ExpenseTypesOptions"
+                                           
                                             :searchable="true"
                                             :class="{
                                                 'invalid-bg':
@@ -780,8 +757,7 @@ export default {
         },
         clearProcessType() {
             this.form.cash_in = "";
-            this.form.cash_out = "";
-            this.form.business_type = "";
+            this.form.cash_out = ""; 
         },
         fetchTransactionEntries() {
             this.serachingLoading = true;
@@ -873,10 +849,7 @@ export default {
             formData.append("ref_no", sanitizeValue(this.form.ref_no));
             formData.append("method", sanitizeValue(this.form.method));
             formData.append("remarks", sanitizeValue(this.form.remarks));
-            formData.append(
-                "business_type",
-                sanitizeValue(this.form.business_type)
-            );
+            
             formData.append("person", sanitizeValue(this.form.person));
             formData.append(
                 "expense_type",
@@ -944,10 +917,10 @@ export default {
 
                     // Call pluck functions before setting form data
                     if (response.data.process_type === "Income") {
-                        this.pluckIncomeTypes(response.data.business_type_id);
+                        this.pluckIncomeTypes();
                     }
                     if (response.data.process_type === "Expense") {
-                        this.pluckExpenseTypes(response.data.business_type_id);
+                        this.pluckExpenseTypes();
                     }
 
                     this.form = {
@@ -962,7 +935,7 @@ export default {
                         income_type: response.data.income_type || "",
                         process_type: response.data.process_type || "",
                         person: response.data.person || "",
-                        business_type: response.data.business_type_id || "",
+                        
                     };
 
                     // Set existing receipt image for preview
@@ -984,17 +957,17 @@ export default {
                     console.error(error);
                 });
         },
-        pluckExpIncTypes(business_type_id, expense_type) {
-            if (expense_type == "Income") {
-                this.pluckIncomeTypes(business_type_id);
+        pluckExpIncTypes(processType) {
+            if (processType == "Income") {
+                this.pluckIncomeTypes();
             }
-            if (expense_type == "Expense") {
-                this.pluckExpenseTypes(business_type_id);
+            if (processType == "Expense") {
+                this.pluckExpenseTypes();
             }
         },
-        pluckIncomeTypes(business_type_id) {
+        pluckIncomeTypes() {
             axios
-                .get(route("api.income.pluck", business_type_id)) // Ensure this API returns income types
+                .get(route("api.income.pluck")) // Ensure this API returns income types
                 .then((response) => {
                     this.IncomeTypesOptions = response.data; // Fix variable name casing
                 })
@@ -1002,9 +975,9 @@ export default {
                     console.error("Error fetching income types:", error);
                 });
         }, 
-        pluckExpenseTypes(business_type_id) {
+        pluckExpenseTypes() {
             axios
-                .get(route("api.expense.pluck", business_type_id)) // Ensure this API returns expense types
+                .get(route("api.expense.pluck")) // Ensure this API returns expense types
                 .then((response) => {
                     this.ExpenseTypesOptions = response.data;
                 })
