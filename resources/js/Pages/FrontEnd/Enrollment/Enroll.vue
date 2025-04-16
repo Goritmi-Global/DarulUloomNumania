@@ -28,74 +28,164 @@
                                 <div class="col-md-12">
                                     <div class="card shadow-sm border-0">
                                         <div
-                                            class="card-header bg-primary text-white"
+                                            class="card-header bg-danger text-white"
                                         >
                                             <h5>
-                                                {{ translate("Check Status") }}
+                                                {{ translate("Check Enrollment Status") }}
                                             </h5>
                                         </div>
                                         <div class="card-body">
-    <p class="mb-4 text-muted">
-        {{ translate("Enter CNIC # to check your enrollment status.") }}
-    </p>
+                                            <p class="mb-4 text-muted">
+                                                {{
+                                                    translate(
+                                                        "Enter CNIC # to check your enrollment status."
+                                                    )
+                                                }}
+                                            </p>
 
-    <!-- CNIC Input -->
-    <div class="mb-3">
-        <label class="form-label">
-            {{ translate("CNIC #") }}
-        </label>
-        <input
-            type="text"
-            class="form-control"
-            v-model="enrollCheckCnin"
-            placeholder="1234567890123"
-            :class="{ 'is-invalid': formErrors.enrollCheckCnin }"
+                                            <!-- CNIC Input -->
+                                            <div class="mb-3">
+                                                <label class="form-label">
+                                                    {{ translate("CNIC #") }}
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    v-model="enrollCheckCnin"
+                                                    placeholder="1234567890123"
+                                                    :class="{
+                                                        'is-invalid':
+                                                            formErrors.enrollCheckCnin,
+                                                    }"
+                                                />
+                                                <div
+                                                    v-if="
+                                                        formErrors.enrollCheckCnin
+                                                    "
+                                                    class="invalid-feedback"
+                                                >
+                                                    {{
+                                                        formErrors
+                                                            .enrollCheckCnin[0]
+                                                    }}
+                                                </div>
+                                            </div>
 
-        />
-        <div v-if="formErrors.enrollCheckCnin" class="invalid-feedback">
-            {{ formErrors.enrollCheckCnin[0] }}
-        </div>
-    </div>
+                                            <!-- Submit Button -->
+                                            <div class="mb-4">
+                                                <button
+                                                    class="btn btn-success"
+                                                    v-if="checkStatusBtn === 1"
+                                                    @click="checkStatus"
+                                                >
+                                                    {{ translate("Check now") }}
+                                                </button>
+                                                <button
+                                                    class="btn btn-secondary"
+                                                    type="button"
+                                                    disabled
+                                                    v-else
+                                                >
+                                                    {{
+                                                        translate("Checking...")
+                                                    }}
+                                                    <span
+                                                        class="spinner-border spinner-border-sm ms-2"
+                                                    ></span>
+                                                </button>
+                                            </div>
 
-    <!-- Submit Button -->
-    <div class="mb-4">
-        <button 
-            class="btn btn-success"
-            v-if="checkStatusBtn === 1"
-            @click="checkStatus"
-        >
-            {{ translate("Check now") }}
-        </button>
-        <button
-            class="btn btn-secondary"
-            type="button"
-            disabled
-            v-else
-        >
-            {{ translate("Checking...") }}
-            <span class="spinner-border spinner-border-sm ms-2"></span>
-        </button>
-    </div>
- 
-    <!-- Found -->
-<div v-if="admissionStatusDetails" class="alert alert-info border rounded p-3">
-    <h5 class="mb-3">{{ translate("Enrollment Status Details") }}</h5>
-    <ul class="list-unstyled mb-0">
-        <li><strong>{{ translate("Name") }}:</strong> {{ admissionStatusDetails.name }}</li>
-        <li><strong>{{ translate("CNIC") }}:</strong> {{ admissionStatusDetails.cnic }}</li>
-        <li><strong>{{ translate("Father's Name") }}:</strong> {{ admissionStatusDetails.father }}</li>
-        <li><strong>{{ translate("Applying For") }}:</strong> {{ admissionStatusDetails.apply_for }}</li>
-        <li><strong>{{ translate("Status") }}:</strong> {{ admissionStatusDetails.status }}</li>
-    </ul>
-</div>
+                                            <!-- Found -->
+                                            <div
+                                                v-if="admissionStatusDetails"
+                                                class="alert alert-info border rounded p-3"
+                                            >
+                                                <h5 class="mb-3">
+                                                    {{
+                                                        translate(
+                                                            "Enrollment Status Details"
+                                                        )
+                                                    }}
+                                                </h5>
+                                                <ul class="list-unstyled mb-0">
+                                                    <li>
+                                                        <strong
+                                                            >{{
+                                                                translate(
+                                                                    "Name"
+                                                                )
+                                                            }}:</strong
+                                                        >
+                                                        {{
+                                                            admissionStatusDetails.name
+                                                        }}
+                                                    </li>
+                                                    <li>
+                                                        <strong
+                                                            >{{
+                                                                translate(
+                                                                    "CNIC"
+                                                                )
+                                                            }}:</strong
+                                                        >
+                                                        {{
+                                                            admissionStatusDetails.cnic
+                                                        }}
+                                                    </li>
+                                                    <li>
+                                                        <strong
+                                                            >{{
+                                                                translate(
+                                                                    "Father's Name"
+                                                                )
+                                                            }}:</strong
+                                                        >
+                                                        {{
+                                                            admissionStatusDetails.father
+                                                        }}
+                                                    </li>
+                                                    <li>
+                                                        <strong
+                                                            >{{
+                                                                translate(
+                                                                    "Applying For"
+                                                                )
+                                                            }}:</strong
+                                                        >
+                                                        {{
+                                                            admissionStatusDetails.apply_for
+                                                        }}
+                                                    </li>
+                                                    <li>
+                                                        <strong
+                                                            >{{
+                                                                translate(
+                                                                    "Status"
+                                                                )
+                                                            }}:</strong
+                                                        >
+                                                        {{
+                                                            admissionStatusDetails.status
+                                                        }}
+                                                    </li>
+                                                </ul>
+                                            </div>
 
-<!-- No Record -->
-<div v-else-if="checkStatusBtn === 1 && noRecordFound" class="alert alert-warning mt-3">
-    {{ translate("No record found for the provided CNIC.") }}
-</div>
-
-</div>
-
+                                            <!-- No Record -->
+                                            <div
+                                                v-else-if="
+                                                    checkStatusBtn === 1 &&
+                                                    noRecordFound
+                                                "
+                                                class="alert alert-warning mt-3"
+                                            >
+                                                {{
+                                                    translate(
+                                                        "No record found for the provided CNIC."
+                                                    )
+                                                }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mt-4">
@@ -213,7 +303,7 @@
                                         />
                                         <div
                                             v-if="formErrors.apply_for"
-                                            class="text-danger"
+                                            class="text-primary"
                                         >
                                             {{ formErrors.apply_for[0] }}
                                         </div>
@@ -730,13 +820,13 @@ export default {
     data() {
         return {
             enrollCheckCnin: "",
-        admissionStatusDetails: null, 
-          formErrors: {},
-        checkStatusBtn: 1,
-        noRecordFound: false,
+            admissionStatusDetails: null,
+            formErrors: {},
+            checkStatusBtn: 1,
+            noRecordFound: false,
 
-        formErrors: {},
-        
+            formErrors: {},
+
             currentStudent: "",
             currentCourse: "",
             students: [],
@@ -805,48 +895,49 @@ export default {
             formErrors: [],
 
             formStatus: 1,
-             
+
             showModal: false,
-             
         };
     },
     methods: {
         checkStatus() {
-    this.admissionStatusDetails = null;
-    this.formErrors = {};
+            this.admissionStatusDetails = null;
+            this.formErrors = {};
 
-    const cnic = this.enrollCheckCnin?.trim();
-    if (!cnic) {
-        this.formErrors.enrollCheckCnin = [
-            this.translate("CNIC field is required."),
-        ];
-        return;
-    }
-
-    this.checkStatusBtn = 0;
-
-    axios
-        .get(route("api.enroll.status.check", cnic))
-        .then((res) => {
-            const data = res?.data;
-
-            if (data && Object.keys(data).length > 0) {
-                this.admissionStatusDetails = data;
-                this.noRecordFound = false;
-            } else {
-                this.admissionStatusDetails = null;
-                this.noRecordFound = true;
+            const cnic = this.enrollCheckCnin?.trim();
+            if (!cnic) {
+                this.formErrors.enrollCheckCnin = [
+                    this.translate("CNIC field is required."),
+                ];
+                return;
             }
 
-            this.checkStatusBtn = 1;
-        })
-        .catch((err) => {
-            this.checkStatusBtn = 1;
-            this.noRecordFound = false;
-            console.error("Error fetching student admission status:", err);
-        });
-},
+            this.checkStatusBtn = 0;
 
+            axios
+                .get(route("api.enroll.status.check", cnic))
+                .then((res) => {
+                    const data = res?.data;
+
+                    if (data && Object.keys(data).length > 0) {
+                        this.admissionStatusDetails = data;
+                        this.noRecordFound = false;
+                    } else {
+                        this.admissionStatusDetails = null;
+                        this.noRecordFound = true;
+                    }
+
+                    this.checkStatusBtn = 1;
+                })
+                .catch((err) => {
+                    this.checkStatusBtn = 1;
+                    this.noRecordFound = false;
+                    console.error(
+                        "Error fetching student admission status:",
+                        err
+                    );
+                });
+        },
 
         submit() {
             this.currentStudent = this.form.name;
@@ -879,7 +970,9 @@ export default {
                         let errorMessages = Object.values(this.formErrors)
                             .flat()
                             .join("<br>");
-                        toastr.error(this.translate("Some fields required data"));
+                        toastr.error(
+                            this.translate("Some fields required data")
+                        );
                     } else {
                         toastr.error(
                             this.translate("An unexpected error occurred.")
