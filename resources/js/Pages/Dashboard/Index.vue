@@ -2,13 +2,13 @@
     <div>
         <main id="main" class="main">
             <div class="pagetitle">
-                <h1>Dashboard</h1>
+                <h1>{{ translate('Dashboard') }} </h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="index.html">Home</a>
                         </li>
-                        <li class="breadcrumb-item active">Dashboard</li>
+                        <li class="breadcrumb-item active">{{ translate('Dashboard') }}</li>
                     </ol>
                 </nav>
             </div>
@@ -28,7 +28,7 @@
                                         <div
                                             class="d-flex align-items-center justify-content-between"
                                         >
-                                            <h6>Incomes</h6>
+                                            <h6>{{ translate('Incomes') }} </h6>
                                         </div>
                                         <div class="flex-grow-1">
                                             <!-- Ensures content stretches -->
@@ -63,7 +63,7 @@
                                         <div
                                             class="d-flex align-items-center justify-content-between"
                                         >
-                                            <h6>Expense</h6>
+                                            <h6>{{ translate('Expense') }} </h6>
                                         </div>
                                         <div class="flex-grow-1">
                                             <!-- Ensures content stretches -->
@@ -109,7 +109,7 @@
                             <div class="col-xxl-4 col-md-4">
                                 <div class="card info-card bg-white">
                                     <div class="card-body">
-                                        <h5 class="card-title">Cash In</h5>
+                                        <h5 class="card-title">{{ translate('Cash In') }} </h5>
                                         <div
                                             class="d-flex align-items-center justify-content-between"
                                         >
@@ -130,7 +130,7 @@
                             <div class="col-xxl-4 col-md-4">
                                 <div class="card info-card bg-white">
                                     <div class="card-body">
-                                        <h5 class="card-title">Cash Out</h5>
+                                        <h5 class="card-title">{{ translate('Cash Out') }} </h5>
                                         <div
                                             class="d-flex align-items-center justify-content-between"
                                         >
@@ -149,7 +149,7 @@
                             <div class="col-xxl-4 col-md-4">
                                 <div class="card info-card bg-white">
                                     <div class="card-body">
-                                        <h5 class="card-title">Balance</h5>
+                                        <h5 class="card-title">{{ translate('Balance') }} </h5>
                                         <div
                                             class="d-flex align-items-center justify-content-between"
                                         >
@@ -185,8 +185,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    Income vs Expense (Bar Chart - Selected
-                                    Range)
+                                    {{ translate('Income vs Expense (Bar Chart - Selected Range)') }}
                                 </h5>
                                 <canvas id="barChart"></canvas>
                             </div>
