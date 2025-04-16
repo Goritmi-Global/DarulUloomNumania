@@ -66,17 +66,20 @@
                                 >
                                     <td>{{ question.subject }}</td>
                                     <td
-                                        v-if="
+                                        
+                                    >
+                                        <span v-if="
                                             question.answer &&
                                             question.answer.answer_short_form
                                         "
-                                    >
-                                        <span
                                             v-html="
                                                 question.answer
                                                     .answer_short_form
                                             "
                                         ></span>
+                                        <span v-else>
+                                            {{ translate("Not Answered Yet!") }}
+                                        </span>
                                     </td>
                                     <td>
                                         <span
@@ -408,7 +411,7 @@
                             </div>
                             <div v-else>
                                 <p>
-                                    {{ translate("No answer provided yet.") }}
+                                    {{ translate("No answer provided yet") }}
                                 </p>
                             </div>
                         </div>
