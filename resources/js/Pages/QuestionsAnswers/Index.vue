@@ -67,7 +67,7 @@
                                     <td>{{ question.subject }}</td>
                                     <td>
 
-                                        <span
+                                        <span v-if="question.answer.answer_short_form"
                                         v-html="
                                             question.answer.answer_short_form
                                         " 
