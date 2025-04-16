@@ -2,14 +2,14 @@
     <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1 class="theme-text-color">Reports</h1>
+                <h1 class="theme-text-color">{{ translate("Reports") }} </h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/dashboard">Darul Oloom</a>
+                            <a href="/dashboard">{{ translate("Darul Oloom") }} </a>
                         </li>
-                        <li class="breadcrumb-item">Reports</li>
-                        <li class="breadcrumb-item active">Index</li>
+                        <li class="breadcrumb-item">{{ translate("Reports") }} </li>
+                        <li class="breadcrumb-item active">{{ translate("Index") }} </li>
                     </ol>
                 </nav>
             </div>
@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title theme-text-color">
-                        All Transaction & Reports {{ selectedFilter }}
+                       {{ translate("All Transaction & Reports") }}  {{ selectedFilter }}
                     </h5>
                     <!-- Filter Section -->
                     <div class="d-flex justify-content-end p-2">
@@ -208,9 +208,9 @@
                                                 : "Date"
                                         }}
                                     </th>
-                                    <th scope="col">Income</th>
-                                    <th scope="col">Expense</th>
-                                    <th scope="col">Balance</th>
+                                    <th scope="col">{{ translate("Income") }} </th>
+                                    <th scope="col">{{ translate("Expense") }} </th>
+                                    <th scope="col">{{ translate("Balance") }} </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -233,7 +233,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="2">Total</th>
+                                    <th colspan="2">{{ translate("Total") }} </th>
                                     <th>
                                         {{ formatCurrency(totalIncome || 0) }}
                                     </th>
@@ -249,7 +249,7 @@
                     </div>
                     <div v-else>
                         <p class="text-center text-danger">
-                            No data available.
+                            {{ translate("No data available.") }} 
                         </p>
                     </div>
                 </div>

@@ -197,7 +197,7 @@
                                             aria-hidden="true"
                                         ></span>
                                         <span v-if="!serachingLoading"
-                                            >Search</span
+                                            >{{ translate("Search")}}</span
                                         >
                                     </button>
                                 </div>

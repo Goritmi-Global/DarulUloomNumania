@@ -2,14 +2,14 @@
     <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1 class="theme-text-color">Income Statement</h1>
+                <h1 class="theme-text-color">{{ translate("Income Statement") }} </h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/dashboard">Darul Oloom</a>
+                            <a href="/dashboard">{{ translate("Darul Oloom") }} </a>
                         </li>
-                        <li class="breadcrumb-item">Income Statement</li>
-                        <li class="breadcrumb-item active">Index</li>
+                        <li class="breadcrumb-item">{{ translate("Income Statement") }} </li>
+                        <li class="breadcrumb-item active">{{ translate("Index") }} </li>
                     </ol>
                 </nav>
             </div>
@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title theme-text-color">
-                        Income Statement
+                        {{ translate("Income Statement") }} 
                     </h5>
                     <div class="d-flex justify-content-end p-2">
                         <!-- Export Buttons -->
@@ -147,7 +147,7 @@
                                                 aria-hidden="true"
                                             ></span>
                                             <span v-if="!serachingLoading"
-                                                >Search</span
+                                                >{{ translate("Search") }} </span
                                             >
                                         </button>
                                     </div>
@@ -198,7 +198,7 @@
                     </div>
                     <div v-else>
                         <p class="text-center text-danger">
-                            No data available.
+                            {{ translate("No data available.") }} 
                         </p>
                     </div>
                 </div>
