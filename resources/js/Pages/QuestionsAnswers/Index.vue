@@ -349,7 +349,7 @@
                                             translate("Short Answer")
                                         }}:</strong
                                     >
-                                    <span
+                                    <span v-if="selectedQuestion.answer.answer_short_form"
                                         v-html="
                                             selectedQuestion.answer.answer_short_form
                                         "
