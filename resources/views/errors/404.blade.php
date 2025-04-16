@@ -1,206 +1,100 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <!-- Enter your title of the page -->
-    <title>404 - {{ ('Page not found') }}</title>
-    <!-- Link the CSS posted below to this page, change the href -->
-    <link rel="stylesheet" href="/404.css" >
-    <!--  Enter your website icon -->
-    <link rel="icon" href="hyg">
-<style>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>404 - {{ translate('Page not found') }}</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f4f6f9;
+      color: #012970;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .error-wrapper {
-      background-color: #292929;
-      height: 100%;
-      padding-top: 10%
-  }
-  
-  .error-wrapper .error-container {
-      -webkit-transform: skew(0deg, -10deg);
-      -moz-transform: skew(0deg, -10deg);
-      -o-transform: skew(0deg, -10deg);
-      -ms-transform: skew(0deg, -10deg);
-      transform: skew(0deg, -10deg);
-      background-color: rgb(47, 66, 238);
-      padding: 60px
-  }
-  
-  .error-wrapper .error-container .error {
-      -webkit-transform: skew(0deg, 10deg);
-      -moz-transform: skew(0deg, 10deg);
-      -o-transform: skew(0deg, 10deg);
-      -ms-transform: skew(0deg, 10deg);
-      transform: skew(0deg, 10deg);
-      margin: 0 auto;
       text-align: center;
-      width: 350px
-  }
-  
-  .error-wrapper .error-container .error .error-title {
+      max-width: 600px;
+      padding: 40px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .error-code {
+      font-size: 120px;
+      font-weight: bold;
+      color: #012970;
+      margin-bottom: 10px;
+    }
+
+    .error-title {
       font-size: 28px;
-      font-weight: 700;
-      letter-spacing: 5px;
-      text-transform: uppercase
-  }
-  
-  .error-wrapper .error-container .error .error-number {
-      font-size: 100px;
-      font-weight: 700;
-      letter-spacing: 5px;
-      text-shadow: 0 3px 0 #292929, 0 14px 10px rgba(0, 0, 0, .15), 0 24px 2px rgba(0, 0, 0, .1), 0 34px 30px rgba(0, 0, 0, .1)
-  }
-  
-  .error-wrapper .error-container .error .error-description {
-      font-size: 14px;
-      font-weight: 300;
-      padding: 0 40px
-  }
-  
-  .error-wrapper .error-container .error .error-or {
-      height: 20px;
-      margin: 30px 0 10px;
-      position: relative;
-      text-align: center
-  }
-  
-  .error-wrapper .error-container .error .error-or .or-line {
-      background-color: #169077;
-      height: 1px;
-      left: 40px;
-      position: absolute;
-      right: 40px;
-      top: 10px
-  }
-  
-  .error-wrapper .error-container .error .error-or .or {
-      -lh-property: 0;
-      left: -webkit-calc(50% - 30px);
-      left: -moz-calc(50% - 30px);
-      left: calc(50% - 30px);
-      background-color: #1dbc9c;
-      height: 20px;
-      margin: 0 auto;
-      position: absolute;
-      text-transform: uppercase;
-      top: 2px;
-      width: 60px
-  }
-  
-  .error-wrapper .error-container .error .error-textbox {
-      padding: 0 40px
-  }
-  
-  .error-wrapper .error-container .error .error-textbox .form-control {
-      background-color: #292929;
-      border: 0
-  }
-  
-  .error-wrapper .error-container .error .error-submit {
-      padding: 0 40px
-  }
-  
-  .error-wrapper .error-container .error .error-submit input {
-      font-size: 13px;
-      font-weight: 300;
-      text-transform: uppercase
-  }
-  
-  .error-wrapper .error-container .error .error-actions {
-      display: block;
-      height: 40px;
-      list-style: none;
-      padding: 5px
-  }
-  
-  .error-wrapper .error-container .error .error-actions>li {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #012970;
+    }
+
+    .error-description {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .home-link {
       display: inline-block;
-      float: left;
-      width: 33%
-  }
-  
-  .error-wrapper .error-container .error .error-actions>li a i {
-      color: white;
+      padding: 12px 24px;
+      background-color: #012970;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
 
-      font-size: 32px
-  }
-  
-  .error-wrapper .error-container.error-500 {
-      background-color: #ffc107
-  }
-  
-  .error-wrapper .error-container.error-500 .error .error-or .or-line {
-      background-color: #d39e00
-  }
-  
-  .error-wrapper .error-container.error-500 .error .error-or .or {
-      background-color: #ffc107
-  }
-  
-  .error-wrapper .error-container.error-401 {
-      background-color: #34b5dc
-  }
-  
-  .error-wrapper .error-container.error-401 .error .error-or .or-line {
-      background-color: #2198bd
-  }
-  
-  .error-wrapper .error-container.error-401 .error .error-or .or {
-      background-color: #34b5dc
-  }
-  
-  @media only screen and (max-width:600px) {
-      .error-wrapper {
-          padding-top: 5%
-      }
-      .error-wrapper .error-container {
-          -webkit-transform: skew(0deg, -5deg);
-          -moz-transform: skew(0deg, -5deg);
-          -o-transform: skew(0deg, -5deg);
-          -ms-transform: skew(0deg, -5deg);
-          transform: skew(0deg, -5deg)
-      }
-      .error-wrapper .error-container .error {
-          -webkit-transform: skew(0deg, 5deg);
-          -moz-transform: skew(0deg, 5deg);
-          -o-transform: skew(0deg, 5deg);
-          -ms-transform: skew(0deg, 5deg);
-          transform: skew(0deg, 5deg);
-          width: auto
-      }
-  }
-</style>
- 
-  
-   </head>
-  <body>
-    <main>
-      <center>
+    .home-link:hover {
+      background-color: #021f59;
+    }
 
-        <div class="error-wrapper">
-          <div class="error-container">
-              <div class="error">
-                  <div class="error-title">
-                      {{ ('Error') }}
-                  </div>
-                  <div class="error-number">
-                      404
-                  </div>
-                  <div class="error-description">
-                      {{ ('Sorry, The page you were looking for doesnt exist') }}
-                  </div>
-                   
-                  
-                  <ul class="error-actions" style="color: white;">
-                   <i class="fa fa-angle-double-right"></i> <a href="/dashboard" style="color: white; text-decoration:none">{{ ('Go to Home Page') }}</a>
-                  </ul>
-              </div>
-          </div>
-      </div>
-          
-        </h3>
-        <br /><br /><br /><br />
-      </center>
-    </main>
+    .icon {
+      font-size: 50px;
+      margin-bottom: 15px;
+      color: #012970;
+    }
 
-    <script src="https://use.fontawesome.com/1874c28d1a.js"></script>
-  </body>
+    @media (max-width: 600px) {
+      .error-code {
+        font-size: 80px;
+      }
+
+      .error-title {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="error-wrapper">
+    <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
+    <div class="error-code">404</div>
+    <div class="error-title">{{ translate('Oops! Page not found') }}</div>
+    <div class="error-description">
+      {{ translate('Sorry, the page you are looking for might have been removed or is temporarily unavailable.') }}
+    </div>
+    <a href="/dashboard" class="home-link">
+      <i class="fas fa-home"></i> {{ translate('Go to Home Page') }}
+    </a>
+  </div>
+</body>
 </html>
