@@ -339,12 +339,12 @@ export default {
     background-color: #f8d4d4 !important;
 } */
 .pagination .page-item.active .page-link {
-    background-color: #006860 !important;
-    border-color: #006860 !important;
+    background-color: #012970 !important;
+    border-color: #012970 !important;
     z-index: 3;
     color: white !important;
 }
 .pagination .page-link {
-    color: #006860 !important;
+    color: #012970 !important;
 }
 </style>
