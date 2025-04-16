@@ -57,6 +57,8 @@ Route::middleware(['web'])->group(function () {
 
     // Students...
     Route::get('/students/fetch', [StudentsController::class, 'students'])->name('api.students.fetch');
+    Route::post('/students/update-status', [StudentsController::class, 'updateStatus'])->name('api.students.updateStatus');
+
 
                                                                                                                           // Cashbook routes
     Route::post('/transaction/fetch', [TransactionController::class, 'fetch'])->name('api.transaction.fetch');            // Fetch all transaction entries

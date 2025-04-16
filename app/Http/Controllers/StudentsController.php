@@ -97,7 +97,7 @@ class StudentsController extends Controller
     // Address
     $student->permanent_address = $request->permanent_address;
     $student->current_address = $request->current_address;
-
+    $student->session = Carbon::now()->format('Y');
     // Save
     $student->save();
 
@@ -116,6 +116,18 @@ public function checkAdmissionStatus($cnic)
 
     return $student;
 }
+
+
+public function updateStatus(Request $request)
+{
+    // dd($request);
+    $student = Student::findOrFail($request->id);
+    $student->status = $request->status;
+    $student->save();
+
+    return response()->json(['message' => 'Status updated']);
+}
+
 
 
 }

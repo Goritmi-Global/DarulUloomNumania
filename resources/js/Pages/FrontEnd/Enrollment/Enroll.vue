@@ -102,7 +102,7 @@
                                             <!-- Found -->
                                             <div
                                                 v-if="admissionStatusDetails"
-                                                class="alert alert-info border rounded p-3"
+                                                class="alert alert-success border rounded p-3"
                                             >
                                                 <h5 class="mb-3">
                                                     {{
@@ -152,7 +152,7 @@
                                                         <strong
                                                             >{{
                                                                 translate(
-                                                                    "Applying For"
+                                                                    "Applied For"
                                                                 )
                                                             }}:</strong
                                                         >
@@ -169,7 +169,27 @@
                                                             }}:</strong
                                                         >
                                                         {{
-                                                            admissionStatusDetails.status
+                                                            admissionStatusDetails.status ==
+                                                            0
+                                                                ? translate(
+                                                                      "Under Review"
+                                                                  )
+                                                                : admissionStatusDetails.status ==
+                                                                  1
+                                                                ? translate(
+                                                                      "Accepted"
+                                                                  )
+                                                                : admissionStatusDetails.status ==
+                                                                  2
+                                                                ? translate(
+                                                                      "Pending"
+                                                                  )
+                                                                : admissionStatusDetails.status ==
+                                                                  3
+                                                                ? translate(
+                                                                      "Rejected"
+                                                                  )
+                                                                : ""
                                                         }}
                                                     </li>
                                                 </ul>
@@ -583,15 +603,20 @@
                                         <label class="form-label">{{
                                             translate("Previous Class")
                                         }}</label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
+                                        <Multiselect
                                             v-model="form.previous_class"
+                                            :options="filterOptions"
+                                            :placeholder="
+                                                translate('Select Course')
+                                            "
+                                            :searchable="true"
+                                            :multiple="true"
                                             :class="{
                                                 'is-invalid':
                                                     formErrors.previous_class,
                                             }"
                                         />
+
                                         <div
                                             v-if="formErrors.previous_class"
                                             class="text-danger"
