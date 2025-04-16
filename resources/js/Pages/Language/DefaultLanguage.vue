@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-body pt-4">
                     <h5 class="card-title">
-                        {{ translate("Default Language") }}
+                        {{ translate("Default Language") }} test
                     </h5>
 
                     <!-- Floating Labels Form -->

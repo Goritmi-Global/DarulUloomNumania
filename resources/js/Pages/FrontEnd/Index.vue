@@ -6,7 +6,7 @@
                 <h1 class="display-4">
                     {{
                         translate(
-                            "Welcome to Jamia Darol Uloom Noumania Utmanzai"
+                            "Jamia Darol Uloom Noumania Utmanzai"
                         )
                     }}
                 </h1>

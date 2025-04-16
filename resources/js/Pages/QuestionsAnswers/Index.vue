@@ -65,9 +65,9 @@
                                     :key="question.id"
                                 >
                                     <td>{{ question.subject }}</td>
-                                    <td>
+                                    <td v-if="question.answer.answer_short_form">
 
-                                        <span v-if="question.answer.answer_short_form"
+                                        <span 
                                         v-html="
                                             question.answer.answer_short_form
                                         " 
@@ -343,13 +343,13 @@
                             </p>
                             <hr />
                             <div v-if="selectedQuestion?.answer">
-                                <p>
+                                <p v-if="selectedQuestion.answer.answer_short_form">
                                     <strong
                                         >{{
                                             translate("Short Answer")
                                         }}:</strong
                                     >
-                                    <span v-if="selectedQuestion.answer.answer_short_form"
+                                    <span 
                                         v-html="
                                             selectedQuestion.answer.answer_short_form
                                         "
