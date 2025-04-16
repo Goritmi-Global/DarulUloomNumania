@@ -242,10 +242,10 @@ export default {
             titleBalance: "Last 3 Months Balance",
             filterLabel: "Last 3 Months",
             filterOptions: [
-                { value: "1", label: "Current Month" },
-                { value: "3", label: "Last 3 Months" },
-                { value: "6", label: "Last 6 Months" },
-                { value: "12", label: "Last 1 Year" },
+                { value: "1", label: this.transate("Current Month") },
+                { value: "3", label:  this.transate("Last 3 Months") },
+                { value: "6", label:  this.transate("Last 6 Months") },
+                { value: "12", label:  this.transate("Last 1 Year") },
                 // { value: "all", label: "Overall" },
             ],
         };
