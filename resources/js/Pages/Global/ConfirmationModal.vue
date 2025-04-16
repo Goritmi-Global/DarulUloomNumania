@@ -1,5 +1,5 @@
 <template>
-    <button
+    <!-- <button
         v-if="recordId"
         class="btn btn-danger btn-sm fs-6"
         type="button"
@@ -9,7 +9,7 @@
     >
         <i class="bi bi-check-circle text-white me-1"></i>
         Close Now
-    </button>
+    </button> -->
 
     <!-- delete Modal -->
     <div class="modal fade" :id="'confirmationModal-' + recordId" tabindex="-1">

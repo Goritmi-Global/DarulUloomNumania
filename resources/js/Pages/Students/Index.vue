@@ -85,7 +85,11 @@
                                             :close-on-select="true"
                                             :clear-on-select="false"
                                             :allow-empty="false"
-                                            @select="updateStatus(student)"
+                                            @select="confirmStatusChange(student)"
+                                        />
+                                        <ConfirmationModal
+                                            :record-id="student.id"
+                                            @processThis="updateStatus"
                                         />
                                     </td>
                                 </tr>
@@ -166,51 +170,56 @@ export default {
                 { value: 2, label: "Pending" },
                 { value: 3, label: "Reject" },
             ],
+            studentToUpdate: null,
+            newStatus: null,
         };
     },
     computed: {
-    canShowTable() {
-        return this.selectedSessions.length > 0 && this.selectedCourses.length > 0;
+        canShowTable() {
+            return this.selectedSessions.length > 0 && this.selectedCourses.length > 0;
+        },
+        filteredStudents() {
+            if (!this.canShowTable) return [];
+            return this.students.filter(s =>
+                this.selectedSessions.includes(String(s.session)) &&
+                this.selectedCourses.includes(s.apply_for)
+            );
+        },
     },
-    filteredStudents() {
-        if (!this.canShowTable) return [];
-
-        return this.students.filter((s) => {
-            const sessionMatch = this.selectedSessions.includes(String(s.session));
-            const courseMatch = this.selectedCourses.includes(s.apply_for);
-            return sessionMatch && courseMatch;
-        });
-    },
-}
-,
     created() {
         this.fetchStudents();
     },
     methods: {
-        fetchStudents() {
-            axios
-                .get(route("api.students.fetch"))
-                .then((res) => {
-                    this.students = res.data;
-                })
-                .catch((err) => {
-                    console.error(err);
-                });
+        translate(text) {
+            return text;
         },
-        updateStatus(student) {
-            axios
-                .post(route("api.students.updateStatus"), {
-                    id: student.id,
-                    status: student.status,
-                })
+        fetchStudents() {
+            axios.get(route("api.students.fetch"))
+                .then(res => this.students = res.data)
+                .catch(err => console.error(err));
+        },
+        confirmStatusChange(student) {
+            this.studentToUpdate = student;
+            this.newStatus = student.status;
+            const modal = new bootstrap.Modal(document.getElementById(`confirmationModal-${student.id}`));
+            modal.show();
+        },
+        updateStatus(studentId) {
+            if (!this.studentToUpdate || !this.newStatus) return;
+            axios.post(route("api.students.updateStatus"), {
+                id: studentId,
+                status: this.newStatus,
+            })
                 .then(() => {
-                    toastr.success(
-                        this.translate("Status updated successfully.")
-                    );
-                     
+                    this.studentToUpdate.status = this.newStatus;
+                    toastr.success(this.translate("Status updated successfully."));
                 })
                 .catch(() => {
-                    this.$toast.error("Failed to update status");
+                    this.$toast.error(this.translate("Failed to update status."));
+                })
+                .finally(() => {
+                    this.studentToUpdate = null;
+                    this.newStatus = null;
                 });
         },
         getRowClass(status) {
@@ -223,7 +232,7 @@ export default {
         },
         showDetails(student) {
             this.selectedStudent = student;
-            let modal = new bootstrap.Modal(document.getElementById("studentModal"));
+            const modal = new bootstrap.Modal(document.getElementById("studentModal"));
             modal.show();
         },
         formatDate(date) {
