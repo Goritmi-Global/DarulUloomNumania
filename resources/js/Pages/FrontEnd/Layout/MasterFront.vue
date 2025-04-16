@@ -349,7 +349,7 @@ export default {
 @import url("public/backend/assets/vendor/bootstrap/css/bootstrap.min.css");
 /* Primary Color */
 :root {
-    --primary-color: #012970;
+    --primary-color: #b8860b ;
 }
 
 #main {
@@ -358,7 +358,7 @@ export default {
     font-weight: 700 !important;
 }
 .header {
-    background: #012970;
+    background: #b8860b ;
     height: 60px;
     display: flex;
     align-items: center;
@@ -381,12 +381,12 @@ export default {
     margin: 0;
     padding: 0;
     display: flow;
-    color: #012970 !important;
+    color: #b8860b  !important;
 }
 
-.nav ul li {
+/* .nav ul li {
     margin: 0 15px;
-}
+} */
 
 /* .lang-active a {
     color: white !important;
@@ -395,18 +395,18 @@ export default {
 .lang-active a:hover {
     /* background-color: white !important; */
     color: white !important;
-    background-color: rgb(134, 154, 196) !important;
+    background-color: #ebcc7f !important;
 }
 
 .languages ul a {
-    color: #012970 !important;
+    color: #b8860b  !important;
     text-decoration: none !important;
     font-weight: 500 !important;
 }
 .nav ul li a {
     color: #fff;
     text-decoration: none;
-    font-weight: 500;
+ 
 }
 
 .nav ul li a:hover {
@@ -421,7 +421,7 @@ export default {
 }
 
 .mobile-nav {
-    background: #012970;
+    background: #b8860b ;
     padding: 10px 0;
 }
 
@@ -459,22 +459,22 @@ export default {
     }
 }
 .bg-primary {
-    background: #012970 !important;
+    background: #b8860b  !important;
 }
 
 .btn-success {
-    background-color: #012970 !important;
-    border-color: #012970 !important;
+    background-color: #b8860b  !important;
+    border-color: #b8860b  !important;
 }
 
 .btn-success:hover {
-    background-color: #012970 !important;
-    border-color: #012970 !important;
+    background-color: #b8860b  !important;
+    border-color: #b8860b  !important;
 }
 
 .btn-success:active {
-    background-color: #012970 !important;
-    border-color: #012970 !important;
+    background-color: #b8860b  !important;
+    border-color: #b8860b  !important;
 }
 
 .btn-success:focus {
@@ -482,17 +482,17 @@ export default {
     box-shadow: none !important;
 }
 .toast-success {
-    background-color: #012970 !important;
+    background-color: #b8860b  !important;
 }
 .theme-text-color {
-    color: #012970 !important;
+    color: #b8860b  !important;
     font-weight: bold;
 }
 .theme-bg-color {
-    background-color: #012970 !important;
+    background-color: #b8860b  !important;
 }
 .text-primary {
-    color: #012970 !important;
+    color: #b8860b  !important;
 }
 
 .footer {
@@ -503,22 +503,22 @@ export default {
 }
 .footer-content p {
     margin: 0;
-    color: #012970;
+    color: #b8860b ;
 }
 .footer-social a {
     font-size: 18px;
-    color: #012970;
+    color: #b8860b ;
     text-decoration: none;
 }
 .footer-social a:hover {
     color: #f8d4d4;
 }
 .multiselect-option.is-selected {
-    background: #012970 !important;
+    background: #b8860b  !important;
     color: var(--ms-option-color-selected, #fff);
 }
 .multiselect-option.is-selected.is-pointed {
-    background: #012970 !important;
+    background: #b8860b  !important;
     color: var(--ms-option-color-selected, #fff);
 }
 .nav ul li {
@@ -526,31 +526,26 @@ export default {
 }
 
 .nav ul li a.active {
-    background-color: #fff;
-    color: #012970 !important;
+    
     font-weight: bold;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    padding: 0 15px;
-    border-radius: 0;
+     
 }
 .footer-top {
     margin-bottom: 30px;
 }
 
 .footer-contact p {
-    color: #012970;
+    color: #b8860b ;
 }
 
 .footer-contact h3 {
-    color: #012970;
+    color: #b8860b ;
     font-weight: bold;
 }
 
 .footer-social a {
     font-size: 20px;
-    color: #012970;
+    color: #b8860b ;
     margin: 0 10px;
     transition: color 0.3s ease;
 }
@@ -570,7 +565,7 @@ export default {
 }
 
 .footer-links ul li a {
-    color: #012970;
+    color: #b8860b ;
     text-decoration: none;
     font-weight: 500;
 }
@@ -582,14 +577,14 @@ export default {
 .footer-newsletter form input {
     padding: 10px;
     width: 70%;
-    border: 1px solid #012970;
+    border: 1px solid #b8860b ;
     border-radius: 5px;
     margin-right: 10px;
 }
 
 .footer-newsletter form button {
     padding: 10px 20px;
-    background-color: #012970;
+    background-color: #b8860b ;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -598,19 +593,19 @@ export default {
 
 .footer-newsletter form button:hover {
     background-color: #f8d4d4;
-    color: #012970;
+    color: #b8860b ;
 }
 
 .footer-bottom {
     background-color: #f8f9fa;
     padding: 10px;
-    color: #012970;
+    color: #b8860b ;
     font-size: 14px;
     text-align: center;
 }
 
 .footer-bottom a {
-    color: #012970;
+    color: #b8860b ;
     text-decoration: none;
 }
 

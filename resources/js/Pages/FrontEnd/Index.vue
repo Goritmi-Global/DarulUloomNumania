@@ -181,7 +181,7 @@ export default {
     border: none;
 }
 .btn-primary:hover {
-    background-color: #011a4d;
+    background-color: #795806;
 }
 /* Equal Height for All Cards */
 .content-card {

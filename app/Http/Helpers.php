@@ -24,6 +24,14 @@ function american_date($date){
     return '';
 }
 
+function logedInUser()
+{
+    if (auth()->check() && auth()->user()) {
+        $user = auth()->user();
+         
+        return $user;
+    }
+}
 
 function translate($key, $lang = null)
 {

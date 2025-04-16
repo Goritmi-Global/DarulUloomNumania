@@ -21,6 +21,18 @@
     @routes
     @vite('resources/js/app.js')
     @inertiaHead
+
+
+    @php
+    $logged_in_user = logedInUser();
+    @endphp
+
+    <script>
+         
+        let logged_in_user = @json($logged_in_user);
+        window.logged_in_user = logged_in_user;
+    </script>
+
 </head>
 <body>
     @inertia
