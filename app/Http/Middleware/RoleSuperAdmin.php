@@ -19,7 +19,7 @@ class RoleSuperAdmin
             return $next($request);
         }
 
-        abort(403, 'Unauthorized action.');
+        abort(404, 'Unauthorized action.');
     }
 
 }
