@@ -6,7 +6,7 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/dashboard">{{ translate("Darul Oloo")}}m</a>
+                            <a href="/dashboard">{{ translate("Darul Oloom")}}m</a>
                         </li>
                         <li class="breadcrumb-item">{{ translate("Transaction")}}</li>
                         <li class="breadcrumb-item active">{{ translate("Index")}}</li>
