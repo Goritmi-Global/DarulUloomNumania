@@ -140,42 +140,43 @@
                     >
                 </li>
                 <li
-                    class="nav-item dropdown languages"
-                    v-if="languages && languages.length"
-                >
-                    <a
-                        class="nav-link dropdown-toggle"
-                        href="javascript:void(0)"
-                        id="languageDropdown"
-                        role="button"
-                        @click="toggleLangMenu"
+                        class="nav-item dropdown languages bg-warning"
+                        v-if="languages && languages.length"
                     >
-                        {{ user_language_name }}
-                    </a>
-                    <ul
-                        v-if="langMenuOpen"
-                        class="dropdown-menu dropdown-menu-end c-global-radius"
-                        aria-labelledby="languageDropdown"
-                    >
-                        <li
-                            v-for="(language, index) in languages"
-                            :key="index"
-                            :class="[
-                                language.code == $page.props.default_language
-                                    ? 'lang-active'
-                                    : '',
-                            ]"
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="javascript:void(0)"
+                            id="languageDropdown"
+                            role="button"
+                            @click="toggleLangMenu"
                         >
-                            <a
-                                class="dropdown-item"
-                                href="javascript:void(0)"
-                                @click="changeLang(language.code)"
+                            {{ user_language_name }}
+                        </a>
+                        <ul
+                            v-if="langMenuOpen"
+                            class="   c-global-radius text-w"
+                            aria-labelledby="languageDropdown"
+                        >
+                            <li
+                                v-for="(language, index) in languages"
+                                :key="index"
+                                :class="[
+                                    language.code ==
+                                    $page.props.default_language
+                                        ? 'lang-active'
+                                        : '',
+                                ]"
                             >
-                                {{ language.name }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                                <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0)"
+                                    @click="changeLang(language.code)"
+                                >
+                                    {{ language.name }}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
             </ul>
         </nav>
 
