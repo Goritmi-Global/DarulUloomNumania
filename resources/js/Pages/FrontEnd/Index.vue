@@ -127,23 +127,24 @@ export default {
                 },
             ],
             bayanaat: [
+                
                 {
-                    title: "The Importance of Salah",
+                    title: "Surat Al-Waqi`ah - Mishary Rashed Alafasy",
                     description:
-                        "Learn why Salah is the foundation of faith and how to perform it correctly.",
-                    url: "https://www.youtube.com/embed/9eeeVTUJL9Q",
+                        "Surat Al-Waqi`ah - Mishary Rashed Alafasy.",
+                    url: "https://www.youtube.com/embed/NDE6iXOK7_Q",
                 },
                 {
-                    title: "Ramadan & Its Blessings",
+                    title: "Molana Muhammad Idrees Sahib New Pashto Bayan 2024",
                     description:
-                        "Discover the spiritual significance of Ramadan and fasting.",
-                    url: "https://www.youtube.com/embed/Li7ajCdomkk",
+                        "Molana Muhammad Idrees Sahib New Pashto Bayan 2024.",
+                    url: "https://www.youtube.com/embed/Aocqzk2Uq-s",
                 },
                 {
                     title: "Stories from the Quran",
                     description:
                         "A journey through the inspiring stories in the Quran.",
-                    url: "https://www.youtube.com/embed/ckDDp9xaGW8",
+                    url: "https://www.youtube.com/embed/fudje82hbdc",
                 },
             ],
         };
