@@ -481,12 +481,19 @@ export default {
 </style>
 
 <style>
+
 @import "@vueform/multiselect/themes/default.css";
 /* custom style that should be moved into the custom.css file later */
+body
+{
+    font-family: 'Jameel Noori Nastaleeq', serif;
+    font-size: 16px !important;
+}
 .section-title {
     text-align: left;
     padding-bottom: 5px;
 }
+
 .nav-link.active {
     background-color: #f6f9ff !important; /* Change this to your desired color */
     color: #174696 !important;

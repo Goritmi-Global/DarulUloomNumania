@@ -351,9 +351,13 @@ export default {
 :root {
     --primary-color: #b8860b ;
 }
-
+body
+{
+    font-family: 'Jameel Noori Nastaleeq', serif;
+    font-size: 16px !important;
+}
 #main {
-    font-family: "Playfair Display", serif !important;
+    /* font-family: "Playfair Display", serif !important; */
 
     font-weight: 700 !important;
 }

@@ -28,7 +28,7 @@
                                 <div class="col-md-12">
                                     <div class="card shadow-sm border-0">
                                         <div
-                                            class="card-header bg-danger text-white"
+                                            class="card-header bg-primary text-white"
                                         >
                                             <h5>
                                                 {{
@@ -237,7 +237,7 @@
                                 <div class="col-md-12 mt-4">
                                     <div class="card shadow-sm border-0">
                                         <div
-                                            class="card-header bg-success text-white"
+                                            class="card-header bg-primary text-white"
                                         >
                                             <h5>
                                                 {{
@@ -277,7 +277,7 @@
                                 <div class="col-md-12 mt-4">
                                     <div class="card shadow-sm border-0">
                                         <div
-                                            class="card-header bg-warning text-white"
+                                            class="card-header bg-primary text-white"
                                         >
                                             <h5>
                                                 {{ translate("Madrassa Role") }}
