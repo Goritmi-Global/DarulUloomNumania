@@ -103,7 +103,8 @@ Route::middleware(['web'])->group(function () {
     Route::post('/translations/show', [LanguageController::class, 'translations'])->name('api.translations.show');
     Route::post('/translations/store', [LanguageController::class, 'translations_store'])->name('api.translations.store');
     Route::post('/translations/search', [LanguageController::class, 'translations_search'])->name('api.translations.search');
-    Route::delete('/translation/delete/{id}', [LanguageController::class, 'translation_delete'])->name('translation.delete');
+    Route::delete('/translation/delete/{id}', [LanguageController::class, 'translation_delete'])->name('api.translation.delete');
+    
 
     // changing default language
     Route::post('/make/default/language', [LanguageController::class, 'make_default_language'])->name('api.make.default.language');
