@@ -65,15 +65,18 @@
                                     :key="question.id"
                                 >
                                     <td>{{ question.subject }}</td>
-                                    <td v-if="question.answer.answer_short_form">
-
-                                        <span 
-                                        v-html="
+                                    <td
+                                        v-if="
+                                            question.answer &&
                                             question.answer.answer_short_form
-                                        " 
-                                    ></span>
-
-                                        
+                                        "
+                                    >
+                                        <span
+                                            v-html="
+                                                question.answer
+                                                    .answer_short_form
+                                            "
+                                        ></span>
                                     </td>
                                     <td>
                                         <span
@@ -342,17 +345,22 @@
                                 {{ selectedQuestion?.date }}
                             </p>
                             <hr />
-                            <div v-if="selectedQuestion && selectedQuestion?.answer">
-                                <p v-if="selectedQuestion?.answer?.answer_short_form">
-
+                            <div v-if="selectedQuestion?.answer">
+                                <p
+                                    v-if="
+                                        selectedQuestion.answer
+                                            .answer_short_form
+                                    "
+                                >
                                     <strong
                                         >{{
                                             translate("Short Answer")
                                         }}:</strong
                                     >
-                                    <span 
+                                    <span
                                         v-html="
-                                            selectedQuestion.answer.answer_short_form
+                                            selectedQuestion.answer
+                                                .answer_short_form
                                         "
                                         class="ms-1"
                                     ></span>
