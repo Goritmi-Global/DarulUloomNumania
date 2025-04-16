@@ -58,8 +58,6 @@ Route::middleware(['web'])->group(function () {
     // Students...
     Route::get('/students/fetch', [StudentsController::class, 'students'])->name('api.students.fetch');
     Route::post('/students/update-status', [StudentsController::class, 'updateStatus'])->name('api.students.updateStatus');
-
-
                                                                                                                           // Cashbook routes
     Route::post('/transaction/fetch', [TransactionController::class, 'fetch'])->name('api.transaction.fetch');            // Fetch all transaction entries
     Route::post('/transaction/store', [TransactionController::class, 'store'])->name('api.transaction.store');            // Create or update a transaction entry
@@ -170,4 +168,3 @@ Route::post('/question/store', [QuestionAnswerController::class, 'saveQuestion']
 Route::get('/questions/approved', [QuestionAnswerController::class, 'getApprovedQuestions'])->name('api.questions.approved');
 
 Route::get('/enroll/status/check/{cnic}', [StudentsController::class, 'checkAdmissionStatus'])->name('api.enroll.status.check');
-
