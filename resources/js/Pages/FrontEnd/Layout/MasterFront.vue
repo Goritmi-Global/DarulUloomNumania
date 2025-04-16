@@ -7,10 +7,11 @@
             <a href="/" class="logo d-flex align-items-center">
                 <img src="/images/logo.jpg" alt="Logo" />
             </a>
-
+             
             <nav class="nav">
                 <ul class="d-flex align-items-center">
                     <!-- Language Dropdown -->
+                     
                     <li
                         class="nav-item dropdown languages"
                         v-if="languages && languages.length"
@@ -447,9 +448,9 @@ body
 }
 
 .footer {
-    background: #f8f9fa;
+    background: #b8860b !important;
     padding: 10px;
-  
+    color: #fff !important; 
     font-size: 14px;
     
 }
@@ -505,18 +506,7 @@ body
     font-size: 14px;
     
 }
-.footer-content p {
-    margin: 0;
-    color: #b8860b ;
-}
-.footer-social a {
-    font-size: 18px;
-    color: #b8860b ;
-    text-decoration: none;
-}
-.footer-social a:hover {
-    color: #f8d4d4;
-}
+ 
 .multiselect-option.is-selected {
     background: #b8860b  !important;
     color: var(--ms-option-color-selected, #fff);
@@ -536,20 +526,13 @@ body
 }
 .footer-top {
     margin-bottom: 30px;
+   
 }
-
-.footer-contact p {
-    color: #b8860b ;
-}
-
-.footer-contact h3 {
-    color: #b8860b ;
-    font-weight: bold;
-}
+ 
 
 .footer-social a {
     font-size: 20px;
-    color: #b8860b ;
+    color: white ;
     margin: 0 10px;
     transition: color 0.3s ease;
 }
@@ -569,7 +552,7 @@ body
 }
 
 .footer-links ul li a {
-    color: #b8860b ;
+    color: white;
     text-decoration: none;
     font-weight: 500;
 }
@@ -581,7 +564,7 @@ body
 .footer-newsletter form input {
     padding: 10px;
     width: 70%;
-    border: 1px solid #b8860b ;
+    border: 1px solid white ;
     border-radius: 5px;
     margin-right: 10px;
 }
@@ -600,21 +583,6 @@ body
     color: #b8860b ;
 }
 
-.footer-bottom {
-    background-color: #f8f9fa;
-    padding: 10px;
-    color: #b8860b ;
-    font-size: 14px;
-    text-align: center;
-}
-
-.footer-bottom a {
-    color: #b8860b ;
-    text-decoration: none;
-}
-
-.footer-bottom a:hover {
-    color: #f8d4d4;
-}
+ 
 
 </style>

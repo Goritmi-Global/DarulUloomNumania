@@ -81,7 +81,7 @@
         </section>
 
         <!-- Admission Open Section -->
-        <section class="admission-section text-center py-5 text-white">
+        <section class="admission-section text-center py-5 text-white mb-3">
             <div class="container">
                 <h2>{{ translate("Admissions Open") }}</h2>
                 <p>
