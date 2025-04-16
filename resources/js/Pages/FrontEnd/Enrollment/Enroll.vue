@@ -31,6 +31,79 @@
                                             class="card-header bg-primary text-white"
                                         >
                                             <h5>
+                                                {{ translate("Check Status") }}
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+    <p class="mb-4 text-muted">
+        {{ translate("Enter CNIC # to check your enrollment status.") }}
+    </p>
+
+    <!-- CNIC Input -->
+    <div class="mb-3">
+        <label class="form-label">
+            {{ translate("CNIC #") }}
+        </label>
+        <input
+            type="text"
+            class="form-control"
+            v-model="enrollCheckCnin"
+            placeholder="1234567890123"
+            :class="{ 'is-invalid': formErrors.enrollCheckCnin }"
+
+        />
+        <div v-if="formErrors.enrollCheckCnin" class="invalid-feedback">
+            {{ formErrors.enrollCheckCnin[0] }}
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="mb-4">
+        <button 
+            class="btn btn-success"
+            v-if="checkStatusBtn === 1"
+            @click="checkStatus"
+        >
+            {{ translate("Check now") }}
+        </button>
+        <button
+            class="btn btn-secondary"
+            type="button"
+            disabled
+            v-else
+        >
+            {{ translate("Checking...") }}
+            <span class="spinner-border spinner-border-sm ms-2"></span>
+        </button>
+    </div>
+ 
+    <!-- Found -->
+<div v-if="admissionStatusDetails" class="alert alert-info border rounded p-3">
+    <h5 class="mb-3">{{ translate("Enrollment Status Details") }}</h5>
+    <ul class="list-unstyled mb-0">
+        <li><strong>{{ translate("Name") }}:</strong> {{ admissionStatusDetails.name }}</li>
+        <li><strong>{{ translate("CNIC") }}:</strong> {{ admissionStatusDetails.cnic }}</li>
+        <li><strong>{{ translate("Father's Name") }}:</strong> {{ admissionStatusDetails.father }}</li>
+        <li><strong>{{ translate("Applying For") }}:</strong> {{ admissionStatusDetails.apply_for }}</li>
+        <li><strong>{{ translate("Status") }}:</strong> {{ admissionStatusDetails.status }}</li>
+    </ul>
+</div>
+
+<!-- No Record -->
+<div v-else-if="checkStatusBtn === 1 && noRecordFound" class="alert alert-warning mt-3">
+    {{ translate("No record found for the provided CNIC.") }}
+</div>
+
+</div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-4">
+                                    <div class="card shadow-sm border-0">
+                                        <div
+                                            class="card-header bg-primary text-white"
+                                        >
+                                            <h5>
                                                 {{
                                                     translate("Course Duration")
                                                 }}
@@ -296,7 +369,8 @@
                                             v-model="form.phone_number"
                                             placeholder="+92 300 1234567"
                                             :class="{
-                                                'is-invalid': formErrors.phone_number,
+                                                'is-invalid':
+                                                    formErrors.phone_number,
                                             }"
                                         />
                                         <div
@@ -316,7 +390,8 @@
                                             v-model="form.whatsapp"
                                             placeholder="+92 300 1234567"
                                             :class="{
-                                                'is-invalid': formErrors.whatsapp,
+                                                'is-invalid':
+                                                    formErrors.whatsapp,
                                             }"
                                         />
                                         <div
@@ -337,7 +412,8 @@
                                             class="form-control"
                                             v-model="form.guardian_name"
                                             :class="{
-                                                'is-invalid': formErrors.guardian_name,
+                                                'is-invalid':
+                                                    formErrors.guardian_name,
                                             }"
                                         />
                                         <div
@@ -356,7 +432,8 @@
                                             class="form-control"
                                             v-model="form.guardian_cnic"
                                             :class="{
-                                                'is-invalid': formErrors.guardian_cnic,
+                                                'is-invalid':
+                                                    formErrors.guardian_cnic,
                                             }"
                                         />
                                         <div
@@ -375,7 +452,8 @@
                                             class="form-control"
                                             v-model="form.guardian_mobile"
                                             :class="{
-                                                'is-invalid': formErrors.guardian_mobile,
+                                                'is-invalid':
+                                                    formErrors.guardian_mobile,
                                             }"
                                         />
                                         <div
@@ -396,7 +474,8 @@
                                             class="form-control"
                                             v-model="form.previous_madrasa"
                                             :class="{
-                                                'is-invalid': formErrors.previous_madrasa,
+                                                'is-invalid':
+                                                    formErrors.previous_madrasa,
                                             }"
                                         />
                                         <div
@@ -415,7 +494,8 @@
                                             class="form-control"
                                             v-model="form.previous_class"
                                             :class="{
-                                                'is-invalid': formErrors.previous_class,
+                                                'is-invalid':
+                                                    formErrors.previous_class,
                                             }"
                                         />
                                         <div
@@ -434,7 +514,8 @@
                                             class="form-control"
                                             v-model="form.total_marks"
                                             :class="{
-                                                'is-invalid': formErrors.total_marks,
+                                                'is-invalid':
+                                                    formErrors.total_marks,
                                             }"
                                         />
                                         <div
@@ -453,7 +534,8 @@
                                             class="form-control"
                                             v-model="form.obtained_marks"
                                             :class="{
-                                                'is-invalid': formErrors.obtained_marks,
+                                                'is-invalid':
+                                                    formErrors.obtained_marks,
                                             }"
                                         />
                                         <div
@@ -473,14 +555,17 @@
                                             class="form-control"
                                             v-model="form.primary_education"
                                             :class="{
-                                                'is-invalid': formErrors.primary_education,
+                                                'is-invalid':
+                                                    formErrors.primary_education,
                                             }"
                                         />
                                         <div
                                             v-if="formErrors.primary_education"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.primary_education[0] }}
+                                            {{
+                                                formErrors.primary_education[0]
+                                            }}
                                         </div>
                                     </div>
 
@@ -495,14 +580,17 @@
                                             class="form-control"
                                             v-model="form.additional_ability"
                                             :class="{
-                                                'is-invalid': formErrors.additional_ability,
+                                                'is-invalid':
+                                                    formErrors.additional_ability,
                                             }"
                                         />
                                         <div
                                             v-if="formErrors.additional_ability"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.additional_ability[0] }}
+                                            {{
+                                                formErrors.additional_ability[0]
+                                            }}
                                         </div>
                                     </div>
 
@@ -516,17 +604,18 @@
                                             rows="2"
                                             v-model="form.permanent_address"
                                             :class="{
-                                                'is-invalid': formErrors.permanent_address,
+                                                'is-invalid':
+                                                    formErrors.permanent_address,
                                             }"
                                         ></textarea>
 
-                                      
-                                    
                                         <div
                                             v-if="formErrors.permanent_address"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.permanent_address[0] }}
+                                            {{
+                                                formErrors.permanent_address[0]
+                                            }}
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -538,7 +627,8 @@
                                             rows="2"
                                             v-model="form.current_address"
                                             :class="{
-                                                'is-invalid': formErrors.current_address,
+                                                'is-invalid':
+                                                    formErrors.current_address,
                                             }"
                                         ></textarea>
                                         <div
@@ -639,21 +729,30 @@ export default {
     },
     data() {
         return {
+            enrollCheckCnin: "",
+        admissionStatusDetails: null, 
+          formErrors: {},
+        checkStatusBtn: 1,
+        noRecordFound: false,
+
+        formErrors: {},
+        
             currentStudent: "",
             currentCourse: "",
             students: [],
             filterOptions: [
-                "دورہ حدیث",
-                "درجہ اولیٰ",
-                "درجہ ثانیہ",
-                "درجہ ثالثہ",
-                "درجہ رابعہ",
-                "درجہ خامسہ",
-                "درجہ سادسہ",
-                "درجہ سابعہ",
+                "تحصّص بالفقہ ایک سال",
+                "تحصّص بالفقہ دو سال",
                 "تحصّص باللغات",
-                "تحصّص بالفقہ",
-                "ایک سال اور دو سال",
+                "دورہ حدیث",
+                "درجہ سابعہ",
+                "درجہ سادسہ",
+                "درجہ خامسہ",
+                "درجہ رابعہ",
+                "درجہ ثالثہ",
+                "درجہ ثانیہ",
+                "درجہ اولیٰ",
+
                 "متوسطا",
             ],
             form: {
@@ -683,8 +782,6 @@ export default {
                 obtained_marks: "",
                 primary_education: "",
                 additional_ability: "",
-
-                 
             },
             countryList: ["Pakistan", "Afghanistan"],
 
@@ -708,10 +805,49 @@ export default {
             formErrors: [],
 
             formStatus: 1,
+             
             showModal: false,
+             
         };
     },
     methods: {
+        checkStatus() {
+    this.admissionStatusDetails = null;
+    this.formErrors = {};
+
+    const cnic = this.enrollCheckCnin?.trim();
+    if (!cnic) {
+        this.formErrors.enrollCheckCnin = [
+            this.translate("CNIC field is required."),
+        ];
+        return;
+    }
+
+    this.checkStatusBtn = 0;
+
+    axios
+        .get(route("api.enroll.status.check", cnic))
+        .then((res) => {
+            const data = res?.data;
+
+            if (data && Object.keys(data).length > 0) {
+                this.admissionStatusDetails = data;
+                this.noRecordFound = false;
+            } else {
+                this.admissionStatusDetails = null;
+                this.noRecordFound = true;
+            }
+
+            this.checkStatusBtn = 1;
+        })
+        .catch((err) => {
+            this.checkStatusBtn = 1;
+            this.noRecordFound = false;
+            console.error("Error fetching student admission status:", err);
+        });
+},
+
+
         submit() {
             this.currentStudent = this.form.name;
             this.currentCourse = this.form.apply_for;
@@ -743,7 +879,7 @@ export default {
                         let errorMessages = Object.values(this.formErrors)
                             .flat()
                             .join("<br>");
-                        toastr.error(errorMessages);
+                        toastr.error(this.translate("Some fields required data"));
                     } else {
                         toastr.error(
                             this.translate("An unexpected error occurred.")
@@ -778,9 +914,6 @@ export default {
                 obtained_marks: "",
                 primary_education: "",
                 additional_ability: "",
-
- 
- 
             };
             this.formErrors = {};
         },

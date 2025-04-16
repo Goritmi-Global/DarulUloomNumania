@@ -322,9 +322,14 @@
 <script>
 import axios from "axios";
 import Master from "./Layout/MasterFront.vue";
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 export default {
     layout: Master,
+    components: {
+        QuillEditor, 
+    },
     data() {
         return {
             form: {

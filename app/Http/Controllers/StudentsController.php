@@ -108,5 +108,14 @@ class StudentsController extends Controller
     ]);
 }
 
+public function checkAdmissionStatus($cnic)
+{
+    $student = Student::select('name', 'cnic', 'father', 'apply_for', 'status')
+        ->where('cnic', $cnic)
+        ->first();
+
+    return $student;
+}
+
 
 }

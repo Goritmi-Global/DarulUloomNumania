@@ -166,3 +166,6 @@ Route::get('/madrasa/islamic/names', [IslamicNameController::class, 'fetch'])->n
 Route::post('/question/store', [QuestionAnswerController::class, 'saveQuestion'])->name('api.question.store');
 // Route::get('/show/questions/approved', [QuestionController::class, 'getApprovedQuestions'])->name('api.show.questions.approved');
 Route::get('/questions/approved', [QuestionAnswerController::class, 'getApprovedQuestions'])->name('api.questions.approved');
+
+Route::get('/enroll/status/check/{cnic}', [StudentsController::class, 'checkAdmissionStatus'])->name('api.enroll.status.check');
+
