@@ -31,7 +31,11 @@
                                             class="card-header bg-danger text-white"
                                         >
                                             <h5>
-                                                {{ translate("Check Enrollment Status") }}
+                                                {{
+                                                    translate(
+                                                        "Check Enrollment Status"
+                                                    )
+                                                }}
                                             </h5>
                                         </div>
                                         <div class="card-body">
@@ -884,14 +888,42 @@ export default {
                 "Azad Jammu and Kashmir",
             ],
             afgProvinceOptions: [
-                "Kabul",
-                "Herat",
-                "Kandahar",
-                "Mazar-i-Sharif",
-                "Jalalabad",
-                "Bamiyan",
                 "Badakhshan",
+                "Badghis",
+                "Baghlan",
+                "Balkh",
+                "Bamyan",
+                "Daykundi",
+                "Farah",
+                "Faryab",
+                "Ghazni",
+                "Ghor",
+                "Helmand",
+                "Herat",
+                "Jowzjan",
+                "Kabul",
+                "Kandahar",
+                "Kapisa",
+                "Khost",
+                "Kunar",
+                "Kunduz",
+                "Laghman",
+                "Logar",
+                "Nangarhar",
+                "Nimroz",
+                "Nuristan",
+                "Paktia",
+                "Paktika",
+                "Panjshir",
+                "Parwan",
+                "Samangan",
+                "Sar-e Pol",
+                "Takhar",
+                "Urozgan",
+                "Wardak",
+                "Zabul",
             ],
+
             formErrors: [],
 
             formStatus: 1,
