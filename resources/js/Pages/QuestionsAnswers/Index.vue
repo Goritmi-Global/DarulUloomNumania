@@ -342,8 +342,9 @@
                                 {{ selectedQuestion?.date }}
                             </p>
                             <hr />
-                            <div v-if="selectedQuestion?.answer">
-                                <p v-if="selectedQuestion.answer.answer_short_form">
+                            <div v-if="selectedQuestion && selectedQuestion?.answer">
+                                <p v-if="selectedQuestion?.answer?.answer_short_form">
+
                                     <strong
                                         >{{
                                             translate("Short Answer")
