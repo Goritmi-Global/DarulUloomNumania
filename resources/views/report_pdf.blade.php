@@ -84,9 +84,9 @@
             <tr>
                 <th style="font-size:12px">#</th>
                 <th style="font-size:12px">{{ $selectedFilter == 'Yearly' ? 'Month' : 'Date' }}</th>
-                <th style="font-size:12px">Income</th>
-                <th style="font-size:12px">Expense</th>
-                <th style="font-size:12px">Balance</th>
+                <th style="font-size:12px">{{ translate("Income")}} </th>
+                <th style="font-size:12px">{{ translate("Expense")}} </th>
+                <th style="font-size:12px">{{ translate("Balance")}} </th>
             </tr>
         </thead>
         <tbody>
@@ -110,13 +110,13 @@
         </tfoot>
     </table>
 @else
-    <p class="text-center">No transactions found for the selected period.</p>
+    <p class="text-center">{{ translate("No transactions found for the selected period.")}} </p>
 @endif
 
 {{-- Footer with Totals --}}
 <div class="footer">
     <div class="date-time">
-        <p>Generated on: {{ \Carbon\Carbon::now()->format('d-M-Y H:i:s') }}</p>
+        <p>{{ translate("Generated on:")}}  {{ \Carbon\Carbon::now()->format('d-M-Y H:i:s') }}</p>
     </div>
 </div>
 

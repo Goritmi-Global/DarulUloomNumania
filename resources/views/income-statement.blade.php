@@ -81,9 +81,9 @@
     <table>
         
         <thead>
-            <th>Cash in / Income</th>
-            <th>Cash out / Expense</th>
-            <th>Profit/Loss</th>
+            <th>{{ translate('Cash in / Income') }}</th>
+            <th>{{ translate('Cash out / Expense')}} </th>
+            <th>{{ translate('Profit/Loss')}} </th>
         </thead>
         <tbody>
             <tr>
@@ -95,11 +95,11 @@
         </tbody>
     </table>
 @else
-    <p class="text-center">No transactions found for the selected period.</p>
+    <p class="text-center">{{ translate('No transactions found for the selected period.')}} </p>
 @endif
 
 <div class="footer">
-    <p>Generated on: {{ \Carbon\Carbon::now()->format('d-M-Y H:i:s') }}</p>
+    <p>{{ translate("Generated on:")}}  {{ \Carbon\Carbon::now()->format('d-M-Y H:i:s') }}</p>
 </div>
 
 </body>

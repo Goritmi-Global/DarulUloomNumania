@@ -87,13 +87,13 @@
             <thead>
                 <tr>
                     <th style="font-size:12px">#</th>
-                    <th style="font-size:12px">Date</th>
-                    <th style="font-size:12px">Ref No</th>
-                    <th style="font-size:12px">Description</th>
-                    <th style="font-size:12px">Method</th>
-                    <th style="font-size:12px">Cash In</th>
-                    <th style="font-size:12px">Cash Out</th>
-                    <th style="font-size:12px">Balance</th>
+                    <th style="font-size:12px">{{ translate("Date")}} </th>
+                    <th style="font-size:12px">{{ translate("Ref No")}} </th>
+                    <th style="font-size:12px">{{ translate("Description")}} </th>
+                    <th style="font-size:12px">{{ translate("Method")}} </th>
+                    <th style="font-size:12px">{{ translate("Cash In")}} </th>
+                    <th style="font-size:12px">{{ translate("Cash Out")}}</th>
+                    <th style="font-size:12px">{{ translate("Balance")}} </th>
                     
                 </tr>
             </thead>
@@ -126,19 +126,19 @@
             </tbody>
         </table>
     @else
-        <p class="text-center">No transactions found for the selected period.</p>
+        <p class="text-center">{{ translate("No transactions found for the selected period.")}} </p>
     @endif
 
     {{-- Footer with Totals --}}
     <div class="footer">
 
         <div class="totals">
-            <p><strong>Total Cash In:</strong>{{ number_format($totalCashIn) }}</p>
-            <p><strong>Total Cash Out:</strong>{{ number_format($totalCashOut) }}</p>
-            <p><strong>Total Balance:</strong>{{ number_format($balance) }}</p>
+            <p><strong>{{ translate("Total Cash In:")}} </strong>{{ number_format($totalCashIn) }}</p>
+            <p><strong>{{ translate("Total Cash Out:")}} </strong>{{ number_format($totalCashOut) }}</p>
+            <p><strong>{{ translate("Total Balance:")}} </strong>{{ number_format($balance) }}</p>
         </div>
         <div class="date-time">
-            <p>Generated on: {{ \Carbon\Carbon::now()->format('d-M-Y H:i:s') }}</p>
+            <p>{{ translate("Generated on:")}}  {{ \Carbon\Carbon::now()->format('d-M-Y H:i:s') }}</p>
         </div>
     </div>
 
