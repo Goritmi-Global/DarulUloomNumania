@@ -53,7 +53,7 @@
                                     href="/profile"
                                 >
                                     <i class="bi bi-gear"></i>
-                                    <span>Account Settings</span>
+                                    <span>{{ translate("Account Settings") }} </span>
                                 </a>
                             </li>
 
@@ -68,7 +68,7 @@
                                     @click="logout"
                                 >
                                     <i class="bi bi-box-arrow-right"></i>
-                                    <span>Sign Out</span>
+                                    <span>{{ translate("Sign Out") }} </span>
                                 </a>
                             </li>
                         </ul>
@@ -103,7 +103,7 @@
                                     href="/profile"
                                 >
                                     <i class="bi bi-gear"></i>
-                                    <span>Account Settings</span>
+                                    <span>{{ translate("Account Settings") }} </span>
                                 </a>
                             </li>
 
@@ -118,7 +118,7 @@
                                     @click="logout"
                                 >
                                     <i class="bi bi-box-arrow-right"></i>
-                                    <span>Sign Out</span>
+                                    <span>{{ translate("Sign Out") }} </span>
                                 </a>
                             </li>
                         </ul>
@@ -142,7 +142,7 @@
                         href="/dashboard"
                     >
                         <i class="bi bi-house-door"></i>
-                        <span>Dashboard</span>
+                        <span>{{ translate("Dashboard") }} </span>
                     </a>
                 </li>
 
@@ -191,7 +191,7 @@
                                 href="/transactions"
                             >
                                 <i class="bi bi-cash"></i>
-                                <span>Transactions</span>
+                                <span>{{ translate("Transactions") }} </span>
                             </a>
                         </li>
                         <!-- <li>
@@ -209,7 +209,7 @@
                                 href="/expense/types"
                             >
                                 <i class="bi bi-dash-circle"></i>
-                                <span>Expense Types</span>
+                                <span>{{ translate("Expense Types") }} </span>
                             </a>
                         </li>
                         <li>
@@ -218,7 +218,7 @@
                                 href="/income/types"
                             >
                                 <i class="bi bi-plus-circle"></i>
-                                <span>Income Types</span>
+                                <span>{{ translate("Income Types") }} </span>
                             </a>
                         </li>
                         <li>
@@ -229,7 +229,7 @@
                                 href="/income-statements"
                             >
                                 <i class="bi bi-file-earmark-text"></i>
-                                <span>Income Statements</span>
+                                <span>{{ translate("Income Statements") }} </span>
                             </a>
                         </li>
                         <li>
@@ -238,7 +238,7 @@
                                 href="/reports"
                             >
                                 <i class="bi bi-bar-chart-line"></i>
-                                <span>Reports</span>
+                                <span>{{ translate("Reports") }} </span>
                             </a>
                         </li>
                         <!-- <li>

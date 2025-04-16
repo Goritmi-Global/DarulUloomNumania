@@ -2,14 +2,14 @@
     <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1 class="theme-text-color">Income Types</h1>
+                <h1 class="theme-text-color">{{ translate("Income Types") }} </h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/dashboard">Darul Oloom</a>
+                            <a href="/dashboard">{{ translate("Darul Oloom") }} </a>
                         </li>
-                        <li class="breadcrumb-item">Income Types</li>
-                        <li class="breadcrumb-item active">Index</li>
+                        <li class="breadcrumb-item">{{ translate("Income Types") }} </li>
+                        <li class="breadcrumb-item active">{{ translate("Index") }} </li>
                     </ol>
                 </nav>
             </div>
@@ -20,7 +20,7 @@
                     data-bs-target="#updateRecordModal"
                     @click="clearFields"
                 >
-                    <i class="bi bi-plus-lg"></i> New Income Types
+                    <i class="bi bi-plus-lg"></i>{{ translate("New Income Types") }} 
                 </button>
             </div>
         </div>
@@ -29,15 +29,15 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title theme-text-color">
-                        All Income Types
+                        {{ translate("All Income Types") }} 
                     </h5>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Name</th> 
-                                    <th scope="col">Action</th>
+                                    <th scope="col">{{ translate("Name") }}</th> 
+                                    <th scope="col">{{ translate("Action") }}</th>
                                 </tr>
                             </thead>
                             <tbody>

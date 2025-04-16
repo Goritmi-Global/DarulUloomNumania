@@ -4,7 +4,7 @@
         type="button"
         class="btn btn-sm btn-success fs-6"
     >
-        {{ "Choose Image" }}
+        {{ translate("Choose Image") }}
     </button>
 
     <button
@@ -173,7 +173,7 @@
                                 role="button"
                                 @click.prevent="cropImage"
                             >
-                                {{ "Save" }}
+                                {{ translate("Save") }}
                             </a>
                         </div>
                     </section>
