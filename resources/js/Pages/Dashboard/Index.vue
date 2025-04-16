@@ -228,8 +228,7 @@ export default {
             incomeTypeDetails: [],
             incomeTypeTotal: 0,
             expenseTypeDetails: [],
-            expenseTypeTotal: 0,
-
+            expenseTypeTotal: 0, 
             expenseDetails: [],
             cashIn: 0,
             cashOut: 0,

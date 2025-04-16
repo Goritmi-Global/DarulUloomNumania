@@ -1,26 +1,23 @@
 <?php
 
+use App\Http\Controllers\BayanaatController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\CommonDataController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExternalWebstieController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncomeExpenseController;
 use App\Http\Controllers\IncomeStatementController;
+use App\Http\Controllers\IntroductionController;
+use App\Http\Controllers\IslamicNameController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\QuestionAnswerController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TransactionController;
-
-use App\Http\Controllers\IntroductionController;
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\BayanaatController;
-use App\Http\Controllers\IslamicNameController;
-use App\Http\Controllers\QuestionAnswerController;
-use App\Http\Controllers\ExternalWebstieController;
-
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -38,11 +35,7 @@ Route::get('/storage-link', function () {
     return "Storage link has been created successfully!";
 });
 
- 
-
 Route::get('/login', [HomeController::class, 'index'])->name('login');
-
-
 
 // Authenticated routes
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -55,40 +48,40 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // 👑 Super Admin Access to Everything
-Route::middleware(['role.superadmin'])->group(function () {
-    
-    // 👑 Users Management
-    Route::get('/users', [UserController::class, 'index'])->name('users');
-    
-    // 💼 Accountant Routes
-    Route::get('/transactions', [TransactionController::class, 'Index'])->name('transactions');
-    Route::get('/expense/types', [IncomeExpenseController::class, 'expense_index'])->name('expense.types');
-    Route::get('/income/expense/details/{type}/{id}', [IncomeExpenseController::class, 'income_expense_details'])->name('income.expanse.details');
-    Route::get('/income/types', [IncomeExpenseController::class, 'income_index'])->name('income.types');
-    Route::get('/reports', [ReportController::class, 'index'])->name('reports');
-    Route::get('/income-statements', [IncomeStatementController::class, 'index'])->name('income-statements');
-    Route::post('/download-pdf', [TransactionController::class, 'transactions_pdf_download'])->name('download-pdf');
-    Route::post('/download-report-pdf', [ReportController::class, 'report_pdf_download'])->name('download-report-pdf');
-    Route::post('/download-excel', [TransactionController::class, 'transactions_exportTo_excel'])->name('download-excel');
-    Route::post('/download-report-excel', [ReportController::class, 'report_exportTo_excel'])->name('download-report-excel');
-    Route::post('/download-income-statement-pdf', [IncomeStatementController::class, 'downloadIncomeStatementPDF'])->name('download-income-statement-pdf');
+    Route::middleware(['role.superadmin'])->group(function () {
 
-    // 🏫 Admission Officer Routes
-    Route::get('/students', [StudentsController::class, 'index'])->name('students');
-    Route::get('/student/details/{id}', [StudentsController::class, 'details'])->name('student.details');
-    Route::get('/student/payment/details/{id}', [StudentsController::class, 'student_payement_details'])->name('student.payment.details');
-    Route::get('/student/edit/{id}', [StudentsController::class, 'edit'])->name('student.edit');
-    Route::get('/download/pdf/{student_id}/{slip_id}', [StudentsController::class, 'download_student_enrollment_pdf'])->name('download.pdf');
-    Route::get('/print/pdf/{student_id}/{slip_id}', [StudentsController::class, 'print_student_enrollment_pdf'])->name('print.pdf');
-    Route::get('/student/details/pdf/print/{student_id}/{process}', [StudentsController::class, 'download_print_student_details_pdf'])->name('student.details.pdf.print');
+        // 👑 Users Management
+        Route::get('/users', [UserController::class, 'index'])->name('users');
 
-    // 📚 Iftah Manager Routes
-    Route::get('/introduction', [IntroductionController::class, 'index'])->name('introduction');
-    Route::get('/books', [BookController::class, 'index'])->name('books');
-    Route::get('/bayanaat', [BayanaatController::class, 'index'])->name('bayanaat');
-    Route::get('/islamic-names', [IslamicNameController::class, 'index'])->name('islamic.names');
-    Route::get('/questions-answers', [QuestionAnswerController::class, 'index'])->name('questions.answers');
-});
+        // 💼 Accountant Routes
+        Route::get('/transactions', [TransactionController::class, 'Index'])->name('transactions');
+        Route::get('/expense/types', [IncomeExpenseController::class, 'expense_index'])->name('expense.types');
+        Route::get('/income/expense/details/{type}/{id}', [IncomeExpenseController::class, 'income_expense_details'])->name('income.expanse.details');
+        Route::get('/income/types', [IncomeExpenseController::class, 'income_index'])->name('income.types');
+        Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+        Route::get('/income-statements', [IncomeStatementController::class, 'index'])->name('income-statements');
+        Route::post('/download-pdf', [TransactionController::class, 'transactions_pdf_download'])->name('download-pdf');
+        Route::post('/download-report-pdf', [ReportController::class, 'report_pdf_download'])->name('download-report-pdf');
+        Route::post('/download-excel', [TransactionController::class, 'transactions_exportTo_excel'])->name('download-excel');
+        Route::post('/download-report-excel', [ReportController::class, 'report_exportTo_excel'])->name('download-report-excel');
+        Route::post('/download-income-statement-pdf', [IncomeStatementController::class, 'downloadIncomeStatementPDF'])->name('download-income-statement-pdf');
+
+        // 🏫 Admission Officer Routes
+        Route::get('/students', [StudentsController::class, 'index'])->name('students');
+        Route::get('/student/details/{id}', [StudentsController::class, 'details'])->name('student.details');
+        Route::get('/student/payment/details/{id}', [StudentsController::class, 'student_payement_details'])->name('student.payment.details');
+        Route::get('/student/edit/{id}', [StudentsController::class, 'edit'])->name('student.edit');
+        Route::get('/download/pdf/{student_id}/{slip_id}', [StudentsController::class, 'download_student_enrollment_pdf'])->name('download.pdf');
+        Route::get('/print/pdf/{student_id}/{slip_id}', [StudentsController::class, 'print_student_enrollment_pdf'])->name('print.pdf');
+        Route::get('/student/details/pdf/print/{student_id}/{process}', [StudentsController::class, 'download_print_student_details_pdf'])->name('student.details.pdf.print');
+
+        // 📚 Iftah Manager Routes
+        Route::get('/introduction', [IntroductionController::class, 'index'])->name('introduction');
+        Route::get('/books', [BookController::class, 'index'])->name('books');
+        Route::get('/bayanaat', [BayanaatController::class, 'index'])->name('bayanaat');
+        Route::get('/islamic-names', [IslamicNameController::class, 'index'])->name('islamic.names');
+        Route::get('/questions-answers', [QuestionAnswerController::class, 'index'])->name('questions.answers');
+    });
 
     // 💼 Accountant Routes
     Route::middleware(['role.accountant'])->group(function () {
@@ -137,9 +130,6 @@ Route::middleware(['role.superadmin'])->group(function () {
     Route::get('/languages/edit/{id}', [LanguageController::class, 'languages_edit'])->name('languages.edit');
     Route::get('/translations/show/{id}', [LanguageController::class, 'translations_show'])->name('translations.show');
 });
-
-
-
 
 Route::get('/student/enroll', [StudentsController::class, 'create'])->name('student.enroll');
 Route::get('/', [ExternalWebstieController::class, 'Index'])->name('/');
