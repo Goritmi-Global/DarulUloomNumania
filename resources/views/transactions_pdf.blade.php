@@ -64,7 +64,7 @@
         <img src="{{ public_path('images/logo.png') }}" alt="Al-shamama Hospital Logo">
     </div>
     {{-- Institution Title --}}
-    <h1>{{ translate('Jamia Daul Oloom Noumania')}}</h1>
+    <h1>{{ translate('Jamia Darul Oloom Noumania')}}</h1>
 
     {{-- Dynamic Title Based on Filter --}}
     <h2>

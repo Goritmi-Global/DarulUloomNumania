@@ -166,7 +166,7 @@
                         href="#"
                     >
                         <i class="bi bi-person-circle"></i>
-                        <span>Accounts</span>
+                        <span>{{ translate("Accounts") }}</span>
                         <i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul
