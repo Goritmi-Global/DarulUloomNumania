@@ -227,17 +227,19 @@
                     </div>
 
                     <!-- Table Section -->
-                    <div class="table-responsive" >
+                    <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">{{ translate("Date") }}</th>
-                                    <th scope="col">{{ translate("Islamic date") }}</th>
+                                    <th scope="col">
+                                        {{ translate("Islamic date") }}
+                                    </th>
                                     <th scope="col">
                                         {{ translate("Reciept No") }}
                                     </th>
-                                    
+
                                     <th scope="col">
                                         {{ translate("Descriptions") }}
                                     </th>
@@ -245,9 +247,13 @@
                                         {{ translate("Method") }}
                                     </th>
                                     <th scope="col">{{ translate("Type") }}</th>
-                                    <th scope="col">{{ translate("Received From") }}</th>
-                                    <th scope="col">{{ translate("Received By") }}</th>
-                                     
+                                    <th scope="col">
+                                        {{ translate("Received From") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Received By") }}
+                                    </th>
+
                                     <th scope="col">
                                         {{ translate("Cash In") }}
                                     </th>
@@ -274,7 +280,7 @@
                                     <td>{{ entry.transaction_date }}</td>
                                     <td>{{ entry.islamic_date }}</td>
                                     <td>{{ entry.ref_no }}</td>
-                                     
+
                                     <td>{{ entry.remarks }}</td>
                                     <td>{{ entry.method }}</td>
                                     <td>
@@ -283,10 +289,10 @@
                                             entry.expense_type
                                         }}
                                     </td>
-                                    
-                                    <td>{{ entry.received_from}}</td>
-                                    <td>{{ entry.received_by}}</td>
-                             
+
+                                    <td>{{ entry.received_from }}</td>
+                                    <td>{{ entry.received_by }}</td>
+
                                     <td>
                                         {{ formatCurrency(entry.cash_in) ?? 0 }}
                                     </td>
@@ -566,19 +572,14 @@
                                     </div>
 
                                     <div class="col-12 col-md-6">
-                                        <label
-                                            for="date"
-                                            class="form-label"
-                                            >{{
-                                                translate("English Date")
-                                            }}</label
-                                        >
+                                        <label for="date" class="form-label">{{
+                                            translate("English Date")
+                                        }}</label>
                                         <Datepicker
                                             autoApply
                                             :enable-time-picker="false"
                                             :class="{
-                                                'invalid-bg':
-                                                    formErrors.date,
+                                                'invalid-bg': formErrors.date,
                                             }"
                                             v-model="form.date"
                                             @update:modelValue="convertToHijri"
@@ -613,8 +614,6 @@
                                         </div>
                                     </div>
 
-                                    
- 
                                     <div class="col-md-6 col-12">
                                         <label for="type">{{
                                             translate("Received from")
@@ -625,7 +624,8 @@
                                             id="type"
                                             v-model="form.received_from"
                                             :class="{
-                                                'invalid-bg': formErrors.received_from,
+                                                'invalid-bg':
+                                                    formErrors.received_from,
                                             }"
                                         />
                                         <div
@@ -635,7 +635,7 @@
                                             {{ formErrors.received_from[0] }}
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md-6 col-12">
                                         <label for="type">{{
                                             translate("Received By")
@@ -646,7 +646,8 @@
                                             id="type"
                                             v-model="form.received_by"
                                             :class="{
-                                                'invalid-bg': formErrors.received_by,
+                                                'invalid-bg':
+                                                    formErrors.received_by,
                                             }"
                                         />
                                         <div
@@ -975,9 +976,7 @@ export default {
         },
         submit() {
             if (this.form.date) {
-                this.form.date = moment(this.form.date).format(
-                    "YYYY/MM/DD"
-                );
+                this.form.date = moment(this.form.date).format("YYYY/MM/DD");
             }
 
             let formData = new FormData();
@@ -989,8 +988,11 @@ export default {
             formData.append("cash_in", sanitizeValue(this.form.cash_in));
             formData.append("cash_out", sanitizeValue(this.form.cash_out));
             formData.append("date", sanitizeValue(this.form.date));
-            
-            formData.append("islamic_date", sanitizeValue(this.form.islamic_date));
+
+            formData.append(
+                "islamic_date",
+                sanitizeValue(this.form.islamic_date)
+            );
             formData.append("ref_no", sanitizeValue(this.form.ref_no));
             formData.append("method", sanitizeValue(this.form.method));
             formData.append("remarks", sanitizeValue(this.form.remarks));
@@ -1029,13 +1031,16 @@ export default {
                         "Content-Type": "multipart/form-data",
                     },
                 })
-                .then(() => {
+                .then((response) => {
                     this.formStatus = 1;
                     this.fetchTransactionEntries();
                     toastr.success(
                         this.translate("Transaction entry saved successfully.")
                     );
                     this.$refs.closeModal?.click();
+
+                    // ✅ Print single transaction slip
+                    this.printSingleSlip(response.data.transaction);
                 })
                 .catch((error) => {
                     this.formStatus = 1;
@@ -1043,6 +1048,152 @@ export default {
                     this.formErrors = error.response.data.errors;
                 });
         },
+        printSingleSlip(entry) {
+            const printWindow = window.open("", "_blank");
+
+            const currentDateTime = new Date().toLocaleString("en-US", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true,
+            });
+
+            const translatedTitle = this.translate(
+                "Jamia Darul Uloom Noumania Utmanzai"
+            );
+
+            printWindow.document.write(`
+    <html>
+    <head>
+        <title>Transaction Slip</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                padding: 20px;
+                line-height: 1.6;
+                color: #000;
+            }
+
+            .header {
+                text-align: center;
+                border-bottom: 2px solid #000;
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+            }
+
+            .header img {
+                height: 100px;
+            }
+
+            .title {
+                font-size: 20px;
+                font-weight: bold;
+                margin-top: 10px;
+            }
+
+            .section {
+                margin-bottom: 15px;
+            }
+
+            .section-title {
+                font-weight: bold;
+                margin-bottom: 5px;
+                border-bottom: 1px dashed #000;
+            }
+
+            .field-row {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 5px;
+            }
+
+            .field-label {
+                width: 35%;
+                font-weight: bold;
+            }
+
+            .field-value {
+                width: 60%;
+                text-align: left;
+            }
+
+            .footer {
+                margin-top: 30px;
+                text-align: right;
+                font-size: 12px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <img src="/images/logo.jpg" alt="Logo" />
+            <div class="title">${translatedTitle}</div>
+        </div>
+
+        <div class="section">
+            <div class="field-row">
+                <div class="field-label">Date:</div>
+                <div class="field-value">${entry.transaction_date}</div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">Islamic Date:</div>
+                <div class="field-value">${entry.islamic_date}</div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">Receipt No:</div>
+                <div class="field-value">${entry.ref_no}</div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">Received From:</div>
+                <div class="field-value">${entry.received_from}</div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">Received By:</div>
+                <div class="field-value">${entry.received_by}</div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">Method:</div>
+                <div class="field-value">${entry.method}</div>
+            </div>
+            // <div class="field-row">
+            //     <div class="field-label">Type:</div>
+            //     <div class="field-value">${
+                entry.income_type ?? entry.expense_type
+            }</div>
+            // </div>
+            <div class="field-row">
+                <div class="field-label">Cash In:</div>
+                <div class="field-value">${
+                    this.formatCurrency(entry.cash_in) ?? 0
+                }</div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">Cash Out:</div>
+                <div class="field-value">${
+                    this.formatCurrency(entry.cash_out) ?? 0
+                }</div>
+            </div>
+            <div class="field-row">
+                <div class="field-label">Description:</div>
+                <div class="field-value">${entry.remarks}</div>
+            </div>
+        </div>
+
+        <div class="footer">Printed on: ${currentDateTime}</div>
+    </body>
+    </html>
+    `);
+
+            printWindow.document.close();
+            printWindow.onload = function () {
+                printWindow.print();
+                printWindow.close();
+            };
+        },
+
         formatCurrency(value) {
             return new Intl.NumberFormat("en-PK", {
                 minimumFractionDigits: 0,
@@ -1068,8 +1219,6 @@ export default {
             axios
                 .get(route("api.transaction.show", entry_id))
                 .then((response) => {
-                    console.log(response.data);
-
                     // Call pluck functions before setting form data
                     if (response.data.process_type === "Income") {
                         this.pluckIncomeTypes();
@@ -1319,7 +1468,7 @@ export default {
             printWindow.document.write(`
         <html>
         <head>
-            <title>Transaction Slip</title>
+          
             <style>
                 body { font-family: Arial, sans-serif; }
                 h2 { text-align: center; margin-bottom: 20px; }
@@ -1338,7 +1487,7 @@ export default {
                         <th>Date</th>
                         <th>Islamic date</th>
                         <th>Receipt No</th>
-                        <th>Business Type</th>
+                 
                         <th>Descriptions</th>
                         <th>Method</th>
                         <th>Type</th>
@@ -1356,7 +1505,7 @@ export default {
                             <td>${entry.transaction_date}</td>
                             <td>${entry.islamic_date}</td>
                             <td>${entry.ref_no}</td>
-                            <td>${entry.business_type}</td>
+                  
                             <td>${entry.remarks}</td>
                             <td>${entry.method}</td>
                             <td>${entry.income_type ?? entry.expense_type}</td>

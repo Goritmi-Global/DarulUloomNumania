@@ -331,7 +331,11 @@ class TransactionController extends Controller
         $transaction->business_type_id = $request->business_type ?? NULL;
         $transaction->save();
 
-        return 'success';
+        return response()->json([
+            'message' => 'Transaction saved successfully.',
+            'transaction' => $transaction
+        ]);
+        
     }
 
     // Display a specific transaction entry
