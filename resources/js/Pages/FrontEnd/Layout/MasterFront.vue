@@ -113,8 +113,7 @@
             </nav>
 
             <i class="bi bi-list mobile-menu" @click="toggleMenu"></i>
-        </header>
-
+        </header> 
         <!-- Mobile Navigation -->
         <nav v-if="menuOpen" class="mobile-nav">
             <ul>

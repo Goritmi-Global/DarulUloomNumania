@@ -43,9 +43,9 @@
 
                         <div class="row g-3">
                             <div class="col-12 col-md-6">
-                                <label for="first_name">{{
+                                <label for="first_name"> 
                                     {{ translate("First name") }}
-                                }}</label>
+                                 </label>
                                 <input
                                     type="text"
                                     class="form-control"
