@@ -605,7 +605,7 @@
                                         }}</label>
                                         <Multiselect
                                             v-model="form.previous_class"
-                                            :options="filterOptions"
+                                            :options="previousClassOptions"
                                             :placeholder="
                                                 translate('Select Course')
                                             "
@@ -863,6 +863,18 @@ export default {
                 "تحصّص بالفقہ ایک سال",
                 "تحصّص بالفقہ دو سال",
                 "تحصّص باللغات",
+                "دورہ حدیث",
+                "درجہ سابعہ",
+                "درجہ سادسہ",
+                "درجہ خامسہ",
+                "درجہ رابعہ",
+                "درجہ ثالثہ",
+                "درجہ ثانیہ",
+                "درجہ اولیٰ",
+
+                "متوسطا",
+            ],
+            previousClassOptions: [ 
                 "دورہ حدیث",
                 "درجہ سابعہ",
                 "درجہ سادسہ",
