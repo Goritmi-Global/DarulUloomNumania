@@ -107,7 +107,7 @@
                                 {{ form.name }}
                             </h5>
                             <h5 class="modal-title text-primary" v-else>
-                                New {{ process }} Entry
+                                {{ translate("New") }} {{ process }} {{ translate("Entry") }} 
                             </h5>
                             <button
                                 type="button"
@@ -121,7 +121,7 @@
                                 <div class="row g-3">
                                     <div class="col-12">
                                         <label for="name" class="form-label"
-                                            >{{ process }} name</label
+                                            >{{ process }} {{ translate("name") }}</label
                                         >
                                         <input
                                             type="text"
@@ -148,7 +148,7 @@
                                             v-if="formStatus === 1"
                                             @click="submit"
                                         >
-                                            Save
+                                        {{ translate("Save") }}
                                         </button>
                                         <button
                                             class="btn btn-success"
@@ -156,7 +156,8 @@
                                             disabled
                                             v-else
                                         >
-                                            Saving
+                                        {{ translate("Saving") }}
+                                            
                                             <span
                                                 class="spinner-border spinner-border-sm"
                                             ></span>
@@ -253,7 +254,7 @@ export default {
                 .delete(route("api.income.expense.delete", [id, this.process]))
                 .then(() => {
                     this.fetchExpenses();
-                    toastr.success("Expense Type deleted successfully.");
+                    toastr.success(this.translate("Expense Type deleted successfully."));
                 })
                 .catch((error) => {
                     console.error(error);

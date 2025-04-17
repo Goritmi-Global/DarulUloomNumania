@@ -236,9 +236,7 @@
                                     <th scope="col">
                                         {{ translate("Reciept No") }}
                                     </th>
-                                    <th scope="col">
-                                        {{ translate("Business Type") }}
-                                    </th>
+                                    
                                     <th scope="col">
                                         {{ translate("Descriptions") }}
                                     </th>
@@ -271,7 +269,7 @@
                                     <th scope="row">{{ index + 1 }}</th>
                                     <td>{{ entry.transaction_date }}</td>
                                     <td>{{ entry.ref_no }}</td>
-                                    <td>{{ entry.business_type }}</td>
+                                     
                                     <td>{{ entry.remarks }}</td>
                                     <td>{{ entry.method }}</td>
                                     <td>
