@@ -199,7 +199,15 @@
         </div>
 
         <!-- ======= Footer ======= -->
-        <footer id="footer" class="footer">
+        <footer
+            id="footer"
+            class="footer"
+            :class="{
+                'rtl-text':
+                    $page.props.default_language === 'PK' ||
+                    $page.props.default_language === 'SA',
+            }"
+        >
             <div class="container">
                 <!-- Footer Top Section -->
                 <div class="footer-top">
@@ -208,7 +216,8 @@
                         <div class="col-lg-6 col-md-6 footer-contact">
                             <h3>{{ translate("Darul Oloom") }}</h3>
                             <p>
-                                <strong>{{ translate("Phone:") }} </strong> 091650861<br />
+                                <strong>{{ translate("Phone:") }} </strong>
+                                091650861<br />
                                 <strong>{{ translate("Email:") }} </strong>
                                 jamianumania2025@gmail.com<br />
                             </p>
@@ -291,7 +300,11 @@
                         {{ translate("&copy; Copyright") }}
                         <strong
                             ><span
-                                >{{ translate("Jamia Darol Uloom Noumania Utmanzai") }}
+                                >{{
+                                    translate(
+                                        "Jamia Darol Uloom Noumania Utmanzai"
+                                    )
+                                }}
                             </span></strong
                         >{{ translate(". All Rights Reserved | Designed by") }}
                         <a href="https://goritmi.co.uk"

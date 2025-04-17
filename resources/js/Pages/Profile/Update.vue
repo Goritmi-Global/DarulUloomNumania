@@ -2,7 +2,7 @@
     <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1>{{ "Update Profile" }}</h1>
+                <h1>{{ translate("Update Profile") }}</h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
@@ -14,7 +14,7 @@
                             {{ "Profile" }}
                         </li>
                         <li class="breadcrumb-item active">
-                            {{ "Update Profile" }}
+                            {{ translate("Update Profile") }}
                         </li>
                     </ol>
                 </nav>
@@ -44,7 +44,7 @@
                         <div class="row g-3">
                             <div class="col-12 col-md-6">
                                 <label for="first_name">{{
-                                    "First name"
+                                    {{ translate("First name") }}
                                 }}</label>
                                 <input
                                     type="text"
@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
-                                <label for="last_name">{{ "Last name" }}</label>
+                                <label for="last_name"> {{ translate("Last name") }}</label>
                                 <input
                                     type="text"
                                     class="form-control"
@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="col-12 col-md-6">
-                                <label for="email">{{ "Email" }}</label>
+                                <label for="email"> {{ translate("Email") }}</label>
                                 <input
                                     type="email"
                                     class="form-control"
@@ -105,9 +105,7 @@
                             </div>
 
                             <div class="col-12 col-md-6">
-                                <label for="current_password">{{
-                                    "Old Password"
-                                }}</label>
+                                <label for="current_password"> {{ translate("Old password") }}</label>
                                 <div class="input-group">
                                     <input
                                         :type="
@@ -145,9 +143,7 @@
                             </div>
 
                             <div class="col-12 col-md-6">
-                                <label for="new_password">{{
-                                    "New Password"
-                                }}</label>
+                                <label for="new_password"> {{ translate("New password") }}</label>
                                 <div class="input-group">
                                     <input
                                         :type="
@@ -185,9 +181,7 @@
                             </div>
 
                             <div class="col-12 col-md-6">
-                                <label for="confirm_password">{{
-                                    "Confirm Password"
-                                }}</label>
+                                <label for="confirm_password">{{ translate("Confirm password") }}</label>
                                 <div class="input-group">
                                     <input
                                         :type="
@@ -263,7 +257,7 @@
                                 class="btn btn-success"
                                 v-if="formStatus == 'Yes'"
                             >
-                                {{ "Save" }}
+                                {{ translate("Save") }}
                             </button>
                             <button
                                 class="btn btn-success"
@@ -271,7 +265,7 @@
                                 disabled
                                 v-else
                             >
-                                {{ "Save" }}
+                            {{ translate("Saving") }}
                                 <span
                                     class="spinner-border spinner-border-sm"
                                     role="status"
@@ -360,7 +354,7 @@ export default {
                     },
                 })
                 .then((data) => {
-                    toastr.success("Profile updated successfully");
+                    toastr.success(this.translate("Profile updated successfully"));
                     this.$inertia.get(route("login"));
                 })
                 .catch((error) => {
