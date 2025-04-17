@@ -1,9 +1,12 @@
 <template>
-    <div class="main" :class="{
-                'c-jameel-noori':
-                    $page.props.default_language === 'PK' ||
-                    $page.props.default_language === 'SA',
-            }">
+    <div
+        class="main"
+        :class="{
+            'c-jameel-noori':
+                $page.props.default_language === 'PK' ||
+                $page.props.default_language === 'SA',
+        }"
+    >
         <header
             id="header"
             class="header fixed-top d-flex align-items-center justify-content-between px-3"
@@ -203,9 +206,10 @@
                     <div class="row">
                         <!-- Contact Info Section -->
                         <div class="col-lg-6 col-md-6 footer-contact">
-                            <h3>{{ translate("Darul Oloom") }} </h3>
+                            <h3>{{ translate("Darul Oloom") }}</h3>
                             <p>
-                                <strong>{{ translate("Phone:") }} </strong> +1 234 567 890<br />
+                                <strong>{{ translate("Phone:") }} </strong> +1
+                                234 567 890<br />
                                 <strong>{{ translate("Email:") }} </strong>
                                 info@daruloolom.com<br />
                             </p>
@@ -238,13 +242,31 @@
                         </div>
                         <!-- Quick Links Section -->
                         <div class="col-lg-6 col-md-6 footer-links">
-                            <h4>{{ translate("Quick Links") }} </h4>
+                            <h4>{{ translate("Quick Links") }}</h4>
                             <ul type="none">
-                                <li><a href="/">{{ translate("Home") }} </a></li>
-                                <li><a href="/about">{{ translate("About") }} </a></li>
-                                <li><a href="/contact">{{ translate("Contact") }} </a></li>
-                                <li><a href="/events">{{ translate("Events") }} </a></li>
-                                <li><a href="/student/enroll">{{ translate("Enroll") }} </a></li>
+                                <li>
+                                    <a href="/">{{ translate("Home") }} </a>
+                                </li>
+                                <li>
+                                    <a href="/about"
+                                        >{{ translate("About") }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/contact"
+                                        >{{ translate("Contact") }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/events"
+                                        >{{ translate("Events") }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/student/enroll"
+                                        >{{ translate("Enroll") }}
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                         <!-- Newsletter Section -->
@@ -267,10 +289,15 @@
                 <!-- Footer Bottom Section -->
                 <div class="footer-bottom">
                     <p>
-                        {{ translate("&copy; Copyright") }} 
-                        <strong><span>{{ translate("Darul Oloom") }} </span></strong
-                        >{{ translate(". All Rights Reserved | Designed by") }} 
-                        <a href="https://goritmi.co.uk">{{ translate("Goritim Ltd") }} </a>
+                        {{ translate("&copy; Copyright") }}
+                        <strong
+                            ><span
+                                >{{ translate("Darul Oloom") }}
+                            </span></strong
+                        >{{ translate(". All Rights Reserved | Designed by") }}
+                        <a href="https://goritmi.co.uk"
+                            >{{ translate("Goritim Ltd") }}
+                        </a>
                     </p>
                 </div>
             </div>
@@ -371,15 +398,14 @@ export default {
 :root {
     --primary-color: #174696;
 }
- 
+
 .rtl-text {
     direction: rtl;
     text-align: right;
     font-family: "Jameel Noori Nastaleeq", serif;
     font-size: 16px !important;
 }
-.c-jameel-noori
-{
+.c-jameel-noori {
     font-family: "Jameel Noori Nastaleeq", serif;
     font-size: 16px !important;
 }
