@@ -23,18 +23,32 @@
         <section class="section">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title theme-text-color" :class="{
-                'rtl-text':
-                    $page.props.default_language === 'PK' ||
-                    $page.props.default_language === 'SA',
-            }">
+                    <h5
+                        class="card-title theme-text-color"
+                        :class="{
+                            'rtl-text':
+                                $page.props.default_language === 'PK' ||
+                                $page.props.default_language === 'SA',
+                        }"
+                    >
                         {{ translate("All Asked Questions") }}
                     </h5>
-                    <div class="mb-3">
+                    <div
+                        class="mb-3"
+                        :class="{
+                            'rtl-text':
+                                $page.props.default_language === 'PK' ||
+                                $page.props.default_language === 'SA',
+                        }"
+                    >
                         <input
                             type="text"
                             class="form-control"
-                            placeholder="Search..."
+                            :placeholder="
+                                translate(
+                                    'Search by Subject, Description, Short Answer, Full Answer, Approved By'
+                                )
+                            "
                             v-model="searchQuery"
                         />
                     </div>
@@ -69,13 +83,13 @@
                                     :key="question.id"
                                 >
                                     <td>{{ question.subject }}</td>
-                                    <td
-                                        
-                                    >
-                                        <span v-if="
-                                            question.answer &&
-                                            question.answer.answer_short_form
-                                        "
+                                    <td>
+                                        <span
+                                            v-if="
+                                                question.answer &&
+                                                question.answer
+                                                    .answer_short_form
+                                            "
                                             v-html="
                                                 question.answer
                                                     .answer_short_form

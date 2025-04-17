@@ -208,10 +208,9 @@
                         <div class="col-lg-6 col-md-6 footer-contact">
                             <h3>{{ translate("Darul Oloom") }}</h3>
                             <p>
-                                <strong>{{ translate("Phone:") }} </strong> +1
-                                234 567 890<br />
+                                <strong>{{ translate("Phone:") }} </strong> 091650861<br />
                                 <strong>{{ translate("Email:") }} </strong>
-                                info@daruloolom.com<br />
+                                jamianumania2025@gmail.com<br />
                             </p>
                             <div class="footer-social">
                                 <a
@@ -292,7 +291,7 @@
                         {{ translate("&copy; Copyright") }}
                         <strong
                             ><span
-                                >{{ translate("Darul Oloom") }}
+                                >{{ translate("Jamia Darol Uloom Noumania Utmanzai") }}
                             </span></strong
                         >{{ translate(". All Rights Reserved | Designed by") }}
                         <a href="https://goritmi.co.uk"

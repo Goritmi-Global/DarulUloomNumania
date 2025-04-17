@@ -44,7 +44,11 @@
                     </h5>
 
                     <!-- Search Input -->
-                    <div class="mb-3">
+                    <div class="mb-3" :class="{
+                            'rtl-text':
+                                $page.props.default_language === 'PK' ||
+                                $page.props.default_language === 'SA',
+                        }">
                         <input
                             type="text"
                             v-model="searchQuery"
@@ -86,14 +90,26 @@
                                     <td>{{ bayan.islamic_date }}</td>
                                     <td>{{ bayan.english_date }}</td>
                                     <td>
-                                        <div v-html="bayan.content"></div>
+                                        <button
+                                            class="btn btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#bayanDetailsModal"
+                                            @click="bayanDetails(bayan.content)"
+                                        >
+                                            <i
+                                                class="bi bi-eye-fill text-primary"
+                                            ></i>
+                                        </button>
                                     </td>
                                     <td>
                                         <button
                                             class="btn btn-sm"
                                             data-bs-toggle="modal"
                                             data-bs-target="#updateRecordModal"
-                                            @click="showEntry(bayan)"
+                                            @click="
+                                                clearFields();
+                                                showEntry(bayan);
+                                            "
                                         >
                                             <i class="bi bi-pencil"></i>
                                         </button>
@@ -141,9 +157,45 @@
                 </div>
             </div>
 
+            <!-- Bayan Details modal -->
+            <div
+                class="modal fade"
+                id="bayanDetailsModal"
+                :class="{
+                    'rtl-text':
+                        $page.props.default_language === 'PK' ||
+                        $page.props.default_language === 'SA',
+                }"
+            >
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>{{ translate("Bayan Details") }}</h5>
+                            <button
+                                class="btn-close"
+                                ref="closeModal"
+                                data-bs-dismiss="modal"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div v-html="bayanContents"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bayan Details modal -->
+
             <!-- Modal -->
-            <div class="modal fade" id="updateRecordModal">
-                <div class="modal-dialog modal-lg">
+            <div
+                class="modal fade"
+                id="updateRecordModal"
+                :class="{
+                    'rtl-text':
+                        $page.props.default_language === 'PK' ||
+                        $page.props.default_language === 'SA',
+                }"
+            >
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 v-if="form.id">
@@ -323,6 +375,7 @@ export default {
             searchQuery: "",
             currentPage: 1,
             pageSize: 20,
+            bayanContents: "",
         };
     },
     computed: {
@@ -352,6 +405,10 @@ export default {
         this.fetchBayanaat();
     },
     methods: {
+        bayanDetails(details) {
+            this.bayanContents = "";
+            this.bayanContents = details;
+        },
         convertToHijri(date) {
             this.form.islamic_date = date
                 ? moment(date).format("iYYYY/iM/iD")
@@ -424,7 +481,7 @@ export default {
                 author: "",
                 islamic_date: "",
                 english_date: "",
-                content: "",
+                content: [],
             };
             this.formErrors = {};
         },

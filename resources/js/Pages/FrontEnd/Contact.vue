@@ -18,7 +18,7 @@
                             "Jamia Darol Uloom Noumania Utmanzai"
                         )
                     }}</h2>
-                        <p class="text-center"><strong>{{ translate("Phone") }}:</strong> 091-650861</p>
+                        <p class="text-center"><strong>{{ translate("Phone") }}:</strong> 091650861</p>
                         <p class="text-center"><strong>{{ translate("Email") }}:</strong> info@jamianoumania.com</p>
 
                         <div class="map-container mt-4">

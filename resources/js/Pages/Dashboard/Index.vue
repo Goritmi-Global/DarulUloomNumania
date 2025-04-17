@@ -1,10 +1,7 @@
 <template>
     <div>
         <main id="main" class="main">
-            <div
-                class="pagetitle"
-                 
-            >
+            <div class="pagetitle">
                 <h1>{{ translate("Dashboard") }}</h1>
                 <nav>
                     <ol class="breadcrumb">

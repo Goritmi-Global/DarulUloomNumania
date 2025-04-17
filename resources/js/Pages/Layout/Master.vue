@@ -1,9 +1,12 @@
 <template>
-    <div class="main" :class="{
-                'c-jameel-noori':
-                    $page.props.default_language === 'PK' ||
-                    $page.props.default_language === 'SA',
-            }">
+    <div
+        class="main"
+        :class="{
+            'c-jameel-noori':
+                $page.props.default_language === 'PK' ||
+                $page.props.default_language === 'SA',
+        }"
+    >
         <header id="header" class="header fixed-top d-flex align-items-center">
             <div class="d-flex align-items-center justify-content-between">
                 <a
@@ -28,14 +31,7 @@
             </a>
             <nav class="header-nav ms-auto">
                 <ul class="d-flex align-items-center">
-                    <!-- <li class="nav-item d-block d-lg-none">
-                        <a class="nav-link nav-icon search-bar-toggle" href="#">
-                            <i class="bi bi-search"></i>
-                            
-                        </a>
-                        
-                    </li> -->
-
+                     
                     <li class="nav-item dropdown nav-item d-block d-lg-none">
                         <a
                             class="nav-link nav-profile d-flex align-items-center pe-0"
@@ -57,7 +53,9 @@
                                     href="/profile"
                                 >
                                     <i class="bi bi-gear"></i>
-                                    <span>{{ translate("Account Settings") }} </span>
+                                    <span
+                                        >{{ translate("Account Settings") }}
+                                    </span>
                                 </a>
                             </li>
 
@@ -87,11 +85,7 @@
                             href="#"
                             data-bs-toggle="dropdown"
                         >
-                            <!-- <img
-                                :src="'/backend/assets/img/profile-img.jpg'"
-                                alt="Profile"
-                                class="rounded-circle"
-                            /> -->
+                            
                             <span class="d-none d-md-block dropdown-toggle ps-2"
                                 >{{ $page.props.user.first_name }}
                                 {{ $page.props.user.last_name }}</span
@@ -107,7 +101,9 @@
                                     href="/profile"
                                 >
                                     <i class="bi bi-gear"></i>
-                                    <span>{{ translate("Account Settings") }} </span>
+                                    <span
+                                        >{{ translate("Account Settings") }}
+                                    </span>
                                 </a>
                             </li>
 
@@ -139,6 +135,7 @@
         <aside id="sidebar" class="sidebar">
             <ul class="sidebar-nav" id="sidebar-nav">
                 <!-- Dashboard -->
+                 
                 <li class="nav-item">
                     <a
                         class="nav-link collapsed"
@@ -151,7 +148,7 @@
                 </li>
 
                 <!-- Accounts (Parent Menu with Transactions and Other Sub-Menus) -->
-                <li class="nav-item">
+                <li class="nav-item" v-if="$page.props.user.role ==='superadmin' || $page.props.user.role ==='accountant'">
                     <a
                         class="nav-link"
                         :class="{
@@ -233,7 +230,9 @@
                                 href="/income-statements"
                             >
                                 <i class="bi bi-file-earmark-text"></i>
-                                <span>{{ translate("Income Statements") }} </span>
+                                <span
+                                    >{{ translate("Income Statements") }}
+                                </span>
                             </a>
                         </li>
                         <li>
@@ -261,9 +260,7 @@
 
                 <!-- End Accounts Section -->
 
-                
-
-                <li class="nav-item">
+                <li class="nav-item" v-if="$page.props.user.role ==='superadmin' || $page.props.user.role ==='admission'">
                     <a
                         class="nav-link collapsed"
                         :class="{ active: isActive('/students') }"
@@ -273,7 +270,7 @@
                         <span>{{ translate("Enrolled Student") }}</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if="$page.props.user.role ==='superadmin' || $page.props.user.role ==='iftah'">
                     <a
                         class="nav-link"
                         :class="{
@@ -358,7 +355,7 @@
                 </li>
 
                 <!-- Software Users (Separate from Accounts) -->
-                <li class="nav-item">
+                <li class="nav-item" v-if="$page.props.user.role ==='superadmin'">
                     <a
                         class="nav-link collapsed"
                         :class="{ active: isActive('/users') }"
@@ -368,7 +365,7 @@
                         <span>{{ translate("Software Users") }}</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if="$page.props.user.role ==='superadmin'">
                     <a
                         class="nav-link"
                         :class="{ collapsed: !isParentActive(['/languages']) }"
@@ -398,25 +395,22 @@
                         </li>
                     </ul>
                 </li>
-                
             </ul>
         </aside>
 
         <!-- End Sidebar-->
 
-        
-            <slot></slot>
-        
+        <slot></slot>
 
         <!-- ======= Footer ======= -->
         <footer id="footer" class="footer">
             <div class="copyright">
-                &copy; Copyright <strong><span>Darul Oloom</span></strong
-                >. All Rights Reserved
+                &copy; Copyright <strong><span>{{ translate("Jamia Darol Uloom Noumania Utmanzai") }}</span></strong
+                >. {{ translate("All Rights Reserved") }}
             </div>
             <div class="credits">
-                Designed by
-                <a href="https://goritmi.co.uk">Goritim Ltd</a>
+                {{ translate("Designed by") }}
+                <a href="https://goritmi.co.uk">{{ translate("Goritim Ltd") }}</a>
             </div>
         </footer>
         <!-- End Footer -->
@@ -487,12 +481,10 @@ export default {
 </style>
 
 <style>
-
 @import "@vueform/multiselect/themes/default.css";
 /* custom style that should be moved into the custom.css file later */
- 
-.c-jameel-noori
-{
+
+.c-jameel-noori {
     font-family: "Jameel Noori Nastaleeq", serif;
     font-size: 16px !important;
 }
@@ -503,8 +495,7 @@ export default {
     font-family: "Jameel Noori Nastaleeq", serif;
     font-size: 16px !important;
 }
-.c-jameel-noori
-{
+.c-jameel-noori {
     font-family: "Jameel Noori Nastaleeq", serif;
     font-size: 16px !important;
 }

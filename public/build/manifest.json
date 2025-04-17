@@ -5,13 +5,13 @@
       "_main-ae0ebc8a.js"
     ]
   },
-  "_jspdf.plugin.autotable-331f2703.js": {
+  "_jspdf.plugin.autotable-410f50d1.js": {
     "dynamicImports": [
       "node_modules/html2canvas/dist/html2canvas.esm.js",
       "node_modules/dompurify/dist/purify.es.js",
       "node_modules/canvg/lib/index.es.js"
     ],
-    "file": "assets/jspdf.plugin.autotable-331f2703.js",
+    "file": "assets/jspdf.plugin.autotable-410f50d1.js",
     "imports": [
       "resources/js/app.js",
       "_main-ae0ebc8a.js"
@@ -23,25 +23,25 @@
     ],
     "file": "assets/main-ae0ebc8a.js"
   },
-  "_multiselect-6deb1144.js": {
-    "file": "assets/multiselect-6deb1144.js",
+  "_multiselect-930b71d6.js": {
+    "file": "assets/multiselect-930b71d6.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_vue-datepicker-af9470db.js": {
-    "file": "assets/vue-datepicker-af9470db.js",
+  "_vue-datepicker-e21fc124.js": {
+    "file": "assets/vue-datepicker-e21fc124.js",
     "imports": [
       "resources/js/app.js",
       "_main-ae0ebc8a.js",
       "_defineProperty-4d844dfb.js"
     ]
   },
-  "_vue-quill.snow-540870bc.js": {
+  "_vue-quill.snow-8fa28507.js": {
     "css": [
       "assets/vue-quill-da05906a.css"
     ],
-    "file": "assets/vue-quill.snow-540870bc.js",
+    "file": "assets/vue-quill.snow-8fa28507.js",
     "imports": [
       "resources/js/app.js"
     ]
@@ -51,7 +51,7 @@
     "src": "main.css"
   },
   "node_modules/canvg/lib/index.es.js": {
-    "file": "assets/index.es-812cbee7.js",
+    "file": "assets/index.es-b22c77ea.js",
     "imports": [
       "resources/js/app.js",
       "_defineProperty-4d844dfb.js",
@@ -124,27 +124,27 @@
     "src": "resources/css/app.css"
   },
   "resources/js/Pages/Banks/Account.vue": {
-    "file": "assets/Account-46adc426.js",
+    "file": "assets/Account-e4c9eaff.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
       "resources/js/app.js",
-      "_multiselect-6deb1144.js",
-      "_vue-datepicker-af9470db.js",
+      "_multiselect-930b71d6.js",
+      "_vue-datepicker-e21fc124.js",
       "_main-ae0ebc8a.js",
-      "_jspdf.plugin.autotable-331f2703.js",
+      "_jspdf.plugin.autotable-410f50d1.js",
       "_defineProperty-4d844dfb.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Banks/Account.vue"
   },
   "resources/js/Pages/Banks/Details.vue": {
-    "file": "assets/Details-598fe9a1.js",
+    "file": "assets/Details-94c7a03f.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
       "resources/js/app.js",
-      "_multiselect-6deb1144.js",
-      "_vue-datepicker-af9470db.js",
-      "_jspdf.plugin.autotable-331f2703.js",
+      "_multiselect-930b71d6.js",
+      "_vue-datepicker-e21fc124.js",
+      "_jspdf.plugin.autotable-410f50d1.js",
       "_main-ae0ebc8a.js",
       "_defineProperty-4d844dfb.js"
     ],
@@ -159,104 +159,104 @@
     "css": [
       "assets/Index-26b60cc1.css"
     ],
-    "file": "assets/Index-37049c81.js",
+    "file": "assets/Index-ffdfc2c3.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Banks/Index.vue"
   },
   "resources/js/Pages/Bayanaat/Index.vue": {
-    "file": "assets/Index-5dbc51dd.js",
+    "file": "assets/Index-685b0316.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
       "resources/js/app.js",
-      "_vue-datepicker-af9470db.js",
+      "_vue-datepicker-e21fc124.js",
       "_main-ae0ebc8a.js",
-      "_vue-quill.snow-540870bc.js",
-      "_multiselect-6deb1144.js",
+      "_vue-quill.snow-8fa28507.js",
+      "_multiselect-930b71d6.js",
       "_defineProperty-4d844dfb.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Bayanaat/Index.vue"
   },
   "resources/js/Pages/Books/Index.vue": {
-    "file": "assets/Index-212e3cf1.js",
+    "file": "assets/Index-9c43238d.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/Layout/Master.vue",
-      "_vue-quill.snow-540870bc.js",
-      "_multiselect-6deb1144.js"
+      "_vue-quill.snow-8fa28507.js",
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Books/Index.vue"
   },
   "resources/js/Pages/CommonData/BusinessDetails.vue": {
-    "file": "assets/BusinessDetails-8260b1a6.js",
+    "file": "assets/BusinessDetails-75895b8d.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
       "resources/js/app.js",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/CommonData/BusinessDetails.vue"
   },
   "resources/js/Pages/CommonData/BusinessType.vue": {
-    "file": "assets/BusinessType-2644e4e7.js",
+    "file": "assets/BusinessType-b538b319.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/CommonData/BusinessType.vue"
   },
   "resources/js/Pages/CommonData/PersonDetails.vue": {
-    "file": "assets/PersonDetails-f4d5a913.js",
+    "file": "assets/PersonDetails-110d2b0e.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
       "resources/js/app.js",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/CommonData/PersonDetails.vue"
   },
   "resources/js/Pages/CommonData/Persons.vue": {
-    "file": "assets/Persons-97ea3977.js",
+    "file": "assets/Persons-07e6b0b5.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/CommonData/Persons.vue"
   },
   "resources/js/Pages/Dashboard/Index.css": {
-    "file": "assets/Index-b16ddbbd.css",
+    "file": "assets/Index-b54f92ae.css",
     "src": "resources/js/Pages/Dashboard/Index.css"
   },
   "resources/js/Pages/Dashboard/Index.vue": {
     "css": [
-      "assets/Index-b16ddbbd.css"
+      "assets/Index-b54f92ae.css"
     ],
-    "file": "assets/Index-1bd1a581.js",
+    "file": "assets/Index-7c1fa426.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js",
+      "_multiselect-930b71d6.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Dashboard/Index.vue"
   },
   "resources/js/Pages/Enroll/Details.vue": {
-    "file": "assets/Details-2bbfad0d.js",
+    "file": "assets/Details-c13fffd1.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
       "resources/js/app.js",
-      "_multiselect-6deb1144.js",
-      "_vue-datepicker-af9470db.js",
+      "_multiselect-930b71d6.js",
+      "_vue-datepicker-e21fc124.js",
       "_main-ae0ebc8a.js",
       "_defineProperty-4d844dfb.js"
     ],
@@ -264,23 +264,23 @@
     "src": "resources/js/Pages/Enroll/Details.vue"
   },
   "resources/js/Pages/Expense/Details.vue": {
-    "file": "assets/Details-91327f2e.js",
+    "file": "assets/Details-bb66ecdc.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
-      "_jspdf.plugin.autotable-331f2703.js",
+      "_jspdf.plugin.autotable-410f50d1.js",
       "_main-ae0ebc8a.js",
       "resources/js/app.js",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Expense/Details.vue"
   },
   "resources/js/Pages/Expense/Index.vue": {
-    "file": "assets/Index-8db5c101.js",
+    "file": "assets/Index-f0a97527.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Expense/Index.vue"
@@ -293,7 +293,7 @@
     "css": [
       "assets/About-11b4aed4.css"
     ],
-    "file": "assets/About-c7ce027b.js",
+    "file": "assets/About-f66e2710.js",
     "imports": [
       "resources/js/Pages/FrontEnd/Layout/MasterFront.vue",
       "resources/js/app.js"
@@ -309,11 +309,11 @@
     "css": [
       "assets/AskQuestion-e8c8945d.css"
     ],
-    "file": "assets/AskQuestion-8e021676.js",
+    "file": "assets/AskQuestion-1562e3e6.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/FrontEnd/Layout/MasterFront.vue",
-      "_vue-quill.snow-540870bc.js"
+      "_vue-quill.snow-8fa28507.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/FrontEnd/AskQuestion.vue"
@@ -326,7 +326,7 @@
     "css": [
       "assets/Contact-5c6da137.css"
     ],
-    "file": "assets/Contact-c0a4e03b.js",
+    "file": "assets/Contact-fd5fa34b.js",
     "imports": [
       "resources/js/Pages/FrontEnd/Layout/MasterFront.vue",
       "resources/js/app.js"
@@ -342,11 +342,11 @@
     "css": [
       "assets/Enroll-7d71c16c.css"
     ],
-    "file": "assets/Enroll-b371af7f.js",
+    "file": "assets/Enroll-6f81fd46.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/FrontEnd/Layout/MasterFront.vue",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/FrontEnd/Enrollment/Enroll.vue"
@@ -359,7 +359,7 @@
     "css": [
       "assets/Events-ff17cd6b.css"
     ],
-    "file": "assets/Events-76fe9912.js",
+    "file": "assets/Events-1e38531b.js",
     "imports": [
       "resources/js/Pages/FrontEnd/Layout/MasterFront.vue",
       "resources/js/app.js"
@@ -375,7 +375,7 @@
     "css": [
       "assets/Index-29617599.css"
     ],
-    "file": "assets/Index-9e378339.js",
+    "file": "assets/Index-1599f1c9.js",
     "imports": [
       "resources/js/Pages/FrontEnd/Layout/MasterFront.vue",
       "resources/js/app.js"
@@ -405,7 +405,7 @@
     "css": [
       "assets/MasterFront-945fc4f8.css"
     ],
-    "file": "assets/MasterFront-bdb81cec.js",
+    "file": "assets/MasterFront-d17cb4f0.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -420,7 +420,7 @@
     "css": [
       "assets/Cropper-f6283329.css"
     ],
-    "file": "assets/Cropper-787378c0.js",
+    "file": "assets/Cropper-1b9a6e29.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -428,23 +428,23 @@
     "src": "resources/js/Pages/Global/Cropper.vue"
   },
   "resources/js/Pages/Income/Details.vue": {
-    "file": "assets/Details-dca0d064.js",
+    "file": "assets/Details-05447d08.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
-      "_jspdf.plugin.autotable-331f2703.js",
+      "_jspdf.plugin.autotable-410f50d1.js",
       "_main-ae0ebc8a.js",
       "resources/js/app.js",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Income/Details.vue"
   },
   "resources/js/Pages/Income/Index.vue": {
-    "file": "assets/Index-f642e833.js",
+    "file": "assets/Index-697f6fa3.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Income/Index.vue"
@@ -457,13 +457,13 @@
     "css": [
       "assets/Index-8cd21959.css"
     ],
-    "file": "assets/Index-ec31e705.js",
+    "file": "assets/Index-e71f7248.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js",
-      "_jspdf.plugin.autotable-331f2703.js",
-      "_vue-datepicker-af9470db.js",
+      "_multiselect-930b71d6.js",
+      "_jspdf.plugin.autotable-410f50d1.js",
+      "_vue-datepicker-e21fc124.js",
       "_main-ae0ebc8a.js",
       "_defineProperty-4d844dfb.js"
     ],
@@ -471,21 +471,21 @@
     "src": "resources/js/Pages/IncomeStatement/Index.vue"
   },
   "resources/js/Pages/Introduction/Index.vue": {
-    "file": "assets/Index-0777248a.js",
+    "file": "assets/Index-bba35d0a.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Introduction/Index.vue"
   },
   "resources/js/Pages/IslamicNames/Index.vue": {
-    "file": "assets/Index-dded53a2.js",
+    "file": "assets/Index-07d787e2.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/IslamicNames/Index.vue"
@@ -498,19 +498,19 @@
     "css": [
       "assets/Create-d79837f0.css"
     ],
-    "file": "assets/Create-6b35799f.js",
+    "file": "assets/Create-185b926e.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js",
+      "_multiselect-930b71d6.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Language/Create.vue"
   },
   "resources/js/Pages/Language/DefaultLanguage.vue": {
-    "file": "assets/DefaultLanguage-7c0d1758.js",
+    "file": "assets/DefaultLanguage-5ecc0033.js",
     "imports": [
-      "_multiselect-6deb1144.js",
+      "_multiselect-930b71d6.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -524,12 +524,12 @@
     "css": [
       "assets/Create-d79837f0.css"
     ],
-    "file": "assets/Index-80077e6b.js",
+    "file": "assets/Index-f5bd8ec2.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
       "resources/js/Pages/Language/DefaultLanguage.vue",
       "resources/js/app.js",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Language/Index.vue"
@@ -542,11 +542,11 @@
     "css": [
       "assets/Translations-222bfbc2.css"
     ],
-    "file": "assets/Translations-145e184d.js",
+    "file": "assets/Translations-c547416b.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
       "resources/js/app.js",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Language/Translations.vue"
@@ -559,10 +559,10 @@
     "css": [
       "assets/Create-d79837f0.css"
     ],
-    "file": "assets/Update-5b7431a2.js",
+    "file": "assets/Update-d21225e4.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js",
+      "_multiselect-930b71d6.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -590,10 +590,10 @@
     "css": [
       "assets/Master-3dd78330.css"
     ],
-    "file": "assets/Master-853d09e3.js",
+    "file": "assets/Master-b51443a1.js",
     "imports": [
       "resources/js/app.js",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Layout/Master.vue"
@@ -620,7 +620,7 @@
     "css": [
       "assets/Login-2d3d8ad6.css"
     ],
-    "file": "assets/Login-5489e262.js",
+    "file": "assets/Login-c129b069.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -635,29 +635,29 @@
     "css": [
       "assets/Update-e3de52ab.css"
     ],
-    "file": "assets/Update-6fd0911c.js",
+    "file": "assets/Update-70eb2b5b.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
       "resources/js/app.js",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Update.vue"
   },
   "resources/js/Pages/QuestionsAnswers/Index.css": {
-    "file": "assets/Index-3746a3c7.css",
+    "file": "assets/Index-b4bf858d.css",
     "src": "resources/js/Pages/QuestionsAnswers/Index.css"
   },
   "resources/js/Pages/QuestionsAnswers/Index.vue": {
     "css": [
-      "assets/Index-3746a3c7.css"
+      "assets/Index-b4bf858d.css"
     ],
-    "file": "assets/Index-ccc98bf2.js",
+    "file": "assets/Index-6e8250a4.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/Layout/Master.vue",
-      "_vue-quill.snow-540870bc.js",
-      "_multiselect-6deb1144.js"
+      "_vue-quill.snow-8fa28507.js",
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/QuestionsAnswers/Index.vue"
@@ -670,13 +670,13 @@
     "css": [
       "assets/Index-199b1fd9.css"
     ],
-    "file": "assets/Index-ee146151.js",
+    "file": "assets/Index-5136be9b.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js",
-      "_jspdf.plugin.autotable-331f2703.js",
-      "_vue-datepicker-af9470db.js",
+      "_multiselect-930b71d6.js",
+      "_jspdf.plugin.autotable-410f50d1.js",
+      "_vue-datepicker-e21fc124.js",
       "_main-ae0ebc8a.js",
       "_defineProperty-4d844dfb.js"
     ],
@@ -691,23 +691,23 @@
     "css": [
       "assets/Index-5481e887.css"
     ],
-    "file": "assets/Index-a5321abd.js",
+    "file": "assets/Index-7a0abd37.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js"
+      "_multiselect-930b71d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Students/Index.vue"
   },
   "resources/js/Pages/Transactions/Details.vue": {
-    "file": "assets/Details-8639a0e5.js",
+    "file": "assets/Details-c9517a97.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
       "resources/js/app.js",
-      "_multiselect-6deb1144.js",
-      "_vue-datepicker-af9470db.js",
-      "_jspdf.plugin.autotable-331f2703.js",
+      "_multiselect-930b71d6.js",
+      "_vue-datepicker-e21fc124.js",
+      "_jspdf.plugin.autotable-410f50d1.js",
       "_main-ae0ebc8a.js",
       "_defineProperty-4d844dfb.js"
     ],
@@ -722,13 +722,13 @@
     "css": [
       "assets/Index-71a29ef9.css"
     ],
-    "file": "assets/Index-64cc2a16.js",
+    "file": "assets/Index-ac554e05.js",
     "imports": [
       "resources/js/app.js",
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js",
-      "_jspdf.plugin.autotable-331f2703.js",
-      "_vue-datepicker-af9470db.js",
+      "_multiselect-930b71d6.js",
+      "_jspdf.plugin.autotable-410f50d1.js",
+      "_vue-datepicker-e21fc124.js",
       "_main-ae0ebc8a.js",
       "_defineProperty-4d844dfb.js"
     ],
@@ -743,10 +743,10 @@
     "css": [
       "assets/Create-d79837f0.css"
     ],
-    "file": "assets/Create-ffdc131c.js",
+    "file": "assets/Create-33474176.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js",
+      "_multiselect-930b71d6.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -760,11 +760,11 @@
     "css": [
       "assets/Index-9b15bb2c.css"
     ],
-    "file": "assets/Index-ddb17be2.js",
+    "file": "assets/Index-170efd1f.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js",
-      "_vue-datepicker-af9470db.js",
+      "_multiselect-930b71d6.js",
+      "_vue-datepicker-e21fc124.js",
       "_main-ae0ebc8a.js",
       "resources/js/app.js",
       "_defineProperty-4d844dfb.js"
@@ -780,10 +780,10 @@
     "css": [
       "assets/Update-9cf7b4f7.css"
     ],
-    "file": "assets/Update-9d7bfc4d.js",
+    "file": "assets/Update-b4c641d6.js",
     "imports": [
       "resources/js/Pages/Layout/Master.vue",
-      "_multiselect-6deb1144.js",
+      "_multiselect-930b71d6.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -811,7 +811,7 @@
     "css": [
       "assets/UserRegister-031a19c2.css"
     ],
-    "file": "assets/UserRegister-3e22c7a4.js",
+    "file": "assets/UserRegister-d435ca2e.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -840,7 +840,7 @@
     "css": [
       "assets/forgotPassword-5c564a65.css"
     ],
-    "file": "assets/forgotPassword-7825b5d1.js",
+    "file": "assets/forgotPassword-50370a4b.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -869,7 +869,7 @@
     "css": [
       "assets/resetPassword-b0a58c8e.css"
     ],
-    "file": "assets/resetPassword-8cbc71b5.js",
+    "file": "assets/resetPassword-5baefa18.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -931,7 +931,7 @@
       "resources/js/Pages/forgotPassword.vue",
       "resources/js/Pages/resetPassword.vue"
     ],
-    "file": "assets/app-87cd5174.js",
+    "file": "assets/app-861e9a82.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },

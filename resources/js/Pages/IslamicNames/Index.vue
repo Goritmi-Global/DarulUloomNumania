@@ -44,7 +44,11 @@
                     </h5>
 
                     <!-- Search Input -->
-                    <div class="mb-3">
+                    <div class="mb-3" :class="{
+                            'rtl-text':
+                                $page.props.default_language === 'PK' ||
+                                $page.props.default_language === 'SA',
+                        }">
                         <input
                             type="text"
                             v-model="searchQuery"
