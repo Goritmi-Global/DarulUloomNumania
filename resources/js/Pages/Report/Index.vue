@@ -304,8 +304,9 @@ export default {
             ],
             yearsOptions: Array.from(
                 { length: 2050 - 2020 + 1 },
-                (_, i) => 2025 + i
+                (_, i) => 2020 + i
             ),
+            
 
             totalIncome: 0, // Total Income
             totalExpense: 0, // Total Expense
