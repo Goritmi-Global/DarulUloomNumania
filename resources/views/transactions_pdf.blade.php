@@ -114,6 +114,8 @@
                     <th style="font-size:12px">{{ translate("Ref No") }} </th>
                     <th style="font-size:12px">{{ translate("Description") }} </th>
                     <th style="font-size:12px">{{ translate("Method") }} </th>
+                    <th style="font-size:12px">{{ translate("Recieved from") }} </th>
+                    <th style="font-size:12px">{{ translate("Recieved By") }} </th>
                     <th style="font-size:12px">{{ translate("Cash In") }} </th>
                     <th style="font-size:12px">{{ translate("Cash Out") }}</th>
                     <th style="font-size:12px">{{ translate("Balance") }} </th>
@@ -143,6 +145,8 @@
                         <td style="font-size:10px">{{ $transaction->remarks ?? 'N/A' }}
                         </td>
                         <td style="font-size:10px">{{ $transaction->method }}</td>
+                        <td style="font-size:10px">{{ $transaction->received_from }}</td>
+                        <td style="font-size:10px">{{ $transaction->received_by }}</td>
                         <td style="font-size:10px">
                             {{ $cashIn ?  number_format($cashIn) : '-' }}</td>
                         <td style="font-size:10px">

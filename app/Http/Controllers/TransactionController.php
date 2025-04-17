@@ -133,6 +133,7 @@ class TransactionController extends Controller
         //     'method'       => 'required|string|max:255',
         //     'remarks'      => 'required|string|max:255',
         // ]);
+        // dd($request->date,$request->islamic_date);
         $request->validate([
             'process_type'  => 'required',
             'income_type'   => 'required_if:process_type,Income',
@@ -140,13 +141,16 @@ class TransactionController extends Controller
             'person'        => 'required_if:process_type,Borrow,Lend', // Person is required for borrowed/loan
             'cash_in'       => 'nullable|numeric|required_without:cash_out|required_if:income_type,!null|required_if:process_type,Borrow',
             'cash_out'      => 'nullable|numeric|required_without:cash_in|required_if:expense_type,!null|required_if:process_type,Lend',
-            'date'          => 'required|date',
+            'date'          => 'required',
+            'islamic_date'          => 'required',
             'ref_no'        => 'nullable|string|max:255',
             'method'        => 'required|string|max:255',
             'remarks'       => 'required|string|max:255',
+            'received_by'       => 'nullable|string|max:255',
+            'received_from'       => 'nullable|string|max:255',
         ]);
 
-        
+       
         
 
         if ($request->id) {
@@ -208,6 +212,9 @@ class TransactionController extends Controller
         $transaction->ref_no           = $request->ref_no;
         $transaction->method           = $request->method;
         $transaction->remarks          = $request->remarks;
+        $transaction->islamic_date          = $request->islamic_date;
+        $transaction->received_by          = $request->received_by;
+        $transaction->received_from          = $request->received_from;
         $transaction->user_id          = auth()->user()->id;
 
         // Handle receipt image

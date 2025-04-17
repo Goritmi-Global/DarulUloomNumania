@@ -233,6 +233,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">{{ translate("Date") }}</th>
+                                    <th scope="col">{{ translate("Islamic date") }}</th>
                                     <th scope="col">
                                         {{ translate("Reciept No") }}
                                     </th>
@@ -244,6 +245,9 @@
                                         {{ translate("Method") }}
                                     </th>
                                     <th scope="col">{{ translate("Type") }}</th>
+                                    <th scope="col">{{ translate("Received From") }}</th>
+                                    <th scope="col">{{ translate("Received By") }}</th>
+                                     
                                     <th scope="col">
                                         {{ translate("Cash In") }}
                                     </th>
@@ -268,6 +272,7 @@
                                 >
                                     <th scope="row">{{ index + 1 }}</th>
                                     <td>{{ entry.transaction_date }}</td>
+                                    <td>{{ entry.islamic_date }}</td>
                                     <td>{{ entry.ref_no }}</td>
                                      
                                     <td>{{ entry.remarks }}</td>
@@ -278,6 +283,10 @@
                                             entry.expense_type
                                         }}
                                     </td>
+                                    
+                                    <td>{{ entry.received_from}}</td>
+                                    <td>{{ entry.received_by}}</td>
+                             
                                     <td>
                                         {{ formatCurrency(entry.cash_in) ?? 0 }}
                                     </td>
@@ -556,6 +565,98 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-12 col-md-6">
+                                        <label
+                                            for="date"
+                                            class="form-label"
+                                            >{{
+                                                translate("English Date")
+                                            }}</label
+                                        >
+                                        <Datepicker
+                                            autoApply
+                                            :enable-time-picker="false"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.date,
+                                            }"
+                                            v-model="form.date"
+                                            @update:modelValue="convertToHijri"
+                                        />
+                                        <div
+                                            v-if="formErrors.date"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.date[0] }}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label
+                                            for="islamic_date"
+                                            class="form-label"
+                                            >{{
+                                                translate("Islamic Date")
+                                            }}</label
+                                        >
+                                        <Datepicker
+                                            v-model="form.islamic_date"
+                                            :enable-time-picker="false"
+                                            autoApply
+                                            :disabled="true"
+                                            :input-props="{ readonly: true }"
+                                        />
+                                        <div
+                                            v-if="formErrors.islamic_date"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.islamic_date[0] }}
+                                        </div>
+                                    </div>
+
+                                    
+ 
+                                    <div class="col-md-6 col-12">
+                                        <label for="type">{{
+                                            translate("Received from")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="type"
+                                            v-model="form.received_from"
+                                            :class="{
+                                                'invalid-bg': formErrors.received_from,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.received_from"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.received_from[0] }}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 col-12">
+                                        <label for="type">{{
+                                            translate("Received By")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="type"
+                                            v-model="form.received_by"
+                                            :class="{
+                                                'invalid-bg': formErrors.received_by,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.received_by"
+                                            class="invalid-feedback"
+                                        >
+                                            {{ formErrors.received_by[0] }}
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-6 col-12">
                                         <label for="type">{{
                                             translate("Reciept No")
@@ -577,27 +678,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 col-12">
-                                        <label for="date">{{
-                                            translate("Date")
-                                        }}</label>
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            :max="today"
-                                            id="date"
-                                            v-model="form.date"
-                                            :class="{
-                                                'invalid-bg': formErrors.date,
-                                            }"
-                                        />
-                                        <div
-                                            v-if="formErrors.date"
-                                            class="invalid-feedback"
-                                        >
-                                            {{ formErrors.date[0] }}
-                                        </div>
-                                    </div>
                                     <div class="col-md-6 col-12">
                                         <label for="receipt_image">{{
                                             translate("Receipt image")
@@ -685,6 +765,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
+import moment from "moment-hijri";
 
 export default {
     layout: Master,
@@ -733,6 +814,7 @@ export default {
                 cash_in: "",
                 cash_out: "",
                 date: "",
+                islamic_date: "",
                 ref_no: "",
                 method: "",
                 remarks: "",
@@ -742,6 +824,8 @@ export default {
                 receipt_image: "",
                 person: "",
                 business_type: "",
+                received_from: "",
+                received_by: "",
             },
             formErrors: [],
             formStatus: 1, // 1 = ready, 0 = saving
@@ -890,6 +974,12 @@ export default {
             return this.formatCurrency(balance);
         },
         submit() {
+            if (this.form.date) {
+                this.form.date = moment(this.form.date).format(
+                    "YYYY/MM/DD"
+                );
+            }
+
             let formData = new FormData();
             // Helper function to handle null, undefined, or empty values
             const sanitizeValue = (value) =>
@@ -899,6 +989,8 @@ export default {
             formData.append("cash_in", sanitizeValue(this.form.cash_in));
             formData.append("cash_out", sanitizeValue(this.form.cash_out));
             formData.append("date", sanitizeValue(this.form.date));
+            
+            formData.append("islamic_date", sanitizeValue(this.form.islamic_date));
             formData.append("ref_no", sanitizeValue(this.form.ref_no));
             formData.append("method", sanitizeValue(this.form.method));
             formData.append("remarks", sanitizeValue(this.form.remarks));
@@ -915,6 +1007,14 @@ export default {
             formData.append(
                 "process_type",
                 sanitizeValue(this.form.process_type)
+            );
+            formData.append(
+                "received_from",
+                sanitizeValue(this.form.received_from)
+            );
+            formData.append(
+                "received_by",
+                sanitizeValue(this.form.received_by)
             );
 
             // Append image only if it exists
@@ -983,8 +1083,11 @@ export default {
                         cash_in: parseInt(response.data.cash_in),
                         cash_out: response.data.cash_out,
                         date: response.data.transaction_date,
+                        islamic_date: response.data.islamic_date,
                         ref_no: response.data.ref_no,
                         method: response.data.method,
+                        received_from: response.data.received_from,
+                        received_by: response.data.received_by,
                         remarks: response.data.remarks,
                         expense_type: response.data.expense_type || "",
                         income_type: response.data.income_type || "",
@@ -1233,6 +1336,7 @@ export default {
                     <tr>
                         <th>#</th>
                         <th>Date</th>
+                        <th>Islamic date</th>
                         <th>Receipt No</th>
                         <th>Business Type</th>
                         <th>Descriptions</th>
@@ -1250,6 +1354,7 @@ export default {
                         <tr>
                             <td>${index + 1}</td>
                             <td>${entry.transaction_date}</td>
+                            <td>${entry.islamic_date}</td>
                             <td>${entry.ref_no}</td>
                             <td>${entry.business_type}</td>
                             <td>${entry.remarks}</td>
@@ -1278,6 +1383,11 @@ export default {
         editTransaction(id) {
             this.$refs.openTransactionModal.click();
             this.clearFields();
+        },
+        convertToHijri(date) {
+            this.form.islamic_date = date
+                ? moment(date).format("iYYYY/iM/iD")
+                : "";
         },
     },
 };
