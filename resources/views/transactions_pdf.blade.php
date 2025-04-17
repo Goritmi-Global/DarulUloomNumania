@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,75 +10,95 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
+
         h1 {
             text-align: center;
             margin-bottom: 20px;
-            color:#0A8ACC !important;
+            color: #0A8ACC !important;
         }
+
         h2 {
             text-align: center;
             margin-bottom: 20px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-        table, th, td {
+
+        table,
+        th,
+        td {
             border: 1px solid black;
         }
-        th, td {
+
+        th,
+        td {
             padding: 10px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
+
         .text-center {
             text-align: center;
         }
+
         .footer {
             margin-top: 30px;
             text-align: right;
         }
+
         .footer .date-time {
             font-size: 12px;
             font-style: italic;
         }
+
         .footer .totals {
             margin-top: 10px;
             text-align: left;
         }
+
         .logo {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .logo img {
             max-width: 150px;
         }
+
     </style>
 </head>
+
 <body>
 
-{{-- Logo --}}
+    {{-- Logo --}}
     <div class="logo">
-        <img src="{{ public_path('images/logo.png') }}" alt="Al-shamama Hospital Logo">
+        <img src="/images/logo.jpg" alt="Madrasa Logo">
     </div>
     {{-- Institution Title --}}
-    <h1>{{ translate('Jamia Darul Oloom Noumania')}}</h1>
+    <h1>{{ translate("Jamia Darul Oloom Noumania") }}</h1>
 
     {{-- Dynamic Title Based on Filter --}}
     <h2>
         @if($selectedFilter == 'Yearly')
-            Transaction Report for Year: {{ $selectedYear }}
+            {{ translate("Transaction Report for Year") }}: {{ $selectedYear }}
         @elseif($selectedFilter == 'Monthly')
-            Transaction Report for {{ date('F', mktime(0, 0, 0, $selectedMonth, 1)) }} {{ $selectedYear }}
+            {{ translate("Transaction Report for") }}
+            {{ date('F', mktime(0, 0, 0, $selectedMonth, 1)) }}
+            {{ $selectedYear }}
         @elseif($selectedFilter == 'Custom')
-            Transaction Report from 
-            {{ \Carbon\Carbon::parse($startDate)->format('d-M-Y') }} to {{ \Carbon\Carbon::parse($endDate)->format('d-M-Y') }}
-             
+            {{ translate("Transaction Report from") }}
+            {{ \Carbon\Carbon::parse($startDate)->format('d-M-Y') }} to
+            {{ \Carbon\Carbon::parse($endDate)->format('d-M-Y') }}
+
         @else
-            All Transactions Report
+            {{ translate("All Transactions Report") }}
         @endif
     </h2>
 
@@ -87,14 +108,14 @@
             <thead>
                 <tr>
                     <th style="font-size:12px">#</th>
-                    <th style="font-size:12px">{{ translate("Date")}} </th>
-                    <th style="font-size:12px">{{ translate("Ref No")}} </th>
-                    <th style="font-size:12px">{{ translate("Description")}} </th>
-                    <th style="font-size:12px">{{ translate("Method")}} </th>
-                    <th style="font-size:12px">{{ translate("Cash In")}} </th>
-                    <th style="font-size:12px">{{ translate("Cash Out")}}</th>
-                    <th style="font-size:12px">{{ translate("Balance")}} </th>
-                    
+                    <th style="font-size:12px">{{ translate("Date") }} </th>
+                    <th style="font-size:12px">{{ translate("Ref No") }} </th>
+                    <th style="font-size:12px">{{ translate("Description") }} </th>
+                    <th style="font-size:12px">{{ translate("Method") }} </th>
+                    <th style="font-size:12px">{{ translate("Cash In") }} </th>
+                    <th style="font-size:12px">{{ translate("Cash Out") }}</th>
+                    <th style="font-size:12px">{{ translate("Balance") }} </th>
+
                 </tr>
             </thead>
             <tbody>
@@ -113,34 +134,45 @@
                     @endphp
                     <tr>
                         <td style="font-size:10px">{{ $index + 1 }}</td>
-                        <td style="font-size:10px">{{ \Carbon\Carbon::parse($transaction->transaction_date)->format('d-M-Y') }}</td>
+                        <td style="font-size:10px">
+                            {{ \Carbon\Carbon::parse($transaction->transaction_date)->format('d-M-Y') }}
+                        </td>
                         <td style="font-size:10px">{{ $transaction->ref_no }}</td>
-                        <td style="font-size:10px">{{ $transaction->remarks ?? 'N/A' }}</td>
+                        <td style="font-size:10px">{{ $transaction->remarks ?? 'N/A' }}
+                        </td>
                         <td style="font-size:10px">{{ $transaction->method }}</td>
-                        <td style="font-size:10px">{{ $cashIn ?  number_format($cashIn) : '-' }}</td>
-                        <td style="font-size:10px">{{ $cashOut ?  number_format($cashOut) : '-' }}</td>
-                        <td style="font-size:10px">{{  number_format($balance) }}</td>
-                     
+                        <td style="font-size:10px">
+                            {{ $cashIn ?  number_format($cashIn) : '-' }}</td>
+                        <td style="font-size:10px">
+                            {{ $cashOut ?  number_format($cashOut) : '-' }}</td>
+                        <td style="font-size:10px">{{ number_format($balance) }}</td>
+
                     </tr>
                 @endforeach
             </tbody>
         </table>
     @else
-        <p class="text-center">{{ translate("No transactions found for the selected period.")}} </p>
+        <p class="text-center">
+            {{ translate("No transactions found for the selected period.") }} </p>
     @endif
 
     {{-- Footer with Totals --}}
     <div class="footer">
 
         <div class="totals">
-            <p><strong>{{ translate("Total Cash In:")}} </strong>{{ number_format($totalCashIn) }}</p>
-            <p><strong>{{ translate("Total Cash Out:")}} </strong>{{ number_format($totalCashOut) }}</p>
-            <p><strong>{{ translate("Total Balance:")}} </strong>{{ number_format($balance) }}</p>
+            <p><strong>{{ translate("Total Cash In:") }}
+                </strong>{{ number_format($totalCashIn) }}</p>
+            <p><strong>{{ translate("Total Cash Out:") }}
+                </strong>{{ number_format($totalCashOut) }}</p>
+            <p><strong>{{ translate("Total Balance:") }} </strong>{{ number_format($balance) }}
+            </p>
         </div>
         <div class="date-time">
-            <p>{{ translate("Generated on:")}}  {{ \Carbon\Carbon::now()->format('d-M-Y H:i:s') }}</p>
+            <p>{{ translate("Generated on:") }}
+                {{ \Carbon\Carbon::now()->format('d-M-Y H:i:s') }}</p>
         </div>
     </div>
 
 </body>
+
 </html>

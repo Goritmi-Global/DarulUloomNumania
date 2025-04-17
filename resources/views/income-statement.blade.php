@@ -57,7 +57,7 @@
 
 {{-- Logo --}}
 <div class="logo">
-    <img src="{{ public_path('images/logo.png') }}" alt="Darul Oloom Logo">
+<img src="/images/logo.jpg" alt="Madrasa Logo">
 </div>
 
 {{-- Institution Title --}}
@@ -66,14 +66,14 @@
 {{-- Dynamic Title Based on Filter --}}
 <h2>
     @if($selectedFilter == 'Yearly')
-        Income Statement for Year: {{ $selectedYear }}
+    {{ translate("Income Statement for Year") }}: {{ $selectedYear }}
     @elseif($selectedFilter == 'Monthly')
-        Income Statement for {{ date('F', mktime(0, 0, 0, $selectedMonth, 1)) }} {{ $selectedYear }}
+    {{ translate("Income Statement for") }} {{ date('F', mktime(0, 0, 0, $selectedMonth, 1)) }} {{ $selectedYear }}
     @elseif($selectedFilter == 'Custom')
-        Income Statement from 
+    {{ translate("Income Statement from") }} 
         {{ \Carbon\Carbon::parse($startDate)->format('d-M-Y') }} to {{ \Carbon\Carbon::parse($endDate)->format('d-M-Y') }}
     @else
-        All Transactions Income Statement
+    {{ translate("All Transactions Income Statement") }}
     @endif
 </h2>
 

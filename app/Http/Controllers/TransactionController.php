@@ -141,7 +141,7 @@ class TransactionController extends Controller
             'cash_in'       => 'nullable|numeric|required_without:cash_out|required_if:income_type,!null|required_if:process_type,Borrow',
             'cash_out'      => 'nullable|numeric|required_without:cash_in|required_if:expense_type,!null|required_if:process_type,Lend',
             'date'          => 'required|date',
-            'ref_no'        => 'required|string|max:255',
+            'ref_no'        => 'nullable|string|max:255',
             'method'        => 'required|string|max:255',
             'remarks'       => 'required|string|max:255',
         ]);

@@ -57,7 +57,9 @@
 
 {{-- Logo --}}
 <div class="logo">
-    <img src="{{ public_path('images/logo.png') }}" alt="Al-Shahama Hospital Logo">
+<img src="/images/logo.jpg" alt="Madrasa Logo">
+
+
 </div>
 
 {{-- Institution Title --}}
@@ -68,12 +70,12 @@
     @if($selectedFilter == 'Yearly')
         Transaction Report for Year: {{ $selectedYear }}
     @elseif($selectedFilter == 'Monthly')
-        Transaction Report for {{ date('F', mktime(0, 0, 0, $selectedMonth, 1)) }} {{ $selectedYear }}
+    {{ translate("Transaction Report for")}} {{ date('F', mktime(0, 0, 0, $selectedMonth, 1)) }} {{ $selectedYear }}
     @elseif($selectedFilter == 'Custom')
-        Transaction Report from 
+    {{ translate("Transaction Report from")}} 
         {{ \Carbon\Carbon::parse($startDate)->format('d-M-Y') }} to {{ \Carbon\Carbon::parse($endDate)->format('d-M-Y') }}
     @else
-        All Transactions Report
+        {{ translate("All Transactions Report") }}
     @endif
 </h2>
 
@@ -102,7 +104,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <th colspan="2">Total</th>
+                <th colspan="2">{{ translate("Total")}}</th>
                 <th>{{ number_format($totalIncome, 2) }}</th>
                 <th>{{ number_format($totalExpense, 2) }}</th>
                 <th>{{ number_format($totalBalance, 2) }}</th>

@@ -169,23 +169,23 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th colspan="2">Title</th>
-                                    <th colspan="1">Amount</th>
+                                    <th colspan="2">{{ translate("Title") }}</th>
+                                    <th colspan="1">{{ translate("Amount") }}</th>
                                 </tr>
                                 <tr>
-                                    <th colspan="2">Income</th>
+                                    <th colspan="2">{{ translate("Income") }}</th>
                                     <td colspan="1" class="text-success">
                                         {{ formatCurrency(totalIncome) }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th colspan="2">Expense</th>
+                                    <th colspan="2">{{ translate("Expense") }}</th>
                                     <td colspan="1" class="text-danger">
                                         {{ formatCurrency(totalExpense) }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th colspan="2">Profit</th>
+                                    <th colspan="2">{{ translate("Current Amount") }}</th>
                                     <th
                                         colspan="1"
                                         :class="
