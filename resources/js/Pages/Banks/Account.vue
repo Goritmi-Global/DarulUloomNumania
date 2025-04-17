@@ -50,11 +50,11 @@
                         <div class="row">
                             <!-- Filter Type Dropdown using Multiselect -->
                             <div class="col-md-4">
-                                <label for="filterType">Filter By</label>
+                                <label for="filterType">{{ translate("Filter By") }}</label>
                                 <Multiselect
                                     v-model="filterType"
                                     :options="filterOptions"
-                                    :placeholder="'Select Filter Type'"
+                                    :placeholder="translate('Filter By Type')"
                                     :searchable="true"
                                     @change="resetFilters"
                                     :class="{

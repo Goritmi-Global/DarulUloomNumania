@@ -66,7 +66,7 @@
                                                 'Custom',
                                             ]"
                                             :searchable="true"
-                                            placeholder="Filter By"
+                                            :placeholder="translate('Filter By')"
                                             @clear="fetchTransactionEntries"
                                         />
                                     </div>

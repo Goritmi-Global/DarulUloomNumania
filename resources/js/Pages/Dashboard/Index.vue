@@ -100,7 +100,7 @@
                                 :options="filterOptions"
                                 :searchable="true"
                                 @select="applyFilter"
-                                placeholder="Filter By"
+                                :placeholder="translate('Filter By')"
                             />
                         </div>
                     </div>
