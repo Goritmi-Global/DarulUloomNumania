@@ -2,14 +2,20 @@
     <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1 class="theme-text-color">{{ translate("Income From -") }}  {{ income_type_name }}</h1>
+                <h1 class="theme-text-color">
+                    {{ translate("Income From -") }} {{ income_type_name }}
+                </h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">{{ translate("Darul Oloom") }} </a>
                         </li>
-                        <li class="breadcrumb-item">{{ translate("Income") }} </li>
-                        <li class="breadcrumb-item active">{{ translate("Details") }} </li>
+                        <li class="breadcrumb-item">
+                            {{ translate("Income") }}
+                        </li>
+                        <li class="breadcrumb-item active">
+                            {{ translate("Details") }}
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -21,10 +27,9 @@
                         <table id="expenseTable" class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>{{ translate("#") }} </th>
-                                    <th>{{ translate("Date") }} </th>
+                                    <th>{{ translate("#") }}</th>
+                                    <th>{{ translate("Date") }}</th>
                                     <th>{{ translate("Credit") }}</th>
-                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,7 +42,6 @@
                                         {{ formatDate(entry.transaction_date) }}
                                     </td>
                                     <td>{{ entry.amount }}</td>
-                                     
                                 </tr>
                             </tbody>
                         </table>
@@ -60,7 +64,7 @@ import "@vuepic/vue-datepicker/dist/main.css";
 
 export default {
     layout: Master,
-    props: ["income_records","income_type_name"],
+    props: ["income_records", "income_type_name"],
     mounted() {
         this.$nextTick(() => {
             $("#expenseTable").DataTable();
