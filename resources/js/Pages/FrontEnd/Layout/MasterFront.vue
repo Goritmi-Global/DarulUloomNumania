@@ -203,10 +203,10 @@
                     <div class="row">
                         <!-- Contact Info Section -->
                         <div class="col-lg-6 col-md-6 footer-contact">
-                            <h3>Darul Oloom</h3>
+                            <h3>{{ translate("Darul Oloom") }} </h3>
                             <p>
-                                <strong>Phone:</strong> +1 234 567 890<br />
-                                <strong>Email:</strong>
+                                <strong>{{ translate("Phone:") }} </strong> +1 234 567 890<br />
+                                <strong>{{ translate("Email:") }} </strong>
                                 info@daruloolom.com<br />
                             </p>
                             <div class="footer-social">
@@ -238,13 +238,13 @@
                         </div>
                         <!-- Quick Links Section -->
                         <div class="col-lg-6 col-md-6 footer-links">
-                            <h4>Quick Links</h4>
+                            <h4>{{ translate("Quick Links") }} </h4>
                             <ul type="none">
-                                <li><a href="/">Home</a></li>
-                                <li><a href="/about">About</a></li>
-                                <li><a href="/contact">Contact</a></li>
-                                <li><a href="/events">Events</a></li>
-                                <li><a href="/student/enroll">Enroll</a></li>
+                                <li><a href="/">{{ translate("Home") }} </a></li>
+                                <li><a href="/about">{{ translate("About") }} </a></li>
+                                <li><a href="/contact">{{ translate("Contact") }} </a></li>
+                                <li><a href="/events">{{ translate("Events") }} </a></li>
+                                <li><a href="/student/enroll">{{ translate("Enroll") }} </a></li>
                             </ul>
                         </div>
                         <!-- Newsletter Section -->
@@ -267,10 +267,10 @@
                 <!-- Footer Bottom Section -->
                 <div class="footer-bottom">
                     <p>
-                        &copy; Copyright
-                        <strong><span>Darul Oloom</span></strong
-                        >. All Rights Reserved | Designed by
-                        <a href="https://goritmi.co.uk">Goritim Ltd</a>
+                        {{ translate("&copy; Copyright") }} 
+                        <strong><span>{{ translate("Darul Oloom") }} </span></strong
+                        >{{ translate(". All Rights Reserved | Designed by") }} 
+                        <a href="https://goritmi.co.uk">{{ translate("Goritim Ltd") }} </a>
                     </p>
                 </div>
             </div>
