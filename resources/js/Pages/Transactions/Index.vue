@@ -1032,16 +1032,14 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.formStatus = 1;
-                    this.fetchTransactionEntries();
-                    toastr.success(
-                        this.translate("Transaction entry saved successfully.")
-                    );
-                    this.$refs.closeModal?.click();
+        this.formStatus = 1;
+        this.fetchTransactionEntries();
+        toastr.success(this.translate("Transaction entry saved successfully."));
+        this.$refs.closeModal?.click();
 
-                    // ✅ Print single transaction slip
-                    this.printSingleSlip(response.data.transaction);
-                })
+        // ✅ Print single transaction slip
+        this.printSingleSlip(response.data.transaction);
+    })
                 .catch((error) => {
                     this.formStatus = 1;
                     toastr.error(error.response.data.message);
@@ -1049,23 +1047,21 @@ export default {
                 });
         },
         printSingleSlip(entry) {
-            const printWindow = window.open("", "_blank");
+    const printWindow = window.open("", "_blank");
 
-            const currentDateTime = new Date().toLocaleString("en-US", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: true,
-            });
+    const currentDateTime = new Date().toLocaleString("en-US", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+    });
 
-            const translatedTitle = this.translate(
-                "Jamia Darul Uloom Noumania Utmanzai"
-            );
+    const translatedTitle = this.translate("Jamia Darul Uloom Noumania Utmanzai");
 
-            printWindow.document.write(`
+    printWindow.document.write(`
     <html>
     <head>
         <title>Transaction Slip</title>
@@ -1158,23 +1154,14 @@ export default {
                 <div class="field-label">Method:</div>
                 <div class="field-value">${entry.method}</div>
             </div>
-            // <div class="field-row">
-            //     <div class="field-label">Type:</div>
-            //     <div class="field-value">${
-                entry.income_type ?? entry.expense_type
-            }</div>
-            // </div>
+            
             <div class="field-row">
                 <div class="field-label">Cash In:</div>
-                <div class="field-value">${
-                    this.formatCurrency(entry.cash_in) ?? 0
-                }</div>
+                <div class="field-value">${this.formatCurrency(entry.cash_in) ?? 0}</div>
             </div>
             <div class="field-row">
                 <div class="field-label">Cash Out:</div>
-                <div class="field-value">${
-                    this.formatCurrency(entry.cash_out) ?? 0
-                }</div>
+                <div class="field-value">${this.formatCurrency(entry.cash_out) ?? 0}</div>
             </div>
             <div class="field-row">
                 <div class="field-label">Description:</div>
@@ -1187,12 +1174,12 @@ export default {
     </html>
     `);
 
-            printWindow.document.close();
-            printWindow.onload = function () {
-                printWindow.print();
-                printWindow.close();
-            };
-        },
+    printWindow.document.close();
+    printWindow.onload = function () {
+        printWindow.print();
+        printWindow.close();
+    };
+},
 
         formatCurrency(value) {
             return new Intl.NumberFormat("en-PK", {
@@ -1218,7 +1205,8 @@ export default {
         showEntry(entry_id) {
             axios
                 .get(route("api.transaction.show", entry_id))
-                .then((response) => {
+                .then((response) => { 
+
                     // Call pluck functions before setting form data
                     if (response.data.process_type === "Income") {
                         this.pluckIncomeTypes();
