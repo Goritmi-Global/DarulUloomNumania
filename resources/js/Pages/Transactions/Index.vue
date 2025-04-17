@@ -768,8 +768,8 @@ export default {
             personsOptions: [],
             businessTypesOptions: [],
             yearsOptions: Array.from(
-                { length: 2050 - 2025 + 1 },
-                (_, i) => 2025 + i
+                { length: 2050 - 2020 + 1 },
+                (_, i) => 2020 + i
             ),
 
             existing_receipt_image: "",

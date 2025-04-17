@@ -77,14 +77,16 @@
 
 <body>
 
-    {{-- Logo --}}
+   
     <div class="logo">
-        <img src="/images/logo.jpg" alt="Madrasa Logo">
-    </div>
-    {{-- Institution Title --}}
-    <h1>{{ translate("Jamia Darul Oloom Noumania") }}</h1>
+    <img src="{{ asset('images/logo.jpg') }}" alt="Madrasa Logo">
 
-    {{-- Dynamic Title Based on Filter --}}
+
+    </div>
+ 
+    <h1>{{ translate("Jamia Darol Uloom Noumania Utmanzai") }}</h1>
+
+  
     <h2>
         @if($selectedFilter == 'Yearly')
             {{ translate("Transaction Report for Year") }}: {{ $selectedYear }}

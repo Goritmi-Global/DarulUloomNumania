@@ -61,7 +61,7 @@ class TransactionController extends Controller
         }
 
         // Fetch all transactions if no filters are applied
-        $transactions = $query->orderByDesc('transaction_date')->get();
+        $transactions = $query->orderBy('transaction_date')->get();
 
         foreach ($transactions as $transaction) {
             // Check if the transaction has Expense

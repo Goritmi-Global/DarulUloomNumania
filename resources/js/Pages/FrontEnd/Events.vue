@@ -6,7 +6,7 @@
                 <h1 class="display-4">Upcoming Events</h1>
                 <p class="lead">
                     Stay updated with the latest events and programs at
-                    Jamia Darul Uloom Noumania.
+                    Jamia Darol Uloom Noumania Utmanzai.
                 </p>
             </div>
         </section>

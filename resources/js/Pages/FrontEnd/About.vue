@@ -16,7 +16,7 @@
                 <h2 class="display-4 p-3 theme-text-color">{{ translate("Who We Are") }}</h2>
                 <p>
                     {{ translate(
-                        "Jamia Darul Uloom Noumania is dedicated to providing quality Islamic education integrated with modern learning techniques. Our mission is to spread the light of knowledge and help students develop a strong connection with their faith."
+                        "Jamia Darol Uloom Noumania Utmanzai is dedicated to providing quality Islamic education integrated with modern learning techniques. Our mission is to spread the light of knowledge and help students develop a strong connection with their faith."
                         ) 
                         }}
                     
