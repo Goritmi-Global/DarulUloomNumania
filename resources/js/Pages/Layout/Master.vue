@@ -29,9 +29,50 @@
             >
                 <i class="bi bi-globe"></i>
             </a>
+
             <nav class="header-nav ms-auto">
                 <ul class="d-flex align-items-center">
-                     
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            style="
+                                font-size: 14px;
+                                font-weight: 600;
+                                color: #012970;
+                            "
+                            href="#"
+                            id="languageDropdown"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            {{ user_language_name }}
+                        </a>
+                        <ul
+                            class="dropdown-menu dropdown-menu-end c-global-radius"
+                            aria-labelledby="languageDropdown"
+                        >
+                            <li
+                                v-for="(language, index) in languages"
+                                :key="index"
+                                :class="[
+                                    language.code ==
+                                    $page.props.default_language
+                                        ? 'lang-active'
+                                        : '',
+                                ]"
+                            >
+                                <a
+                                    class="dropdown-item"
+                                    style=""
+                                    href="javascript:void(0)"
+                                    @click="changeLang(language.code)"
+                                    >{{ language.name }}</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="nav-item dropdown nav-item d-block d-lg-none">
                         <a
                             class="nav-link nav-profile d-flex align-items-center pe-0"
@@ -85,7 +126,6 @@
                             href="#"
                             data-bs-toggle="dropdown"
                         >
-                            
                             <span class="d-none d-md-block dropdown-toggle ps-2"
                                 >{{ $page.props.user.first_name }}
                                 {{ $page.props.user.last_name }}</span
@@ -135,7 +175,7 @@
         <aside id="sidebar" class="sidebar">
             <ul class="sidebar-nav" id="sidebar-nav">
                 <!-- Dashboard -->
-                 
+
                 <li class="nav-item">
                     <a
                         class="nav-link collapsed"
@@ -148,7 +188,13 @@
                 </li>
 
                 <!-- Accounts (Parent Menu with Transactions and Other Sub-Menus) -->
-                <li class="nav-item" v-if="$page.props.user.role ==='superadmin' || $page.props.user.role ==='accountant'">
+                <li
+                    class="nav-item"
+                    v-if="
+                        $page.props.user.role === 'superadmin' ||
+                        $page.props.user.role === 'accountant'
+                    "
+                >
                     <a
                         class="nav-link"
                         :class="{
@@ -260,7 +306,13 @@
 
                 <!-- End Accounts Section -->
 
-                <li class="nav-item" v-if="$page.props.user.role ==='superadmin' || $page.props.user.role ==='admission'">
+                <li
+                    class="nav-item"
+                    v-if="
+                        $page.props.user.role === 'superadmin' ||
+                        $page.props.user.role === 'admission'
+                    "
+                >
                     <a
                         class="nav-link collapsed"
                         :class="{ active: isActive('/students') }"
@@ -270,7 +322,13 @@
                         <span>{{ translate("Enrolled Student") }}</span>
                     </a>
                 </li>
-                <li class="nav-item" v-if="$page.props.user.role ==='superadmin' || $page.props.user.role ==='iftah'">
+                <li
+                    class="nav-item"
+                    v-if="
+                        $page.props.user.role === 'superadmin' ||
+                        $page.props.user.role === 'iftah'
+                    "
+                >
                     <a
                         class="nav-link"
                         :class="{
@@ -355,7 +413,10 @@
                 </li>
 
                 <!-- Software Users (Separate from Accounts) -->
-                <li class="nav-item" v-if="$page.props.user.role ==='superadmin'">
+                <li
+                    class="nav-item"
+                    v-if="$page.props.user.role === 'superadmin'"
+                >
                     <a
                         class="nav-link collapsed"
                         :class="{ active: isActive('/users') }"
@@ -365,7 +426,10 @@
                         <span>{{ translate("Software Users") }}</span>
                     </a>
                 </li>
-                <li class="nav-item" v-if="$page.props.user.role ==='superadmin'">
+                <li
+                    class="nav-item"
+                    v-if="$page.props.user.role === 'superadmin'"
+                >
                     <a
                         class="nav-link"
                         :class="{ collapsed: !isParentActive(['/languages']) }"
@@ -403,14 +467,20 @@
         <slot></slot>
 
         <!-- ======= Footer ======= -->
-        <footer id="footer" class="footer" >
+        <footer id="footer" class="footer">
             <div class="copyright">
-                &copy; {{ translate("Copyright") }} <strong><span>{{ translate("Jamia Darol Uloom Noumania Utmanzai") }}</span></strong
+                &copy; {{ translate("Copyright") }}
+                <strong
+                    ><span>{{
+                        translate("Jamia Darol Uloom Noumania Utmanzai")
+                    }}</span></strong
                 >. {{ translate("All Rights Reserved") }}
             </div>
             <div class="credits">
                 {{ translate("Designed by") }}
-                <a href="https://goritmi.co.uk">{{ translate("Goritim Ltd") }}</a>
+                <a href="https://goritmi.co.uk">{{
+                    translate("Goritim Ltd")
+                }}</a>
             </div>
         </footer>
         <!-- End Footer -->
@@ -425,8 +495,14 @@ export default {
         Multiselect,
     },
 
+    created() {
+        this.fatchLanguages();
+    },
     data() {
-        return {};
+        return {
+            languages: [],
+            user_language_name: "",
+        };
     },
     mounted() {
         let bootstrapJs = document.createElement("script");
@@ -464,6 +540,41 @@ export default {
                 })
                 .catch((error) => {});
         },
+        fatchLanguages() {
+            axios
+                .get(route("api.all.languages"), {
+                    headers: {
+                        Authorization: "Bearer " + this.$page.props.auth_token,
+                    },
+                })
+                .then((response) => {
+                    this.languages = response.data;
+                    // getting user default language name from langauges array
+                    this.user_language_name = response.data.filter(
+                        (p) => p.code == this.$page.props.default_language
+                    )[0].name;
+                })
+                .catch((error) => {
+                    toastr.error(error.response.data.message);
+                });
+        },
+        changeLang(code) {
+            let formData = new FormData();
+            formData.append("default_language", code);
+
+            axios
+                .post(route("api.user.default.language"), formData)
+                .then((data) => {
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    toastr.error(error.response.data.message);
+
+                    if (error.response.data.errors) {
+                        this.formErrors = error.response.data.errors;
+                    }
+                });
+        },
     },
 };
 </script>
@@ -483,6 +594,19 @@ export default {
 <style>
 @import "@vueform/multiselect/themes/default.css";
 /* custom style that should be moved into the custom.css file later */
+
+.languages {
+    font-weight: bold !important;
+}
+.languages .lang-active a {
+    color: white !important;
+}
+.lang-active a,
+.lang-active a:hover {
+    /* background-color: white !important; */
+    color: white !important;
+    background-color: #174696 !important;
+}
 
 .c-jameel-noori {
     font-family: "Jameel Noori Nastaleeq", serif;
