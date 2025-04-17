@@ -52,123 +52,47 @@
                         data-bs-parent="#questionsAccordion"
                     >
                         <div class="accordion-body">
-                            <div class="row g-2">
+                            <div class="row g-2 sawal-jawab">
                                 <div class="col-md-12">
-                                    <div class="card shadow-sm">
-                                        <div
-                                            class="card-header bg-primary text-white"
-                                        >
-                                            {{ translate("Question Details") }}
-                                        </div>
-                                        <div class="card-body">
-                                            <p>
-                                                <strong
-                                                    >{{
-                                                        translate(
-                                                            "Question Short Form"
-                                                        )
-                                                    }}:</strong
-                                                >
-                                                {{ question.subject }}
-                                            </p>
-                                            <p>
-                                                <strong
-                                                    >{{
-                                                        translate(
-                                                            "Full Question"
-                                                        )
-                                                    }}:</strong
-                                                >
-                                                {{ question.description }}
-                                            </p>
-                                            <p>
-                                                <strong
-                                                    >{{
-                                                        translate(
-                                                            "Question Date"
-                                                        )
-                                                    }}:</strong
-                                                >
-                                                {{ formatDate(question.date) }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="card shadow-sm">
-                                        <div
-                                            class="card-header bg-success text-white"
-                                        >
-                                            {{ translate("Answer Details") }}
-                                        </div>
-                                        <div class="card-body">
-                                            <p>
-                                                <strong
-                                                    >{{
-                                                        translate(
-                                                            "Short Answer"
-                                                        )
-                                                    }}:</strong
-                                                >
-                                                <span
-                                                    v-html="
-                                                        question.answer
-                                                            .answer_short_form
-                                                    "
-                                                    class="ms-1"
-                                                ></span>
-                                            </p>
-                                            <p>
-                                                <strong
-                                                    >{{
-                                                        translate(
-                                                            "Full Answer"
-                                                        )
-                                                    }}:</strong
-                                                >
-                                                <span
-                                                    v-html="
-                                                        question.answer
-                                                            .answer_full_form
-                                                    "
-                                                    class="ms-1"
-                                                ></span>
-                                            </p>
-                                            <p>
-                                                <strong
-                                                    >{{
-                                                        translate(
-                                                            "Approved By Mufti"
-                                                        )
-                                                    }}:</strong
-                                                >
-                                                {{
-                                                    question.answer
-                                                        ?.approved_by_mufti ||
-                                                    translate("Not Available")
-                                                }}
-                                            </p>
-                                            <p>
-                                                <strong
-                                                    >{{
-                                                        translate(
-                                                            "Answer Date"
-                                                        )
-                                                    }}:</strong
-                                                >
-                                                {{
-                                                    question.answer
-                                                        ? formatDate(
-                                                              question.answer
-                                                                  .date
-                                                          )
-                                                        : translate(
-                                                              "Not Available"
-                                                          )
-                                                }}
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <h3 class="question_heading">
+                                        {{ translate("Question") }}
+                                    </h3>
+                                    <p>
+                                        {{ question.subject }}
+                                    </p>
+
+                                    <p>
+                                        {{ question.description }}
+                                    </p>
+                                    <small class="text-end">
+                                        {{ formatDate(question.date) }}
+                                    </small>
+                                    <h3 class="question_heading">
+                                        {{ translate("Answer") }}
+                                    </h3>
+                                    <p
+                                        v-html="
+                                            question.answer.answer_short_form
+                                        "
+                                    ></p>
+
+                                    <h2 class="theme-text-color">
+                                        {{ translate("Answer Details") }}
+                                    </h2>
+                                    <p
+                                        v-html="
+                                            question.answer.answer_full_form
+                                        "
+                                    ></p>
+                                    <p>
+                                        <small class="text-end">
+                                            {{
+                                                question.answer
+                                                    ?.approved_by_mufti ||
+                                                translate("Not Available")
+                                            }}
+                                        </small>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -328,7 +252,7 @@ import "@vueup/vue-quill/dist/vue-quill.snow.css";
 export default {
     layout: Master,
     components: {
-        QuillEditor, 
+        QuillEditor,
     },
     data() {
         return {
@@ -480,5 +404,14 @@ export default {
 }
 .invalid-bg {
     border-color: red !important;
+}
+
+.sawal-jawab h3,
+.sawal-jawab h4 {
+    background: #174696;
+    color: white;
+    font-size: 26px;
+    padding: 10px 12px;
+    margin-bottom: 20px;
 }
 </style>
