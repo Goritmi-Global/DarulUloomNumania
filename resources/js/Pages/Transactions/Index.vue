@@ -1131,11 +1131,11 @@ export default {
 
         <div class="section">
             <div class="field-row">
-                <div class="field-label"> this.translate("Date") :</div>
+                <div class="field-label">Date:</div>
                 <div class="field-value">${entry.transaction_date}</div>
             </div>
             <div class="field-row">
-                <div class="field-label">this.translate("Islamic Date"):</div>
+                <div class="field-label">Islamic Date:</div>
                 <div class="field-value">${entry.islamic_date}</div>
             </div>
             <div class="field-row">
