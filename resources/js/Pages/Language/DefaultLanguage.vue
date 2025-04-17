@@ -12,8 +12,7 @@
                         }"
                     >
                         {{ translate("Default Language") }}
-                    </h5>
-
+                    </h5> 
                     <!-- Floating Labels Form -->
                     <form @submit.prevent="submit">
                         <div class="row g-3">
