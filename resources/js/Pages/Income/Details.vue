@@ -2,14 +2,14 @@
     <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1 class="theme-text-color">Income From - {{ income_type_name }}</h1>
+                <h1 class="theme-text-color">{{ translate("Income From -") }}  {{ income_type_name }}</h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/">Darul Oloom</a>
+                            <a href="/">{{ translate("Darul Oloom") }} </a>
                         </li>
-                        <li class="breadcrumb-item">Income</li>
-                        <li class="breadcrumb-item active">Details</li>
+                        <li class="breadcrumb-item">{{ translate("Income") }} </li>
+                        <li class="breadcrumb-item active">{{ translate("Details") }} </li>
                     </ol>
                 </nav>
             </div>
@@ -21,9 +21,9 @@
                         <table id="expenseTable" class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Date</th>
-                                    <th>Credit</th>
+                                    <th>{{ translate("#") }} </th>
+                                    <th>{{ translate("Date") }} </th>
+                                    <th>{{ translate("Credit") }}</th>
                                     
                                 </tr>
                             </thead>
