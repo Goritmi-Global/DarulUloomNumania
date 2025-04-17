@@ -1,5 +1,25 @@
 <template>
+    <div v-if="loading" class="preloader">
+        <transition name="fade">
+            <div class="loader-wrapper">
+                <img
+                    :src="'/images/frontlogo.png'"
+                    alt="Goritmi Logo"
+                    class="logo-bounce mb-2"
+                    width="290"
+                />
+                <p class="loader-text text-center">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </p>
+                <!-- <p style="color: red;">Coming Soon</p> -->
+            </div>
+        </transition>
+    </div>
+
     <div
+        v-else
         class="main"
         :class="{
             'c-jameel-noori':
@@ -12,7 +32,7 @@
             class="header fixed-top d-flex align-items-center justify-content-between px-3"
         >
             <a href="/" class="logo d-flex align-items-center">
-                <img src="/images/logo.jpg" alt="Logo" />
+                <img src="/images/frontlogo.png" alt="Logo" />
             </a>
 
             <!-- test {{ user_language_name }} / {{ $page.props.default_language }} -->
@@ -113,7 +133,7 @@
             </nav>
 
             <i class="bi bi-list mobile-menu" @click="toggleMenu"></i>
-        </header> 
+        </header>
         <!-- Mobile Navigation -->
         <nav v-if="menuOpen" class="mobile-nav">
             <ul>
@@ -213,7 +233,13 @@
                     <div class="row">
                         <!-- Contact Info Section -->
                         <div class="col-lg-6 col-md-6 footer-contact">
-                            <h3>{{ translate("Jamia Darol Uloom Noumania Utmanzai") }}</h3>
+                            <h3>
+                                {{
+                                    translate(
+                                        "Jamia Darol Uloom Noumania Utmanzai"
+                                    )
+                                }}
+                            </h3>
                             <p>
                                 <strong>{{ translate("Phone:") }} </strong>
                                 091650861<br />
@@ -330,6 +356,10 @@ export default {
             langMenuOpen: false,
             user_language_name: "",
             languages: [],
+
+            loading: true,
+            dots: "",
+            dotInterval: null,
         };
     },
     mounted() {
@@ -345,6 +375,28 @@ export default {
         document.head.appendChild(mainJs);
 
         document.addEventListener("click", this.handleOutsideClick);
+
+        // preloader
+        let preloader = this.$refs.preloader;
+        if (preloader) {
+            window.addEventListener("load", () => {
+                preloader.remove();
+            });
+        }
+        window.addEventListener("scroll", this.handleScroll);
+
+        // Animate dots
+        let dotCount = 0;
+        this.dotInterval = setInterval(() => {
+            dotCount = (dotCount + 1) % 4;
+            this.dots = ".".repeat(dotCount);
+        }, 500);
+
+        // Stop loader after 5 seconds
+        setTimeout(() => {
+            clearInterval(this.dotInterval);
+            this.loading = false;
+        }, 2000);
     },
     beforeUnmount() {
         document.removeEventListener("click", this.handleOutsideClick);
@@ -646,5 +698,101 @@ export default {
 .footer-newsletter form button:hover {
     background-color: #f8d4d4;
     color: #174696;
+}
+
+/* Loader Styles */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e6ecf3, #f7f9fc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.loader-wrapper {
+    text-align: center;
+}
+
+/* Bounce animation on the logo */
+.logo-bounce {
+    animation: logoBounce 1.2s infinite ease-in-out;
+}
+
+@keyframes logoDance {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateY(-10px) rotate(-5deg) scale(1.05);
+    }
+    50% {
+        transform: translateY(0) rotate(5deg) scale(1);
+    }
+    75% {
+        transform: translateY(-10px) rotate(-5deg) scale(1.05);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+.logo-bounce {
+    animation: logoDance 1.5s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0.5;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.loader-text {
+    font-size: 20px;
+    color: #296fb6;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Dot style */
+.loader-text span {
+    width: 10px;
+    height: 10px;
+    background-color: #296fb6;
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounceDot 1.2s infinite ease-in-out;
+}
+
+/* Add delays for each dot using nth-child */
+.loader-text span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.loader-text span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounceDot {
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+        opacity: 0.3;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 </style>

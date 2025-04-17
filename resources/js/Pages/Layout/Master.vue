@@ -1,5 +1,6 @@
 <template>
-    <div
+   
+    <div  
         class="main"
         :class="{
             'c-jameel-noori':
@@ -485,6 +486,7 @@
         </footer>
         <!-- End Footer -->
     </div>
+     
 </template>
 
 <script>
@@ -502,6 +504,8 @@ export default {
         return {
             languages: [],
             user_language_name: "",
+
+
         };
     },
     mounted() {
@@ -515,6 +519,9 @@ export default {
         let mainJs = document.createElement("script");
         mainJs.setAttribute("src", "/backend/assets/js/main.js");
         document.head.appendChild(mainJs);
+
+        
+
     },
 
     methods: {
@@ -728,4 +735,14 @@ export default {
     background: #012970 !important;
     color: var(--ms-option-color-selected, #fff);
 }
+/* Fade transition */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 1s ease;
+}
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
 </style>
