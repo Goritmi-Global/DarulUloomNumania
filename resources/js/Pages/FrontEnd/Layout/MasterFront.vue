@@ -1,5 +1,9 @@
 <template>
-    <div class="main">
+    <div class="main" :class="{
+                'c-jameel-noori':
+                    $page.props.default_language === 'PK' ||
+                    $page.props.default_language === 'SA',
+            }">
         <header
             id="header"
             class="header fixed-top d-flex align-items-center justify-content-between px-3"
@@ -367,15 +371,18 @@ export default {
 :root {
     --primary-color: #174696;
 }
-body {
-    font-family: "Jameel Noori Nastaleeq", serif;
-    font-size: 16px !important;
-}
+ 
 .rtl-text {
     direction: rtl;
     text-align: right;
+    font-family: "Jameel Noori Nastaleeq", serif;
+    font-size: 16px !important;
 }
-
+.c-jameel-noori
+{
+    font-family: "Jameel Noori Nastaleeq", serif;
+    font-size: 16px !important;
+}
 .rtl-text .nav ul {
     justify-content: flex-end !important;
 }

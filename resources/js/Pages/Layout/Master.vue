@@ -1,5 +1,9 @@
 <template>
-    <div class="main">
+    <div class="main" :class="{
+                'c-jameel-noori':
+                    $page.props.default_language === 'PK' ||
+                    $page.props.default_language === 'SA',
+            }">
         <header id="header" class="header fixed-top d-flex align-items-center">
             <div class="d-flex align-items-center justify-content-between">
                 <a
@@ -400,7 +404,15 @@
 
         <!-- End Sidebar-->
 
-        <slot></slot>
+        <div
+            :class="{
+                'rtl-text':
+                    $page.props.default_language === 'PK' ||
+                    $page.props.default_language === 'SA',
+            }"
+        >
+            <slot></slot>
+        </div>
 
         <!-- ======= Footer ======= -->
         <footer id="footer" class="footer">
@@ -484,10 +496,19 @@ export default {
 
 @import "@vueform/multiselect/themes/default.css";
 /* custom style that should be moved into the custom.css file later */
-body
-{
-    font-family: 'Jameel Noori Nastaleeq', serif;
+.rtl-text {
+    direction: rtl;
+    text-align: right;
+    font-family: "Jameel Noori Nastaleeq", serif;
     font-size: 16px !important;
+}
+.c-jameel-noori
+{
+    font-family: "Jameel Noori Nastaleeq", serif;
+    font-size: 16px !important;
+}
+.rtl-text .nav ul {
+    justify-content: flex-end !important;
 }
 .section-title {
     text-align: left;
