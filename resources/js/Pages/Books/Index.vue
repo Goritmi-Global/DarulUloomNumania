@@ -140,7 +140,7 @@
 
             <!-- Modal -->
             <div class="modal fade" id="updateRecordModal">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 v-if="form.id">{{ translate("Edit Book") }}</h5>

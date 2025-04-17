@@ -140,11 +140,11 @@
             tabindex="-1"
             aria-hidden="true"
         >
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">
-                            {{ selectedStudent.name }} - Details
+                            {{ selectedStudent.name }} - {{ translate("Details") }}
                         </h5>
                         <button
                             type="button"
