@@ -7,11 +7,13 @@
             <a href="/" class="logo d-flex align-items-center">
                 <img src="/images/logo.jpg" alt="Logo" />
             </a>
-             
+
+            <!-- test {{ user_language_name }} / {{ $page.props.default_language }} -->
+
             <nav class="nav">
                 <ul class="d-flex align-items-center">
                     <!-- Language Dropdown -->
-                     
+
                     <li
                         class="nav-item dropdown languages"
                         v-if="languages && languages.length"
@@ -29,6 +31,7 @@
                             v-if="langMenuOpen"
                             class="dropdown-menu dropdown-menu-end c-global-radius"
                             aria-labelledby="languageDropdown"
+                            style="border-radius: 0px !important"
                         >
                             <li
                                 v-for="(language, index) in languages"
@@ -140,47 +143,53 @@
                     >
                 </li>
                 <li
-                        class="nav-item dropdown languages bg-warning"
-                        v-if="languages && languages.length"
+                    class="nav-item dropdown languages bg-warning"
+                    v-if="languages && languages.length"
+                >
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="javascript:void(0)"
+                        id="languageDropdown"
+                        role="button"
+                        @click="toggleLangMenu"
                     >
-                        <a
-                            class="nav-link dropdown-toggle"
-                            href="javascript:void(0)"
-                            id="languageDropdown"
-                            role="button"
-                            @click="toggleLangMenu"
+                        {{ user_language_name }}
+                    </a>
+                    <ul
+                        v-if="langMenuOpen"
+                        aria-labelledby="languageDropdown"
+                        style="border-radius: 0px !important"
+                    >
+                        <li
+                            v-for="(language, index) in languages"
+                            :key="index"
+                            :class="[
+                                language.code == $page.props.default_language
+                                    ? 'lang-active'
+                                    : '',
+                            ]"
                         >
-                            {{ user_language_name }}
-                        </a>
-                        <ul
-                            v-if="langMenuOpen"
-                            class="   c-global-radius text-w"
-                            aria-labelledby="languageDropdown"
-                        >
-                            <li
-                                v-for="(language, index) in languages"
-                                :key="index"
-                                :class="[
-                                    language.code ==
-                                    $page.props.default_language
-                                        ? 'lang-active'
-                                        : '',
-                                ]"
+                            <a
+                                class="dropdown-item"
+                                href="javascript:void(0)"
+                                @click="changeLang(language.code)"
                             >
-                                <a
-                                    class="dropdown-item"
-                                    href="javascript:void(0)"
-                                    @click="changeLang(language.code)"
-                                >
-                                    {{ language.name }}
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                                {{ language.name }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
-
-        <slot></slot>
+        <div
+            :class="{
+                'rtl-text':
+                    $page.props.default_language === 'PK' ||
+                    $page.props.default_language === 'SA',
+            }"
+        >
+            <slot></slot>
+        </div>
 
         <!-- ======= Footer ======= -->
         <footer id="footer" class="footer">
@@ -292,6 +301,11 @@ export default {
         let mainJs = document.createElement("script");
         mainJs.setAttribute("src", "/backend/assets/js/main.js");
         document.head.appendChild(mainJs);
+
+        document.addEventListener("click", this.handleOutsideClick);
+    },
+    beforeUnmount() {
+        document.removeEventListener("click", this.handleOutsideClick);
     },
     methods: {
         isActive(route) {
@@ -351,20 +365,28 @@ export default {
 @import url("public/backend/assets/vendor/bootstrap/css/bootstrap.min.css");
 /* Primary Color */
 :root {
-    --primary-color: #b8860b ;
+    --primary-color: #174696;
 }
-body
-{
-    font-family: 'Jameel Noori Nastaleeq', serif;
+body {
+    font-family: "Jameel Noori Nastaleeq", serif;
     font-size: 16px !important;
 }
+.rtl-text {
+    direction: rtl;
+    text-align: right;
+}
+
+.rtl-text .nav ul {
+    justify-content: flex-end !important;
+}
+
 #main {
     /* font-family: "Playfair Display", serif !important; */
 
     font-weight: 700 !important;
 }
 .header {
-    background: #b8860b ;
+    background: #174696;
     height: 60px;
     display: flex;
     align-items: center;
@@ -387,47 +409,51 @@ body
     margin: 0;
     padding: 0;
     display: flow;
-    color: #b8860b  !important;
+    color: #174696 !important;
 }
 
 /* .nav ul li {
     margin: 0 15px;
 } */
 
-/* .lang-active a {
+.languages .lang-active a {
     color: white !important;
-} */
+}
 .lang-active a,
 .lang-active a:hover {
     /* background-color: white !important; */
     color: white !important;
-    background-color: #ebcc7f !important;
+    background-color: #174696 !important;
+}
+
+.nav-link:focus {
+    color: white;
 }
 
 .languages ul a {
-    color: #b8860b  !important;
+    color: black !important;
     text-decoration: none !important;
     font-weight: 500 !important;
 }
 .nav ul li a {
-    color: #fff;
+    color: white;
     text-decoration: none;
- 
 }
 
 .nav ul li a:hover {
-    color: #f8d4d4;
+    color: white;
+    font-weight: bold;
 }
 
 .mobile-menu {
     display: none;
     font-size: 24px;
-    color: #fff;
+    color: white;
     cursor: pointer;
 }
 
 .mobile-nav {
-    background: #b8860b ;
+    background: #174696;
     padding: 10px 0;
 }
 
@@ -443,17 +469,16 @@ body
 }
 
 .mobile-nav ul li a {
-    color: #fff;
+    color: white;
     text-decoration: none;
     font-size: 18px;
 }
 
 .footer {
-    background: #b8860b !important;
+    background: #174696 !important;
     padding: 10px;
-    color: #fff !important; 
+    color: white !important;
     font-size: 14px;
-    
 }
 
 @media (max-width: 768px) {
@@ -465,22 +490,22 @@ body
     }
 }
 .bg-primary {
-    background: #b8860b  !important;
+    background: #174696 !important;
 }
 
 .btn-success {
-    background-color: #b8860b  !important;
-    border-color: #b8860b  !important;
+    background-color: #174696 !important;
+    border-color: #174696 !important;
 }
 
 .btn-success:hover {
-    background-color: #b8860b  !important;
-    border-color: #b8860b  !important;
+    background-color: #174696 !important;
+    border-color: #174696 !important;
 }
 
 .btn-success:active {
-    background-color: #b8860b  !important;
-    border-color: #b8860b  !important;
+    background-color: #174696 !important;
+    border-color: #174696 !important;
 }
 
 .btn-success:focus {
@@ -488,32 +513,31 @@ body
     box-shadow: none !important;
 }
 .toast-success {
-    background-color: #b8860b  !important;
+    background-color: #174696 !important;
 }
 .theme-text-color {
-    color: #b8860b  !important;
+    color: #174696 !important;
     font-weight: bold;
 }
 .theme-bg-color {
-    background-color: #b8860b  !important;
+    background-color: #174696 !important;
 }
 .text-primary {
-    color: #b8860b  !important;
+    color: #174696 !important;
 }
 
 .footer {
     width: 100%;
-    background: white; 
+    background: white;
     font-size: 14px;
-    
 }
- 
+
 .multiselect-option.is-selected {
-    background: #b8860b  !important;
+    background: #174696 !important;
     color: var(--ms-option-color-selected, #fff);
 }
 .multiselect-option.is-selected.is-pointed {
-    background: #b8860b  !important;
+    background: #174696 !important;
     color: var(--ms-option-color-selected, #fff);
 }
 .nav ul li {
@@ -521,19 +545,15 @@ body
 }
 
 .nav ul li a.active {
-    
     font-weight: bold;
-     
 }
 .footer-top {
     margin-bottom: 30px;
-   
 }
- 
 
 .footer-social a {
     font-size: 20px;
-    color: white ;
+    color: white;
     margin: 0 10px;
     transition: color 0.3s ease;
 }
@@ -565,14 +585,14 @@ body
 .footer-newsletter form input {
     padding: 10px;
     width: 70%;
-    border: 1px solid white ;
+    border: 1px solid white;
     border-radius: 5px;
     margin-right: 10px;
 }
 
 .footer-newsletter form button {
     padding: 10px 20px;
-    background-color: #b8860b ;
+    background-color: #174696;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -581,9 +601,6 @@ body
 
 .footer-newsletter form button:hover {
     background-color: #f8d4d4;
-    color: #b8860b ;
+    color: #174696;
 }
-
- 
-
 </style>
