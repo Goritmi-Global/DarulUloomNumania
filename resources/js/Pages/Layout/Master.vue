@@ -404,7 +404,9 @@
 
         <!-- End Sidebar-->
 
-        <slot></slot>
+        
+            <slot></slot>
+        
 
         <!-- ======= Footer ======= -->
         <footer id="footer" class="footer">
@@ -493,6 +495,21 @@ export default {
 {
     font-family: "Jameel Noori Nastaleeq", serif;
     font-size: 16px !important;
+}
+
+.rtl-text {
+    direction: rtl;
+    text-align: right;
+    font-family: "Jameel Noori Nastaleeq", serif;
+    font-size: 16px !important;
+}
+.c-jameel-noori
+{
+    font-family: "Jameel Noori Nastaleeq", serif;
+    font-size: 16px !important;
+}
+.rtl-text .nav ul {
+    justify-content: flex-end !important;
 }
 .section-title {
     text-align: left;

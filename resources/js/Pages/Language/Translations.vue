@@ -1,5 +1,5 @@
 <template>
-     <main id="main" class="main">
+    <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
                 <h1>{{ translate("Translations") }}</h1>

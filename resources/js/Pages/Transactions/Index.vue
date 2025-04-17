@@ -2,14 +2,20 @@
     <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1 class="theme-text-color">{{ translate("Transaction")}}</h1>
+                <h1 class="theme-text-color">{{ translate("Transaction") }}</h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/dashboard">{{ translate("Darul Oloom")}}m</a>
+                            <a href="/dashboard"
+                                >{{ translate("Darul Oloom") }}m</a
+                            >
                         </li>
-                        <li class="breadcrumb-item">{{ translate("Transaction")}}</li>
-                        <li class="breadcrumb-item active">{{ translate("Index")}}</li>
+                        <li class="breadcrumb-item">
+                            {{ translate("Transaction") }}
+                        </li>
+                        <li class="breadcrumb-item active">
+                            {{ translate("Index") }}
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -21,7 +27,8 @@
                     data-bs-target="#transactionmodal"
                     @click="clearFields"
                 >
-                    <i class="bi bi-plus-lg"></i> {{ translate("New Transaction") }}
+                    <i class="bi bi-plus-lg"></i>
+                    {{ translate("New Transaction") }}
                 </button>
             </div>
         </div>
@@ -29,7 +36,14 @@
         <section class="section">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title theme-text-color">
+                    <h5
+                        class="card-title theme-text-color"
+                        :class="{
+                            'rtl-text':
+                                $page.props.default_language === 'PK' ||
+                                $page.props.default_language === 'SA',
+                        }"
+                    >
                         {{ translate("All Transaction Entries") }}
                     </h5>
                     <!-- Filter Section -->
@@ -116,7 +130,9 @@
                                             :options="yearsOptions"
                                             :searchable="true"
                                             @clear="fetchTransactionEntries"
-                                            :placeholder="translate('Select Year')"
+                                            :placeholder="
+                                                translate('Select Year')
+                                            "
                                         />
                                     </div>
 
@@ -127,7 +143,9 @@
                                             :options="monthsOptions"
                                             :searchable="true"
                                             @clear="fetchTransactionEntries"
-                                            :placeholder="translate('Select Month')"
+                                            :placeholder="
+                                                translate('Select Month')
+                                            "
                                         />
                                     </div>
                                 </div>
@@ -196,9 +214,9 @@
                                             role="status"
                                             aria-hidden="true"
                                         ></span>
-                                        <span v-if="!serachingLoading"
-                                            >{{ translate("Search")}}</span
-                                        >
+                                        <span v-if="!serachingLoading">{{
+                                            translate("Search")
+                                        }}</span>
                                     </button>
                                 </div>
                             </div>
@@ -209,22 +227,40 @@
                     </div>
 
                     <!-- Table Section -->
-                    <div class="table-responsive">
+                    <div class="table-responsive" >
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">{{translate('Date') }}</th>
-                                    <th scope="col">{{translate('Reciept No') }}</th>
-                                    <th scope="col">{{translate('Business Type') }}</th>
-                                    <th scope="col">{{translate('Descriptions') }}</th>
-                                    <th scope="col">{{translate('Method') }}</th>
-                                    <th scope="col">{{translate('Type') }}</th>
-                                    <th scope="col">{{translate('Cash In') }}</th>
-                                    <th scope="col">{{translate('Cash Out') }}</th>
-                                    <th scope="col">{{translate('Balance') }}</th>
-                                    <th scope="col">{{translate('Reciept') }}</th>
-                                    <th scope="col">{{translate('Action') }}</th>
+                                    <th scope="col">{{ translate("Date") }}</th>
+                                    <th scope="col">
+                                        {{ translate("Reciept No") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Business Type") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Descriptions") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Method") }}
+                                    </th>
+                                    <th scope="col">{{ translate("Type") }}</th>
+                                    <th scope="col">
+                                        {{ translate("Cash In") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Cash Out") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Balance") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Reciept") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Action") }}
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -328,16 +364,18 @@
                             <div class="card card-body p-3">
                                 <div class="row g-3">
                                     <div class="col-12 col-md-12 mb-3">
-                                        <label>{{ translate("Process Type") }} </label>
+                                        <label
+                                            >{{ translate("Process Type") }}
+                                        </label>
                                         <Multiselect
                                             v-model="form.process_type"
                                             :options="processTypeOptions"
                                             :searchable="true"
-                                          
                                             @select="
-                                            pluckExpIncTypes( 
+                                                pluckExpIncTypes(
                                                     form.process_type
-                                                ),clearProcessType()
+                                                ),
+                                                    clearProcessType()
                                             "
                                             :class="{
                                                 'invalid-bg':
@@ -351,16 +389,17 @@
                                             {{ formErrors.process_type[0] }}
                                         </div>
                                     </div>
-                                   
+
                                     <div
                                         class="col-12 col-md-6"
                                         v-if="form.process_type == 'Income'"
                                     >
-                                        <label>{{   translate("Income Type") }} </label>
+                                        <label
+                                            >{{ translate("Income Type") }}
+                                        </label>
                                         <Multiselect
                                             v-model="form.income_type"
                                             :options="IncomeTypesOptions"
-                                             
                                             :searchable="true"
                                             :class="{
                                                 'invalid-bg':
@@ -379,11 +418,12 @@
                                         class="col-12 col-md-6"
                                         v-if="form.process_type == 'Expense'"
                                     >
-                                        <label>{{ translate("Expense Type") }} </label>
+                                        <label
+                                            >{{ translate("Expense Type") }}
+                                        </label>
                                         <Multiselect
                                             v-model="form.expense_type"
                                             :options="ExpenseTypesOptions"
-                                           
                                             :searchable="true"
                                             :class="{
                                                 'invalid-bg':
@@ -427,7 +467,9 @@
                                             form.process_type == 'Borrow'
                                         "
                                     >
-                                        <label for="cash_in">{{ translate("Cash In")}}</label>
+                                        <label for="cash_in">{{
+                                            translate("Cash In")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
@@ -453,7 +495,9 @@
                                             form.process_type == 'Lend'
                                         "
                                     >
-                                        <label for="cash_out">{{ translate("Cash Out")}}</label>
+                                        <label for="cash_out">{{
+                                            translate("Cash Out")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
@@ -473,7 +517,9 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="remarks">{{ translate("Description")}}</label>
+                                        <label for="remarks">{{
+                                            translate("Description")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
@@ -493,7 +539,9 @@
                                     </div>
 
                                     <div class="col-12 col-md-6">
-                                        <label>{{ translate("Payment Method") }} </label>
+                                        <label
+                                            >{{ translate("Payment Method") }}
+                                        </label>
                                         <Multiselect
                                             v-model="form.method"
                                             :options="methodTypesOpions"
@@ -511,7 +559,9 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="type">{{ translate("Reciept No")}}</label>
+                                        <label for="type">{{
+                                            translate("Reciept No")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
@@ -530,7 +580,9 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="date">{{ translate("Date")}}</label>
+                                        <label for="date">{{
+                                            translate("Date")
+                                        }}</label>
                                         <input
                                             type="date"
                                             class="form-control"
@@ -549,9 +601,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12">
-                                        <label for="receipt_image"
-                                            >{{ translate("Receipt image")}}</label
-                                        >
+                                        <label for="receipt_image">{{
+                                            translate("Receipt image")
+                                        }}</label>
                                         <br />
                                         <CropperOffCanvas
                                             @croppedImg="croppedImgPassToForm"
@@ -757,7 +809,7 @@ export default {
         },
         clearProcessType() {
             this.form.cash_in = "";
-            this.form.cash_out = ""; 
+            this.form.cash_out = "";
         },
         fetchTransactionEntries() {
             this.serachingLoading = true;
@@ -767,15 +819,17 @@ export default {
                 this.selectedFilter === "Monthly" &&
                 (!this.selectedMonth || !this.selectedYear)
             ) {
-                this.FilterErrors =
-                    this.translate("Please select both Month and Year for the Monthly filter.");
+                this.FilterErrors = this.translate(
+                    "Please select both Month and Year for the Monthly filter."
+                );
                 this.serachingLoading = false;
                 return;
             }
 
             if (this.selectedFilter === "Yearly" && !this.selectedYear) {
-                this.FilterErrors =
-                this.translate("Please select a Year for the Yearly filter.");
+                this.FilterErrors = this.translate(
+                    "Please select a Year for the Yearly filter."
+                );
                 this.serachingLoading = false;
                 return;
             }
@@ -784,8 +838,9 @@ export default {
                 this.selectedFilter === "Custom" &&
                 (!this.startDate || !this.endDate)
             ) {
-                this.FilterErrors =
-                this.translate("Please select both Start Date and End Date for the Custom filter.");
+                this.FilterErrors = this.translate(
+                    "Please select both Start Date and End Date for the Custom filter."
+                );
                 this.serachingLoading = false;
                 return;
             }
@@ -849,7 +904,7 @@ export default {
             formData.append("ref_no", sanitizeValue(this.form.ref_no));
             formData.append("method", sanitizeValue(this.form.method));
             formData.append("remarks", sanitizeValue(this.form.remarks));
-            
+
             formData.append("person", sanitizeValue(this.form.person));
             formData.append(
                 "expense_type",
@@ -879,7 +934,9 @@ export default {
                 .then(() => {
                     this.formStatus = 1;
                     this.fetchTransactionEntries();
-                    toastr.success(this.translate("Transaction entry saved successfully."));
+                    toastr.success(
+                        this.translate("Transaction entry saved successfully.")
+                    );
                     this.$refs.closeModal?.click();
                 })
                 .catch((error) => {
@@ -935,7 +992,6 @@ export default {
                         income_type: response.data.income_type || "",
                         process_type: response.data.process_type || "",
                         person: response.data.person || "",
-                        
                     };
 
                     // Set existing receipt image for preview
@@ -974,7 +1030,7 @@ export default {
                 .catch((error) => {
                     console.error("Error fetching income types:", error);
                 });
-        }, 
+        },
         pluckExpenseTypes() {
             axios
                 .get(route("api.expense.pluck")) // Ensure this API returns expense types
@@ -984,7 +1040,7 @@ export default {
                 .catch((error) => {
                     console.error("Error fetching expense types:", error);
                 });
-        }, 
+        },
         pluckPersons() {
             axios
                 .get(route("api.persons.pluck"))
@@ -1077,8 +1133,6 @@ export default {
             if (this.filterBusinessType) {
                 formData.append("businessType", this.filterBusinessType);
             }
-
-            
 
             axios
                 .post(route("download-pdf"), formData, {

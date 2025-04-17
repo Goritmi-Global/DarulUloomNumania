@@ -1,5 +1,5 @@
 <template>
-     <main id="main" class="main">
+    <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
                 <h1>{{ translate("Language") }}</h1>
@@ -28,7 +28,16 @@
         <section class="section">
             <div class="card">
                 <div class="card-body pt-4">
-                    <h5 class="card-title">{{ translate("Languages") }}</h5>
+                    <h5
+                        class="card-title"
+                        :class="{
+                            'rtl-text':
+                                $page.props.default_language === 'PK' ||
+                                $page.props.default_language === 'SA',
+                        }"
+                    >
+                        {{ translate("Languages") }}
+                    </h5>
 
                     <!-- Table with stripped rows -->
                     <table class="table table-striped">

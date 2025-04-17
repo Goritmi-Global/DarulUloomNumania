@@ -35,7 +35,11 @@
         <section class="section">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title theme-text-color">
+                    <h5 class="card-title theme-text-color" :class="{
+                'rtl-text':
+                    $page.props.default_language === 'PK' ||
+                    $page.props.default_language === 'SA',
+            }">
                         {{ translate("All Islamic Names") }}
                     </h5>
 

@@ -1,8 +1,8 @@
 <template>
-     <main id="main" class="main">
+    <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1>Add New Language</h1>
+                <h1>{{ translate("Add New Language") }}</h1>
                 <nav>
                     <ol class="breadcrumb">
                         <Link
@@ -10,12 +10,14 @@
                             :href="route('dashboard')"
                             >{{ $page.props.website_name }}</Link
                         >
-                        <li class="breadcrumb-item active">Add New Language</li>
+                        <li class="breadcrumb-item active">
+                            {{ translate("Add New Language") }}
+                        </li>
                     </ol>
                 </nav>
             </div>
-            <Link class="btn btn-success" :href="route('languages')"
-                >Go to Languages</Link
+            <Link class="btn btn-success" :href="route('languages')">
+                {{ translate("Go to Languages") }}</Link
             >
         </div>
 
@@ -23,7 +25,9 @@
         <section class="section">
             <div class="card">
                 <div class="card-body pt-4">
-                    <h5 class="card-title">Add New Language</h5>
+                    <h5 class="card-title">
+                        {{ translate("Add New Language") }}
+                    </h5>
 
                     <!-- Floating Labels Form -->
                     <form @submit.prevent="submit">
@@ -45,9 +49,9 @@
                                         }"
                                         v-model="form.status"
                                         checked
-                                        :disabled=" 
-                                            form.code ===
-                                                'US' && form.status == 1
+                                        :disabled="
+                                            form.code === 'US' &&
+                                            form.status == 1
                                         "
                                     />
                                     <label class="form-check-label">{{

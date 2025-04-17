@@ -1,14 +1,19 @@
 <template>
     <div>
         <main id="main" class="main">
-            <div class="pagetitle">
-                <h1>{{ translate('Dashboard') }} </h1>
+            <div
+                class="pagetitle"
+                 
+            >
+                <h1>{{ translate("Dashboard") }}</h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="index.html">Home</a>
+                            <a href="index.html">{{ translate("Home") }}</a>
                         </li>
-                        <li class="breadcrumb-item active">{{ translate('Dashboard') }}</li>
+                        <li class="breadcrumb-item active">
+                            {{ translate("Dashboard") }}
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -19,7 +24,14 @@
                     <!-- Filter -->
 
                     <!-- Top Boxes -->
-                    <div class="col-lg-12">
+                    <div
+                        class="col-lg-12"
+                        :class="{
+                            'rtl-text':
+                                $page.props.default_language === 'PK' ||
+                                $page.props.default_language === 'SA',
+                        }"
+                    >
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <div class="card info-card bg-white h-100">
@@ -28,12 +40,13 @@
                                         <div
                                             class="d-flex align-items-center justify-content-between"
                                         >
-                                            <h6>{{ translate('Incomes') }} </h6>
+                                            <h6>{{ translate("Incomes") }}</h6>
                                         </div>
                                         <div class="flex-grow-1">
                                             <!-- Ensures content stretches -->
                                             <h5 class="card-title">
-                                                Total: {{ incomeTypeTotal }}
+                                                {{ translate("Total") }}:
+                                                {{ incomeTypeTotal }}
                                             </h5>
 
                                             <div
@@ -63,12 +76,13 @@
                                         <div
                                             class="d-flex align-items-center justify-content-between"
                                         >
-                                            <h6>{{ translate('Expense') }} </h6>
+                                            <h6>{{ translate("Expense") }}</h6>
                                         </div>
                                         <div class="flex-grow-1">
                                             <!-- Ensures content stretches -->
                                             <h5 class="card-title">
-                                                Total: {{ expenseTypeTotal }}
+                                                {{ translate("Total") }}:
+                                                {{ expenseTypeTotal }}
                                             </h5>
 
                                             <div
@@ -104,12 +118,21 @@
                             />
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div
+                        class="col-lg-12"
+                        :class="{
+                            'rtl-text':
+                                $page.props.default_language === 'PK' ||
+                                $page.props.default_language === 'SA',
+                        }"
+                    >
                         <div class="row">
                             <div class="col-xxl-4 col-md-4">
                                 <div class="card info-card bg-white">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ translate('Cash In') }} </h5>
+                                        <h5 class="card-title">
+                                            {{ translate("Cash In") }}
+                                        </h5>
                                         <div
                                             class="d-flex align-items-center justify-content-between"
                                         >
@@ -130,7 +153,9 @@
                             <div class="col-xxl-4 col-md-4">
                                 <div class="card info-card bg-white">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ translate('Cash Out') }} </h5>
+                                        <h5 class="card-title">
+                                            {{ translate("Cash Out") }}
+                                        </h5>
                                         <div
                                             class="d-flex align-items-center justify-content-between"
                                         >
@@ -149,7 +174,9 @@
                             <div class="col-xxl-4 col-md-4">
                                 <div class="card info-card bg-white">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ translate('Balance') }} </h5>
+                                        <h5 class="card-title">
+                                            {{ translate("Balance") }}
+                                        </h5>
                                         <div
                                             class="d-flex align-items-center justify-content-between"
                                         >
@@ -181,11 +208,22 @@
                     </div>
 
                     <!-- Charts -->
-                    <div class="col-lg-12">
+                    <div
+                        class="col-lg-12"
+                        :class="{
+                            'rtl-text':
+                                $page.props.default_language === 'PK' ||
+                                $page.props.default_language === 'SA',
+                        }"
+                    >
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    {{ translate('Income vs Expense (Bar Chart - Selected Range)') }}
+                                    {{
+                                        translate(
+                                            "Income vs Expense (Bar Chart - Selected Range)"
+                                        )
+                                    }}
                                 </h5>
                                 <canvas id="barChart"></canvas>
                             </div>
@@ -227,7 +265,7 @@ export default {
             incomeTypeDetails: [],
             incomeTypeTotal: 0,
             expenseTypeDetails: [],
-            expenseTypeTotal: 0, 
+            expenseTypeTotal: 0,
             expenseDetails: [],
             cashIn: 0,
             cashOut: 0,
@@ -243,9 +281,9 @@ export default {
             filterLabel: "Last 3 Months",
             filterOptions: [
                 { value: "1", label: this.translate("Current Month") },
-                { value: "3", label:  this.translate("Last 3 Months") },
-                { value: "6", label:  this.translate("Last 6 Months") },
-                { value: "12", label:  this.translate("Last 1 Year") },
+                { value: "3", label: this.translate("Last 3 Months") },
+                { value: "6", label: this.translate("Last 6 Months") },
+                { value: "12", label: this.translate("Last 1 Year") },
                 // { value: "all", label: "Overall" },
             ],
         };

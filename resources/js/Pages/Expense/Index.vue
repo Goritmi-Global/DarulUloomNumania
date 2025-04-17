@@ -1,6 +1,6 @@
 <template>
     <main id="main" class="main">
-        <div class="pagetitle d-flex justify-content-between">
+        <div class="pagetitle d-flex justify-content-between" >
             <div>
                 <h1 class="theme-text-color">{{ translate("Expanse Types") }} </h1>
                 <nav>
@@ -28,7 +28,11 @@
         <section class="section">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title theme-text-color">
+                    <h5 class="card-title theme-text-color" :class="{
+                'rtl-text':
+                    $page.props.default_language === 'PK' ||
+                    $page.props.default_language === 'SA',
+            }">
                         {{ translate("All Expanse Types") }}
                     </h5>
                     <div class="table-responsive">

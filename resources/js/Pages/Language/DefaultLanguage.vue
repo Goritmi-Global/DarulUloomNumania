@@ -3,7 +3,14 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body pt-4">
-                    <h5 class="card-title">
+                    <h5
+                        class="card-title"
+                        :class="{
+                            'rtl-text':
+                                $page.props.default_language === 'PK' ||
+                                $page.props.default_language === 'SA',
+                        }"
+                    >
                         {{ translate("Default Language") }}
                     </h5>
 
@@ -121,12 +128,12 @@ export default {
                 })
                 .then((data) => {
                     this.formStatus = 1;
-                    
+
                     // toastr.success(
                     //     this.translate("Default language changed successfully")
                     // );
                     //this.$inertia.reload();
-                    
+
                     window.location.reload();
                 })
                 .catch((error) => {
