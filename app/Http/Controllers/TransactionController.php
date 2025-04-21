@@ -19,6 +19,8 @@ use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 use Storage;
+use Illuminate\Support\Facades\File;
+
 
 
 class TransactionController extends Controller
@@ -42,10 +44,10 @@ class TransactionController extends Controller
         // }
         
         // Apply filters only if request contains filtering parameters
-        if($request->businessType)
+        if($request->transaction_type)
         {
            
-            $query->where('business_type_id', $request->businessType);
+            $query->where('transaction_type', $request->transaction_type);
         }
         if ($request->has('selectedFilter') && $request->selectedFilter) {
             $filter = $request->selectedFilter;
@@ -218,37 +220,46 @@ class TransactionController extends Controller
         $transaction->user_id          = auth()->user()->id;
 
         // Handle receipt image
-        if ($request->receipt_image) {
-            if ($transaction->receipt_image) {
-                $existingInUploads = Upload::where('id', $transaction->receipt_image)->first();
-                if ($existingInUploads) {
-                    Storage::delete($existingInUploads->file_name);
-                    $existingInUploads->delete();
-                }
-            }
-
-            // Decode Base64 image
-            $data = substr($request->receipt_image, strpos($request->receipt_image, ',') + 1);
-            $data = base64_decode($data);
-
-            // Generate unique file name and path
-            $image_name = Str::random(40) . '.png';
-            $image_path = 'TransactionReceipts/' . $image_name;
-
-            // Store the image
-            Storage::disk('public')->put($image_path, $data);
-
-            // Save file details
-            $upload                     = new Upload();
-            $upload->file_original_name = $image_name;
-            $upload->extension          = 'png';
-            $upload->type               = 'image/png';
-            $upload->file_name          = $image_path;
-            $upload->save();
-
-            // Assign uploaded image to transaction
-            $transaction->receipt_image = $upload->id;
+        
+if ($request->receipt_image) {
+    // Delete old image if exists
+    if ($transaction->receipt_image) {
+        $existing = Upload::find($transaction->receipt_image);
+        if ($existing) {
+            Storage::disk('public')->delete($existing->file_name);
+            File::delete(public_path('storage/' . $existing->file_name)); // clean up public side
+            $existing->delete();
         }
+    }
+
+    // Decode Base64 image
+    $data = substr($request->receipt_image, strpos($request->receipt_image, ',') + 1);
+    $data = base64_decode($data);
+
+    // Generate unique name and path
+    $image_name = Str::random(40) . '.png';
+    $image_path = 'TransactionReceipts/' . $image_name;
+
+    // Store in storage/app/public
+    Storage::disk('public')->put($image_path, $data);
+
+    // Copy to public/storage for web access (no symlink needed)
+    $source      = storage_path('app/public/' . $image_path);
+    $destination = public_path('storage/' . $image_path);
+    File::ensureDirectoryExists(dirname($destination));
+    File::copy($source, $destination);
+
+    // Save in Uploads table
+    $upload                     = new Upload();
+    $upload->file_original_name = $image_name;
+    $upload->extension          = 'png';
+    $upload->type               = 'image/png';
+    $upload->file_name          = $image_path;
+    $upload->save();
+
+    // Attach to transaction
+    $transaction->receipt_image = $upload->id;
+}
 
         $transaction->save();
 
@@ -409,15 +420,15 @@ class TransactionController extends Controller
         $selectedMonth  = null;
         $startDate      = null;
         $endDate        = null;
-        $businessType        = null;
+        $transaction_type        = null;
 
         $query = Transaction::query();
 
         // Apply filters only if a filter is selected
-        if($request->businessType)
+        if($request->transaction_type)
         {
            
-            $query->where('business_type_id', $request->businessType);
+            $query->where('transaction_type', $request->transaction_type);
         }
         if ($selectedFilter) {
             if ($selectedFilter == 'Yearly') {
@@ -460,10 +471,10 @@ class TransactionController extends Controller
         $query = Transaction::query();
 
         // Apply filters only if a filter is selected
-        if($request->businessType)
+        if($request->transaction_type)
         {
            
-            $query->where('business_type_id', $request->businessType);
+            $query->where('transaction_type', $request->transaction_type);
         }
         if ($request->has('selectedFilter') && $request->selectedFilter) {
             $filter = $request->selectedFilter;

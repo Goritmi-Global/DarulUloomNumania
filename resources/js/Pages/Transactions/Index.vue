@@ -191,16 +191,17 @@
                                     />
                                 </div>
 
-                                <!-- <div class="col-auto" >
+                                <div class="col-auto">
                                     <Multiselect
-                                        v-model="filterBusinessType"
-                                        :options="businessTypesOptions"
-                                        placeholder="Bussiness Type"
+                                        v-model="filterTransactionType"
+                                        :options="processTypeOptions"
+                                        :placeholder="
+                                            translate('Filter By Type')
+                                        "
                                         :searchable="true"
                                         @clear="fetchTransactionEntries"
                                     />
-                                    
-                                </div> -->
+                                </div>
 
                                 <div class="col-auto">
                                     <button
@@ -785,11 +786,11 @@ export default {
             today: this.getPakistanDate(),
             transactionEntries: [],
             selectedFilter: "",
-            selectedMonth: "",
-            selectedYear: "",
+            selectedMonth: String(new Date().getMonth() + 1).padStart(2, '0'), 
+        selectedYear: String(new Date().getFullYear()),   
             startDate: "",
             endDate: "",
-            filterBusinessType: "",
+            filterTransactionType: "",
             months: [
                 "January",
                 "February",
@@ -835,7 +836,10 @@ export default {
             ExpenseTypesOptions: [],
             IncomeTypesOptions: [],
             methodTypesOpions: ["Bank", "Cash"],
-            processTypeOptions: ["Expense", "Income"],
+            processTypeOptions: [
+                { label: "Expense (خرچ)", value: "Expense" },
+                { label: "Income (آمدنی)", value: "Income" },
+            ],
             monthsOptions: [
                 { value: 1, label: "January" },
                 { value: 2, label: "February" },
@@ -851,7 +855,7 @@ export default {
                 { value: 12, label: "December" },
             ],
             personsOptions: [],
-            businessTypesOptions: [],
+            // filterByType: ['Income','Expense'],
             yearsOptions: Array.from(
                 { length: 2050 - 2020 + 1 },
                 (_, i) => 2020 + i
@@ -868,7 +872,7 @@ export default {
     mounted() {
         this.fetchTransactionEntries();
         this.pluckPersons();
-        this.pluckBussinessTypes();
+        // this.pluckBussinessTypes();
     },
 
     methods: {
@@ -944,8 +948,8 @@ export default {
             if (this.endDate) {
                 formData.append("endDate", this.endDate);
             }
-            if (this.filterBusinessType) {
-                formData.append("businessType", this.filterBusinessType);
+            if (this.filterTransactionType) {
+                formData.append("transaction_type", this.filterTransactionType);
             }
 
             axios
@@ -1032,14 +1036,16 @@ export default {
                     },
                 })
                 .then((response) => {
-        this.formStatus = 1;
-        this.fetchTransactionEntries();
-        toastr.success(this.translate("Transaction entry saved successfully."));
-        this.$refs.closeModal?.click();
+                    this.formStatus = 1;
+                    this.fetchTransactionEntries();
+                    toastr.success(
+                        this.translate("Transaction entry saved successfully.")
+                    );
+                    this.$refs.closeModal?.click();
 
-        // ✅ Print single transaction slip
-        this.printSingleSlip(response.data.transaction);
-    })
+                    // ✅ Print single transaction slip
+                    this.printSingleSlip(response.data.transaction);
+                })
                 .catch((error) => {
                     this.formStatus = 1;
                     toastr.error(error.response.data.message);
@@ -1047,21 +1053,23 @@ export default {
                 });
         },
         printSingleSlip(entry) {
-    const printWindow = window.open("", "_blank");
+            const printWindow = window.open("", "_blank");
 
-    const currentDateTime = new Date().toLocaleString("en-US", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true,
-    });
+            const currentDateTime = new Date().toLocaleString("en-US", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true,
+            });
 
-    const translatedTitle = this.translate("Jamia Darul Uloom Noumania Utmanzai");
+            const translatedTitle = this.translate(
+                "Jamia Darul Uloom Noumania Utmanzai"
+            );
 
-    printWindow.document.write(`
+            printWindow.document.write(`
     <html>
     <head>
         <title>Transaction Slip</title>
@@ -1157,11 +1165,15 @@ export default {
             
             <div class="field-row">
                 <div class="field-label">Cash In:</div>
-                <div class="field-value">${this.formatCurrency(entry.cash_in) ?? 0}</div>
+                <div class="field-value">${
+                    this.formatCurrency(entry.cash_in) ?? 0
+                }</div>
             </div>
             <div class="field-row">
                 <div class="field-label">Cash Out:</div>
-                <div class="field-value">${this.formatCurrency(entry.cash_out) ?? 0}</div>
+                <div class="field-value">${
+                    this.formatCurrency(entry.cash_out) ?? 0
+                }</div>
             </div>
             <div class="field-row">
                 <div class="field-label">Description:</div>
@@ -1174,12 +1186,12 @@ export default {
     </html>
     `);
 
-    printWindow.document.close();
-    printWindow.onload = function () {
-        printWindow.print();
-        printWindow.close();
-    };
-},
+            printWindow.document.close();
+            printWindow.onload = function () {
+                printWindow.print();
+                printWindow.close();
+            };
+        },
 
         formatCurrency(value) {
             return new Intl.NumberFormat("en-PK", {
@@ -1205,8 +1217,7 @@ export default {
         showEntry(entry_id) {
             axios
                 .get(route("api.transaction.show", entry_id))
-                .then((response) => { 
-
+                .then((response) => {
                     // Call pluck functions before setting form data
                     if (response.data.process_type === "Income") {
                         this.pluckIncomeTypes();
@@ -1289,16 +1300,16 @@ export default {
                     console.error(error);
                 });
         },
-        pluckBussinessTypes() {
-            axios
-                .get(route("api.business.types.pluck"))
-                .then((response) => {
-                    this.businessTypesOptions = response.data;
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        },
+        // pluckBussinessTypes() {
+        //     axios
+        //         .get(route("api.business.types.pluck"))
+        //         .then((response) => {
+        //             this.filterByType = response.data;
+        //         })
+        //         .catch((error) => {
+        //             console.error(error);
+        //         });
+        // },
         // Export data to Excel
         exportToExcel() {
             this.excelBtnLoader = true;
@@ -1318,8 +1329,8 @@ export default {
             if (this.endDate) {
                 formData.append("endDate", this.endDate);
             }
-            if (this.filterBusinessType) {
-                formData.append("businessType", this.filterBusinessType);
+            if (this.filterTransactionType) {
+                formData.append("transaction_type", this.filterTransactionType);
             }
 
             axios
@@ -1368,8 +1379,8 @@ export default {
             if (this.endDate) {
                 formData.append("endDate", this.endDate);
             }
-            if (this.filterBusinessType) {
-                formData.append("businessType", this.filterBusinessType);
+            if (this.filterTransactionType) {
+                formData.append("transaction_type", this.filterTransactionType);
             }
 
             axios
