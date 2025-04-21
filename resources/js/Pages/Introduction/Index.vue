@@ -90,7 +90,19 @@
                                 >
                                     <th scope="row">{{ index + 1 }}</th>
                                     <td>{{ intro.title }}</td>
-                                    <td>{{ intro.description }}</td>
+                                    <td>
+                                        <button
+                                            class="btn btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#introDetailsModal"
+                                            @click="introDetails(intro.description)"
+                                        >
+                                            <i
+                                                class="bi bi-eye-fill text-primary"
+                                            ></i>
+                                        </button>
+                                    </td>
+                                    <!-- <td>{{ intro.description }}</td> -->
                                     <td>
                                         <div class="btn-group">
                                             <button
@@ -249,6 +261,35 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Book Details modal -->
+         <div
+                class="modal fade"
+                id="introDetailsModal"
+                :class="{
+                    'rtl-text':
+                        $page.props.default_language === 'PK' ||
+                        $page.props.default_language === 'SA',
+                }"
+            >
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>{{ translate("Book Details") }}</h5>
+                            <button
+                                class="btn-close"
+                                ref="closeModal"
+                                data-bs-dismiss="modal"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div v-html="introContents"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Book Details modal -->
+
         </section>
     </main>
 </template>
@@ -272,6 +313,7 @@ export default {
             searchQuery: "",
             currentPage: 1,
             perPage: 5,
+            introContents: "",
         };
     },
     computed: {
@@ -298,6 +340,10 @@ export default {
         this.fetchIntroductions();
     },
     methods: {
+        introDetails(details) {
+            this.introContents = "";
+            this.introContents = details;
+        },
         fetchIntroductions() {
             axios
                 .get(route("api.introduction.fetch"))

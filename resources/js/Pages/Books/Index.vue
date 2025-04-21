@@ -85,7 +85,19 @@
                                     </td>
 
                                     <td>{{ book.download_link }}</td>
-                                    <td v-html="book.description"></td>
+                                    <td>
+                                        <button
+                                            class="btn btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#bookDetailsModal"
+                                            @click="bookDetails(book.description)"
+                                        >
+                                            <i
+                                                class="bi bi-eye-fill text-primary"
+                                            ></i>
+                                        </button>
+                                    </td>
+                                    <!-- <td v-html="book.description"></td> -->
                                     <td>
                                         <button
                                             class="btn btn-sm"
@@ -285,6 +297,35 @@
                 </div>
             </div>
         </section>
+
+         <!-- Book Details modal -->
+         <div
+                class="modal fade"
+                id="bookDetailsModal"
+                :class="{
+                    'rtl-text':
+                        $page.props.default_language === 'PK' ||
+                        $page.props.default_language === 'SA',
+                }"
+            >
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>{{ translate("Book Details") }}</h5>
+                            <button
+                                class="btn-close"
+                                ref="closeModal"
+                                data-bs-dismiss="modal"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div v-html="bookContents"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Book Details modal -->
+
     </main>
 </template>
 
@@ -314,6 +355,7 @@ export default {
             searchQuery: "",
             currentPage: 1,
             pageSize: 20,
+            bookContents: "",
         };
     },
 
@@ -348,6 +390,10 @@ export default {
     },
 
     methods: {
+        bookDetails(details) {
+            this.bookContents = "";
+            this.bookContents = details;
+        },
         fetchBooks() {
             axios
                 .get(route("api.books.fetch"))

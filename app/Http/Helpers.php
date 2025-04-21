@@ -15,6 +15,7 @@ function getFileUrl($file_name)
     return $file_name ? env('APP_URL') . '/storage/' . ltrim($file_name, '/') : null;
 }
 
+
  
 
 function american_date($date){
