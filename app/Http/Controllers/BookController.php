@@ -2,11 +2,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Upload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Storage;
-use App\Models\Upload;
+
 class BookController extends Controller
 {
     public function index()
@@ -15,17 +17,16 @@ class BookController extends Controller
     }
     public function fetch()
     {
-        $books =  Book::all();
-        foreach($books as $book)
-        {
-             // Handle receipt image
-             if ($book->image) {
-                $upload                     = Upload::where('id', $book->image)->first();
+        $books = Book::all();
+        foreach ($books as $book) {
+            // Handle receipt image
+            if ($book->image) {
+                $upload      = Upload::where('id', $book->image)->first();
                 $book->image = $upload ? getFileUrl($upload->file_name) : null;
             }
         }
-        return  $books;
-        
+        return $books;
+
     }
 
     public function store(Request $request)
@@ -44,15 +45,17 @@ class BookController extends Controller
             $book     = new Book();
             $book->id = Str::orderedUuid();
         }
-        $book->title         = $request->title;
-        $book->description   = $request->description;
-         // Handle receipt image
-         if ($request->image) {
+        $book->title       = $request->title;
+        $book->description = $request->description;
+        // Handle receipt image
+        if ($request->image) {
+            // Delete existing image if any
             if ($book->image) {
-                $existingInUploads = Upload::where('id', $book->image)->first();
-                if ($existingInUploads) {
-                    Storage::delete($existingInUploads->file_name);
-                    $existingInUploads->delete();
+                $existing = Upload::find($book->image);
+                if ($existing) {
+                    Storage::disk('public')->delete($existing->file_name);
+                    File::delete(public_path('storage/' . $existing->file_name)); // remove from public
+                    $existing->delete();
                 }
             }
 
@@ -60,14 +63,20 @@ class BookController extends Controller
             $data = substr($request->image, strpos($request->image, ',') + 1);
             $data = base64_decode($data);
 
-            // Generate unique file name and path
+            // Generate image path
             $image_name = Str::random(40) . '.png';
             $image_path = 'BooksImages/' . $image_name;
 
-            // Store the image
+            // Store in storage/app/public
             Storage::disk('public')->put($image_path, $data);
 
-            // Save file details
+            // Copy into public/storage manually (for Hostinger or shared hosting)
+            $source      = storage_path('app/public/' . $image_path);
+            $destination = public_path('storage/' . $image_path);
+            File::ensureDirectoryExists(dirname($destination));
+            File::copy($source, $destination);
+
+            // Save upload record
             $upload                     = new Upload();
             $upload->file_original_name = $image_name;
             $upload->extension          = 'png';
@@ -75,11 +84,9 @@ class BookController extends Controller
             $upload->file_name          = $image_path;
             $upload->save();
 
-            // Assign uploaded image to transaction
             $book->image = $upload->id;
         }
 
-        
         $book->download_link = $request->download_link;
         $book->save();
 
