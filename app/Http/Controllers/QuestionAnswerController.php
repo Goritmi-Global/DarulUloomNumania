@@ -68,7 +68,7 @@ class QuestionAnswerController extends Controller
         $record->save();
 
         return response()->json([
-            'message' => 'Question submitted successfully.',
+            'message' => translate('Question submitted successfully.'),
             'data'    => $record,
         ]);
     }
