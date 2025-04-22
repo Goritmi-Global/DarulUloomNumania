@@ -67,7 +67,10 @@ class QuestionAnswerController extends Controller
         $record->date        = Carbon::now(); // Store current date
         $record->save();
 
-        return 'success';
+        return response()->json([
+            'message' => 'Question submitted successfully.',
+            'data'    => $record,
+        ]);
     }
 
     public function answerStore(Request $request)

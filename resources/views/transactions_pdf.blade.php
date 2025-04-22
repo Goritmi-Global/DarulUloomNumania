@@ -7,7 +7,7 @@
     <title>Transaction Report</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Jameel Noori Nastaleeq", serif;
             margin: 20px;
         }
 
