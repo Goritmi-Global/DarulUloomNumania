@@ -2,14 +2,20 @@
     <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1 class="theme-text-color">{{ translate("Reports") }} </h1>
+                <h1 class="theme-text-color">{{ translate("Reports") }}</h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/dashboard">{{ translate("Darul Oloom") }} </a>
+                            <a href="/dashboard"
+                                >{{ translate("Darul Oloom") }}
+                            </a>
                         </li>
-                        <li class="breadcrumb-item">{{ translate("Reports") }} </li>
-                        <li class="breadcrumb-item active">{{ translate("Index") }} </li>
+                        <li class="breadcrumb-item">
+                            {{ translate("Reports") }}
+                        </li>
+                        <li class="breadcrumb-item active">
+                            {{ translate("Index") }}
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -18,12 +24,16 @@
         <section class="section">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title theme-text-color" :class="{
-                'rtl-text':
-                    $page.props.default_language === 'PK' ||
-                    $page.props.default_language === 'SA',
-            }">
-                       {{ translate("All Transaction & Reports") }}  {{ selectedFilter }}
+                    <h5
+                        class="card-title theme-text-color"
+                        :class="{
+                            'rtl-text':
+                                $page.props.default_language === 'PK' ||
+                                $page.props.default_language === 'SA',
+                        }"
+                    >
+                        {{ translate("All Transaction & Reports") }}
+                        {{ selectedFilter }}
                     </h5>
                     <!-- Filter Section -->
                     <div class="d-flex justify-content-end p-2">
@@ -35,7 +45,7 @@
                                 transactionEntries && transactionEntries.length
                             "
                         >
-                            <button
+                            <!-- <button
                                 class="btn btn-primary"
                                 title="Download as Excel"
                                 @click="exportToExcel"
@@ -66,7 +76,7 @@
                                 <span v-if="!pdfBtnLoader">
                                     <i class="bi bi-file-earmark-pdf"></i
                                 ></span>
-                            </button>
+                            </button> -->
                             <button
                                 class="btn btn-secondary"
                                 title="Print"
@@ -93,7 +103,7 @@
                                             'Custom',
                                         ]"
                                         :searchable="true"
-                                       :placeholder="translate('Filter By')"
+                                        :placeholder="translate('Filter By')"
                                         @clear="fetchTransactionEntries"
                                     />
                                 </div>
@@ -212,9 +222,15 @@
                                                 : "Date"
                                         }}
                                     </th>
-                                    <th scope="col">{{ translate("Income") }} </th>
-                                    <th scope="col">{{ translate("Expense") }} </th>
-                                    <th scope="col">{{ translate("Balance") }} </th>
+                                    <th scope="col">
+                                        {{ translate("Income") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Expense") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Balance") }}
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -237,7 +253,9 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="2">{{ translate("Total") }} </th>
+                                    <th colspan="2">
+                                        {{ translate("Total") }}
+                                    </th>
                                     <th>
                                         {{ formatCurrency(totalIncome || 0) }}
                                     </th>
@@ -253,7 +271,7 @@
                     </div>
                     <div v-else>
                         <p class="text-center text-danger">
-                            {{ translate("No data available.") }} 
+                            {{ translate("No data available.") }}
                         </p>
                     </div>
                 </div>
@@ -306,7 +324,6 @@ export default {
                 { length: 2050 - 2020 + 1 },
                 (_, i) => 2020 + i
             ),
-            
 
             totalIncome: 0, // Total Income
             totalExpense: 0, // Total Expense
@@ -421,30 +438,59 @@ export default {
                 )} to ${this.formatDate(this.endDate)}`;
             }
 
+            let currentDateTime = new Date().toLocaleString("en-US", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+            });
+
             // HTML Content
             printWindow.document.write(`
                 <html>
                 <head>
                     <title>Transaction Slip</title>
                     <style>
-                        body { font-family: Arial, sans-serif; }
-                        h2 { text-align: center; margin-bottom: 20px; }
-                        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-                        th, td { border: 1px solid black; padding: 8px; text-align: left; }
-                        th { background-color: #f2f2f2; }
-                        .footer { text-align: right; font-size: 12px; margin-top: 20px; }
-                    </style>
+            .header {
+                    text-align: center;
+                    border-bottom: 2px solid #000;
+                    padding-bottom: 10px;
+                    margin-bottom: 20px;
+                }
+                .header img {
+                    height: 100px;
+                }
+
+                .title {
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin-top: 10px;
+                }
+                body { font-family: Arial, sans-serif; }
+                h2 { text-align: center; margin-bottom: 20px; }
+                table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                th, td { border: 1px solid black; padding: 8px; text-align: left;font-size: 9px; }
+                th { background-color: #f2f2f2; }
+                .footer { text-align: right; font-size: 9px; margin-top: 20px; }
+                
+            </style>
                 </head>
                 <body>
-                    <h2>${title}</h2>
+                    <div class="header">
+                <img src="/images/logo.jpg" alt="Logo" />
+                <div class="title">${title}</div>
+            </div>
+                   
                     <table>
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Date</th>
-                                <th>Income</th>
-                                <th>Expense</th>
-                                <th>Balance</th>
+                                <th>${this.translate("Date")}</th>
+                                <th>${this.translate("Income")}</th>
+                                <th>${this.translate("Expense")}</th>
+                                <th>${this.translate("Balance")}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -469,17 +515,9 @@ export default {
                                 .join("")}
                         </tbody>
                     </table>
-                    <div class="footer">Printed: ${new Date().toLocaleString(
-                        "en-US",
-                        {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            hour12: true,
-                        }
-                    )}</div>
+                    <div class="footer">${this.translate(
+                        "Printed"
+                    )}: ${currentDateTime}</div>
                 </body>
                 </html>
             `);
