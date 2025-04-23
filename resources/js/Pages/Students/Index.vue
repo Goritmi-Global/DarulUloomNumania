@@ -67,7 +67,7 @@
 
                     <!-- Student Table -->
                     <div v-if="canShowTable" class="table-responsive">
-                        <table class="table table-striped">
+                        <table class="table table-striped" >
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -76,7 +76,7 @@
                                     <th>{{ translate("Apply For") }}</th>
                                     <th>{{ translate("Phone#") }}</th>
                                     <th>{{ translate("Applied Date") }}</th>
-                                    <th>{{ translate("Status") }}</th>
+                                    <th colspan="2" class="text-center">{{ translate("Status") }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -100,8 +100,9 @@
                                     <td>
                                         {{ formatDate(student.created_at) }}
                                     </td>
-                                    <td>
-                                        <Multiselect
+                                    <td colspan="2">
+                                  
+                                        <Multiselect 
                                             v-model="student.status"
                                             :options="statusOptions"
                                             :searchable="false"
@@ -111,6 +112,8 @@
                                             @select="
                                                 confirmStatusChange(student)
                                             "
+                                            :placeholder="translate('Select Status')"
+                                            style="width: 200px"
                                         />
                                         <ConfirmationModal
                                             :record-id="student.id"
@@ -401,4 +404,5 @@ export default {
 .cursor-pointer {
     cursor: pointer;
 }
+ 
 </style>
