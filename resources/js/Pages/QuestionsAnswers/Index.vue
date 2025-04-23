@@ -110,7 +110,19 @@
                                             {{ getStatusText(question.status) }}
                                         </span>
                                     </td>
-                                    <td>{{ question.answer.fitwa_number }}</td>
+                                    <td>
+                                        <span
+                                            v-if="
+                                                question.answer &&
+                                                question.answer.fitwa_number
+                                            "
+                                            >{{ question.answer.fitwa_number }}</span
+                                        >
+                                        <span v-else>
+                                            {{ translate("Not Assigned Yet!") }}
+                                        </span>
+                                    </td>
+                                        
                                     <td class="text-nowrap">
                                         <!-- Details Icon -->
                                         <i
