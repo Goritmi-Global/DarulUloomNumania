@@ -291,4 +291,8 @@ class HomeController extends Controller
     {
         return Inertia::render('Enrollment/Enroll');
     }
+    public function privacyPolicy()
+    { 
+        return Inertia::render('FrontEnd/PrivacyPolicy');
+    }
 }

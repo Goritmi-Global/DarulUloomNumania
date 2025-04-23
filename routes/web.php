@@ -36,6 +36,8 @@ Route::get('/storage-link', function () {
 });
 
 Route::get('/login', [HomeController::class, 'index'])->name('login');
+Route::get('/policy/and/privacy', [HomeController::class, 'privacyPolicy'])->name('privacy.policy');
+
 
 // Authenticated routes
 Route::middleware(['auth:sanctum'])->group(function () {
