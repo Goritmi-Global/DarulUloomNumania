@@ -84,7 +84,7 @@
                                             question.answer.answer_full_form
                                         "
                                     ></p>
-                                    <p>
+                                    <p v-if="question.answer.fitwa_number">
                                         <!-- add fatwa number here -->
                                         <small class="text-end">
                                             {{ translate("Fatwa Number") }} 
@@ -98,7 +98,7 @@
                                             }}
                                         </small>
                                     </p>
-                                    <p>
+                                    <p v-if="question.answer.approved_by_mufti">
                                         <small class="text-end">
                                             {{ translate("Approved By Mufti") }} 
                                         </small>
