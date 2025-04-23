@@ -33,7 +33,7 @@ class TransactionExport implements FromCollection, WithHeadings, WithMapping
     {
         // Add the header row with the title
         return [
-            ['Alshahama Hospital Peshawar'], // Title of the institution
+            ['Jamia Darol Uloom Noumania Utmanzai'], // Title of the institution
             [
                 'Transaction Report',
                 $this->getFilteredTitle(),

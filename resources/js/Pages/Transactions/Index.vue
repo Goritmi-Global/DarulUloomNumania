@@ -56,7 +56,7 @@
                                 transactionEntries && transactionEntries.length
                             "
                         >
-                            <button
+                            <!-- <button
                                 class="btn btn-primary"
                                 title="Download as Excel"
                                 @click="exportToExcel"
@@ -71,8 +71,8 @@
                                 <span v-if="!excelBtnLoader">
                                     <i class="bi bi-file-earmark-excel"></i
                                 ></span>
-                            </button>
-                            <button
+                            </button> -->
+                            <!-- <button
                                 class="btn btn-danger"
                                 title="Download as PDF"
                                 @click="exportToPDF"
@@ -87,7 +87,7 @@
                                 <span v-if="!pdfBtnLoader">
                                     <i class="bi bi-file-earmark-pdf"></i
                                 ></span>
-                            </button>
+                            </button> -->
                             <button
                                 class="btn btn-secondary"
                                 title="Print"
@@ -786,8 +786,8 @@ export default {
             today: this.getPakistanDate(),
             transactionEntries: [],
             selectedFilter: "",
-            selectedMonth: String(new Date().getMonth() + 1).padStart(2, '0'), 
-        selectedYear: String(new Date().getFullYear()),   
+            selectedMonth: String(new Date().getMonth() + 1).padStart(2, "0"),
+            selectedYear: String(new Date().getFullYear()),
             startDate: "",
             endDate: "",
             filterTransactionType: "",
@@ -1054,7 +1054,6 @@ export default {
         },
         printSingleSlip(entry) {
             const printWindow = window.open("", "_blank");
-
             const currentDateTime = new Date().toLocaleString("en-US", {
                 day: "2-digit",
                 month: "2-digit",
@@ -1064,135 +1063,111 @@ export default {
                 second: "2-digit",
                 hour12: true,
             });
-
-            const translatedTitle = this.translate(
-                "Jamia Darul Uloom Noumania Utmanzai"
-            );
+            // console.log("Testing");
+            // Translate strings before entering printWindow context
+            const translations = {
+                title: this.translate("Jamia Darul Uloom Noumania Utmanzai"),
+                date: this.translate("Date"),
+                islamicDate: this.translate("Islamic Date"),
+                receiptNo: this.translate("Receipt No"),
+                receivedFrom: this.translate("Received From"),
+                receivedBy: this.translate("Received By"),
+                method: this.translate("Method"),
+                cashIn: this.translate("Cash In"),
+                cashOut: this.translate("Cash Out"),
+                description: this.translate("Description"),
+                printedOn: this.translate("Printed on"),
+            };
+            console.log(translations);
+            const formattedCashIn = this.formatCurrency(entry.cash_in) ?? 0;
+            const formattedCashOut = this.formatCurrency(entry.cash_out) ?? 0;
 
             printWindow.document.write(`
-    <html>
-    <head>
-        <title>Transaction Slip</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                padding: 20px;
-                line-height: 1.6;
-                color: #000;
-            }
+        <html>
+        <head>
+            <title>Transaction Slip</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    padding: 20px;
+                    line-height: 1.6;
+                    color: #000;
+                    font-size: 9px;
+                }
 
-            .header {
-                text-align: center;
-                border-bottom: 2px solid #000;
-                padding-bottom: 10px;
-                margin-bottom: 20px;
-            }
+                .header {
+                    text-align: center;
+                    border-bottom: 2px solid #000;
+                    padding-bottom: 10px;
+                    margin-bottom: 20px;
+                }
 
-            .header img {
-                height: 100px;
-            }
+                .header img {
+                    height: 100px;
+                }
 
-            .title {
-                font-size: 20px;
-                font-weight: bold;
-                margin-top: 10px;
-            }
+                .title {
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin-top: 10px;
+                }
 
-            .section {
-                margin-bottom: 15px;
-            }
+                .section {
+                    margin-bottom: 15px;
+                }
 
-            .section-title {
-                font-weight: bold;
-                margin-bottom: 5px;
-                border-bottom: 1px dashed #000;
-            }
+                .field-row {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 5px;
+                }
 
-            .field-row {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 5px;
-            }
+                .field-label {
+                    width: 35%;
+                    font-weight: bold;
+                }
 
-            .field-label {
-                width: 35%;
-                font-weight: bold;
-            }
+                .field-value {
+                    width: 60%;
+                    text-align: left;
+                }
 
-            .field-value {
-                width: 60%;
-                text-align: left;
-            }
-
-            .footer {
-                margin-top: 30px;
-                text-align: right;
-                font-size: 12px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="header">
-            <img src="/images/logo.jpg" alt="Logo" />
-            <div class="title">${translatedTitle}</div>
-        </div>
-
-        <div class="section">
-            <div class="field-row">
-                <div class="field-label">Date:</div>
-                <div class="field-value">${entry.transaction_date}</div>
+                .footer {
+                    margin-top: 30px;
+                    text-align: right;
+                    font-size: 12px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <img src="/images/logo.jpg" alt="Logo" />
+                <div class="title">${translations.title}</div>
             </div>
-            <div class="field-row">
-                <div class="field-label">Islamic Date:</div>
-                <div class="field-value">${entry.islamic_date}</div>
-            </div>
-            <div class="field-row">
-                <div class="field-label">Receipt No:</div>
-                <div class="field-value">${entry.ref_no}</div>
-            </div>
-            <div class="field-row">
-                <div class="field-label">Received From:</div>
-                <div class="field-value">${entry.received_from}</div>
-            </div>
-            <div class="field-row">
-                <div class="field-label">Received By:</div>
-                <div class="field-value">${entry.received_by}</div>
-            </div>
-            <div class="field-row">
-                <div class="field-label">Method:</div>
-                <div class="field-value">${entry.method}</div>
-            </div>
-            
-            <div class="field-row">
-                <div class="field-label">Cash In:</div>
-                <div class="field-value">${
-                    this.formatCurrency(entry.cash_in) ?? 0
-                }</div>
-            </div>
-            <div class="field-row">
-                <div class="field-label">Cash Out:</div>
-                <div class="field-value">${
-                    this.formatCurrency(entry.cash_out) ?? 0
-                }</div>
-            </div>
-            <div class="field-row">
-                <div class="field-label">Description:</div>
-                <div class="field-value">${entry.remarks}</div>
-            </div>
-        </div>
 
-        <div class="footer">Printed on: ${currentDateTime}</div>
-    </body>
-    </html>
+            <div class="section">
+                <div class="field-row"><div class="field-label">${translations.date}:</div><div class="field-value">${entry.transaction_date}</div></div>
+                <div class="field-row"><div class="field-label">${translations.islamicDate}:</div><div class="field-value">${entry.islamic_date}</div></div>
+                <div class="field-row"><div class="field-label">${translations.receiptNo}:</div><div class="field-value">${entry.ref_no}</div></div>
+                <div class="field-row"><div class="field-label">${translations.receivedFrom}:</div><div class="field-value">${entry.received_from}</div></div>
+                <div class="field-row"><div class="field-label">${translations.receivedBy}:</div><div class="field-value">${entry.received_by}</div></div>
+                <div class="field-row"><div class="field-label">${translations.method}:</div><div class="field-value">${entry.method}</div></div>
+                <div class="field-row"><div class="field-label">${translations.cashIn}:</div><div class="field-value">${formattedCashIn}</div></div>
+                <div class="field-row"><div class="field-label">${translations.cashOut}:</div><div class="field-value">${formattedCashOut}</div></div>
+                <div class="field-row"><div class="field-label">${translations.description}:</div><div class="field-value">${entry.remarks}</div></div>
+            </div>
+
+            <div class="footer">${translations.printedOn}: ${currentDateTime}</div>
+        </body>
+        </html>
     `);
 
             printWindow.document.close();
-            printWindow.onload = function () {
+            printWindow.onload = () => {
                 printWindow.print();
                 printWindow.close();
             };
         },
-
         formatCurrency(value) {
             return new Intl.NumberFormat("en-PK", {
                 minimumFractionDigits: 0,
@@ -1435,10 +1410,13 @@ export default {
         },
         printSlip() {
             let printWindow = window.open("", "_blank");
+
+            // Helper function to get the month name
             const getMonthName = (monthNumber) => {
                 const date = new Date(2025, monthNumber - 1, 1); // Year is arbitrary
                 return date.toLocaleString("en-US", { month: "long" });
             };
+
             let currentDateTime = new Date().toLocaleString("en-US", {
                 day: "2-digit",
                 month: "short",
@@ -1448,80 +1426,116 @@ export default {
                 hour12: true,
             });
 
-            let title = "All Transactions List"; // Default title
+            // Determine the title based on selected filter with translation
+            let title = this.translate("All Transactions List"); // Default title
             if (this.selectedFilter === "Monthly") {
                 const monthName = getMonthName(this.selectedMonth);
-                title = `Transactions for ${monthName} ${this.selectedYear}`;
+                title = `${this.translate("Transactions for")} ${monthName} ${
+                    this.selectedYear
+                }`;
             } else if (this.selectedFilter === "Yearly" && this.selectedYear) {
-                title = `Transactions for the Year ${this.selectedYear}`;
+                title = `${this.translate("Transactions for the Year")} ${
+                    this.selectedYear
+                }`;
             } else if (
                 this.selectedFilter === "Custom" &&
                 this.startDate &&
                 this.endDate
             ) {
-                title = `Transactions from ${this.formatDate(
-                    this.startDate
-                )} to ${this.formatDate(this.endDate)}`;
+                title = `${this.translate(
+                    "Transactions from"
+                )} ${this.formatDate(this.startDate)} ${this.translate(
+                    "to"
+                )} ${this.formatDate(this.endDate)}`;
             }
 
+            // Prepare the HTML content for the print window with translations
             printWindow.document.write(`
         <html>
         <head>
-          
             <style>
+            .header {
+                    text-align: center;
+                    border-bottom: 2px solid #000;
+                    padding-bottom: 10px;
+                    margin-bottom: 20px;
+                }
+                .header img {
+                    height: 100px;
+                }
+
+                .title {
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin-top: 10px;
+                }
                 body { font-family: Arial, sans-serif; }
                 h2 { text-align: center; margin-bottom: 20px; }
                 table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-                th, td { border: 1px solid black; padding: 8px; text-align: left; }
+                th, td { border: 1px solid black; padding: 8px; text-align: left;font-size: 9px; }
                 th { background-color: #f2f2f2; }
-                .footer { text-align: right; font-size: 12px; margin-top: 20px; }
+                .footer { text-align: right; font-size: 9px; margin-top: 20px; }
+                
             </style>
         </head>
         <body>
-            <h2>${title}</h2>
+            
+            <div class="header">
+                <img src="/images/logo.jpg" alt="Logo" />
+                <div class="title">${title}</div>
+            </div>
+
             <table>
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Date</th>
-                        <th>Islamic date</th>
-                        <th>Receipt No</th>
-                 
-                        <th>Descriptions</th>
-                        <th>Method</th>
-                        <th>Type</th>
-                        <th>Cash In</th>
-                        <th>Cash Out</th>
-                        <th>Balance</th>
+                        <th>${this.translate("Date")}</th>
+                        <th>${this.translate("Islamic date")}</th>
+                        <th>${this.translate("Receipt No")}</th>
+                        <th>${this.translate("Descriptions")}</th>
+                        <th>${this.translate("Method")}</th>
+                        <th>${this.translate("Type")}</th>
+                        <th>${this.translate("Cash In")}</th>
+                        <th>${this.translate("Cash Out")}</th>
+                        <th>${this.translate("Balance")}</th>
                     </tr>
                 </thead>
                 <tbody>
+                    
                     ${this.transactionEntries
                         .map(
                             (entry, index) => `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td>${entry.transaction_date}</td>
-                            <td>${entry.islamic_date}</td>
-                            <td>${entry.ref_no}</td>
-                  
-                            <td>${entry.remarks}</td>
-                            <td>${entry.method}</td>
-                            <td>${entry.income_type ?? entry.expense_type}</td>
-                            <td>${this.formatCurrency(entry.cash_in) ?? 0}</td>
-                            <td>${this.formatCurrency(entry.cash_out) ?? 0}</td>
-                            <td>${this.calculateBalance(index)}</td>
-                        </tr>
-                    `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${entry.transaction_date}</td>
+                                <td>${entry.islamic_date}</td>
+                                <td>${entry.ref_no}</td>
+                                <td>${entry.remarks}</td>
+                                <td>${entry.method}</td>
+                                <td>${
+                                    entry.income_type ?? entry.expense_type
+                                }</td>
+                                <td>${
+                                    this.formatCurrency(entry.cash_in) ?? 0
+                                }</td>
+                                <td>${
+                                    this.formatCurrency(entry.cash_out) ?? 0
+                                }</td>
+                                <td>${this.calculateBalance(index)}</td>
+                            </tr>
+                        `
                         )
                         .join("")}
                 </tbody>
             </table>
-            <div class="footer">Printed: ${currentDateTime}</div>
+            <div class="footer">${this.translate(
+                "Printed"
+            )}: ${currentDateTime}</div>
         </body>
         </html>
     `);
 
+            // Close the document and trigger printing
             printWindow.document.close();
             printWindow.onload = function () {
                 printWindow.print();
