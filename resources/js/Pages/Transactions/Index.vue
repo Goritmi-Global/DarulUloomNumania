@@ -7,7 +7,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/dashboard"
-                                >{{ translate("Darul Oloom") }}m</a
+                                >{{ translate("Darul Oloom") }}</a
                             >
                         </li>
                         <li class="breadcrumb-item">
