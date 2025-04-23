@@ -85,7 +85,24 @@
                                         "
                                     ></p>
                                     <p>
+                                        <!-- add fatwa number here -->
                                         <small class="text-end">
+                                            {{ translate("Fatwa Number") }} 
+                                        </small>
+
+                                         <small class="text-end  m-3">
+                                             #{{
+                                                question.answer
+                                                    ?.fitwa_number ||
+                                                translate("Not Available")
+                                            }}
+                                        </small>
+                                    </p>
+                                    <p>
+                                        <small class="text-end">
+                                            {{ translate("Approved By Mufti") }} 
+                                        </small>
+                                        <small class="text-end  m-3">
                                             {{
                                                 question.answer
                                                     ?.approved_by_mufti ||
@@ -93,6 +110,7 @@
                                             }}
                                         </small>
                                     </p>
+                                    
                                 </div>
                             </div>
                         </div>

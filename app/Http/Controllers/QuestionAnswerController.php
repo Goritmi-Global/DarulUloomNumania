@@ -81,36 +81,46 @@ class QuestionAnswerController extends Controller
             'answer_short_form' => 'required|string|max:255',
             'answer_full_form'  => 'required|string',
             'approved_by_mufti' => 'nullable|string|max:255',
-            'fitwa_number'      => 'required',
         ]);
-
+    
         // Create a new answer record
         if ($request->id) {
             $answer = Answer::find($request->id);
         } else {
-
-            $answer     = new Answer();
+            $answer = new Answer();
             $answer->id = Str::uuid();
         }
-        $answer->question_id       = $request->question_id;
+    
+        // Generate the next fitwa_number automatically
+        $lastAnswer = Answer::latest('fitwa_number')->first(); // Get the latest answer by fitwa_number
+        $lastFitwaNumber = $lastAnswer ? (int) $lastAnswer->fitwa_number : 0; // If no answers, start from 0
+    
+        // Generate new fitwa_number, incrementing from the last one
+        $newFitwaNumber = str_pad($lastFitwaNumber + 1, 6, '0', STR_PAD_LEFT);
+        $answer->fitwa_number = $newFitwaNumber; // Set the generated fitwa_number
+    
+        // Assign the other fields from the request
+        $answer->question_id = $request->question_id;
         $answer->answer_short_form = $request->answer_short_form;
-        $answer->answer_full_form  = $request->answer_full_form;
+        $answer->answer_full_form = $request->answer_full_form;
         $answer->approved_by_mufti = $request->approved_by_mufti;
-        $answer->fitwa_number      = $request->fitwa_number;
+    
+        // Update the question's status based on the approval
+        $question = Question::find($request->question_id);
         if ($request->approved_by_mufti) {
-            $question         = Question::find($request->question_id);
-            $question->status = 2;
-            $question->save();
+            $question->status = 2; // Approved by Mufti
         } else {
-            $question         = Question::find($request->question_id);
-            $question->status = 1;
-            $question->save();
+            $question->status = 1; // Not approved
         }
+        $question->save();
+    
+        // Save the answer record with the auto-generated fitwa_number
         $answer->date = Carbon::now(); // Store current date
         $answer->save();
-
+    
         return response()->json(['message' => 'Answer stored successfully!'], 201);
     }
+    
 
     public function getApprovedQuestions(Request $request)
     {

@@ -72,6 +72,7 @@
                                     </th>
                                     <th>{{ translate("Short Answer") }}</th>
                                     <th>{{ translate("Status") }}</th>
+                                    <th>{{ translate("Fitwa Number") }}</th>
                                     <th>{{ translate("Actions") }}</th>
                                 </tr>
                             </thead>
@@ -109,6 +110,7 @@
                                             {{ getStatusText(question.status) }}
                                         </span>
                                     </td>
+                                    <td>{{ question.answer.fitwa_number }}</td>
                                     <td class="text-nowrap">
                                         <!-- Details Icon -->
                                         <i
@@ -277,7 +279,7 @@
                                         />
                                     </div>
 
-                                    <div class="col-12">
+                                    <!-- <div class="col-12">
                                         <b
                                             for="fitwa_number"
                                             class="form-label"
@@ -290,7 +292,7 @@
                                             id="fitwa_number"
                                             v-model="replyForm.fitwa_number"
                                         />
-                                    </div>
+                                    </div> -->
 
                                     <div class="mt-3">
                                         <button
@@ -460,7 +462,7 @@ export default {
                 answer_short_form: "",
                 answer_full_form: "",
                 approved_by_mufti: "",
-                fitwa_number: "",
+                // fitwa_number: "",
             },
             replyErrors: [],
             replyStatus: 1, // 1 = ready, 0 = saving
@@ -534,7 +536,7 @@ export default {
                 answer_short_form: "",
                 answer_full_form: "",
                 approved_by_mufti: "",
-                fitwa_number: "",
+                // fitwa_number: "",
             };
             this.replyErrors = [];
             this.replyForm.id = answer ? answer.id : "";
@@ -548,7 +550,7 @@ export default {
             this.replyForm.approved_by_mufti = answer
                 ? answer.approved_by_mufti
                 : "";
-            this.replyForm.fitwa_number = answer ? answer.fitwa_number : "";
+            // this.replyForm.fitwa_number = answer ? answer.fitwa_number : "";
             this.replyErrors = [];
         },
         submitReply() {

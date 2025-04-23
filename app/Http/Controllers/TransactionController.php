@@ -122,20 +122,7 @@ class TransactionController extends Controller
 
     // Store or update a transaction entry
     public function store(Request $request)
-    { 
-        // Validate the incoming request
-        // $request->validate([
-        //     'process_type' => 'required',
-        //     'income_type'  => 'required_if:process_type,Income',
-        //     'expense_type' => 'required_if:process_type,Expense',
-        //     'cash_in'      => 'nullable|numeric|required_without:cash_out|required_if:income_type,!null',
-        //     'cash_out'     => 'nullable|numeric|required_without:cash_in|required_if:expense_type,!null',
-        //     'date'         => 'required|date',
-        //     'ref_no'       => 'required|string|max:255',
-        //     'method'       => 'required|string|max:255',
-        //     'remarks'      => 'required|string|max:255',
-        // ]);
-        // dd($request->date,$request->islamic_date);
+    {  
         $request->validate([
             'process_type'  => 'required',
             'income_type'   => 'required_if:process_type,Income',
@@ -151,10 +138,7 @@ class TransactionController extends Controller
             'received_by'       => 'nullable|string|max:255',
             'received_from'       => 'nullable|string|max:255',
         ]);
-
-       
-        
-
+  
         if ($request->id) {
             // Fetch existing transaction
             $transaction = Transaction::findOrFail($request->id);
@@ -214,52 +198,52 @@ class TransactionController extends Controller
         $transaction->ref_no           = $request->ref_no;
         $transaction->method           = $request->method;
         $transaction->remarks          = $request->remarks;
-        $transaction->islamic_date          = $request->islamic_date;
-        $transaction->received_by          = $request->received_by;
-        $transaction->received_from          = $request->received_from;
+        $transaction->islamic_date     = $request->islamic_date;
+        $transaction->received_by      = $request->received_by;
+        $transaction->received_from    = $request->received_from;
         $transaction->user_id          = auth()->user()->id;
 
         // Handle receipt image
         
-if ($request->receipt_image) {
-    // Delete old image if exists
-    if ($transaction->receipt_image) {
-        $existing = Upload::find($transaction->receipt_image);
-        if ($existing) {
-            Storage::disk('public')->delete($existing->file_name);
-            File::delete(public_path('storage/' . $existing->file_name)); // clean up public side
-            $existing->delete();
+        if ($request->receipt_image) {
+            // Delete old image if exists
+            if ($transaction->receipt_image) {
+                $existing = Upload::find($transaction->receipt_image);
+                if ($existing) {
+                    Storage::disk('public')->delete($existing->file_name);
+                    File::delete(public_path('storage/' . $existing->file_name)); // clean up public side
+                    $existing->delete();
+                }
+            }
+
+            // Decode Base64 image
+            $data = substr($request->receipt_image, strpos($request->receipt_image, ',') + 1);
+            $data = base64_decode($data);
+
+            // Generate unique name and path
+            $image_name = Str::random(40) . '.png';
+            $image_path = 'TransactionReceipts/' . $image_name;
+
+            // Store in storage/app/public
+            Storage::disk('public')->put($image_path, $data);
+
+            // Copy to public/storage for web access (no symlink needed)
+            $source      = storage_path('app/public/' . $image_path);
+            $destination = public_path('storage/' . $image_path);
+            File::ensureDirectoryExists(dirname($destination));
+            File::copy($source, $destination);
+
+            // Save in Uploads table
+            $upload                     = new Upload();
+            $upload->file_original_name = $image_name;
+            $upload->extension          = 'png';
+            $upload->type               = 'image/png';
+            $upload->file_name          = $image_path;
+            $upload->save();
+
+            // Attach to transaction
+            $transaction->receipt_image = $upload->id;
         }
-    }
-
-    // Decode Base64 image
-    $data = substr($request->receipt_image, strpos($request->receipt_image, ',') + 1);
-    $data = base64_decode($data);
-
-    // Generate unique name and path
-    $image_name = Str::random(40) . '.png';
-    $image_path = 'TransactionReceipts/' . $image_name;
-
-    // Store in storage/app/public
-    Storage::disk('public')->put($image_path, $data);
-
-    // Copy to public/storage for web access (no symlink needed)
-    $source      = storage_path('app/public/' . $image_path);
-    $destination = public_path('storage/' . $image_path);
-    File::ensureDirectoryExists(dirname($destination));
-    File::copy($source, $destination);
-
-    // Save in Uploads table
-    $upload                     = new Upload();
-    $upload->file_original_name = $image_name;
-    $upload->extension          = 'png';
-    $upload->type               = 'image/png';
-    $upload->file_name          = $image_path;
-    $upload->save();
-
-    // Attach to transaction
-    $transaction->receipt_image = $upload->id;
-}
 
         $transaction->save();
 
