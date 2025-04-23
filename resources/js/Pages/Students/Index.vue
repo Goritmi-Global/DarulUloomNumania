@@ -144,7 +144,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">
-                            {{ selectedStudent.name }} - {{ translate("Details") }}
+                            {{ selectedStudent.name }} -
+                            {{ translate("Details") }}
                         </h5>
                         <button
                             type="button"
@@ -301,9 +302,9 @@ export default {
                 (_, i) => new Date().getFullYear() - i
             ),
             statusOptions: [
-                { value: 1, label: "Accept" },
-                { value: 2, label: "Pending" },
-                { value: 3, label: "Reject" },
+                { value: 1, label: "Accepted (قبول کیا گیا)" },
+                { value: 2, label: "Pending (زیر التواء)" },
+                { value: 3, label: "Rejected (مسترد کیا گیا)" },
             ],
             studentToUpdate: null,
             newStatus: null,
@@ -329,9 +330,9 @@ export default {
         this.fetchStudents();
     },
     methods: {
-        translate(text) {
-            return text;
-        },
+        // translate(text) {
+        //     return text;
+        // },
         fetchStudents() {
             axios
                 .get(route("api.students.fetch"))
