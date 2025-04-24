@@ -13,7 +13,7 @@
         type="button"
         class="btn btn-sm btn-success fs-6"
     >
-        {{ ("Upload Image") }}
+        {{ translate("Upload Image") }}
     </button>
 
     <button
@@ -25,7 +25,7 @@
         :title="('Open')"
         ref="openModal"
     >
-        {{ ("Modal opener") }}
+        {{ translate("Modal opener") }}
     </button>
 
     <input
@@ -43,7 +43,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>
-                        {{ ("Upload and crop the image") }}
+                        {{ translate("Upload and crop the image") }}
                     </h2>
                 </div>
                 <div class="modal-body">
@@ -78,7 +78,7 @@
                                     role="button"
                                     @click.prevent="zoom(0.2)"
                                 >
-                                    {{ ("Zoom In") }}
+                                    {{ translate("Zoom In") }}
                                 </a>
                                 <a
                                     href="#"
@@ -86,7 +86,7 @@
                                     role="button"
                                     @click.prevent="zoom(-0.2)"
                                 >
-                                    {{ ("Zoom Out") }}
+                                    {{ translate("Zoom Out") }}
                                 </a>
                                 <a
                                     href="#"
@@ -94,7 +94,7 @@
                                     role="button"
                                     @click.prevent="move(-10, 0)"
                                 >
-                                    {{ ("Move Left") }}
+                                    {{ translate("Move Left") }}
                                 </a>
                                 <a
                                     href="#"
@@ -102,7 +102,7 @@
                                     role="button"
                                     @click.prevent="move(10, 0)"
                                 >
-                                    {{ ("Move Right") }}
+                                    {{ translate("Move Right") }}
                                 </a>
                                 <a
                                     href="#"
@@ -110,7 +110,7 @@
                                     role="button"
                                     @click.prevent="move(0, -10)"
                                 >
-                                    {{ ("Move Up") }}
+                                    {{ translate("Move Up") }}
                                 </a>
                                 <a
                                     href="#"
@@ -118,7 +118,7 @@
                                     role="button"
                                     @click.prevent="move(0, 10)"
                                 >
-                                    {{ ("Move Down") }}
+                                    {{ translate("Move Down") }}
                                 </a>
                                 <a
                                     href="#"
@@ -126,7 +126,7 @@
                                     role="button"
                                     @click.prevent="rotate(90)"
                                 >
-                                    {{ ("Rotate +90deg") }}
+                                    {{ translate("Rotate +90deg") }}
                                 </a>
                                 <a
                                     href="#"
@@ -134,7 +134,7 @@
                                     role="button"
                                     @click.prevent="rotate(-90)"
                                 >
-                                    {{ ("Rotate -90deg") }}
+                                    {{ translate("Rotate -90deg") }}
                                 </a>
                                 <a
                                     ref="flipX"
@@ -143,7 +143,7 @@
                                     role="button"
                                     @click.prevent="flipX"
                                 >
-                                    {{ ("Flip X") }}
+                                    {{ translate("Flip X") }}
                                 </a>
                                 <a
                                     ref="flipY"
@@ -152,7 +152,7 @@
                                     role="button"
                                     @click.prevent="flipY"
                                 >
-                                    {{ ("Flip Y") }}
+                                    {{ translate("Flip Y") }}
                                 </a>
 
                                 <a
@@ -161,7 +161,7 @@
                                     role="button"
                                     @click.prevent="reset"
                                 >
-                                    {{ ("Reset") }}
+                                    {{ translate("Reset") }}
                                 </a>
                                 <!-- <a href="#" class="btn btn-sm btn-info" role="button" @click.prevent="getData">
                                     Get Data
@@ -182,7 +182,7 @@
                                     role="button"
                                     @click.prevent="cropImage"
                                 >
-                                    {{ ("Crop") }}
+                                    {{ translate("Crop") }}
                                 </a>
                                 <!-- <a
                                     href="#"
@@ -198,7 +198,7 @@
                                     class="btn btn-sm btn-dark"
                                     data-bs-dismiss="modal"
                                 >
-                                    {{ ("Close") }}
+                                    {{ translate("Close") }}
                                 </button>
                             </div>
                         </section>

@@ -17,7 +17,7 @@
                 <div class="modal-body">
                     <div class="block-content text-center p-4">
                         <h2>
-                            Are you sure?
+                            {{ translate("Are you sure?") }}
                         </h2>
 
                         <button
@@ -27,7 +27,7 @@
                             data-bs-dismiss="modal"
                             @click="$emit('deleteThis', deleteId)"
                         >
-                            Yes, delete it!
+                            {{ translate("Yes, delete it!")}}"
                         </button>
 
                         <button
@@ -35,7 +35,7 @@
                             class="btn btn-sm btn-dark"
                             data-bs-dismiss="modal"
                         >
-                            Close
+                            {{ translate("Close")}}
                         </button>
                     </div>
                 </div>

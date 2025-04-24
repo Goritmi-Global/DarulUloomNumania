@@ -116,13 +116,15 @@
                                                 question.answer &&
                                                 question.answer.fitwa_number
                                             "
-                                            >{{ question.answer.fitwa_number }}</span
+                                            >{{
+                                                question.answer.fitwa_number
+                                            }}</span
                                         >
                                         <span v-else>
                                             {{ translate("Not Assigned Yet!") }}
                                         </span>
                                     </td>
-                                        
+
                                     <td class="text-nowrap">
                                         <!-- Details Icon -->
                                         <i
@@ -200,7 +202,14 @@
             >
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div
+                            class="modal-header"
+                            :class="{
+                                'rtl-text':
+                                    $page.props.default_language === 'PK' ||
+                                    $page.props.default_language === 'SA',
+                            }"
+                        >
                             <h5 class="modal-title text-primary">
                                 {{
                                     translate(
@@ -221,12 +230,22 @@
                         <div class="modal-body">
                             <div class="card card-body p-3">
                                 <div class="col-12">
-                                    <b
-                                        for="answer_short_form"
-                                        class="form-label"
+                                    <div
+                                        :class="{
+                                            'rtl-text':
+                                                $page.props.default_language ===
+                                                    'PK' ||
+                                                $page.props.default_language ===
+                                                    'SA',
+                                        }"
                                     >
-                                        {{ translate("Short Answer") }}
-                                    </b>
+                                        <b
+                                            for="answer_short_form"
+                                            class="form-label"
+                                        >
+                                            {{ translate("Short Answer") }}
+                                        </b>
+                                    </div>
 
                                     <QuillEditor
                                         v-model:content="
@@ -246,12 +265,22 @@
                                 </div>
 
                                 <div class="col-12 mt-2">
-                                    <b
-                                        for="answer_full_form"
-                                        class="form-label"
+                                    <div
+                                        :class="{
+                                            'rtl-text':
+                                                $page.props.default_language ===
+                                                    'PK' ||
+                                                $page.props.default_language ===
+                                                    'SA',
+                                        }"
                                     >
-                                        {{ translate("Full Answer") }}
-                                    </b>
+                                        <b
+                                            for="answer_full_form"
+                                            class="form-label"
+                                        >
+                                            {{ translate("Full Answer") }}
+                                        </b>
+                                    </div>
 
                                     <QuillEditor
                                         v-model:content="
@@ -270,7 +299,16 @@
                                     </div>
                                 </div>
                                 <div class="row g-3 mt-2">
-                                    <div class="col-12">
+                                    <div
+                                        class="col-12"
+                                        :class="{
+                                            'rtl-text':
+                                                $page.props.default_language ===
+                                                    'PK' ||
+                                                $page.props.default_language ===
+                                                    'SA',
+                                        }"
+                                    >
                                         <b
                                             for="approved_by_mufti"
                                             class="form-label"
@@ -306,7 +344,16 @@
                                         />
                                     </div> -->
 
-                                    <div class="mt-3">
+                                    <div
+                                        class="mt-3"
+                                        :class="{
+                                            'rtl-text':
+                                                $page.props.default_language ===
+                                                    'PK' ||
+                                                $page.props.default_language ===
+                                                    'SA',
+                                        }"
+                                    >
                                         <button
                                             type="submit"
                                             class="btn btn-success"
@@ -348,7 +395,14 @@
                 aria-labelledby="detailsModalLabel"
                 aria-hidden="true"
             >
-                <div class="modal-dialog modal-xl">
+                <div
+                    class="modal-dialog modal-xl"
+                    :class="{
+                        'rtl-text':
+                            $page.props.default_language === 'PK' ||
+                            $page.props.default_language === 'SA',
+                    }"
+                >
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-primary">

@@ -17,7 +17,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="block-content text-center p-4">
-                        <h2>Are you sure?</h2>
+                        <h2>{{ translate("Are you sure?")}}"</h2>
 
                         <button
                             v-if="recordId"
@@ -26,7 +26,7 @@
                             data-bs-dismiss="modal"
                             @click="$emit('processThis', recordId)"
                         >
-                            Yes, Process it!
+                            {{ translate("Yes, Process it!")}}"
                         </button>
 
                         <button
@@ -34,7 +34,7 @@
                             class="btn btn-sm btn-dark"
                             data-bs-dismiss="modal"
                         >
-                            Close
+                            {{ translate("Close")}}
                         </button>
                     </div>
                 </div>
