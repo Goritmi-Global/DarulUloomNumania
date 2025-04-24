@@ -6,10 +6,10 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/dashboard">Darul Oloom</a>
+                            <a href="/dashboard">{{ translate("Darul Oloom")}}</a>
                         </li>
                         <!-- <li class="breadcrumb-item">Users</li> -->
-                        <li class="breadcrumb-item active">Users</li>
+                        <li class="breadcrumb-item active">{{ translate("Users") }}</li>
                     </ol>
                 </nav>
             </div>
@@ -20,7 +20,7 @@
                     data-bs-target="#usermodal"
                     @click="clearFields"
                 >
-                    <i class="bi bi-plus-lg"></i> Add New User
+                    <i class="bi bi-plus-lg"></i> {{ translate("Add New User") }}
                 </button>
             </div>
         </div>

@@ -17,8 +17,8 @@ class QuestionAnswerController extends Controller
     }
     public function fetchQuestions()
     {
-        $questions = Question::with('answer')->orderByDesc('date')->get();
-        return $questions;
+        $questions = Question::with('answer')->get();
+            return $questions;
     }
 
     public function store(Request $request)
@@ -75,47 +75,90 @@ class QuestionAnswerController extends Controller
 
     public function answerStore(Request $request)
     {
+ 
+        // dd($request->all());
         // Validate the incoming request
         $request->validate([
-            'question_id'       => 'required|exists:questions,id',
-            'answer_short_form' => 'required|string|max:255',
-            'answer_full_form'  => 'required|string',
+            'question_id'       => 'nullable|exists:questions,id',
+            'short_question'      => 'nullable|required_if:new_fatwa,true|string|max:255',
+            'full_question'       => 'nullable|required_if:new_fatwa,true|string|max:255',
+             
+            'answer_short_form'   => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+            if (Str::of(strip_tags($value))->trim()->isEmpty()) {
+                $fail("The $attribute field cannot be empty.");
+            }
+        }],
+        'answer_full_form'    => ['required', 'string', function ($attribute, $value, $fail) {
+            if (Str::of(strip_tags($value))->trim()->isEmpty()) {
+                $fail("The $attribute field cannot be empty.");
+            }
+        }],
             'approved_by_mufti' => 'nullable|string|max:255',
+            
+            
         ]);
     
+        
         // Create a new answer record
         if ($request->id) {
             $answer = Answer::find($request->id);
+            // dd("extig",$answer,$request->id);
         } else {
             $answer = new Answer();
             $answer->id = Str::uuid();
+
+            // Generate the next fitwa_number automatically
+            $lastAnswer = Answer::latest('fitwa_number')->first(); // Get the latest answer by fitwa_number
+            $lastFitwaNumber = $lastAnswer ? (int) $lastAnswer->fitwa_number : 0; // If no answers, start from 0
+        
+            // Generate new fitwa_number, incrementing from the last one
+            $newFitwaNumber = str_pad($lastFitwaNumber + 1, 6, '0', STR_PAD_LEFT);
+            $answer->fitwa_number = $newFitwaNumber; // Set the generated fitwa_number
+            // dd("new");
         }
     
-        // Generate the next fitwa_number automatically
-        $lastAnswer = Answer::latest('fitwa_number')->first(); // Get the latest answer by fitwa_number
-        $lastFitwaNumber = $lastAnswer ? (int) $lastAnswer->fitwa_number : 0; // If no answers, start from 0
+   
+        if($request->new_fatwa)
+        {
+
+            $record     = new Question();
+            $record->id = Str::uuid();  
+            $record->name        = "جامعہ دارالعلوم نعمانیہ اتمانزئی";
+            $record->email       = " jamianumania2025@gmail.com";
+            $record->subject     = $request->short_question;
+            $record->description = $request->full_question;
+            $record->date        = Carbon::now(); // Store current date
+            $record->save();
+            $question_id = $record->id;
     
-        // Generate new fitwa_number, incrementing from the last one
-        $newFitwaNumber = str_pad($lastFitwaNumber + 1, 6, '0', STR_PAD_LEFT);
-        $answer->fitwa_number = $newFitwaNumber; // Set the generated fitwa_number
+        }else
+        {
+            $question_id = $request->question_id;
+        }
+  
+
     
         // Assign the other fields from the request
-        $answer->question_id = $request->question_id;
+//  dd($answer);
+        $answer->question_id = $question_id; 
         $answer->answer_short_form = $request->answer_short_form;
         $answer->answer_full_form = $request->answer_full_form;
         $answer->approved_by_mufti = $request->approved_by_mufti;
     
         // Update the question's status based on the approval
-        $question = Question::find($request->question_id);
+        $question = Question::where('id',$question_id)->first();
+    
         if ($request->approved_by_mufti) {
             $question->status = 2; // Approved by Mufti
         } else {
             $question->status = 1; // Not approved
         }
+        
         $question->save();
     
         // Save the answer record with the auto-generated fitwa_number
         $answer->date = Carbon::now(); // Store current date
+       
         $answer->save();
     
         return response()->json(['message' => 'Answer stored successfully!'], 201);

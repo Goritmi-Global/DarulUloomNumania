@@ -42,7 +42,7 @@
                             aria-expanded="false"
                             :aria-controls="'collapse' + index"
                         >
-                            {{ truncateText(question.description, 150) }}
+                            {{ truncateText(question.subject, 150) }}
                         </button>
                     </h2>
                     <div
@@ -61,9 +61,13 @@
                                         {{ question.subject }}
                                     </p>
 
-                                    <p>
-                                        {{ question.description }}
-                                    </p>
+                                    <p
+                                        v-html="
+                                            question.description
+                                        "
+                                    ></p>
+
+                                   
                                     <small class="text-end">
                                         {{ formatDate(question.date) }}
                                     </small>
