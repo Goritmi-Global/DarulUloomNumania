@@ -16,7 +16,7 @@
     <!-- <script src="{{ asset('backend/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('backend/assets/js/main.js') }}"></script> -->
 
-    <title>Noumania</title>
+    <title>{{ translate("Nomania") }}</title>
 
     @routes
     @vite('resources/js/app.js')
