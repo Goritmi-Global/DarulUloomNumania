@@ -2,7 +2,7 @@
     <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1>{{ "User" }}</h1>
+                <h1>{{ translate("User") }}</h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
