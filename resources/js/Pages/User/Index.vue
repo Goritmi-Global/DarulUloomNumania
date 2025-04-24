@@ -71,8 +71,8 @@
                                             <Link
                                                 v-if="
                                                     $page.props.user.role ==
-                                                        'admin' &&
-                                                    user.role != 'admin'
+                                                        'superadmin' &&
+                                                    user.role != 'superadmin'
                                                 "
                                                 type="button"
                                                 class="btn btn-sm fs-6"
@@ -89,8 +89,8 @@
                                             <DeleteModal
                                                 v-if="
                                                     $page.props.user.role ==
-                                                        'admin' &&
-                                                    user.role != 'admin'
+                                                        'superadmin' &&
+                                                    user.role != 'superadmin'
                                                 "
                                                 :deleteId="user.id"
                                                 @deleteThis="deleteThis"
@@ -404,7 +404,7 @@ export default {
                 })
                 .then((response) => {
                     this.form.user_id = response.data.id;
-                    this.form.user_name = response.data.name;
+                    this.form.user_name = response.data.first_name + " " + response.data.last_name;
                     this.form.email = response.data.email;
                     this.form.role = response.data.role;
                 })
