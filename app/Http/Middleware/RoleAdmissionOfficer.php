@@ -14,7 +14,7 @@ class RoleAdmissionOfficer
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->role === 'superadmin' || auth()->user()->role === 'admission-officer') {
+        if (auth()->check() && auth()->user()->role === 'superadmin' || auth()->user()->role === 'admission') {
             return $next($request);
         }
 

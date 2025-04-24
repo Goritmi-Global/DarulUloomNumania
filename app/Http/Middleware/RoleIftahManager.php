@@ -14,7 +14,7 @@ class RoleIftahManager
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->role === 'superadmin' || auth()->user()->role === 'iftah-manager') {
+        if (auth()->check() && auth()->user()->role === 'superadmin' || auth()->user()->role === 'iftah') {
             return $next($request);
         }
 

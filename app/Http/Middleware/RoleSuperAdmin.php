@@ -14,8 +14,8 @@ class RoleSuperAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->role === 'super-admin') {
-            dd('super-admin');
+        if (auth()->check() && auth()->user()->role === 'superadmin') {
+       
             return $next($request);
         }
 
