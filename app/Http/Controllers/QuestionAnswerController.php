@@ -99,6 +99,7 @@ class QuestionAnswerController extends Controller
         ]);
     
         
+    
         // Create a new answer record
         if ($request->id) {
             $answer = Answer::find($request->id);

@@ -34,12 +34,12 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">#</th>
-                                    <th scope="col">{{ "User name" }}</th>
-                                    <th scope="col">{{ "User email" }}</th>
-                                    <th scope="col">{{ "User Role" }}</th>
+                                    <th scope="col">{{ translate("User name") }}</th>
+                                    <th scope="col">{{ translate("User email") }}</th>
+                                    <th scope="col">{{ translate("User Role") }}</th>
 
                                     <th scope="col" class="text-center">
-                                        {{ "Actions" }}
+                                        {{ translate("Actions") }}
                                     </th>
                                 </tr>
                             </thead>
@@ -117,7 +117,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="section-title mt-1">
-                            <h5 class="c-theme-red">User form</h5>
+                            <h5 class="c-theme-red">{{ translate("User form") }}</h5>
                         </div>
                         <button
                             type="button"
@@ -133,7 +133,7 @@
                                 <div class="row g-3">
                                     <div class="col-12 col-md-6">
                                         <label for="user_name">{{
-                                            "User name"
+                                            translate("User name")
                                         }}</label>
                                         <input
                                             type="text"
@@ -156,7 +156,7 @@
 
                                     <div class="col-12 col-md-6">
                                         <label for="email">{{
-                                            "User email"
+                                            translate("User email")
                                         }}</label>
                                         <input
                                             type="email"
@@ -177,7 +177,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-12">
-                                        <label>{{ "Role" }} </label>
+                                        <label>{{ translate("Role") }} </label>
                                         <Multiselect
                                             id=""
                                             v-model="form.role"
@@ -197,7 +197,7 @@
                                     <div class="row g-3" v-if="!form.user_id">
                                         <div class="col-12 col-md-6">
                                             <label for="password">{{
-                                                "User password"
+                                                translate("User password")
                                             }}</label>
                                             <input
                                                 type="password"
@@ -220,7 +220,7 @@
 
                                         <div class="col-12 col-md-6">
                                             <label for="confirm_password">{{
-                                                "Confirm password"
+                                                translate("Confirm password")
                                             }}</label>
                                             <input
                                                 type="password"
@@ -254,7 +254,7 @@
                                         class="btn btn-success"
                                         v-if="formStatus == 1"
                                     >
-                                        {{ "Save" }}
+                                        {{ translate("Save") }}
                                     </button>
                                     <button
                                         class="btn btn-success"
@@ -262,7 +262,7 @@
                                         disabled
                                         v-else
                                     >
-                                        {{ "Save" }}
+                                        {{ translate("Saving") }}
                                         <span
                                             class="spinner-border spinner-border-sm"
                                             role="status"
@@ -369,9 +369,9 @@ export default {
                 })
                 .then(() => {
                     if (this.form.user_id) {
-                        toastr.success("User record updated.");
+                        toastr.success(this.translate("User record updated."));
                     } else {
-                        toastr.success("New user created.");
+                        toastr.success(this.translate("New user created."));
                     }
                     this.$refs.closeModal.click();
                     this.fetchUsers();
