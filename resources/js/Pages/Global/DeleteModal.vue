@@ -27,7 +27,7 @@
                             data-bs-dismiss="modal"
                             @click="$emit('deleteThis', deleteId)"
                         >
-                            {{ translate("Yes, delete it!")}}"
+                            {{ translate("Yes, delete it!")}}
                         </button>
 
                         <button
