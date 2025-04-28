@@ -1,6 +1,5 @@
 <template>
-   
-    <div  
+    <div
         class="main"
         :class="{
             'c-jameel-noori':
@@ -462,11 +461,8 @@
                 </li>
             </ul>
         </aside>
-
         <!-- End Sidebar-->
-
         <slot></slot>
-
         <!-- ======= Footer ======= -->
         <footer id="footer" class="footer">
             <div class="copyright">
@@ -486,7 +482,6 @@
         </footer>
         <!-- End Footer -->
     </div>
-     
 </template>
 
 <script>
@@ -496,7 +491,6 @@ export default {
     components: {
         Multiselect,
     },
-
     created() {
         this.fatchLanguages();
     },
@@ -504,8 +498,6 @@ export default {
         return {
             languages: [],
             user_language_name: "",
-
-
         };
     },
     mounted() {
@@ -519,9 +511,6 @@ export default {
         let mainJs = document.createElement("script");
         mainJs.setAttribute("src", "/backend/assets/js/main.js");
         document.head.appendChild(mainJs);
-
-        
-
     },
 
     methods: {
@@ -594,11 +583,7 @@ export default {
 @import url("public/backend/assets/vendor/simple-datatables/style.css");
 @import url("public/backend/assets/css/style.css");
 @import url("public/backend/assets/css/custom.css");
-
 @import "toastr";
-</style>
-
-<style>
 @import "@vueform/multiselect/themes/default.css";
 /* custom style that should be moved into the custom.css file later */
 
@@ -649,26 +634,6 @@ export default {
     position: relative;
     color: #012970;
 }
-/* .section-title h5::before {
-    content: "";
-    position: absolute;
-    display: block;
-    width: 120px;
-    height: 1px;
-    background: #ddd;
-    bottom: 1px;
-    left: calc(50% - 60px);
-}
-.section-title h5::after {
-    content: "";
-    position: absolute;
-    display: block;
-    width: 40px;
-    height: 3px;
-    background: #012970;
-    bottom: 0;
-    left: calc(50% - 20px);
-} */
 .c-file-padding {
     padding: 1rem 0.75rem !important;
 }
@@ -679,22 +644,18 @@ export default {
     border-color: #f8d4d4 !important;
     background-color: #f8d4d4 !important;
 }
-
 .btn-success {
     background-color: #012970 !important;
     border-color: #012970 !important;
 }
-
 .btn-success:hover {
     background-color: #012970 !important;
     border-color: #012970 !important;
 }
-
 .btn-success:active {
     background-color: #012970 !important;
     border-color: #012970 !important;
 }
-
 .btn-success:focus {
     color: #fff !important;
     box-shadow: none !important;
@@ -744,5 +705,4 @@ export default {
 .fade-leave-to {
     opacity: 0;
 }
-
 </style>
