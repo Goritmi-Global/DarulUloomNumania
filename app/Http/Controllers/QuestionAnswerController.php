@@ -148,6 +148,10 @@ class QuestionAnswerController extends Controller
     
         // Update the question's status based on the approval
         $question = Question::where('id',$question_id)->first();
+        $question->subject     = $request->short_question;
+        $question->description = $request->full_question;
+         
+        $question->save();
     
         if ($request->approved_by_mufti) {
             $question->status = 2; // Approved by Mufti

@@ -25,7 +25,8 @@
                     data-bs-target="#replyModal"
                     @click="AddFatwaQuestion"
                 >
-                    <i class="bi bi-plus-lg"></i> {{ translate("Add Fatwa & Question") }}
+                    <i class="bi bi-plus-lg"></i>
+                    {{ translate("Add Fatwa & Question") }}
                 </button>
             </div>
         </div>
@@ -220,13 +221,11 @@
                                     $page.props.default_language === 'SA',
                             }"
                         >
-                        
-                            <h5 class="modal-title text-primary" v-if="newFatwaQuestion">
-                                {{
-                                    translate(
-                                        "Add Fatwa & Question"
-                                    )
-                                }}
+                            <h5
+                                class="modal-title text-primary"
+                                v-if="newFatwaQuestion"
+                            >
+                                {{ translate("Add Fatwa & Question") }}
                             </h5>
                             <h5 class="modal-title text-primary" v-else>
                                 {{
@@ -247,7 +246,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="card card-body p-3">
-                                <div class="row g-3 mb-4 "  v-if="newFatwaQuestion">
+                                <div class="row g-3 mb-4">
                                     <div
                                         class="col-12"
                                         :class="{
@@ -258,67 +257,71 @@
                                                     'SA',
                                         }"
                                     >
-                                        <b
-                                            for="question_id"
-                                            class="form-label"
-                                        >
-                                            {{ translate("Short form of Question") }}
+                                        <b for="question_id" class="form-label">
+                                            {{
+                                                translate(
+                                                    "Short form of Question"
+                                                )
+                                            }}
                                         </b>
                                         <input
                                             type="text"
                                             class="form-control"
                                             id="question_id"
-                                            v-model="
-                                                replyForm.short_question
-                                            "
-                                             
+                                            v-model="replyForm.short_question"
                                         />
                                         <div
-                                        v-if="replyErrors.short_question"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ replyErrors.short_question[0] }}
-                                    </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                    <div class="col-12">
-                                    <div
-                                        :class="{
-                                            'rtl-text':
-                                                $page.props.default_language ===
-                                                    'PK' ||
-                                                $page.props.default_language ===
-                                                    'SA',
-                                        }"
-                                    >
-                                        <b
-                                            for="answer_short_form"
-                                            class="form-label"
+                                            v-if="replyErrors.short_question"
+                                            class="invalid-feedback"
                                         >
-                                            {{ translate("Question Details") }}
-                                        </b>
+                                            {{ replyErrors.short_question[0] }}
+                                        </div>
                                     </div>
 
-                                    <QuillEditor
-                                        v-model:content="
-                                            replyForm.full_question
-                                        "
-                                        contentType="html"
-                                        toolbar="full"
-                                        theme="snow"
-                                    />
+                                    <div class="col-12" >
+                                        <div class="col-12">
+                                            <div
+                                                :class="{
+                                                    'rtl-text':
+                                                        $page.props
+                                                            .default_language ===
+                                                            'PK' ||
+                                                        $page.props
+                                                            .default_language ===
+                                                            'SA',
+                                                }"
+                                            >
+                                                <b
+                                                    for="answer_short_form"
+                                                    class="form-label"
+                                                >
+                                                    {{
+                                                        translate(
+                                                            "Question Details"
+                                                        )
+                                                    }}
+                                                </b>
+                                            </div>
 
-                                    <div
-                                        v-if="replyErrors.full_question"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ replyErrors.full_question[0] }}
+                                            <QuillEditor
+                                                v-model:content="
+                                                    replyForm.full_question
+                                                "
+                                                contentType="html"
+                                                toolbar="full"
+                                                theme="snow"
+                                            />
+
+                                            <div
+                                                v-if="replyErrors.full_question"
+                                                class="invalid-feedback"
+                                            >
+                                                {{
+                                                    replyErrors.full_question[0]
+                                                }}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                </div>
-
-
                                 </div>
                                 <div class="col-12">
                                     <div
@@ -620,9 +623,9 @@ export default {
                 answer_full_form: "",
                 approved_by_mufti: "",
                 // fitwa_number: "",
-                new_fatwa:false,
-                short_question:'',
-                full_question:'',
+                new_fatwa: false,
+                short_question: "",
+                full_question: "",
             },
             replyErrors: [],
             replyStatus: 1, // 1 = ready, 0 = saving
@@ -630,7 +633,7 @@ export default {
             searchQuery: "",
             currentPage: 1,
             perPage: 20,
-            newFatwaQuestion:false,
+            newFatwaQuestion: false,
         };
     },
 
@@ -679,8 +682,7 @@ export default {
     },
 
     methods: {
-        AddFatwaQuestion()
-        {
+        AddFatwaQuestion() {
             this.replyForm = {
                 id: "",
                 question_id: "",
@@ -689,15 +691,12 @@ export default {
                 approved_by_mufti: "",
                 short_question: "",
                 full_question: [],
-                new_fatwa:false,
+                new_fatwa: false,
             };
             this.replyErrors = [];
 
             this.newFatwaQuestion = true;
             this.replyForm.new_fatwa = true;
-
-           
-
         },
         fetchQuestions() {
             axios
@@ -714,6 +713,9 @@ export default {
         },
         openReplyModal(question, answer) {
             // Clear all fields first
+           
+            
+           
             this.newFatwaQuestion = false;
             this.replyForm.newFatwaQuestion = 0;
             this.replyForm = {
@@ -724,9 +726,10 @@ export default {
                 approved_by_mufti: "",
                 short_question: "",
                 full_question: [],
-                new_fatwa:false,
+                new_fatwa: false,
                 // fitwa_number: "",
             };
+            
             this.replyErrors = [];
             this.replyForm.id = answer ? answer.id : "";
             this.replyForm.question_id = question.id;
@@ -739,8 +742,8 @@ export default {
             this.replyForm.approved_by_mufti = answer
                 ? answer.approved_by_mufti
                 : "";
-            this.replyForm.short_question = question.short_question ?? "";
-            this.replyForm.full_question = question.full_question ?? "";
+            this.replyForm.short_question = question.subject ?? "";
+            this.replyForm.full_question = question.description ?? "";
             // this.replyForm.fitwa_number = answer ? answer.fitwa_number : "";
             this.replyErrors = [];
         },
