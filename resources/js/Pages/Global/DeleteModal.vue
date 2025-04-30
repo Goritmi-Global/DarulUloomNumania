@@ -2,7 +2,7 @@
     <button
         v-if="deleteId"
         type="button"
-        class="btn btn-sm fs-6"
+        class="btn btn-sm fs-6 text-danger"
         data-bs-toggle="modal"
         :data-bs-target="'#deleteModal-' + deleteId"
         title="Delete"
