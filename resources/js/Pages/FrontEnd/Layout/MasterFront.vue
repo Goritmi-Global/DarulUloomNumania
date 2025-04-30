@@ -6,7 +6,7 @@
                     :src="'/images/frontlogo.png'"
                     alt="Goritmi Logo"
                     class="logo-bounce mb-2"
-                    width="290"
+                    width="120"
                 />
                 <p class="loader-text text-center">
                     <span></span>
@@ -390,9 +390,9 @@ export default {
         this.dotInterval = setInterval(() => {
             dotCount = (dotCount + 1) % 4;
             this.dots = ".".repeat(dotCount);
-        }, 500);
+        }, 100);
 
-        // Stop loader after 5 seconds
+      
         setTimeout(() => {
             clearInterval(this.dotInterval);
             this.loading = false;
@@ -723,27 +723,23 @@ export default {
 .logo-bounce {
     animation: logoBounce 1.2s infinite ease-in-out;
 }
-
-@keyframes logoDance {
-    0% {
-        transform: translateY(0) rotate(0deg) scale(1);
-    }
-    25% {
-        transform: translateY(-10px) rotate(-5deg) scale(1.05);
-    }
-    50% {
-        transform: translateY(0) rotate(5deg) scale(1);
-    }
-    75% {
-        transform: translateY(-10px) rotate(-5deg) scale(1.05);
-    }
-    100% {
-        transform: translateY(0) rotate(0deg) scale(1);
-    }
-}
+ 
 
 .logo-bounce {
-    animation: logoDance 1.5s ease-in-out infinite;
+ 
+    animation: logoZoom 3.8s ease-in-out infinite;
+}
+
+@keyframes logoZoom {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 @keyframes fadeIn {
