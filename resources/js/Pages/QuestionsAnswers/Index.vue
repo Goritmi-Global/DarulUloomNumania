@@ -773,10 +773,10 @@ export default {
         },
         getStatusText(status) {
             return status === 0
-                ? "Not Replied"
+                ? this.translate("Not Replied")
                 : status === 1
-                ? "Waiting for Approval"
-                : "Replied";
+                ? this.translate("Waiting for Approval")
+                : this.translate("Replied");
         },
         getStatusClass(status) {
             return status === 0

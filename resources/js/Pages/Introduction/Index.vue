@@ -50,11 +50,14 @@
                         {{ translate("All Introductions") }}
                     </h5>
                     <!-- Search Input -->
-                    <div class="mb-3" :class="{
+                    <div
+                        class="mb-3"
+                        :class="{
                             'rtl-text':
                                 $page.props.default_language === 'PK' ||
                                 $page.props.default_language === 'SA',
-                        }">
+                        }"
+                    >
                         <input
                             type="text"
                             v-model="searchQuery"
@@ -95,7 +98,9 @@
                                             class="btn btn-sm"
                                             data-bs-toggle="modal"
                                             data-bs-target="#introDetailsModal"
-                                            @click="introDetails(intro.description)"
+                                            @click="
+                                                introDetails(intro.description)
+                                            "
                                         >
                                             <i
                                                 class="bi bi-eye-fill text-primary"
@@ -216,16 +221,16 @@
                                                 translate("Description")
                                             }}</label
                                         >
-                                        <textarea
-                                            class="form-control"
-                                            id="description"
-                                            v-model="form.description"
-                                            rows="4"
-                                            :class="{
-                                                'invalid-bg':
-                                                    formErrors.description,
-                                            }"
-                                        ></textarea>
+                                        <div class="col-12">
+                                            <QuillEditor
+                                                v-model:content="
+                                                    form.description
+                                                "
+                                                contentType="html"
+                                                toolbar="full"
+                                                theme="snow"
+                                            />
+                                        </div>
                                         <div
                                             v-if="formErrors.description"
                                             class="invalid-feedback"
@@ -263,7 +268,7 @@
             </div>
 
             <!-- Book Details modal -->
-         <div
+            <div
                 class="modal fade"
                 id="introDetailsModal"
                 :class="{
@@ -289,7 +294,6 @@
                 </div>
             </div>
             <!-- Book Details modal -->
-
         </section>
     </main>
 </template>
@@ -297,9 +301,13 @@
 <script>
 import axios from "axios";
 import Master from "../Layout/Master.vue";
-
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 export default {
     layout: Master,
+    components: {
+        QuillEditor,
+    },
     data() {
         return {
             introductions: [],
@@ -348,6 +356,7 @@ export default {
             axios
                 .get(route("api.introduction.fetch"))
                 .then((response) => {
+                    this.$refs.closeModal.click();
                     this.introductions = response.data;
                 })
                 .catch((error) => {
@@ -363,7 +372,7 @@ export default {
             axios
                 .post(route("api.introduction.store"), this.form)
                 .then(() => {
-                    this.$refs.closeModal.click();
+                   
                     this.formStatus = 1;
                     toastr.success(
                         this.translate("Introduction saved successfully.")
