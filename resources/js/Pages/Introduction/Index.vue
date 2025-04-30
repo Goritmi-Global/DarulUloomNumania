@@ -182,7 +182,7 @@
                                 {{ translate("New Introduction Entry") }}
                             </h5>
                             <button
-                                ref="closeModal"
+                                ref="closeMainModal"
                                 type="button"
                                 class="btn-close"
                                 data-bs-dismiss="modal"
@@ -317,7 +317,7 @@ export default {
                 description: "",
             },
             formErrors: [],
-            formStatus: 1, // 1 = ready, 0 = saving
+            formStatus: 1,  
             searchQuery: "",
             currentPage: 1,
             perPage: 5,
@@ -356,7 +356,7 @@ export default {
             axios
                 .get(route("api.introduction.fetch"))
                 .then((response) => {
-                    this.$refs.closeModal.click();
+                   
                     this.introductions = response.data;
                 })
                 .catch((error) => {
@@ -374,9 +374,11 @@ export default {
                 .then(() => {
                    
                     this.formStatus = 1;
+                    this.$refs.closeMainModal.click();
                     toastr.success(
                         this.translate("Introduction saved successfully.")
                     );
+                    
                     this.fetchIntroductions();
                 })
 

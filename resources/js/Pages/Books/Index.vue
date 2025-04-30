@@ -160,7 +160,7 @@
                             <button
                                 class="btn-close"
                                 data-bs-dismiss="modal"
-                                ref="closeModal"
+                                ref="closeMainModal"
                             ></button>
                         </div>
                         <div class="modal-body">
@@ -287,7 +287,7 @@
                                     >
                                         {{ translate("Saving")
                                         }}<span
-                                            class="spinner-border spinner-border-sm"
+                                            class="spinner-border spinner-border-sm ms-2"
                                         ></span>
                                     </button>
                                 </div>
@@ -415,7 +415,7 @@ export default {
             axios
                 .post(route("api.books.store"), this.form)
                 .then(() => {
-                    this.$refs.closeModal.click();
+                    this.$refs.closeMainModal.click();
                     this.formStatus = 1;
                     toastr.success(this.translate("Book saved successfully."));
                     this.fetchBooks();
