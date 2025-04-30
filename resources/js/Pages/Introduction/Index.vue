@@ -119,13 +119,11 @@
                                             >
                                                 <i class="bi bi-pencil"></i>
                                             </button>
-                                            <!-- <button
-                                                class="btn btn-sm text-danger"
-                                                title="Delete"
-                                                @click="deleteThis(intro.id)"
-                                            >
-                                                <i class="bi bi-trash"></i>
-                                            </button> -->
+                                            <DeleteModal
+                                            :deleteId="intro.id"
+                                            @deleteThis="deleteThis"
+                                        ></DeleteModal>
+                                             
                                         </div>
                                     </td>
                                 </tr>
@@ -396,7 +394,7 @@ export default {
                 .then(() => {
                     this.fetchIntroductions();
                     toastr.success(
-                        translate("Introduction deleted successfully.")
+                        this.translate("Introduction deleted successfully.")
                     );
                 })
                 .catch((error) => {

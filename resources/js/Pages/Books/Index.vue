@@ -107,12 +107,10 @@
                                         >
                                             <i class="bi bi-pencil"></i>
                                         </button>
-                                        <button
-                                            class="btn btn-sm text-danger"
-                                            @click="deleteBook(book.id)"
-                                        >
-                                            <i class="bi bi-trash"></i>
-                                        </button>
+                                        <DeleteModal
+                                            :deleteId="book.id"
+                                            @deleteThis="deleteThis"
+                                        ></DeleteModal>
                                     </td>
                                 </tr>
                             </tbody>
@@ -430,13 +428,20 @@ export default {
                     }
                 });
         },
-        deleteBook(id) {
-            if (confirm("Are you sure you want to delete this book?")) {
-                axios
-                    .delete(route("api.books.delete", id))
-                    .then(() => this.fetchBooks());
-            }
+        deleteThis(id) {
+            axios
+                .delete(route("api.books.delete", id))
+                .then(() => {
+                    this.fetchBooks();
+                    toastr.success(
+                        this.translate("Book deleted successfully.")
+                    );
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         },
+        
         clearFields() {
             this.form = {
                 id: "",

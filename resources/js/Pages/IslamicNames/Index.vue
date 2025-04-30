@@ -97,13 +97,10 @@
                                             >
                                                 <i class="bi bi-pencil"></i>
                                             </button>
-                                            <button
-                                                class="btn btn-sm text-danger"
-                                                title="Delete"
-                                                @click="deleteName(name.id)"
-                                            >
-                                                <i class="bi bi-trash"></i>
-                                            </button>
+                                            <DeleteModal
+                                            :deleteId="name.id"
+                                            @deleteThis="deleteThis"
+                                        ></DeleteModal>
                                         </div>
                                     </td>
                                 </tr>
@@ -410,14 +407,20 @@ export default {
                     );
                 });
         },
-        deleteName(id) {
-            axios.delete(route("api.islamic-names.delete", id)).then(() => {
-                this.fetchIslamicNames();
-                toastr.success(
-                    this.translate("Islamic Name deleted successfully.")
-                );
-            });
+        deleteThis(id) {
+            axios
+                .delete(route("api.islamic-names.delete", id))
+                .then(() => {
+                    this.fetchIslamicNames();
+                    toastr.success(
+                        this.translate("Islamic Name deleted successfully.")
+                    );
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         },
+        
         changePage(page) {
             if (page >= 1 && page <= this.totalPages) {
                 this.currentPage = page;

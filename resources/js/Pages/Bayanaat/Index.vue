@@ -113,12 +113,10 @@
                                         >
                                             <i class="bi bi-pencil"></i>
                                         </button>
-                                        <button
-                                            class="btn btn-sm text-danger"
-                                            @click="deleteBayan(bayan.id)"
-                                        >
-                                            <i class="bi bi-trash"></i>
-                                        </button>
+                                        <DeleteModal
+                                            :deleteId="bayan.id"
+                                            @deleteThis="deleteThis"
+                                        ></DeleteModal>
                                     </td>
                                 </tr>
                             </tbody>
@@ -460,7 +458,7 @@ export default {
                     }
                 });
         },
-        deleteBayan(id) {
+        deleteThis(id) {
             axios
                 .delete(route("api.bayanaat.delete", id))
                 .then(() => {
@@ -474,6 +472,7 @@ export default {
                     toastr.error(this.translate("Failed to delete bayan."));
                 });
         },
+         
         clearFields() {
             this.form = {
                 id: "",
