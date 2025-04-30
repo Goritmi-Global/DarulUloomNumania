@@ -314,6 +314,7 @@ class LanguageController extends Controller
 
         $user_language = '';
         $user_language = Session::get('default_language');
+        // dd($user_language);
         Session::put(['default_language' => $user_language]);
 
         return $default_language;

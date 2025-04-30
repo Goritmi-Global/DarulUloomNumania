@@ -500,7 +500,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-primary">
-                                {{ translate("Question Details") }}
+                                {{ translate("Question Details") }} 
                             </h5>
                             <button
                                 ref="closeModal"
@@ -513,11 +513,15 @@
                         <div class="modal-body">
                             <p>
                                 <strong>{{ translate("Subject") }}:</strong>
+                                <br>
                                 {{ selectedQuestion?.subject }}
                             </p>
                             <p>
                                 <strong>{{ translate("Description") }}:</strong>
-                                {{ selectedQuestion?.description }}
+                                <i
+                                    v-html="selectedQuestion?.description"
+                                    class="ms-1"    
+                                ></i>
                             </p>
                             <p>
                                 <strong>{{ translate("Email") }}:</strong>

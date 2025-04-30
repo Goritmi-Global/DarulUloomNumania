@@ -514,6 +514,28 @@ export default {
                                 )
                                 .join("")}
                         </tbody>
+                        <tfoot>
+                                <tr>
+                                    <th colspan="2">
+                                        ${this.translate("Total")}
+                                    </th>
+                                    <th>
+                                        ${this.formatCurrency(
+                                            this.totalIncome || 0
+                                        )}
+                                    </th>
+                                    <th>
+                                        ${this.formatCurrency(
+                                            this.totalExpense || 0
+                                        )}
+                                    </th>
+                                    <th>
+                                        ${this.formatCurrency(
+                                            this.totalBalance || 0
+                                        )}
+                                    </th>
+                                </tr>
+                            </tfoot>
                     </table>
                     <div class="footer">${this.translate(
                         "Printed"

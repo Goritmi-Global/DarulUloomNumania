@@ -25,8 +25,8 @@
             }">
                         {{ translate("Income Statement") }} 
                     </h5>
-                    <div class="d-flex justify-content-end p-2">
-                        <!-- Export Buttons -->
+                    <!-- <div class="d-flex justify-content-end p-2">
+                        
                         <div
                             class="btn-group"
                             role="group"
@@ -51,7 +51,7 @@
                                 ></span>
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- Filter Section -->
                     <div class="card card-body p-2">
                         <div class="row">
