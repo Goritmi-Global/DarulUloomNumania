@@ -21,6 +21,7 @@ class IntroductionController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'required|string',
