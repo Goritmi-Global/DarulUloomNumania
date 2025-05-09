@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Mail;
 
 class QuestionAnswerController extends Controller
 {
@@ -116,6 +117,26 @@ class QuestionAnswerController extends Controller
             $newFitwaNumber = str_pad($lastFitwaNumber + 1, 6, '0', STR_PAD_LEFT);
             $answer->fitwa_number = $newFitwaNumber; // Set the generated fitwa_number
             // dd("new");
+
+            $question = Question::where('id',$request->question_id)->first();
+            $website_name = "جامعہ دارالعلوم نعمانیہ اتمانزئی";
+        
+            $url = url('/ask/question');
+            $dataforEmail = [
+                'user_name' => $question->name,
+                'website_name' => $website_name,
+                'user_email' => $question->email,
+                'fatwa_number' => $newFitwaNumber,
+                'url' => $url,
+            ];
+            $user_email = $question->email;
+            $mail_subject = "دارالافتاء نعمانیہ سوال کا جواب" ;
+            // dd($dataforEmail);
+            Mail::send('Emails.mail', $dataforEmail, function ($message) use ($user_email, $mail_subject) {
+                $message->to($user_email)->subject($mail_subject);
+            });
+
+ 
         }
     
    
@@ -171,22 +192,25 @@ class QuestionAnswerController extends Controller
     
 
     public function getApprovedQuestions(Request $request)
-    {
-        $search = $request->query('search');
+{
+    $search = $request->query('search');
 
-                                                               // dd("etes");
-        $query = Question::with('answer')->where('status', 2); // Only approved questions
+    $query = Question::with('answer')->where('status', 2); // Only approved questions
 
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('subject', 'LIKE', "%{$search}%")
-                    ->orWhere('description', 'LIKE', "%{$search}%");
-            });
-        }
-
-        $questions = $query->paginate(20); // Show 5 records per page
-        return response()->json($questions);
+    if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('subject', 'LIKE', "%{$search}%")
+              ->orWhere('description', 'LIKE', "%{$search}%")
+              ->orWhereHas('answer', function ($qa) use ($search) {
+                  $qa->where('fitwa_number', 'LIKE', "%{$search}%");
+              });
+        });
     }
+
+    $questions = $query->paginate(20);
+    return response()->json($questions);
+}
+
 
     public function delete($id)
     {
