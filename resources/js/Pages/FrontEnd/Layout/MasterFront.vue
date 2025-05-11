@@ -8,6 +8,13 @@
                     class="logo-bounce mb-2"
                     width="120"
                 />
+                <h1 class="display-4 c-font-family">
+                    {{
+                        translate(
+                            "Jamia Darol Uloom Noumania Utmanzai"
+                        )
+                    }}
+                </h1>
                 <p class="loader-text text-center">
                     <span></span>
                     <span></span>
@@ -462,6 +469,11 @@ export default {
     --primary-color: #174696;
 }
 
+.c-font-family
+{
+    font-family: "Jameel Noori Nastaleeq", serif;
+    color: #174696;
+}
 .rtl-text {
     direction: rtl;
     text-align: right;
@@ -752,7 +764,7 @@ export default {
 }
 .loader-text {
     font-size: 20px;
-    color: #296fb6;
+    color: #174696;
     letter-spacing: 1px;
     margin-top: 20px;
     display: flex;
@@ -765,7 +777,7 @@ export default {
 .loader-text span {
     width: 10px;
     height: 10px;
-    background-color: #296fb6;
+    background-color: #174696;
     border-radius: 50%;
     display: inline-block;
     animation: bounceDot 1.2s infinite ease-in-out;
