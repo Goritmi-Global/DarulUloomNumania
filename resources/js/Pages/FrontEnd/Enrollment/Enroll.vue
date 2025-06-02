@@ -1,5 +1,5 @@
 <template>
-    <main id="main" class="main">
+    <main id="main" class="main mb-3">
         <!-- Hero Section -->
         <section class="hero-section text-center py-5 text-white">
             <div class="container">
@@ -757,6 +757,42 @@
                                             {{ formErrors.current_address[0] }}
                                         </div>
                                     </div>
+                                    <div class="col-md-6 mt-3">
+                                        <div class="c-files">
+                                            <span
+                                                class="col-6 col-form-label mt-1"
+                                                >{{ "Image" }}</span
+                                            >
+                                            <br />
+                                            <Cropper
+                                                @croppedImg="croppedImgSubmit"
+                                                accept=".jpg,.jpeg,.png"
+                                            />
+                                            <br />
+                                            <ImageZooming
+                                                v-if="form.image"
+                                                :file="form.image"
+                                                :width="100"
+                                            />
+                                            <ImageZooming
+                                                v-else
+                                                :file="
+                                                    existing_image ??
+                                                    '/images/default.jpg'
+                                                "
+                                                :width="100"
+                                            />
+
+                                            <!-- <img :src="form.image" width="100" /> -->
+                                        </div>
+                                        <div
+                                            class="invalid-feedback animated fadeIn"
+                                            v-if="formErrors.image"
+                                        >
+                                            {{ formErrors.image[0] }}
+                                        </div>
+                                    </div>
+
                                     <!-- Submit -->
                                     <div class="mt-4">
                                         <button
@@ -802,9 +838,10 @@
                         ></button>
                     </div>
                     <div class="modal-body text-center">
-                        <p>
+                        <p class="text-primary">
                             <strong
                                 >{{ translate("Dear ") }}
+
                                 {{ currentStudent }},</strong
                             >
                         </p>
@@ -814,7 +851,10 @@
                                     "You have successfully applied for the course of "
                                 )
                             }}
-                            <strong>{{ currentCourse }}</strong>
+                            <br />
+                            <strong class="text-primary">
+                                {{ currentCourse }}</strong
+                            >
                         </p>
                         <p>
                             {{
@@ -827,7 +867,7 @@
                             {{ translate("For any queries, contact us at:") }}
                         </p>
                         <p>
-                            <strong>0000-0000000</strong>
+                            <strong class="text-primary"> 091650861</strong>
                         </p>
                     </div>
                 </div>
@@ -899,7 +939,7 @@ export default {
                 permanent_address: "",
                 phone_number: "",
                 whatsapp_number: "",
-
+                image: null, // For storing the uploaded image
                 // Guardian Info
                 guardian_name: "",
                 guardian_cnic: "",
@@ -978,7 +1018,7 @@ export default {
 
             formStatus: 1,
 
-            showModal: false,
+            // showModal: false,
         };
     },
     methods: {
@@ -1061,6 +1101,10 @@ export default {
                         );
                     }
                 });
+        },
+
+        croppedImgSubmit(img) {
+            this.form.image = img;
         },
 
         clearForm() {

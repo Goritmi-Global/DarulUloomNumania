@@ -21,7 +21,7 @@
         type="button"
         class="btn btn-sm btn-success fs-6"
         data-bs-toggle="modal"
-        :data-bs-target="'#cropperModal-' + randId"
+        :data-bs-target="'#imageCropperModal-' + randId"
         :title="('Open')"
         ref="openModal"
     >
@@ -38,7 +38,7 @@
     />
 
     <!-- delete Modal -->
-    <div class="modal fade" :id="'cropperModal-' + randId" tabindex="-1">
+    <div class="modal fade" :id="'imageCropperModal-' + randId" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -61,7 +61,7 @@
                                 <div class="col-md-8">
                                     <vue-cropper
                                         ref="cropper"
-                                        :aspect-ratio="9 / 6"
+                                        :aspect-ratio="200 / 200"
                                         :src="imgSrc"
                                         preview=".preview"
                                     />

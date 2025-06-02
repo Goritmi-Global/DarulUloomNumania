@@ -5,7 +5,7 @@
         class="img-fluid img-thumbnail rounded"
         :width="width"
         :height="height"
-        @error="setAltImg"
+        @error="setAltImg ?? '/images/default.jpg'"
         @click="ZoomImage"
     />
     <a
@@ -22,7 +22,7 @@
                 <div class="modal-body">
                     <div class="block-content text-center">
                         <img
-                            :src="file"
+                            :src="file ?? '/images/default.jpg'"
                             class="img-thumbnail"
                             @error="setAltImg"
                         />

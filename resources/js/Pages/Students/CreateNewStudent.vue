@@ -489,6 +489,38 @@
                                             {{ formErrors.current_address[0] }}
                                         </div>
                                     </div>
+                                    <div class="col-md-6 mt-3">
+                                        <div class="c-files">
+                                            <span
+                                                class="col-6 col-form-label mt-1"
+                                                >{{ "Image" }}</span
+                                            >
+                                            <br />
+                                            <Cropper
+                                                @croppedImg="croppedImgSubmit"
+                                                accept=".jpg,.jpeg,.png"
+                                            />
+                                            <br />
+                                            <ImageZooming
+                                                v-if="form.image"
+                                                :file="form.image"
+                                                :width="100"
+                                            />
+                                            <ImageZooming
+                                                v-else
+                                                :file="existing_image"
+                                                :width="100"
+                                            />
+
+                                            <!-- <img :src="form.image" width="100" /> -->
+                                        </div>
+                                        <div
+                                            class="invalid-feedback animated fadeIn"
+                                            v-if="formErrors.image"
+                                        >
+                                            {{ formErrors.image[0] }}
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
                                         <label class="form-label">{{
                                             translate("Status")
@@ -573,11 +605,11 @@ export default {
                 current_address: studentData.current_address,
                 permanent_address: studentData.permanent_address,
                 phone_number: studentData.phone_number,
-                whatsapp_number: studentData.whatsapp_number,
+                whatsapp: studentData.whatsapp,
 
                 guardian_name: studentData.guardian_name,
                 guardian_cnic: studentData.guardian_cnic,
-                guardian_phone: studentData.guardian_phone,
+                guardian_mobile: studentData.guardian_mobile,
 
                 desired_class: studentData.desired_class,
                 previous_madrasa: studentData.previous_madrasa,
@@ -589,8 +621,7 @@ export default {
 
                 status: studentData.status || 2, // Default to 'Pending' if not set
             };
-
-            // this.form = { ...studentData };
+            this.existing_image = studentData.image;
         }
     },
     data() {
@@ -646,7 +677,7 @@ export default {
                 permanent_address: "",
                 phone_number: "",
                 whatsapp_number: "",
-
+                image: null, // For storing the uploaded image
                 // Guardian Info
                 guardian_name: "",
                 guardian_cnic: "",
@@ -663,6 +694,7 @@ export default {
 
                 status: "",
             },
+            existing_image: "",
             countryList: [
                 { label: "Pakistan (پاکستان)", value: "Pakistan" },
                 { label: "Afghanistan (افغانستان)", value: "Afghanistan" },
@@ -735,7 +767,7 @@ export default {
         };
     },
     methods: {
-        submit() { 
+        submit() {
             this.currentStudent = this.form.name;
             this.currentCourse = this.form.apply_for;
             this.formStatus = 0;
@@ -777,6 +809,10 @@ export default {
                         );
                     }
                 });
+        },
+
+        croppedImgSubmit(img) {
+            this.form.image = img;
         },
 
         clearForm() {

@@ -105,6 +105,7 @@
                                     <th>{{ translate("Apply For") }}</th>
                                     <th>{{ translate("Phone#") }}</th>
                                     <th>{{ translate("Applied Date") }}</th>
+                                    <th>{{ translate("Image") }}</th>
                                     <th colspan="2" class="text-center">
                                         {{ translate("Status") }}
                                     </th>
@@ -132,6 +133,13 @@
                                     <td>
                                         {{ formatDate(student.created_at) }}
                                     </td>
+                                    <td>
+                                 <!-- Testing -    {{ student.image }}  -->
+                                    <ImageZooming 
+                                    :file="student.image ?? '/images/default.jpg'" 
+                                    :width="80"
+                                     
+                                /></td>
                                     <td colspan="2">
                                         <Multiselect
                                             v-model="student.status"
@@ -374,7 +382,7 @@ export default {
         };
     },
     computed: {
-        canShowTable() { 
+        canShowTable() {
             return (
                 this.selectedSessions.length > 0 ||
                 this.selectedCourses.length > 0 ||

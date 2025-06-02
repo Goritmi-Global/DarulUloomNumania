@@ -17,7 +17,7 @@ InertiaProgress.init();
 import DeleteModal from "./Pages/Global/DeleteModal.vue";
 import ConfirmationModal from "./Pages/Global/ConfirmationModal.vue";
 import ImageZooming from "./Pages/Global/ImageZooming.vue";
-// import Cropper from './Pages/Global/Cropper.vue';
+import Cropper from './Pages/Global/Cropper.vue';
 import CropperOffCanvas from "./Pages/Global/CropperOffCanvas.vue";
 import IncomeExpenseCreateComponent from "./Pages/Global/IncomeExpenseCreateComponent.vue";
 
@@ -35,6 +35,7 @@ createInertiaApp({
             .component("DeleteModal", DeleteModal)
             .component("ConfirmationModal", ConfirmationModal)
             .component("ImageZooming", ImageZooming)
+            .component("Cropper", Cropper)
 
             .component("CropperOffCanvas", CropperOffCanvas)
             .component(
