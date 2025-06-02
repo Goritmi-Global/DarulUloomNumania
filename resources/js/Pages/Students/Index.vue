@@ -133,13 +133,15 @@
                                     <td>
                                         {{ formatDate(student.created_at) }}
                                     </td>
-                                    <td>
-                                 <!-- Testing -    {{ student.image }}  -->
-                                    <ImageZooming 
-                                    :file="student.image ?? '/images/default.jpg'" 
-                                    :width="80"
-                                     
-                                /></td>
+                                    <td> 
+                                        <ImageZooming
+                                            :file="
+                                                student.image ??
+                                                '/images/default.jpg'
+                                            "
+                                            :width="80"
+                                        />
+                                    </td>
                                     <td colspan="2">
                                         <Multiselect
                                             v-model="student.status"

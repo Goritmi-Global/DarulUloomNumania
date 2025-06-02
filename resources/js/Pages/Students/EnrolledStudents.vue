@@ -105,6 +105,7 @@
                                     <th>{{ translate("Apply For") }}</th>
                                     <th>{{ translate("Phone#") }}</th>
                                     <th>{{ translate("Applied Date") }}</th>
+                                    <th>{{ translate("Image") }}</th>
                                     <th colspan="2" class="text-center">
                                         {{ translate("Status") }}
                                     </th>
@@ -131,6 +132,15 @@
                                     <td>{{ student.phone_number }}</td>
                                     <td>
                                         {{ formatDate(student.created_at) }}
+                                    </td>
+                                     <td> 
+                                        <ImageZooming
+                                            :file="
+                                                student.image ??
+                                                '/images/default.jpg'
+                                            "
+                                            :width="80"
+                                        />
                                     </td>
                                     <td colspan="2">
                                         <Multiselect
