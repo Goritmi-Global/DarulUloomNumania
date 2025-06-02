@@ -156,7 +156,7 @@
                                             :placeholder="
                                                 translate('Select Status')
                                             "
-                                            style="width: 200px"
+                                            style="width: 300px"
                                         />
                                         <ConfirmationModal
                                             :record-id="student.id"
