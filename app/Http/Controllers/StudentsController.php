@@ -20,13 +20,21 @@ class StudentsController extends Controller
     { 
         return Inertia::render('Students/Index');
     }
+    public function EnrolledStudents()
+    { 
+        return Inertia::render('Students/EnrolledStudents');
+    }
+    public function enroll_new_students()
+    { 
+        return Inertia::render('Students/CreateNewStudent');
+    }
     public function create()
     { 
         return Inertia::render('FrontEnd/Enrollment/Enroll');
     }
-    public function edit($id)
+    public function show($id)
     {
-        return Inertia::render('Students/Create', ['studentId' => $id]);
+        return Inertia::render('Students/CreateNewStudent', ['studentId' => $id,'studentData'=> Student::findOrFail($id)]);
     }
     public function students()
     { 
@@ -35,10 +43,18 @@ class StudentsController extends Controller
   
         return $students;
     }
+    public function enrolled_students()
+    { 
+        $students = Student::orderBy('created_at')->where('status',1)->get();
+        // dd($students);
+         
+  
+        return $students;
+    }
    
     public function store(Request $request)
 {
-   
+    
     $request->validate([
         'apply_for' => 'required',
         'name' => 'required|string|max:255',
@@ -98,6 +114,7 @@ class StudentsController extends Controller
     $student->permanent_address = $request->permanent_address;
     $student->current_address = $request->current_address;
     $student->session = Carbon::now()->format('Y');
+    $student->status = $request->status ?? '';
     // Save
     $student->save();
 
@@ -128,6 +145,14 @@ public function updateStatus(Request $request)
     return response()->json(['message' => 'Status updated']);
 }
 
+
+public function delete($id)
+{
+    $student = Student::findOrFail($id);
+    $student->delete();
+
+    return 'success'; 
+}
 
 
 }

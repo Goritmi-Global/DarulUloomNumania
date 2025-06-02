@@ -3,7 +3,7 @@
         <div class="pagetitle d-flex justify-content-between">
             <div>
                 <h1 class="theme-text-color">
-                    {{ translate("All Students") }}
+                    {{ translate("Enrolled Students") }}
                 </h1>
                 <nav>
                     <ol class="breadcrumb">
@@ -16,12 +16,12 @@
                             {{ translate("Students") }}
                         </li>
                         <li class="breadcrumb-item active">
-                            {{ translate("Index") }}
+                            {{ translate("Enrolled") }}
                         </li>
                     </ol>
                 </nav>
             </div>
-            <div>
+             <div>
                 <a class="btn btn-success" href="/enroll-new-students">
                     <span>{{ translate("Enroll New Students") }}</span>
                 </a>
@@ -39,10 +39,10 @@
                                 $page.props.default_language === 'SA',
                         }"
                     >
-                        {{ translate("All Students") }}
+                        {{ translate("Enrolled Students") }}
                     </h5>
 
-                    <!-- Filters -->
+                     <!-- Filters -->
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">{{
@@ -96,7 +96,7 @@
 
                     <!-- Student Table -->
                     <div v-if="canShowTable" class="table-responsive">
-                        <table class="table table-striped">
+                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -156,26 +156,26 @@
                                     <td>
                                         <div class="btn-group">
                                             <Link
-                                                type="button"
-                                                class="btn btn-sm fs-6"
-                                                :title="
-                                                    translate('Translations')
-                                                "
-                                                :href="
-                                                    route(
-                                                        'student.show',
-                                                        student.id
-                                                    )
-                                                "
-                                            >
-                                                <i class="bi bi-pencil"></i>
-                                            </Link>
+                                            type="button"
+                                            class="btn btn-sm fs-6"
+                                            :title="translate('Translations')"
+                                            :href="
+                                                route(
+                                                    'student.show',
+                                                    student.id
+                                                )
+                                            "
+                                        >
+                                            <i class="bi bi-pencil"></i>
+                                        </Link>
+                                             
 
-                                            <DeleteModal
-                                                v-if="student.status != 1"
-                                                :deleteId="student.id"
-                                                @deleteThis="deleteThis"
-                                            ></DeleteModal>
+                                            
+                                            <DeleteModal v-if="student.status != 1"
+                                            :deleteId="student.id"
+                                            @deleteThis="deleteThis"
+                                        ></DeleteModal>
+                                             
                                         </div>
                                     </td>
                                 </tr>
@@ -373,7 +373,7 @@ export default {
             newStatus: null,
         };
     },
-    computed: {
+      computed: {
         canShowTable() { 
             return (
                 this.selectedSessions.length > 0 ||
@@ -408,7 +408,6 @@ export default {
             });
         },
     },
-
     created() {
         this.fetchStudents();
     },
@@ -418,7 +417,7 @@ export default {
         // },
         fetchStudents() {
             axios
-                .get(route("api.students.fetch"))
+                .get(route("api.accepted.students.fetch"))
                 .then((res) => (this.students = res.data))
                 .catch((err) => console.error(err));
         },
@@ -475,19 +474,6 @@ export default {
         formatDate(date) {
             return moment(date).format("DD-MMM-YYYY hh:mm A");
         },
-        deleteThis($id) {
-            axios
-                .delete(route("api.students.delete", $id))
-                .then(() => {
-                    toastr.success(
-                        this.translate("Student deleted successfully.")
-                    );
-                    this.fetchStudents();
-                })
-                .catch((error) => {
-                    toastr.error(this.translate("Failed to delete student."));
-                });
-        },
     },
 };
 </script>
@@ -497,4 +483,5 @@ export default {
 .cursor-pointer {
     cursor: pointer;
 }
+ 
 </style>

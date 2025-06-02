@@ -70,9 +70,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         // 🏫 Admission Officer Routes
         Route::get('/students', [StudentsController::class, 'index'])->name('students');
+        Route::get('/enrolled-students', [StudentsController::class, 'EnrolledStudents'])->name('enrolled-students');
+        Route::get('/enroll-new-students', [StudentsController::class, 'enroll_new_students'])->name('enroll-new-students');
         Route::get('/student/details/{id}', [StudentsController::class, 'details'])->name('student.details');
         Route::get('/student/payment/details/{id}', [StudentsController::class, 'student_payement_details'])->name('student.payment.details');
-        Route::get('/student/edit/{id}', [StudentsController::class, 'edit'])->name('student.edit');
+        Route::get('/student/show/{id}', [StudentsController::class, 'show'])->name('student.show');
         Route::get('/download/pdf/{student_id}/{slip_id}', [StudentsController::class, 'download_student_enrollment_pdf'])->name('download.pdf');
         Route::get('/print/pdf/{student_id}/{slip_id}', [StudentsController::class, 'print_student_enrollment_pdf'])->name('print.pdf');
         Route::get('/student/details/pdf/print/{student_id}/{process}', [StudentsController::class, 'download_print_student_details_pdf'])->name('student.details.pdf.print');
@@ -109,9 +111,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // 🏫 Admission Officer Routes
     Route::middleware(['role.admission'])->group(function () {
         Route::get('/students', [StudentsController::class, 'index'])->name('students');
+        Route::get('/enrolled-students', [StudentsController::class, 'EnrolledStudents'])->name('enrolled-students');
+        Route::get('/enroll-new-students', [StudentsController::class, 'enroll_new_students'])->name('enroll-new-students');
         Route::get('/student/details/{id}', [StudentsController::class, 'details'])->name('student.details');
         Route::get('/student/payment/details/{id}', [StudentsController::class, 'student_payement_details'])->name('student.payment.details');
-        Route::get('/student/edit/{id}', [StudentsController::class, 'edit'])->name('student.edit');
+   Route::get('/student/show/{id}', [StudentsController::class, 'show'])->name('student.show');
         Route::get('/download/pdf/{student_id}/{slip_id}', [StudentsController::class, 'download_student_enrollment_pdf'])->name('download.pdf');
         Route::get('/print/pdf/{student_id}/{slip_id}', [StudentsController::class, 'print_student_enrollment_pdf'])->name('print.pdf');
         Route::get('/student/details/pdf/print/{student_id}/{process}', [StudentsController::class, 'download_print_student_details_pdf'])->name('student.details.pdf.print');

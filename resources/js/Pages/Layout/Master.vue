@@ -308,6 +308,57 @@
 
                 <li
                     class="nav-item"
+                    v-if="$page.props.user.role === 'superadmin'"
+                >
+                    <a
+                        class="nav-link"
+                        :class="{ collapsed: !isParentActive(['/students']) }"
+                        data-bs-target="#students-nav"
+                        data-bs-toggle="collapse"
+                        href="#"
+                    >
+                        <i class="bi bi-gear"></i>
+                        <span>{{ translate("Students") }}</span>
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul
+                        id="students-nav"
+                        class="nav-content collapse"
+                     
+                        :class="{
+                            show: isParentActive([
+                                '/students',
+                                '/enrolled-students',
+                                '/enroll-new-students',
+                                
+                            ]),
+                        }"
+                        data-bs-parent="#sidebar-nav"
+                    >
+                        <!-- Languages (Only for Super Admin) -->
+                        <li>
+                            <a
+                                :class="{ active: isActive('/students') }"
+                                href="/students"
+                            >
+                                <i class="bi bi-translate"></i>
+                                <span>{{ translate("All Students") }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                :class="{ active: isActive('/enrolled-students') }"
+                                href="/enrolled-students"
+                            >
+                                <i class="bi bi-translate"></i>
+                                <span>{{ translate("Enrolled Students") }}</span> 
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- <li
+                    class="nav-item"
                     v-if="
                         $page.props.user.role === 'superadmin' ||
                         $page.props.user.role === 'admission'
@@ -321,7 +372,7 @@
                         <i class="bi bi-people-fill"></i>
                         <span>{{ translate("Enrolled Student") }}</span>
                     </a>
-                </li>
+                </li> -->
                 <li
                     class="nav-item"
                     v-if="
