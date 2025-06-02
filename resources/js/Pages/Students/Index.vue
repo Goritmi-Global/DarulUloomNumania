@@ -43,7 +43,7 @@
                     </h5>
 
                     <!-- Filters -->
-                    <div class="row mb-3">
+                    <div class="row mb-3 g-3">
                         <div class="col-md-6">
                             <label class="form-label">{{
                                 translate("Session")
@@ -133,7 +133,7 @@
                                     <td>
                                         {{ formatDate(student.created_at) }}
                                     </td>
-                                    <td> 
+                                    <td>
                                         <ImageZooming
                                             :file="
                                                 student.image ??

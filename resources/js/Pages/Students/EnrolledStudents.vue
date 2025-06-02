@@ -21,7 +21,7 @@
                     </ol>
                 </nav>
             </div>
-             <div>
+            <div>
                 <a class="btn btn-success" href="/enroll-new-students">
                     <span>{{ translate("Enroll New Students") }}</span>
                 </a>
@@ -42,8 +42,8 @@
                         {{ translate("Enrolled Students") }}
                     </h5>
 
-                     <!-- Filters -->
-                    <div class="row mb-3">
+                    <!-- Filters -->
+                    <div class="row mb-3 g-3">
                         <div class="col-md-6">
                             <label class="form-label">{{
                                 translate("Session")
@@ -96,7 +96,7 @@
 
                     <!-- Student Table -->
                     <div v-if="canShowTable" class="table-responsive">
-                         <table class="table table-striped">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -133,7 +133,7 @@
                                     <td>
                                         {{ formatDate(student.created_at) }}
                                     </td>
-                                     <td> 
+                                    <td>
                                         <ImageZooming
                                             :file="
                                                 student.image ??
@@ -166,26 +166,26 @@
                                     <td>
                                         <div class="btn-group">
                                             <Link
-                                            type="button"
-                                            class="btn btn-sm fs-6"
-                                            :title="translate('Translations')"
-                                            :href="
-                                                route(
-                                                    'student.show',
-                                                    student.id
-                                                )
-                                            "
-                                        >
-                                            <i class="bi bi-pencil"></i>
-                                        </Link>
-                                             
+                                                type="button"
+                                                class="btn btn-sm fs-6"
+                                                :title="
+                                                    translate('Translations')
+                                                "
+                                                :href="
+                                                    route(
+                                                        'student.show',
+                                                        student.id
+                                                    )
+                                                "
+                                            >
+                                                <i class="bi bi-pencil"></i>
+                                            </Link>
 
-                                            
-                                            <DeleteModal v-if="student.status != 1"
-                                            :deleteId="student.id"
-                                            @deleteThis="deleteThis"
-                                        ></DeleteModal>
-                                             
+                                            <DeleteModal
+                                                v-if="student.status != 1"
+                                                :deleteId="student.id"
+                                                @deleteThis="deleteThis"
+                                            ></DeleteModal>
                                         </div>
                                     </td>
                                 </tr>
@@ -383,8 +383,8 @@ export default {
             newStatus: null,
         };
     },
-      computed: {
-        canShowTable() { 
+    computed: {
+        canShowTable() {
             return (
                 this.selectedSessions.length > 0 ||
                 this.selectedCourses.length > 0 ||
@@ -493,5 +493,4 @@ export default {
 .cursor-pointer {
     cursor: pointer;
 }
- 
 </style>
