@@ -167,6 +167,7 @@ Route::get('/madrasa/introduction', [IntroductionController::class, 'fetch'])->n
 Route::get('/madrasa/books', [BookController::class, 'fetch'])->name('api.madrasa.books');
 Route::get('/madrasa/bayanaat', [BayanaatController::class, 'fetch'])->name('api.madrasa.bayanaat');
 Route::get('/madrasa/islamic/names', [IslamicNameController::class, 'fetch'])->name('api.madrasa.islamic.names');
+
 Route::post('/question/store', [QuestionAnswerController::class, 'saveQuestion'])->name('api.question.store');
 // Route::get('/show/questions/approved', [QuestionController::class, 'getApprovedQuestions'])->name('api.show.questions.approved');
 Route::get('/questions/approved', [QuestionAnswerController::class, 'getApprovedQuestions'])->name('api.questions.approved');
