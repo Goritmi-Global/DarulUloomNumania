@@ -20,3 +20,4 @@ yarn-error.log
 /public/real_public
 /public/CustomerFiles 
 /public/sitemap.xml
+node_modules
