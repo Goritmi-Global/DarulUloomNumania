@@ -1096,8 +1096,7 @@ export default {
                     );
                     this.showModal = true;
                 })
-                .catch((error) => {
-                    this.showModal = true;
+                .catch((error) => { 
                     this.formStatus = 1;
                     if (error.response?.data?.errors) {
                         this.formErrors = error.response.data.errors;
