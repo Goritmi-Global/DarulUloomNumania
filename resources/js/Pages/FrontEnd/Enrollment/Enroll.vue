@@ -833,9 +833,11 @@
                         </h5>
                         <button
                             type="button"
-                            class="btn-close"
-                            @click="showModal = false"
-                        ></button>
+                            class="btn btn-sm btn-danger"
+                            @click="hideModal()"
+                        >
+                            X
+                        </button>
                     </div>
                     <div class="modal-body text-center">
                         <p class="text-primary">
@@ -1022,6 +1024,15 @@ export default {
         };
     },
     methods: {
+        hideModal() {
+            this.showModal = false;
+            this.clearForm();
+            this.formStatus = 1;
+            this.formErrors = {};
+            this.admissionStatusDetails = null;
+            this.enrollCheckCnin = "";
+            this.noRecordFound = false;
+        },
         checkStatus() {
             this.admissionStatusDetails = null;
             this.formErrors = {};
@@ -1086,6 +1097,7 @@ export default {
                     this.showModal = true;
                 })
                 .catch((error) => {
+                    this.showModal = true;
                     this.formStatus = 1;
                     if (error.response?.data?.errors) {
                         this.formErrors = error.response.data.errors;

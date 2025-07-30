@@ -4,11 +4,7 @@
         <section class="hero-section text-center py-5 text-white">
             <div class="container">
                 <h1 class="display-4">
-                    {{
-                        translate(
-                            "Jamia Darol Uloom Noumania Utmanzai"
-                        )
-                    }}
+                    {{ translate("Jamia Darol Uloom Noumania Utmanzai") }}
                 </h1>
                 <h2>
                     {{ translate("Charsadda Khyber PakhtunKhwa Pakistan") }}
@@ -42,7 +38,7 @@
                                 <p class="card-text">
                                     {{ course.description }}
                                 </p>
-                                <a href="#" class="btn btn-primary">{{
+                                <a href="/student/enroll" class="btn btn-primary">{{
                                     translate("Enroll Now")
                                 }}</a>
                             </div>
@@ -127,24 +123,24 @@ export default {
                 },
             ],
             bayanaat: [
-                
                 {
-                    title: "Surat Al-Waqi`ah - Mishary Rashed Alafasy",
+                    title: "Molana Muhammad Idrees Sahib Pashto Bayan – Juma 20 06 2025",
                     description:
-                        "Surat Al-Waqi`ah - Mishary Rashed Alafasy.",
-                    url: "https://www.youtube.com/embed/NDE6iXOK7_Q",
+                        "Molana Muhammad Idrees Sahib’s Pashto Bayan delivered on Friday, 20 June 2025.",
+                    url: "https://www.youtube.com/embed/KfVv1GGVFYU",
+                },
+
+                {
+                    title: "Molana Muhammad Idrees Sahib New Pashto Bayan – 05 01 2025",
+                    description:
+                        "New Pashto bayan by Molana Muhammad Idrees Sahib (January 5, 2025).",
+                    url: "https://www.youtube.com/embed/c4RyVepLm40",
                 },
                 {
-                    title: "Molana Muhammad Idrees Sahib New Pashto Bayan 2024",
+                    title: "Molana Muhammad Idrees Sahib Bayan – July 2025",
                     description:
-                        "Molana Muhammad Idrees Sahib New Pashto Bayan 2024.",
-                    url: "https://www.youtube.com/embed/Aocqzk2Uq-s",
-                },
-                {
-                    title: "Stories from the Quran",
-                    description:
-                        "A journey through the inspiring stories in the Quran.",
-                    url: "https://www.youtube.com/embed/fudje82hbdc",
+                        "Powerful new bayan by Molana Muhammad Idrees Sahib uploaded in July 2025.",
+                    url: "https://www.youtube.com/embed/TEJywc1RpPQ",
                 },
             ],
         };
@@ -153,6 +149,22 @@ export default {
 </script>
 
 <style>
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
 /* General Styles */
 .hero-section,
 .admission-section {

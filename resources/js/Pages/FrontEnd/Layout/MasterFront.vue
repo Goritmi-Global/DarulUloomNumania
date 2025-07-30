@@ -9,11 +9,7 @@
                     width="120"
                 />
                 <h1 class="display-4 c-font-family">
-                    {{
-                        translate(
-                            "Jamia Darol Uloom Noumania Utmanzai"
-                        )
-                    }}
+                    {{ translate("Jamia Darol Uloom Noumania Utmanzai") }}
                 </h1>
                 <p class="loader-text text-center">
                     <span></span>
@@ -38,8 +34,18 @@
             id="header"
             class="header fixed-top d-flex align-items-center justify-content-between px-3"
         >
-            <a href="/" class="logo d-flex align-items-center">
-                <img src="/images/frontlogo.png" alt="Logo" />
+            <a
+                href="/"
+                class="logo d-flex align-items-center text-decoration-none"
+            >
+                <img
+                    :src="'/images/frontlogo.png'"
+                    alt="Goritmi Logo"
+                    class="logo-bounce mb-2"
+                />
+                <h4 class="text-white">
+                    {{ translate("Jamia Darol Uloom Noumania Utmanzai") }}
+                </h4>
             </a>
 
             <!-- test {{ user_language_name }} / {{ $page.props.default_language }} -->
@@ -399,7 +405,6 @@ export default {
             this.dots = ".".repeat(dotCount);
         }, 100);
 
-      
         setTimeout(() => {
             clearInterval(this.dotInterval);
             this.loading = false;
@@ -469,8 +474,7 @@ export default {
     --primary-color: #174696;
 }
 
-.c-font-family
-{
+.c-font-family {
     font-family: "Jameel Noori Nastaleeq", serif;
     color: #174696;
 }
@@ -735,10 +739,8 @@ export default {
 .logo-bounce {
     animation: logoBounce 1.2s infinite ease-in-out;
 }
- 
 
 .logo-bounce {
- 
     animation: logoZoom 3.8s ease-in-out infinite;
 }
 

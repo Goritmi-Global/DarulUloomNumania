@@ -34,11 +34,17 @@
                             <div class="card mb-3">
                                 <div class="d-flex justify-content-center py-4">
                                     <a :href="route('/')">
-                                        <img
+                                        <!-- <img
                                             src="/images/logo.jpg"
-                                            height="100"
                                             alt="logo"
-                                        />
+                                            /> -->
+                                            <img
+                                            :src="'/images/frontlogo.png'"
+                                            height="100"
+                    alt="Goritmi Logo"
+                    class="logo-bounce mb-2"
+              
+                />
                                         <!-- <h1 class="text-transform-capital">Darul Uloom Numania</h1>  -->
                                     </a>
                                 </div>

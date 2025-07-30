@@ -38,6 +38,7 @@
     />
 
     <!-- delete Modal -->
+     <teleport to="body">
     <div class="modal fade" :id="'imageCropperModal-' + randId" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -214,7 +215,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div></teleport>
 </template>
 
 <script>
