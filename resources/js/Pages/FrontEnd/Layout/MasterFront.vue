@@ -469,6 +469,9 @@ export default {
 
 @import "toastr";
 @import url("public/backend/assets/vendor/bootstrap/css/bootstrap.min.css");
+ 
+@import url('./../../../../css/app.css');
+
 /* Primary Color */
 :root {
     --primary-color: #174696;

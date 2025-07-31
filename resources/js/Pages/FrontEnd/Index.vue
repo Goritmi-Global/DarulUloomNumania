@@ -2,8 +2,8 @@
     <main id="main" class="main">
         <!-- Hero Section -->
         <section class="hero-section text-center text-white position-relative">
-            <img
-                src="https://www.independenturdu.com/sites/default/files/styles/1200x630/public/article/main-image/2022/02/17/199851-575588226.jpg?itok=PAno-qRg"
+            <img 
+                :src="'/images/hero-image.jpg'"
                 alt="background"
                 class="hero-bg-image"
             />
@@ -51,14 +51,8 @@
                         :key="index"
                     >
                         <div class="course-box" @click="goToEnroll(course)">
-                            <h5
-                                class="mb-0 fw-semibold"
-                                style="
-                                    font-family: 'Jameel Noori Nastaleeq', serif;
-                                "
-                            >
-                                {{ course }}
-                            </h5>
+                            <h5 >{{ course }}</h5>
+
                         </div>
                     </div>
                 </div>
@@ -190,7 +184,7 @@ export default {
 
 .hero-section {
     position: relative;
-    height: 500px; /* or 600px if you want it taller */
+    height: 600px; /* or 600px if you want it taller */
     overflow: hidden;
 }
 

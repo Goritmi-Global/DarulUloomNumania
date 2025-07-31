@@ -637,6 +637,7 @@ export default {
 @import "toastr";
 @import "@vueform/multiselect/themes/default.css";
 /* custom style that should be moved into the custom.css file later */
+@import url('../../../css/app.css');
 
 .languages {
     font-weight: bold !important;
