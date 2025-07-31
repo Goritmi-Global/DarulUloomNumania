@@ -41,7 +41,7 @@
             id="courses"
         >
             <div class="container">
-                <h1 class="display-5 mb-4 theme-text-color fw-bold">
+               <h1 class="display-5 mb-4 theme-text-color fw-bold">
                     {{ translate("Our Courses") }}
                 </h1>
                 <div class="row g-4">

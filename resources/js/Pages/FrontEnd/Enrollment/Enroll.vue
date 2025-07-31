@@ -1,20 +1,13 @@
 <template>
     <main id="main" class="main mb-3">
         <!-- Hero Section -->
-        <section class="hero-section text-center py-5 text-white">
-            <div class="container">
-                <h1 class="display-4">
-                    {{ translate("New Student Enrollment") }}
-                </h1>
-                <p class="lead">
-                    {{
-                        translate(
-                            "Providing quality Islamic education with modern learning techniques"
-                        )
-                    }}.
-                </p>
-            </div>
-        </section> 
+          
+         <section class="hero-section text-center text-white py-5">
+      <div class="container">
+        <h1 class="display-4 fw-bold">{{ translate("New Student Enrollment") }}</h1>
+        <p class="lead">{{ translate("Providing quality Islamic education with modern learning techniques") }}</p>
+      </div>
+    </section>
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -77,7 +70,7 @@
                                             <!-- Submit Button -->
                                             <div class="mb-4">
                                                 <button
-                                                    class="btn btn-success"
+                                                    class="btn btn-success w-100"
                                                     v-if="checkStatusBtn === 1"
                                                     @click="checkStatus"
                                                 >
@@ -796,7 +789,7 @@
                                     <div class="mt-4">
                                         <button
                                             type="submit"
-                                            class="btn btn-success px-4"
+                                            class="btn btn-success px-4 w-100"
                                             v-if="formStatus === 1"
                                             @click="submit"
                                         >
@@ -1213,5 +1206,13 @@ export default {
 .card:hover {
     opacity: 1;
     transform: translateY(-5px);
+}
+.hero-section {
+  background: linear-gradient(120deg, #023F86, #035bb8);
+  color: white;
+  margin-top: 60px;
+}
+.theme-text-color {
+  color: #023F86;
 }
 </style>

@@ -231,123 +231,128 @@
         </div>
 
         <!-- ======= Footer ======= -->
-        <footer
-            id="footer"
-            class="footer"
-            :class="{
-                'rtl-text':
-                    $page.props.default_language === 'PK' ||
-                    $page.props.default_language === 'SA',
-            }"
-        >
+        <footer id="footer" class="footer text-white">
             <div class="container">
-                <!-- Footer Top Section -->
-                <div class="footer-top">
-                    <div class="row">
-                        <!-- Contact Info Section -->
-                        <div class="col-lg-6 col-md-6 footer-contact">
-                            <h3>
-                                {{
-                                    translate(
-                                        "Jamia Darol Uloom Noumania Utmanzai"
-                                    )
-                                }}
-                            </h3>
-                            <p>
-                                <strong>{{ translate("Phone:") }} </strong>
-                                091650861<br />
-                                <strong>{{ translate("Email:") }} </strong>
-                                jamianumania2025@gmail.com<br />
-                            </p>
-                            <div class="footer-social">
-                                <a
-                                    href="https://facebook.com"
-                                    target="_blank"
-                                    class="facebook"
-                                    ><i class="bi bi-facebook"></i
-                                ></a>
-                                <a
-                                    href="https://twitter.com"
-                                    target="_blank"
-                                    class="twitter ms-3"
-                                    ><i class="bi bi-twitter"></i
-                                ></a>
-                                <a
-                                    href="https://instagram.com"
-                                    target="_blank"
-                                    class="instagram ms-3"
-                                    ><i class="bi bi-instagram"></i
-                                ></a>
-                                <a
-                                    href="https://linkedin.com"
-                                    target="_blank"
-                                    class="linkedin ms-3"
-                                    ><i class="bi bi-linkedin"></i
-                                ></a>
-                            </div>
+                <!-- Footer Top -->
+                <div class="row py-4">
+                    <!-- Logo and Institute Name -->
+                    <div
+                        class="col-lg-3 col-md-6 mb-4 mb-lg-0 text-center text-lg-start"
+                    >
+                        <img
+                            :src="'/images/frontlogo.png'"
+                            alt="Logo"
+                            width="180"
+                            class="mb-3 logo-bounce"
+                        />
+                        <h5 class="fw-bold">
+                            {{
+                                translate("Jamia Darol Uloom Noumania Utmanzai")
+                            }}
+                        </h5>
+                        <p class="small">
+                            {{
+                                translate(
+                                    "Spreading knowledge, nurturing values."
+                                )
+                            }}
+                        </p>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="col-lg-3 col-md-6 mt-5 mb-lg-0">
+                        <h6 class="fw-bold mb-3">
+                            {{ translate("Quick Links") }}
+                        </h6>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="/" class="footer-link">{{
+                                    translate("Home")
+                                }}</a>
+                            </li>
+                            <li>
+                                <a href="/about" class="footer-link">{{
+                                    translate("About")
+                                }}</a>
+                            </li>
+                            <li>
+                                <a href="/contact" class="footer-link">{{
+                                    translate("Contact")
+                                }}</a>
+                            </li>
+                            <li>
+                                <a href="/events" class="footer-link">{{
+                                    translate("Events")
+                                }}</a>
+                            </li>
+                            <li>
+                                <a href="/student/enroll" class="footer-link">{{
+                                    translate("Enroll")
+                                }}</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="col-lg-3 col-md-6 mt-5 mb-lg-0">
+                        <h6 class="fw-bold mb-3">
+                            {{ translate("Contact Info") }}
+                        </h6>
+                        <p class="mb-1">
+                            <i class="bi bi-telephone-fill me-2"></i>
+                            <strong>{{ translate("Phone") }}:</strong> 091650861
+                        </p>
+                        <p class="mb-1">
+                            <i class="bi bi-envelope-fill me-2"></i>
+                            <strong>{{ translate("Email") }}:</strong>
+                            jamianumania2025@gmail.com
+                        </p>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div
+                        class="col-lg-3 col-md-6 mt-5 text-center text-lg-start"
+                    >
+                        <h6 class="fw-bold mb-3">
+                            {{ translate("Follow Us") }}
+                        </h6>
+                        <div
+                            class="d-flex justify-content-center justify-content-lg-start"
+                        >
+                            <a
+                                href="https://facebook.com"
+                                target="_blank"
+                                class="me-3 social-icon"
+                            >
+                                <i class="bi bi-facebook"></i>
+                            </a>
+
+                            <a
+                                href="https://youtueb.com"
+                                target="_blank"
+                                class="me-3 social-icon"
+                            >
+                                <i class="bi bi-youtube"></i>
+                            </a>
                         </div>
-                        <!-- Quick Links Section -->
-                        <div class="col-lg-6 col-md-6 footer-links">
-                            <h4>{{ translate("Quick Links") }}</h4>
-                            <ul type="none">
-                                <li>
-                                    <a href="/">{{ translate("Home") }} </a>
-                                </li>
-                                <li>
-                                    <a href="/about"
-                                        >{{ translate("About") }}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/contact"
-                                        >{{ translate("Contact") }}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/events"
-                                        >{{ translate("Events") }}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/student/enroll"
-                                        >{{ translate("Enroll") }}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- Newsletter Section -->
-                        <!-- <div class="col-lg-4 col-md-6 footer-newsletter">
-                            <h4>Join Our Newsletter</h4>
-                            <p>Get updates on events and announcements.</p>
-                            <form action="#" method="post">
-                                <input
-                                    type="email"
-                                    name="email"
-                                    placeholder="Enter your email"
-                                    required
-                                />
-                                <button type="submit">Subscribe</button>
-                            </form>
-                        </div> -->
                     </div>
                 </div>
 
-                <!-- Footer Bottom Section -->
-                <div class="footer-bottom">
-                    <p>
+                <!-- Footer Bottom -->
+                <div
+                    class="text-center pt-3 border-top border-light-subtle mt-4"
+                >
+                    <p class="mb-0 small">
                         {{ translate("&copy; Copyright") }}
-                        <strong
-                            ><span
-                                >{{
-                                    translate(
-                                        "Jamia Darol Uloom Noumania Utmanzai"
-                                    )
-                                }}
-                            </span></strong
-                        >{{ translate(". All Rights Reserved | Designed by") }}
-                        <a href="https://goritmi.co.uk"
-                            >{{ translate("Goritim Ltd") }}
-                        </a>
+                        <strong>{{
+                            translate("Jamia Darol Uloom Noumania Utmanzai")
+                        }}</strong>
+                        {{ translate(". All Rights Reserved | Designed by") }}
+                        <a
+                            href="https://goritmi.co.uk"
+                            class="text-white text-decoration-underline"
+                            >{{ translate("Goritim Ltd") }}</a
+                        >
                     </p>
                 </div>
             </div>
@@ -469,8 +474,8 @@ export default {
 
 @import "toastr";
 @import url("public/backend/assets/vendor/bootstrap/css/bootstrap.min.css");
- 
-@import url('./../../../../css/app.css');
+
+@import url("./../../../../css/app.css");
 
 /* Primary Color */
 :root {
@@ -589,13 +594,6 @@ export default {
     font-size: 18px;
 }
 
-.footer {
-    background: #174696 !important;
-    padding: 10px;
-    color: white !important;
-    font-size: 14px;
-}
-
 @media (max-width: 768px) {
     .nav {
         display: none;
@@ -641,12 +639,6 @@ export default {
     color: #174696 !important;
 }
 
-.footer {
-    width: 100%;
-    background: white;
-    font-size: 14px;
-}
-
 .multiselect-option.is-selected {
     background: #174696 !important;
     color: var(--ms-option-color-selected, #fff);
@@ -661,62 +653,6 @@ export default {
 
 .nav ul li a.active {
     font-weight: bold;
-}
-.footer-top {
-    margin-bottom: 30px;
-}
-
-.footer-social a {
-    font-size: 20px;
-    color: white;
-    margin: 0 10px;
-    transition: color 0.3s ease;
-}
-
-.footer-social a:hover {
-    color: #f8d4d4;
-}
-
-.footer-links ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-links ul li {
-    margin: 5px 0;
-}
-
-.footer-links ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.footer-links ul li a:hover {
-    color: #f8d4d4;
-}
-
-.footer-newsletter form input {
-    padding: 10px;
-    width: 70%;
-    border: 1px solid white;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-
-.footer-newsletter form button {
-    padding: 10px 20px;
-    background-color: #174696;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.footer-newsletter form button:hover {
-    background-color: #f8d4d4;
-    color: #174696;
 }
 
 /* Loader Styles */
@@ -807,5 +743,33 @@ export default {
         transform: scale(1);
         opacity: 1;
     }
+}
+
+/* footer sytles */
+.footer {
+    background-color: #174696;
+    font-size: 15px;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+.footer-link {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 6px;
+    transition: color 0.3s;
+}
+.footer-link:hover {
+    color: #f8d4d4;
+    text-decoration: underline;
+}
+.social-icon {
+    color: white;
+    font-size: 20px;
+    transition: transform 0.3s, color 0.3s;
+}
+.social-icon:hover {
+    color: #f8d4d4;
+    transform: scale(1.2);
 }
 </style>
