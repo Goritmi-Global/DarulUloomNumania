@@ -65,7 +65,7 @@
                             role="button"
                             @click="toggleLangMenu"
                         >
-                            {{ user_language_name }}
+                            {{ translate(user_language_name) }}
                         </a>
                         <ul
                             v-if="langMenuOpen"
@@ -772,4 +772,35 @@ export default {
     color: #f8d4d4;
     transform: scale(1.2);
 }
+
+.lang-dropdown {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(23, 70, 150, 0.2);
+  width: 200px;
+  margin: 0 auto;
+  padding: 10px 0;
+  z-index: 999;
+}
+
+.lang-dropdown .dropdown-item {
+  color: #174696 !important;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+}
+
+.lang-dropdown .dropdown-item:hover {
+  background-color: #174696;
+  color: white !important;
+  font-weight: bold;
+}
+
+.lang-active .dropdown-item {
+  background-color: #174696 !important;
+  color: white !important;
+  font-weight: bold;
+  /* border-radius: 6px; */
+}
+
 </style>
