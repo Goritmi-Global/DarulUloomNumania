@@ -46,7 +46,7 @@
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                         >
-                            {{ user_language_name }}
+                            {{ translate(user_language_name) }}
                         </a>
                         <ul
                             class="dropdown-menu dropdown-menu-end c-global-radius"
