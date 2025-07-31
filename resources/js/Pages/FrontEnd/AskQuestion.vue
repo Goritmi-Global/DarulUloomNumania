@@ -1,18 +1,22 @@
 <template>
   <main id="main" class="main">
     <!-- Contact Hero Section -->
-    <section class="hero-section text-center py-5 text-white">
-      <div class="container">
-        <h1 class="display-4">{{ translate("Ask a Question") }}</h1>
-        <p class="lead">
-          {{
-            translate(
-              "Have a question? Send us a message, and we will respond as soon as possible."
-            )
-          }}
-        </p>
-      </div>
-    </section>
+     
+
+    <section class="hero-section text-center text-white py-5">
+            <div class="container">
+                <h1 class="display-4 fw-bold">
+                    {{ translate("Ask a Question") }}
+                </h1>
+                <p class="lead">
+                    {{
+                        translate(
+                            "Have a question? Send us a message, and we will respond as soon as possible"
+                        )
+                    }}
+                </p>
+            </div>
+        </section>
 
     <!-- Search Bar -->
     <section class="container p-4">
@@ -394,5 +398,13 @@ export default {
   font-size: 26px;
   padding: 10px 12px;
   margin-bottom: 20px;
+}
+.hero-section {
+    background: linear-gradient(120deg, #023f86, #035bb8);
+    color: white;
+    margin-top: 60px;
+}
+.theme-text-color {
+    color: #023f86;
 }
 </style>
