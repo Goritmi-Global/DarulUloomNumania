@@ -1,13 +1,21 @@
 <template>
     <main id="main" class="main mb-3">
         <!-- Hero Section -->
-          
-         <section class="hero-section text-center text-white py-5">
-      <div class="container">
-        <h1 class="display-4 fw-bold">{{ translate("New Student Enrollment") }}</h1>
-        <p class="lead">{{ translate("Providing quality Islamic education with modern learning techniques") }}</p>
-      </div>
-    </section>
+
+        <section class="hero-section text-center text-white py-5">
+            <div class="container">
+                <h1 class="display-4 fw-bold">
+                    {{ translate("New Student Enrollment") }}
+                </h1>
+                <p class="lead">
+                    {{
+                        translate(
+                            "Providing quality Islamic education with modern learning techniques"
+                        )
+                    }}
+                </p>
+            </div>
+        </section>
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -869,24 +877,22 @@
         </div>
         <div v-if="showModal" class="modal-backdrop fade show"></div>
     </main>
-
 </template>
 
 <script>
 import axios from "axios";
 import Master from "../Layout/MasterFront.vue";
 import Multiselect from "@vueform/multiselect";
-import { usePage } from '@inertiajs/vue3';
+import { usePage } from "@inertiajs/vue3";
 
 export default {
     layout: Master,
     components: {
         Multiselect,
     },
- 
+
     data() {
-        
-        return { 
+        return {
             enrollCheckCnin: "",
             admissionStatusDetails: null,
             formErrors: {},
@@ -1093,7 +1099,7 @@ export default {
                     );
                     this.showModal = true;
                 })
-                .catch((error) => { 
+                .catch((error) => {
                     this.formStatus = 1;
                     if (error.response?.data?.errors) {
                         this.formErrors = error.response.data.errors;
@@ -1145,9 +1151,9 @@ export default {
             this.formErrors = {};
         },
     },
-    
+
     mounted() {
-        const queryString = usePage().url.split('?')[1];
+        const queryString = usePage().url.split("?")[1];
         const courseParam = queryString
             ? new URLSearchParams(queryString).get("course")
             : "";
@@ -1208,11 +1214,11 @@ export default {
     transform: translateY(-5px);
 }
 .hero-section {
-  background: linear-gradient(120deg, #023F86, #035bb8);
-  color: white;
-  margin-top: 60px;
+    background: linear-gradient(120deg, #023f86, #035bb8);
+    color: white;
+    margin-top: 60px;
 }
 .theme-text-color {
-  color: #023F86;
+    color: #023f86;
 }
 </style>
