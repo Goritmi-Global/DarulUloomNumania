@@ -14,8 +14,7 @@
                     }}.
                 </p>
             </div>
-        </section>
-
+        </section> 
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -877,19 +876,24 @@
         </div>
         <div v-if="showModal" class="modal-backdrop fade show"></div>
     </main>
+
 </template>
 
 <script>
 import axios from "axios";
 import Master from "../Layout/MasterFront.vue";
 import Multiselect from "@vueform/multiselect";
+import { usePage } from '@inertiajs/vue3';
+
 export default {
     layout: Master,
     components: {
         Multiselect,
     },
+ 
     data() {
-        return {
+        
+        return { 
             enrollCheckCnin: "",
             admissionStatusDetails: null,
             formErrors: {},
@@ -930,7 +934,7 @@ export default {
             ],
             form: {
                 id: "",
-                apply_for: "",
+                apply_for: this.course,
                 name: "",
                 father: "",
                 dob: "",
@@ -1147,6 +1151,16 @@ export default {
             };
             this.formErrors = {};
         },
+    },
+    
+    mounted() {
+        const queryString = usePage().url.split('?')[1];
+        const courseParam = queryString
+            ? new URLSearchParams(queryString).get("course")
+            : "";
+        if (courseParam) {
+            this.form.apply_for = decodeURIComponent(courseParam);
+        }
     },
 };
 </script>

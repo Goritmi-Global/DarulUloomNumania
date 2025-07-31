@@ -1,65 +1,83 @@
 <template>
     <main id="main" class="main">
         <!-- Hero Section -->
-        <section class="hero-section text-center py-5 text-white">
-            <div class="container">
-                <h1 class="display-4">
+        <section class="hero-section text-center text-white position-relative">
+            <img
+                src="https://www.independenturdu.com/sites/default/files/styles/1200x630/public/article/main-image/2022/02/17/199851-575588226.jpg?itok=PAno-qRg"
+                alt="background"
+                class="hero-bg-image"
+            />
+            <div
+                class="overlay position-absolute top-0 start-0 w-100 h-100"
+            ></div>
+            <div
+                class="container py-5 position-relative z-1 c-hero-textual-contents"
+            >
+                <h1 class="display-4 fw-bold">
                     {{ translate("Jamia Darol Uloom Noumania Utmanzai") }}
                 </h1>
-                <h2>
+                <h2 class="fs-4">
                     {{ translate("Charsadda Khyber PakhtunKhwa Pakistan") }}
                 </h2>
-                <!--                 
-                <p class="lead">
-                    {{ translate("Providing quality Islamic education with modern learning techniques") }}.
-                </p> -->
+                <p class="lead mt-3">
+                    {{
+                        translate(
+                            "Providing quality Islamic education with modern learning techniques"
+                        )
+                    }}
+                </p>
+                <a
+                    href="#courses"
+                    class="btn btn-light btn-lg mt-3 shadow rounded-pill"
+                >
+                    {{ translate("Explore Courses") }}
+                </a>
             </div>
         </section>
 
-        <section class="courses-section py-2 bg-light">
+        <!-- Courses Section -->
+        <section
+            class="courses-section py-5 bg-light c-jameel-noori"
+            id="courses"
+        >
             <div class="container">
-                <h1 class="display-4 p-3 theme-text-color">
+                <h1 class="display-5 mb-4 theme-text-color fw-bold">
                     {{ translate("Our Courses") }}
                 </h1>
-                <div class="row g-2">
+                <div class="row g-4">
                     <div
-                        class="col-md-4 d-flex align-items-stretch"
-                        v-for="(course, index) in courses"
+                        class="col-md-3"
+                        v-for="(course, index) in filterOptions"
                         :key="index"
                     >
-                        <div class="card content-card">
-                            <img
-                                :src="course.image"
-                                class="card-img-top"
-                                alt="Course Image"
-                            />
-                            <div class="card-body">
-                                <h5 class="card-title">{{ course.title }}</h5>
-                                <p class="card-text">
-                                    {{ course.description }}
-                                </p>
-                                <a href="/student/enroll" class="btn btn-primary">{{
-                                    translate("Enroll Now")
-                                }}</a>
-                            </div>
+                        <div class="course-box" @click="goToEnroll(course)">
+                            <h5
+                                class="mb-0 fw-semibold"
+                                style="
+                                    font-family: 'Jameel Noori Nastaleeq', serif;
+                                "
+                            >
+                                {{ course }}
+                            </h5>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="bayanaat-section py-2">
+        <!-- Bayanaat Section -->
+        <section class="bayanaat-section py-5">
             <div class="container">
-                <h1 class="display-4 p-3 theme-text-color">
+                <h1 class="display-5 mb-4 theme-text-color fw-bold">
                     {{ translate("Latest Bayanaat") }}
                 </h1>
-                <div class="row g-2">
+                <div class="row g-4">
                     <div
                         class="col-md-4 d-flex align-items-stretch"
                         v-for="(video, index) in bayanaat"
                         :key="index"
                     >
-                        <div class="card content-card">
+                        <div class="card content-card shadow">
                             <div class="video-wrapper">
                                 <iframe
                                     :src="video.url"
@@ -77,19 +95,25 @@
         </section>
 
         <!-- Admission Open Section -->
-        <section class="admission-section text-center py-5 text-white mb-3">
+        <section class="admission-section text-center text-white py-5">
             <div class="container">
-                <h2>{{ translate("Admissions Open") }}</h2>
-                <p>
+                <h2 class="display-5 fw-bold">
+                    {{ translate("Admissions Open") }}
+                </h2>
+                <p class="lead">
                     {{
                         translate(
                             "Register now and start your journey towards Islamic knowledge"
                         )
-                    }}.
+                    }}
                 </p>
-                <a href="/student/enroll" class="btn btn-light btn-lg">{{
-                    translate("Apply Now")
-                }}</a>
+
+                <a
+                    href="/student/enroll"
+                    class="btn btn-light btn-lg rounded-pill shadow"
+                >
+                    {{ translate("Apply Now") }}
+                </a>
             </div>
         </section>
     </main>
@@ -102,134 +126,142 @@ export default {
     layout: Master,
     data() {
         return {
-            courses: [
-                {
-                    title: "Quran Memorization",
-                    description:
-                        "Learn and memorize the Holy Quran with proper Tajweed.",
-                    image: "https://images.squarespace-cdn.com/content/v1/5d016c1ba9f2e7000120c08c/1560579210527-7LDCZH62S91OLOJIKAE9/AdobeStock_87517185.jpeg",
-                },
-                {
-                    title: "Islamic Studies",
-                    description:
-                        "Deep dive into Islamic history, Fiqh, and Hadith.",
-                    image: "https://img.freepik.com/free-photo/top-view-islamic-new-year-concept_23-2148611689.jpg",
-                },
-                {
-                    title: "Arabic Language",
-                    description:
-                        "Master the Arabic language and understand the Quran better.",
-                    image: "https://images.squarespace-cdn.com/content/v1/61782ecbf6567d12f08ba3b9/72a3bc52-cdf5-49a8-8289-4454f6c00534/image-from-rawpixel-id-418053-jpeg.jpg",
-                },
+            filterOptions: [
+                "تحصّص بالفقہ ایک سال",
+                "تحصّص بالفقہ دو سال",
+                "تحصّص باللغات",
+                "دورہ حدیث",
+                "درجہ سابعہ",
+                "درجہ سادسہ",
+                "درجہ خامسہ",
+                "درجہ رابعہ",
+                "درجہ ثالثہ",
+                "درجہ ثانیہ",
+                "درجہ اولیٰ",
+                "متوسطا",
             ],
             bayanaat: [
                 {
-                    title: "Molana Muhammad Idrees Sahib Pashto Bayan – Juma 20 06 2025",
-                    description:
-                        "Molana Muhammad Idrees Sahib’s Pashto Bayan delivered on Friday, 20 June 2025.",
+                    title: this.translate(
+                        "Molana Muhammad Idrees Sahib Pashto Bayan – Juma 20 06 2025"
+                    ),
+                    description: this.translate(
+                        "Molana Muhammad Idrees Sahib’s Pashto Bayan delivered on Friday, 20 June 2025."
+                    ),
                     url: "https://www.youtube.com/embed/KfVv1GGVFYU",
                 },
-
                 {
-                    title: "Molana Muhammad Idrees Sahib New Pashto Bayan – 05 01 2025",
-                    description:
-                        "New Pashto bayan by Molana Muhammad Idrees Sahib (January 5, 2025).",
+                    title: this.translate(
+                        "Molana Muhammad Idrees Sahib New Pashto Bayan – 05 01 2025"
+                    ),
+                    description: this.translate(
+                        "New Pashto bayan by Molana Muhammad Idrees Sahib (January 5, 2025)."
+                    ),
                     url: "https://www.youtube.com/embed/c4RyVepLm40",
                 },
                 {
-                    title: "Molana Muhammad Idrees Sahib Bayan – July 2025",
-                    description:
-                        "Powerful new bayan by Molana Muhammad Idrees Sahib uploaded in July 2025.",
+                    title: this.translate(
+                        "Molana Muhammad Idrees Sahib Bayan – July 2025"
+                    ),
+                    description: this.translate(
+                        "Powerful new bayan by Molana Muhammad Idrees Sahib uploaded in July 2025."
+                    ),
                     url: "https://www.youtube.com/embed/TEJywc1RpPQ",
                 },
             ],
         };
     },
+    methods: {
+        goToEnroll(courseName) {
+            const encoded = encodeURIComponent(courseName);
+            window.location.href = `/student/enroll?course=${encoded}`;
+        },
+    },
 };
 </script>
 
 <style>
-.video-wrapper {
+.hero-section {
+    background-color: #023f86;
     position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.hero-section {
+    position: relative;
+    height: 500px; /* or 600px if you want it taller */
     overflow: hidden;
 }
 
-.video-wrapper iframe {
+.hero-bg-image {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border: 0;
-}
-
-/* General Styles */
-.hero-section,
-.admission-section {
-    margin-top: 70px;
-    background-color: var(--primary-color);
-}
-
-/* Course & Video Cards */
-.card {
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-}
-.card:hover {
-    transform: translateY(-5px);
-}
-.card-img-top {
-    height: 200px;
     object-fit: cover;
+    z-index: 0;
 }
-.card-body {
-    padding: 20px;
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
 }
-.btn-primary {
-    background-color: var(--primary-color);
-    border: none;
+.c-hero-textual-contents {
+    margin-top: 140px;
 }
-.btn-primary:hover {
-    background-color: #795806;
-}
-/* Equal Height for All Cards */
-.content-card {
-    display: flex;
-    flex-direction: column;
+.course-box {
+    background-color: #023f86;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 1.25rem;
     height: 100%;
+    font-weight: 600;
+    font-size: 1.15rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    font-family: "Jameel Noori Nastaleeq", serif !important;
 }
 
-/* Ensure All Cards in a Row Have the Same Height */
-.row {
-    display: flex;
-    flex-wrap: wrap;
+.course-box:hover {
+    background-color: #035bb8;
+    transform: scale(1.05);
+    cursor: pointer;
 }
 
-/* Video Section Adjustments */
 .video-wrapper {
     width: 100%;
-    height: 250px; /* Adjust as needed */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 250px;
     overflow: hidden;
 }
 
 .video-wrapper iframe {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the video covers the area */
+    border: 0;
 }
 
-/* Ensure Text & Buttons Align Properly */
+.card.content-card {
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card.content-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
 .card-body {
-    flex-grow: 1;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.admission-section {
+    background: linear-gradient(120deg, #023f86, #035bb8);
 }
 </style>
