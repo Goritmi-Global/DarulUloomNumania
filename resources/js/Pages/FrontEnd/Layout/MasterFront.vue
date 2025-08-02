@@ -313,11 +313,24 @@
                     <div
                         class="col-lg-3 col-md-6 mt-5 text-center text-lg-start"
                     >
-                        <h6 class="fw-bold mb-3">
+                        <h6 class="fw-bold mb-3 ms-3">
                             {{ translate("Follow Us") }}
                         </h6>
+                        <div>
+                            <a
+                                href="https://play.google.com/store/apps/details?id=com.jamianumaniapak.numania"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                                    alt="Get it on Google Play"
+                                    style="height: 60px"
+                                />
+                            </a>
+                        </div>
                         <div
-                            class="d-flex justify-content-center justify-content-lg-start"
+                            class="d-flex justify-content-center justify-content-lg-start ms-3"
                         >
                             <a
                                 href="https://facebook.com"
@@ -334,7 +347,9 @@
                             >
                                 <i class="bi bi-youtube"></i>
                             </a>
+                            <br />
                         </div>
+                        
                     </div>
                 </div>
 
@@ -774,33 +789,32 @@ export default {
 }
 
 .lang-dropdown {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(23, 70, 150, 0.2);
-  width: 200px;
-  margin: 0 auto;
-  padding: 10px 0;
-  z-index: 999;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(23, 70, 150, 0.2);
+    width: 200px;
+    margin: 0 auto;
+    padding: 10px 0;
+    z-index: 999;
 }
 
 .lang-dropdown .dropdown-item {
-  color: #174696 !important;
-  font-weight: 500;
-  transition: all 0.2s ease-in-out;
-  text-align: center;
+    color: #174696 !important;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    text-align: center;
 }
 
 .lang-dropdown .dropdown-item:hover {
-  background-color: #174696;
-  color: white !important;
-  font-weight: bold;
+    background-color: #174696;
+    color: white !important;
+    font-weight: bold;
 }
 
 .lang-active .dropdown-item {
-  background-color: #174696 !important;
-  color: white !important;
-  font-weight: bold;
-  /* border-radius: 6px; */
+    background-color: #174696 !important;
+    color: white !important;
+    font-weight: bold;
+    /* border-radius: 6px; */
 }
-
 </style>
