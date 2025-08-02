@@ -167,13 +167,13 @@
                         >{{ translate("Contact") }}</a
                     >
                 </li>
-                <li>
+                <!-- <li>
                     <a
                         href="/events"
                         :class="{ active: isActive('/events') }"
                         >{{ translate("Events") }}</a
                     >
-                </li>
+                </li> -->
                 <li>
                     <a
                         href="/student/enroll"
