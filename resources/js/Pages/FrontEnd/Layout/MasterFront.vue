@@ -192,7 +192,7 @@
                         role="button"
                         @click="toggleLangMenu"
                     >
-                        {{ user_language_name }}
+                        {{ translate(user_language_name) }}
                     </a>
                     <ul
                         v-if="langMenuOpen"
