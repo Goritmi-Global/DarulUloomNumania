@@ -15,228 +15,286 @@
                 </nav>
             </div>
             <!-- End Page Title -->
+            <h1></h1>
 
             <section class="section dashboard">
                 <div class="row">
-                    <!-- Filter -->
-
-                    <!-- Top Boxes -->
-                    <div
-                        class="col-lg-12"
-                        :class="{
-                            'rtl-text':
-                                $page.props.default_language === 'PK' ||
-                                $page.props.default_language === 'SA',
-                        }"
+                    <!-- SUPERADMIN & ACCOUNTANT -->
+                    <template
+                        v-if="['superadmin', 'accountant'].includes(userRole)"
                     >
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <div class="card info-card bg-white h-100">
-                                    <!-- Ensure same height -->
-                                    <div class="card-body d-flex flex-column">
+                        <div class="col-lg-12" :class="rtlClass">
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div
+                                        class="card info-card income-card bg-white h-100"
+                                    >
                                         <div
-                                            class="d-flex align-items-center justify-content-between"
+                                            class="card-body d-flex flex-column"
                                         >
-                                            <h6>{{ translate("Incomes") }}</h6>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <!-- Ensures content stretches -->
-                                            <h5 class="card-title">
-                                                {{ translate("Total") }}:
-                                                {{ incomeTypeTotal }}
-                                            </h5>
-
                                             <div
-                                                v-for="income in incomeTypeDetails"
-                                                :key="income.id"
-                                                class="d-flex justify-content-between border-bottom py-1"
+                                                class="d-flex align-items-center justify-content-between"
                                             >
-                                                <span>{{ income.name }}</span>
-                                                <span>
-                                                    {{
-                                                        income.total_income_type
-                                                    }}
-                                                    ({{
-                                                        income.percentage_of_total
-                                                    }}%)
-                                                </span>
+                                                <h6>
+                                                    {{ translate("Incomes") }}
+                                                </h6>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h5 class="card-title">
+                                                    {{ translate("Total") }}:
+                                                    {{ incomeTypeTotal }}
+                                                </h5>
+                                                <div
+                                                    v-for="income in incomeTypeDetails"
+                                                    :key="income.id"
+                                                    class="d-flex justify-content-between border-bottom py-1"
+                                                >
+                                                    <span>{{
+                                                        income.name
+                                                    }}</span>
+                                                    <span
+                                                        >{{
+                                                            income.total_income_type
+                                                        }}
+                                                        ({{
+                                                            income.percentage_of_total
+                                                        }}%)</span
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div
+                                        class="card info-card expense-card bg-white h-100"
+                                    >
+                                        <div
+                                            class="card-body d-flex flex-column"
+                                        >
+                                            <div
+                                                class="d-flex align-items-center justify-content-between"
+                                            >
+                                                <h6>
+                                                    {{ translate("Expense") }}
+                                                </h6>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h5 class="card-title">
+                                                    {{ translate("Total") }}:
+                                                    {{ expenseTypeTotal }}
+                                                </h5>
+                                                <div
+                                                    v-for="expense in expenseTypeDetails"
+                                                    :key="expense.id"
+                                                    class="d-flex justify-content-between border-bottom py-1"
+                                                >
+                                                    <span>{{
+                                                        expense.name
+                                                    }}</span>
+                                                    <span
+                                                        >{{
+                                                            expense.total_expense_type
+                                                        }}
+                                                        ({{
+                                                            expense.percentage_of_total
+                                                        }}%)</span
+                                                    >
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="col-12 col-md-6">
-                                <div class="card info-card bg-white h-100">
-                                    <!-- Ensure same height -->
-                                    <div class="card-body d-flex flex-column">
-                                        <div
-                                            class="d-flex align-items-center justify-content-between"
-                                        >
-                                            <h6>{{ translate("Expense") }}</h6>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <!-- Ensures content stretches -->
+                        <!-- Filter -->
+                        <div class="row justify-content-end mb-4 mt-4">
+                            <div class="col-md-4">
+                                <div
+                                    class="filter-box bg-white rounded-pill shadow-sm px-3 py-2 d-flex align-items-center gap-2"
+                                >
+                                    <i
+                                        class="bi bi-funnel-fill text-primary fs-5"
+                                    ></i>
+                                    <Multiselect
+                                        v-model="selectedFilter"
+                                        :options="filterOptions"
+                                        :searchable="true"
+                                        @select="applyFilter"
+                                        :placeholder="translate('Filter By')"
+                                        class="w-100"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cash In, Out, Balance -->
+                        <div class="col-lg-12" :class="rtlClass">
+                            <div class="row">
+                                <div
+                                    class="col-xxl-4 col-md-4"
+                                    v-for="(item, idx) in cashSummary"
+                                    :key="idx"
+                                >
+                                    <div class="card info-card bg-white">
+                                        <div class="card-body">
                                             <h5 class="card-title">
-                                                {{ translate("Total") }}:
-                                                {{ expenseTypeTotal }}
+                                                {{ item.title }}
                                             </h5>
-
                                             <div
-                                                v-for="expense in expenseTypeDetails"
-                                                :key="expense.id"
-                                                class="d-flex justify-content-between border-bottom py-1"
+                                                class="d-flex align-items-center justify-content-between"
                                             >
-                                                <span>{{ expense.name }}</span>
-                                                <span>
+                                                <h6 :class="item.class">
                                                     {{
-                                                        expense.total_expense_type
+                                                        formatCurrency(
+                                                            item.value
+                                                        )
                                                     }}
-                                                    ({{
-                                                        expense.percentage_of_total
-                                                    }}%)
-                                                </span>
+                                                </h6>
+                                                <span :class="item.iconBg"
+                                                    ><i
+                                                        :class="item.icon"
+                                                        class="text-white"
+                                                    ></i
+                                                ></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="d-flex justify-content-end mb-3 mt-3">
-                        <div class="col-md-3">
-                            <Multiselect
-                                v-model="selectedFilter"
-                                :options="filterOptions"
-                                :searchable="true"
-                                @select="applyFilter"
-                                :placeholder="translate('Filter By')"
-                            />
-                        </div>
-                    </div>
-                    <div
-                        class="col-lg-12"
-                        :class="{
-                            'rtl-text':
-                                $page.props.default_language === 'PK' ||
-                                $page.props.default_language === 'SA',
-                        }"
-                    >
-                        <div class="row">
-                            <div class="col-xxl-4 col-md-4">
-                                <div class="card info-card bg-white">
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            {{ translate("Cash In") }}
-                                        </h5>
-                                        <div
-                                            class="d-flex align-items-center justify-content-between"
-                                        >
-                                            <h6>
-                                                {{ formatCurrency(cashIn) }}
-                                            </h6>
-                                            <span
-                                                class="icon-bubble bg-success"
-                                            >
-                                                <i
-                                                    class="bi bi-cash text-white"
-                                                ></i>
-                                            </span>
-                                        </div>
-                                    </div>
+                        <!-- Bar Chart -->
+                        <div class="col-lg-12" :class="rtlClass">
+                            <div
+                                class="card shadow-sm border-0 rounded-4 overflow-hidden chart-card"
+                            >
+                                <div
+                                    class="card-header bg-gradient-blue text-white d-flex justify-content-between align-items-center px-4 py-3"
+                                >
+                                    <h5 class="mb-0 fw-semibold">
+                                        {{
+                                            translate(
+                                                "Income vs Expense (Bar Chart - Selected Range)"
+                                            )
+                                        }}
+                                    </h5>
+                                    <i class="bi bi-bar-chart-steps fs-4"></i>
                                 </div>
-                            </div>
-                            <div class="col-xxl-4 col-md-4">
-                                <div class="card info-card bg-white">
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            {{ translate("Cash Out") }}
-                                        </h5>
-                                        <div
-                                            class="d-flex align-items-center justify-content-between"
-                                        >
-                                            <h6 class="text-danger">
-                                                {{ formatCurrency(cashOut) }}
-                                            </h6>
-                                            <span class="icon-bubble bg-danger">
-                                                <i
-                                                    class="bi bi-cash-coin text-white"
-                                                ></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xxl-4 col-md-4">
-                                <div class="card info-card bg-white">
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            {{ translate("Balance") }}
-                                        </h5>
-                                        <div
-                                            class="d-flex align-items-center justify-content-between"
-                                        >
-                                            <h6
-                                                :class="{
-                                                    'text-success':
-                                                        balance >= 0,
-                                                    'text-danger': balance < 0,
-                                                }"
-                                            >
-                                                {{ formatCurrency(balance) }}
-                                            </h6>
-                                            <span
-                                                :class="
-                                                    balance >= 0
-                                                        ? 'icon-bubble bg-success'
-                                                        : 'icon-bubble bg-danger'
-                                                "
-                                            >
-                                                <i
-                                                    class="bi bi-bank text-white"
-                                                ></i>
-                                            </span>
-                                        </div>
-                                    </div>
+                                <div class="card-body bg-light p-4">
+                                    <canvas id="barChart" height="100"></canvas>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </template>
 
-                    <!-- Charts -->
-                    <div
-                        class="col-lg-12"
-                        :class="{
-                            'rtl-text':
-                                $page.props.default_language === 'PK' ||
-                                $page.props.default_language === 'SA',
-                        }"
+                    <!-- ADMISSION DASHBOARD -->
+                    <template
+                        v-else-if="
+                            ['superadmin', 'admission'].includes(userRole)
+                        "
                     >
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    {{
-                                        translate(
-                                            "Income vs Expense (Bar Chart - Selected Range)"
-                                        )
-                                    }}
-                                </h5>
-                                <canvas id="barChart"></canvas>
+                        <div class="row g-4">
+                            <div
+                                v-for="(course, index) in admissionCourses"
+                                :key="index"
+                                class="col-md-4"
+                            >
+                                <div
+                                    :class="[
+                                        'card h-100 text-white admission-card',
+                                        course.bg,
+                                    ]"
+                                >
+                                    <div
+                                        class="card-body d-flex justify-content-between align-items-center"
+                                    >
+                                        <!-- Left: Icon -->
+                                        <div class="d-flex flex-column">
+                                            <i
+                                                :class="[
+                                                    'fs-2 mb-2',
+                                                    course.icon,
+                                                ]"
+                                            ></i>
+                                            <h6 class="fw-bold mb-0">
+                                                {{ course.name }}
+                                            </h6>
+                                            <small class="text-white-50">{{
+                                                course.subtitle
+                                            }}</small>
+                                        </div>
+                                        <!-- Right: Badge -->
+                                        <span
+                                            class="badge rounded-pill bg-light text-dark px-3 py-2"
+                                        >
+                                            {{ getRandomCount(index) }} طلباء
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    Income and Expense (Line Chart - Selected
-                                    Range)
-                                </h5>
-                                <canvas id="lineChart"></canvas>
+                    </template>
+
+                    <!-- IFTAH DASHBOARD -->
+
+                    <template
+                        v-else-if="['superadmin', 'iftah'].includes(userRole)"
+                    >
+                        <div class="row g-4">
+                            <div
+                                v-for="(item, index) in iftahItems"
+                                :key="index"
+                                class="col-md-3"
+                            >
+                                <Link
+                                    :href="item.link"
+                                    class="card-box text-decoration-none d-block"
+                                >
+                                    <div
+                                        :class="[
+                                            'card h-100 text-white',
+                                            item.bg,
+                                        ]"
+                                    >
+                                        <div
+                                            class="card-body d-flex flex-column justify-content-between"
+                                        >
+                                            <div
+                                                class="d-flex justify-content-between align-items-center mb-2"
+                                            >
+                                                <i
+                                                    :class="['fs-2', item.icon]"
+                                                ></i>
+                                                <span
+                                                    class="badge rounded-pill px-3 py-1"
+                                                    :class="
+                                                        item.unanswered > 0
+                                                            ? 'bg-danger'
+                                                            : 'bg-success'
+                                                    "
+                                                >
+                                                    {{
+                                                        item.unanswered > 0
+                                                            ? `${item.unanswered} unanswered`
+                                                            : "✓"
+                                                    }}
+                                                </span>
+                                            </div>
+                                            <h5 class="fw-bold mb-0">
+                                                {{ item.name }}
+                                            </h5>
+                                            <small class="text-white-50">{{
+                                                item.description
+                                            }}</small>
+                                        </div>
+                                    </div>
+                                </Link>
                             </div>
                         </div>
-                    </div> -->
+                    </template>
                 </div>
             </section>
         </main>
@@ -256,8 +314,128 @@ export default {
     components: {
         Multiselect,
     },
+    computed: {
+        userRole() {
+            return this.$page.props.user.role;
+        },
+        rtlClass() {
+            return this.$page.props.default_language === "PK" ||
+                this.$page.props.default_language === "SA"
+                ? "rtl-text"
+                : "";
+        },
+    },
     data() {
         return {
+            admissionCourses: [
+                {
+                    name: "تَخَصُّص فِی الفِقْہِ ایک سال",
+                    subtitle: "Year 1",
+                    bg: "bg-gradient-blue",
+                    icon: "bi bi-journal-bookmark",
+                },
+                {
+                    name: "تَخَصُّص فِی الفِقْہِ دو سال",
+                    subtitle: "Year 2",
+                    bg: "bg-gradient-purple",
+                    icon: "bi bi-journal-richtext",
+                },
+                {
+                    name: "تحصُّص فِي اللُّغَاتِ",
+                    subtitle: "Linguistics",
+                    bg: "bg-gradient-green",
+                    icon: "bi bi-translate",
+                },
+                {
+                    name: "دورہ حدیث",
+                    subtitle: "Hadith Studies",
+                    bg: "bg-gradient-orange",
+                    icon: "bi bi-book",
+                },
+                {
+                    name: "درجہ سابعہ",
+                    subtitle: "Class 7",
+                    bg: "bg-gradient-teal",
+                    icon: "bi bi-7-square",
+                },
+                {
+                    name: "درجہ سادسہ",
+                    subtitle: "Class 6",
+                    bg: "bg-gradient-pink",
+                    icon: "bi bi-6-square",
+                },
+                {
+                    name: "درجہ خامسہ",
+                    subtitle: "Class 5",
+                    bg: "bg-gradient-sky",
+                    icon: "bi bi-5-square",
+                },
+                {
+                    name: "درجہ رابعہ",
+                    subtitle: "Class 4",
+                    bg: "bg-gradient-cyan",
+                    icon: "bi bi-4-square",
+                },
+                {
+                    name: "درجہ ثالثہ",
+                    subtitle: "Class 3",
+                    bg: "bg-gradient-yellow",
+                    icon: "bi bi-3-square",
+                },
+                {
+                    name: "درجہ ثانیہ",
+                    subtitle: "Class 2",
+                    bg: "bg-gradient-indigo",
+                    icon: "bi bi-2-square",
+                },
+                {
+                    name: "درجہ اولیٰ",
+                    subtitle: "Class 1",
+                    bg: "bg-gradient-red",
+                    icon: "bi bi-1-square",
+                },
+                {
+                    name: "متوسطا",
+                    subtitle: "Middle",
+                    bg: "bg-gradient-gray",
+                    icon: "bi bi-stack",
+                },
+            ],
+
+            iftahItems: [
+                {
+                    name: "Books",
+                    link: "/books",
+                    icon: "bi bi-book",
+                    description: "Manage Islamic Books",
+                    bg: "bg-gradient-primary",
+                    unanswered: 0,
+                },
+                {
+                    name: "Bayanaat",
+                    link: "/bayanaat",
+                    icon: "bi bi-mic",
+                    description: "Upload speeches",
+                    bg: "bg-gradient-purple",
+                    unanswered: 0,
+                },
+                {
+                    name: "Islamic Names",
+                    link: "/islamic-names",
+                    icon: "bi bi-person-bounding-box",
+                    description: "Track name suggestions",
+                    bg: "bg-gradient-success",
+                    unanswered: 0,
+                },
+                {
+                    name: "Question & Answers",
+                    link: "/questions-answers",
+                    icon: "bi bi-question-circle",
+                    description: "Answer pending questions",
+                    bg: "bg-gradient-warning",
+                    unanswered: 12, // Example
+                },
+            ],
             transactionEntries: [],
             incomeTypeDetails: [],
             incomeTypeTotal: 0,
@@ -286,6 +464,9 @@ export default {
         };
     },
     methods: {
+        getRandomCount(seed) {
+            return Math.floor(100 + ((seed * 73) % 900));
+        },
         formatCurrency(value) {
             return new Intl.NumberFormat("en-PK", {
                 minimumFractionDigits: 0,
@@ -685,5 +866,160 @@ export default {
 canvas {
     width: 100% !important;
     height: 400px !important;
+}
+
+/* style for the iftah dashboard */
+.card-box .card {
+    border: none;
+    border-radius: 16px;
+    padding: 1.2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out;
+}
+.card-box .card:hover {
+    transform: scale(1.03);
+}
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #44b4ff, #2f80ed);
+}
+.bg-gradient-purple {
+    background: linear-gradient(135deg, #7f00ff, #e100ff);
+}
+.bg-gradient-success {
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+}
+.bg-gradient-warning {
+    background: linear-gradient(135deg, #f39c12, #f1c40f);
+}
+
+/* style for Admission user dashboard */
+.admission-card {
+    border: none;
+    border-radius: 16px;
+    padding: 1.2rem;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+.admission-card:hover {
+    transform: scale(1.03);
+}
+.bg-gradient-blue {
+    background: linear-gradient(135deg, #44b4ff, #2f80ed);
+}
+.bg-gradient-purple {
+    background: linear-gradient(135deg, #7f00ff, #e100ff);
+}
+.bg-gradient-green {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+}
+.bg-gradient-orange {
+    background: linear-gradient(135deg, #f39c12, #f1c40f);
+}
+.bg-gradient-teal {
+    background: linear-gradient(135deg, #20c997, #17a2b8);
+}
+.bg-gradient-pink {
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+}
+.bg-gradient-sky {
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+}
+.bg-gradient-cyan {
+    background: linear-gradient(135deg, #00c9ff, #92fe9d);
+}
+.bg-gradient-yellow {
+    background: linear-gradient(135deg, #fddb92, #d1fdff);
+}
+.bg-gradient-indigo {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+.bg-gradient-red {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+}
+.bg-gradient-gray {
+    background: linear-gradient(135deg, #bdc3c7, #2c3e50);
+}
+
+/* main dashboard for accouting style */
+.card.info-card {
+    border: none;
+    border-radius: 16px;
+    padding: 1.5rem;
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        #1c92d2,
+        #f2fcfe
+    ); /* fallback gradient */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+.card.info-card:hover {
+    transform: scale(1.01);
+}
+
+/* Specific Gradient Overrides */
+.card.info-card.income-card {
+    background: linear-gradient(135deg, #44b4ff, #2f80ed);
+}
+
+.card.info-card.expense-card {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+}
+
+/* Section Title */
+.card h6 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Total Value */
+.card .card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+/* Breakdown Rows */
+.card .border-bottom {
+    font-size: 0.95rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+}
+
+.card .border-bottom span:last-child {
+    font-weight: 500;
+    color: #f1f1f1;
+    white-space: nowrap;
+}
+/* filter deisgn  */
+.filter-box {
+    border: 1px solid #e0e0e0;
+    transition: box-shadow 0.3s ease;
+}
+.filter-box:hover {
+    box-shadow: 0 0 0 4px rgba(44, 123, 255, 0.1);
+}
+
+/* bar chart design */
+.chart-card {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.card-header.bg-gradient-blue {
+    background: linear-gradient(135deg, #36d1dc, #5b86e5);
+}
+
+.card-body.bg-light {
+    background-color: #f8f9fa;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#barChart {
+    max-height: 300px;
 }
 </style>

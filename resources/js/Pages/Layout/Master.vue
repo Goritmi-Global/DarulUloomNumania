@@ -308,7 +308,10 @@
 
                 <li
                     class="nav-item"
-                    v-if="$page.props.user.role === 'superadmin'"
+                    v-if="
+                        $page.props.user.role === 'superadmin' ||
+                        $page.props.user.role === 'admission'
+                    "
                 >
                     <a
                         class="nav-link"
