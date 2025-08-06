@@ -14,12 +14,117 @@ use App\Models\Person;
 use App\Models\Upload;
 use App\Models\BusinessType;
 
+use App\Models\Book;
+use App\Models\IslamicName;
+use App\Models\Bayanaat;
+use App\Models\Question;
+use App\Models\Answer;
+
+use App\Models\Student;
+
+
+
 class DashboardController extends Controller
 {
     public function index()
-    {
-        return Inertia::render('Dashboard/Index');
+{
+    $user = auth()->user();
+    $props = [];
+
+    // IFTAH BLOCK
+    if (in_array($user->role, ['iftah', 'superadmin'])) {
+        $booksCount = Book::count();
+        $bayanaatCount = Bayanaat::count();
+        $namesCount = IslamicName::count();
+
+        // Get unanswered questions
+        $unansweredCount = Question::whereNotIn('id', function ($query) {
+            $query->select('question_id')->from('answers');
+        })->count();
+
+        $props['iftahItems'] = [
+            [
+                'name' => 'Books',
+                'link' => '/books',
+                'icon' => 'bi bi-book',
+                'description' => 'Manage Islamic Books',
+                'bg' => 'bg-gradient-primary',
+                'unanswered' => 0,
+                'count' => $booksCount,
+            ],
+            [
+                'name' => 'Bayanaat',
+                'link' => '/bayanaat',
+                'icon' => 'bi bi-mic',
+                'description' => 'Upload speeches',
+                'bg' => 'bg-gradient-purple',
+                'unanswered' => 0,
+                'count' => $bayanaatCount,
+            ],
+            [
+                'name' => 'Islamic Names',
+                'link' => '/islamic-names',
+                'icon' => 'bi bi-person-bounding-box',
+                'description' => 'Track name suggestions',
+                'bg' => 'bg-gradient-success',
+                'unanswered' => 0,
+                'count' => $namesCount,
+            ],
+            [
+                'name' => 'Question & Answers',
+                'link' => '/questions-answers',
+                'icon' => 'bi bi-question-circle',
+                'description' => 'Answer pending questions',
+                'bg' => 'bg-gradient-warning',
+                'unanswered' => $unansweredCount,
+                'count' => $unansweredCount,
+            ],
+        ];
     }
+
+    // ADMISSION BLOCK
+    if (in_array($user->role, ['admission', 'superadmin'])) {
+        $currentYear = Carbon::now()->year;
+
+        // Grouped student count by apply_for
+        $students = Student::select('apply_for')
+            ->where('status', 1)
+            ->where('session', $currentYear)
+            ->groupBy('apply_for')
+            ->selectRaw('apply_for, COUNT(*) as total')
+            ->get();
+        $courseColors = [
+            'تَخَصُّص فِی الفِقْہِ ایک سال' => 'bg-edu-blue',
+            'تَخَصُّص فِی الفِقْہِ دو سال' => 'bg-edu-navy',
+            'تحصُّص فِي اللُّغَاتِ' => 'bg-edu-green',
+            'دورہ حدیث' => 'bg-edu-orange',
+            'درجہ سابعہ' => 'bg-edu-purple',
+            'درجہ سادسہ' => 'bg-edu-red',
+            'درجہ خامسہ' => 'bg-edu-pink',
+            'درجہ رابعہ' => 'bg-edu-yellow',
+            'درجہ ثالثہ' => 'bg-edu-cyan',
+            'درجہ ثانیہ' => 'bg-edu-indigo',
+            'درجہ اولیٰ' => 'bg-edu-sky',
+            'متوسطا' => 'bg-edu-teal',
+        ];
+
+
+        $admissionCourses = $students->map(function ($item) use ($courseColors) {
+        return [
+            'name' => $item->apply_for,
+            'subtitle' => 'Current Year',
+            'bg' => $courseColors[$item->apply_for] ?? 'bg-edu-silver',
+            'icon' => 'bi bi-mortarboard',
+            'count' => $item->total,
+        ];
+});
+
+        $props['admissionCourses'] = $admissionCourses;
+    }
+
+    return Inertia::render('Dashboard/Index', $props);
+}
+
     public function create()
     {
         return Inertia::render('Dashboard/Create', [

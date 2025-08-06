@@ -1,191 +1,74 @@
 <template>
     <!-- Google Fonts -->
-    <a href="https://fonts.gstatic.com" rel="preconnect" />
-    <a
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Nunito:wght@300;400;600&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet"
     />
 
-    <main class="bg-template">
-        <div class="container">
-            <section
-                class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4"
-            >
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div
-                            class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center"
-                        >
-                            <!-- <div
-                                style="
-                                    background: yellow;
-                                    padding: 10px;
-                                    text-align: center;
-                                    font-weight: bold;
-                                "
-                            >
-                                The system is currently in the testing and
-                                configuration phase. Some features may not work
-                                as expected.
-                            </div> -->
-
-                            <!-- End Logo -->
-                            
-                            <div class="card mb-3">
-                                <div class="d-flex justify-content-center py-4">
-                                    <a :href="route('/')">
-                                        <!-- <img
-                                            src="/images/logo.jpg"
-                                            alt="logo"
-                                            /> -->
-                                            <img
-                                            :src="'/images/frontlogo.png'"
-                                            height="100"
-                    alt="Goritmi Logo"
-                    class="logo-bounce mb-2"
-              
-                />
-                                        <!-- <h1 class="text-transform-capital">Darul Uloom Numania</h1>  -->
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="pb-2">
-                                        <h5
-                                            class="card-title text-center pb-0 fs-4"
-                                        >
-                                            {{ "Login to Your Account" }}
-                                        </h5>
+<main :class="[$page.props.default_language === 'UR' ? 'rtl-text' : '', 'bg-template', 'position-relative']">
+        <img :src="'/images/hero-image.jpg'" alt="background" class="hero-bg-image" />
+        <div class="container position-relative z-1">
+            <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                        <div class="card shadow-lg rounded-4 border-0">
+                            <div class="text-center pt-4">
+                                <a :href="route('/')">
+                                    <img :src="'/images/frontlogo.png'" height="100" alt="Jamia Nounia Logo" class="logo-bounce mb-2" />
+                                </a>
+                            </div>
+                            <div class="card-body px-4">
+                                <h5 class="card-title text-center fs-4 mb-3">{{ translate("Login to Your Account") }}</h5>
+                                <form @submit.prevent="submit" class="row g-3">
+                                    <div class="col-12">
+                                        <label for="email" class="form-label">{{ translate("Email") }}</label>
+                                        <input
+                                            id="email"
+                                            type="email"
+                                            v-model="form.email"
+                                            :class="['form-control', { 'is-invalid': formErrors.email }]"
+                                            :placeholder="translate('Enter your email')"
+                                            autocomplete="current-email"
+                                        />
+                                        <div class="invalid-feedback" v-if="formErrors.email">{{ formErrors.email[0] }}</div>
                                     </div>
 
-                                    <form
-                                        class="row g-3"
-                                        @submit.prevent="submit"
-                                    >
-                                        <div class="col-12">
-                                            <label
-                                                for="email"
-                                                class="form-label"
-                                                >{{ "Email" }}
-                                            </label>
-                                            <input
-                                                type="email"
-                                                class="form-control"
-                                                :class="{
-                                                    'invalid-bg':
-                                                        formErrors.email,
-                                                }"
-                                                id="email"
-                                                v-model="form.email"
-                                                :placeholder="'Email'"
-                                                autocomplete="current-email"
-                                            />
-                                            <div
-                                                v-if="formErrors.email"
-                                                class="invalid-feedback"
-                                            >
-                                                {{ formErrors.email[0] }}
-                                            </div>
-                                        </div>
+                                    <div class="col-12">
+                                        <label for="password" class="form-label">{{ translate("Password") }}</label>
+                                        <input
+                                            id="password"
+                                            type="password"
+                                            v-model="form.password"
+                                            :class="['form-control', { 'is-invalid': formErrors.password }]"
+                                            :placeholder="translate('Enter your password')"
+                                            autocomplete="current-password"
+                                        />
+                                        <div class="invalid-feedback" v-if="formErrors.password">{{ formErrors.password[0] }}</div>
+                                    </div>
 
-                                        <div class="col-12">
-                                            <label
-                                                for="password"
-                                                class="form-label"
-                                                >{{ "Password" }}</label
-                                            >
-                                            <input
-                                                type="password"
-                                                class="form-control"
-                                                id="password"
-                                                :class="{
-                                                    'invalid-bg':
-                                                        formErrors.email,
-                                                }"
-                                                v-model="form.password"
-                                                :placeholder="'Password'"
-                                                autocomplete="current-password"
-                                            />
-                                            <div
-                                                v-if="formErrors.password"
-                                                class="invalid-feedback"
-                                            >
-                                                {{ formErrors.password[0] }}
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <div class="mt-2">
-                                                <button
-                                                    v-if="formStatus == 1"
-                                                    class="btn btn-success w-100"
-                                                    type="submit"
-                                                >
-                                                    {{ "Login" }}
-                                                </button>
-
-                                                <button
-                                                    class="btn btn-success w-100"
-                                                    type="submit"
-                                                    disabled
-                                                    v-else
-                                                >
-                                                    {{ "Login" }}
-                                                    <span
-                                                        class="spinner-border spinner-border-sm"
-                                                        role="status"
-                                                        aria-hidden="true"
-                                                    ></span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <!-- <div class="col-12">
-                                            <p class="small mb-0">
-                                                <a
-                                                    :href="
-                                                        route('/')
-                                                    "
-                                                    class="theme-color-red"
-                                                >
-                                                    {{
-                                                        (
-                                                            "Forgot Password?"
-                                                        )
-                                                    }}
-                                                </a>
-                                            </p>
-                                        </div> -->
-                                        <!-- <div class="col-12">
-                                            <p class="small mb-0">
-                                                <a
-                                                    :href="route('/')"
-                                                    class="theme-color-red"
-                                                >
-                                                    {{ ("Register") }}
-                                                </a>
-                                            </p>
-                                        </div> -->
-                                    </form>
-                                </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary w-100" :disabled="formStatus !== 1">
+                                            <span v-if="formStatus === 1">{{ translate('Login') }}</span>
+                                            <span v-else>
+                                                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                                {{ translate('Logging in...') }}
+                                            </span>
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-
-                            <div class="credits">
-                                <!-- All the links in the footer should remain intact. -->
-                                <!-- You can delete the links only if you purchased the pro version. -->
-                                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                                <!-- Designed by
-                                <a href="https://bootstrapmade.com/"
-                                    >BootstrapMade</a
-                                > -->
-                            </div>
+                        </div>
+                        <div class="text-center text-white mt-4 small">
+                            &copy; {{ new Date().getFullYear() }} {{ translate("Jamia Darol Uloom Noumania Utmanzai") }}
                         </div>
                     </div>
                 </div>
             </section>
         </div>
     </main>
-    <!-- End #main -->
 </template>
+
+
 
 <script>
 import axios from "axios";
@@ -257,99 +140,40 @@ export default {
 @import url("public/backend/assets/css/custom.css");
 @import "toastr";
 
-.c-file-padding {
-    padding: 1rem 0.75rem !important;
-}
-.invalid-feedback {
-    display: block !important;
-}
-.invalid-bg {
-    border-color: #f8d4d4 !important;
-    background-color: #f8d4d4 !important;
-}
-
-.btn-success {
-    background-color: rgb(65, 84, 241) !important;
-    border-color: rgb(65, 84, 241) !important;
-}
-
-.btn-success:hover {
-    background-color: rgb(13, 32, 201) !important;
-    border-color: rgb(13, 32, 201) !important;
-}
-
-.btn-success:active {
-    background-color: rgb(13, 32, 201) !important;
-    border-color: rgb(13, 32, 201) !important;
-}
-
-.btn-success:focus {
-    color: #fff !important;
-    box-shadow: none !important;
-}
-.toast-success {
-    background-color: rgb(65, 84, 241) !important;
-}
-.theme-text-color {
-    color: rgb(13, 32, 201) !important;
-    font-weight: bold;
-}
-.theme-bg-color {
-    background-color: rgb(13, 32, 201) !important;
-}
-</style>
-<style scope>
-.bg-template {
-    position: relative;
-    /* background: url('/images/alshahamahospital.jpg') no-repeat center center fixed; */
-    background-size: cover;
-    background: white;
-}
-
-.bg-template::before {
-    content: "";
+.hero-bg-image {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.3); /* Red overlay with 30% opacity */
+    width: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0.3;
 }
 
-.btn-success {
-    background-color: #012970 !important;
-    border-color: #012970 !important;
+.bg-template {
+    background: #fff;
+    overflow: hidden;
 }
 
-.btn-success:hover {
-    background-color: #012970 !important;
-    border-color: #012970 !important;
+.card {
+    background: #fff;
+    border-radius: 1rem;
 }
 
-.btn-success:active {
-    background-color: #012970 !important;
-    border-color: #012970 !important;
+.btn-primary {
+    background-color: #012970;
+    border-color: #012970;
 }
 
-.btn-success:focus {
-    color: #fff !important;
-    box-shadow: none !important;
+.btn-primary:hover {
+    background-color: #011a50;
+    border-color: #011a50;
 }
-.toast-success {
-    background-color: #012970 !important;
-}
-.theme-text-color {
-    color: #012970 !important;
-    font-weight: bold;
-}
-.theme-bg-color {
-    background-color: #012970 !important;
-}
-.text-primary {
-    color: #012970 !important;
-}
-.text-transform-capital {
-    text-transform: capitalize;
+
+.is-invalid {
+    border-color: #dc3545;
+    background-color: #f8d7da;
 }
 
 </style>

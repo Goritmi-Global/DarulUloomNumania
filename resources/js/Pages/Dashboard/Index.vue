@@ -203,10 +203,8 @@
                                 class="col-md-4"
                             >
                                 <div
-                                    :class="[
-                                        'card h-100 text-white admission-card',
-                                        course.bg,
-                                    ]"
+                                    :class="['card h-100 text-white admission-card', course.bg]"
+
                                 >
                                     <div
                                         class="card-body d-flex justify-content-between align-items-center"
@@ -230,7 +228,8 @@
                                         <span
                                             class="badge rounded-pill bg-light text-dark px-3 py-2"
                                         >
-                                            {{ getRandomCount(index) }} طلباء
+                                            {{ course.count }} طلباء
+
                                         </span>
                                     </div>
                                 </div>
@@ -276,10 +275,11 @@
                                                             : 'bg-success'
                                                     "
                                                 >
+                                                
                                                     {{
                                                         item.unanswered > 0
                                                             ? `${item.unanswered} unanswered`
-                                                            : "✓"
+                                                            : item.count
                                                     }}
                                                 </span>
                                             </div>
@@ -314,6 +314,17 @@ export default {
     components: {
         Multiselect,
     },
+    props: {
+    admissionCourses: {
+        type: Array,
+        default: () => [],
+    },
+    iftahItems: {
+        type: Array,
+        default: () => [],
+    },
+},
+
     computed: {
         userRole() {
             return this.$page.props.user.role;
@@ -327,115 +338,7 @@ export default {
     },
     data() {
         return {
-            admissionCourses: [
-                {
-                    name: "تَخَصُّص فِی الفِقْہِ ایک سال",
-                    subtitle: "Year 1",
-                    bg: "bg-gradient-blue",
-                    icon: "bi bi-journal-bookmark",
-                },
-                {
-                    name: "تَخَصُّص فِی الفِقْہِ دو سال",
-                    subtitle: "Year 2",
-                    bg: "bg-gradient-purple",
-                    icon: "bi bi-journal-richtext",
-                },
-                {
-                    name: "تحصُّص فِي اللُّغَاتِ",
-                    subtitle: "Linguistics",
-                    bg: "bg-gradient-green",
-                    icon: "bi bi-translate",
-                },
-                {
-                    name: "دورہ حدیث",
-                    subtitle: "Hadith Studies",
-                    bg: "bg-gradient-orange",
-                    icon: "bi bi-book",
-                },
-                {
-                    name: "درجہ سابعہ",
-                    subtitle: "Class 7",
-                    bg: "bg-gradient-teal",
-                    icon: "bi bi-7-square",
-                },
-                {
-                    name: "درجہ سادسہ",
-                    subtitle: "Class 6",
-                    bg: "bg-gradient-pink",
-                    icon: "bi bi-6-square",
-                },
-                {
-                    name: "درجہ خامسہ",
-                    subtitle: "Class 5",
-                    bg: "bg-gradient-sky",
-                    icon: "bi bi-5-square",
-                },
-                {
-                    name: "درجہ رابعہ",
-                    subtitle: "Class 4",
-                    bg: "bg-gradient-cyan",
-                    icon: "bi bi-4-square",
-                },
-                {
-                    name: "درجہ ثالثہ",
-                    subtitle: "Class 3",
-                    bg: "bg-gradient-yellow",
-                    icon: "bi bi-3-square",
-                },
-                {
-                    name: "درجہ ثانیہ",
-                    subtitle: "Class 2",
-                    bg: "bg-gradient-indigo",
-                    icon: "bi bi-2-square",
-                },
-                {
-                    name: "درجہ اولیٰ",
-                    subtitle: "Class 1",
-                    bg: "bg-gradient-red",
-                    icon: "bi bi-1-square",
-                },
-                {
-                    name: "متوسطا",
-                    subtitle: "Middle",
-                    bg: "bg-gradient-gray",
-                    icon: "bi bi-stack",
-                },
-            ],
-
-            iftahItems: [
-                {
-                    name: "Books",
-                    link: "/books",
-                    icon: "bi bi-book",
-                    description: "Manage Islamic Books",
-                    bg: "bg-gradient-primary",
-                    unanswered: 0,
-                },
-                {
-                    name: "Bayanaat",
-                    link: "/bayanaat",
-                    icon: "bi bi-mic",
-                    description: "Upload speeches",
-                    bg: "bg-gradient-purple",
-                    unanswered: 0,
-                },
-                {
-                    name: "Islamic Names",
-                    link: "/islamic-names",
-                    icon: "bi bi-person-bounding-box",
-                    description: "Track name suggestions",
-                    bg: "bg-gradient-success",
-                    unanswered: 0,
-                },
-                {
-                    name: "Question & Answers",
-                    link: "/questions-answers",
-                    icon: "bi bi-question-circle",
-                    description: "Answer pending questions",
-                    bg: "bg-gradient-warning",
-                    unanswered: 12, // Example
-                },
-            ],
+             
             transactionEntries: [],
             incomeTypeDetails: [],
             incomeTypeTotal: 0,
@@ -464,9 +367,7 @@ export default {
         };
     },
     methods: {
-        getRandomCount(seed) {
-            return Math.floor(100 + ((seed * 73) % 900));
-        },
+       
         formatCurrency(value) {
             return new Intl.NumberFormat("en-PK", {
                 minimumFractionDigits: 0,
@@ -846,6 +747,21 @@ export default {
 </script>
 
 <style scoped>
+.bg-edu-blue { background: linear-gradient(135deg, #2193b0, #6dd5ed); }
+.bg-edu-navy { background: linear-gradient(135deg, #141e30, #243b55); }
+.bg-edu-green { background: linear-gradient(135deg, #11998e, #38ef7d); }
+.bg-edu-orange { background: linear-gradient(135deg, #f2994a, #f2c94c); }
+.bg-edu-purple { background: linear-gradient(135deg, #9d50bb, #6e48aa); }
+.bg-edu-red { background: linear-gradient(135deg, #cb2d3e, #ef473a); }
+.bg-edu-pink { background: linear-gradient(135deg, #ff6a00, #ee0979); }
+.bg-edu-yellow { background: linear-gradient(135deg, #fceabb, #f8b500); }
+.bg-edu-cyan { background: linear-gradient(135deg, #00c9ff, #92fe9d); }
+.bg-edu-indigo { background: linear-gradient(135deg, #6a11cb, #2575fc); }
+.bg-edu-sky { background: linear-gradient(135deg, #2980b9, #6dd5fa); }
+.bg-edu-teal { background: linear-gradient(135deg, #43cea2, #185a9d); }
+.bg-edu-silver { background: linear-gradient(135deg, #bdc3c7, #2c3e50); }
+
+
 @import "@vueform/multiselect/themes/default.css";
 .info-card {
     background: #f8f9fa;
@@ -903,43 +819,7 @@ canvas {
 .admission-card:hover {
     transform: scale(1.03);
 }
-.bg-gradient-blue {
-    background: linear-gradient(135deg, #44b4ff, #2f80ed);
-}
-.bg-gradient-purple {
-    background: linear-gradient(135deg, #7f00ff, #e100ff);
-}
-.bg-gradient-green {
-    background: linear-gradient(135deg, #11998e, #38ef7d);
-}
-.bg-gradient-orange {
-    background: linear-gradient(135deg, #f39c12, #f1c40f);
-}
-.bg-gradient-teal {
-    background: linear-gradient(135deg, #20c997, #17a2b8);
-}
-.bg-gradient-pink {
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
-}
-.bg-gradient-sky {
-    background: linear-gradient(135deg, #74ebd5, #9face6);
-}
-.bg-gradient-cyan {
-    background: linear-gradient(135deg, #00c9ff, #92fe9d);
-}
-.bg-gradient-yellow {
-    background: linear-gradient(135deg, #fddb92, #d1fdff);
-}
-.bg-gradient-indigo {
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-}
-.bg-gradient-red {
-    background: linear-gradient(135deg, #ff416c, #ff4b2b);
-}
-.bg-gradient-gray {
-    background: linear-gradient(135deg, #bdc3c7, #2c3e50);
-}
-
+ 
 /* main dashboard for accouting style */
 .card.info-card {
     border: none;
