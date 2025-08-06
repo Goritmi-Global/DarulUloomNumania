@@ -329,6 +329,11 @@ export default {
                     icon: "bi bi-plus-circle",
                 },
                 {
+                    path: "/operating/advance",
+                    label: "Operating Advance",
+                    icon: "bi bi-plus-circle",
+                },
+                {
                     path: "/income-statements",
                     label: "Income Statements",
                     icon: "bi bi-file-earmark-text",

@@ -15,6 +15,7 @@ use App\Http\Controllers\QuestionAnswerController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\operatingAdvanceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -67,6 +68,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/download-excel', [TransactionController::class, 'transactions_exportTo_excel'])->name('download-excel');
         Route::post('/download-report-excel', [ReportController::class, 'report_exportTo_excel'])->name('download-report-excel');
         Route::post('/download-income-statement-pdf', [IncomeStatementController::class, 'downloadIncomeStatementPDF'])->name('download-income-statement-pdf');
+
+         
+        Route::get('/operating/advance', [IncomeExpenseController::class, 'operating_advance_index'])->name('operating.advance');
+
+
 
         // 🏫 Admission Officer Routes
         Route::get('/students', [StudentsController::class, 'index'])->name('students');

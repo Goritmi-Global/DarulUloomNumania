@@ -10,10 +10,8 @@ use Illuminate\Support\Str;
 use Inertia\Inertia;
 use App\Models\BusinessType;
 use App\Models\Person;
-use App\Models\OperatingAdvance;
 
-
-class IncomeExpenseController extends Controller
+class operatingAdvanceController extends Controller
 {
     // Display the expense index view
     public function expense_index()
@@ -25,23 +23,18 @@ class IncomeExpenseController extends Controller
         return Inertia::render('Income/Index');
     }
 
-    public function operating_advance_index()
-    {
-        return Inertia::render('OperatingAdvance/Index');
-    }
-
-
     // Fetch all expense entries
     public function fetch($process)
     {
         if ($process == 'Expense') {
             $records = ExpenseType::all();
-        } elseif ($process == 'Income') {
-            $records = IncomeType::all();
-        } else {
-            $records = OperatingAdvance::all();
-        }
+            
 
+        } else {
+            $records = IncomeType::all();
+
+        }
+        
         return $records;
     }
 
@@ -50,68 +43,64 @@ class IncomeExpenseController extends Controller
     { 
         $request->validate([
             'name' => 'required|string|max:255', 
-            'designation' => 'nullable|string|max:255',
-            'contact' => 'nullable|string|max:255',
         ]);
 
         if ($request->id) {
+
             if ($request->process == 'Expense') {
                 $record = ExpenseType::findOrFail($request->id);
-            } elseif ($request->process == 'Income') {
-                $record = IncomeType::findOrFail($request->id);
+
             } else {
-                $record = OperatingAdvance::findOrFail($request->id);
+                $record = IncomeType::findOrFail($request->id);
+
             }
         } else {
             if ($request->process == 'Expense') {
                 $record = new ExpenseType;
-            } elseif ($request->process == 'Income') {
-                $record = new IncomeType;
+
             } else {
-                $record = new OperatingAdvance;
+
+                $record = new IncomeType;
             }
-            $record->id = Str::orderedUuid(); // UUID
+            $record->id = Str::orderedUuid(); // Generate UUID for new record
         }
 
-        $record->name = $request->name;
-        if ($request->has('designation')) $record->designation = $request->designation;
-        if ($request->has('contact')) $record->contact = $request->contact;
+        // Set values
+        $record->name = $request->name; 
+
+        // $record->status = 1;
 
         $record->save();
+
         return 'success';
     }
-
 
     // Display a specific expense entry
     public function show($id, $process)
     {
         if ($process == 'Expense') {
+
             $record = ExpenseType::findOrFail($id);
-        } elseif ($process == 'Income') {
-            $record = IncomeType::findOrFail($id);
         } else {
-            $record = OperatingAdvance::findOrFail($id);
+            $record = IncomeType::findOrFail($id);
         }
 
         return $record;
     }
-
 
     // Delete a specific expense entry
     public function delete($id, $process)
     {
         if ($process == 'Expense') {
             $record = ExpenseType::findOrFail($id);
-        } elseif ($process == 'Income') {
-            $record = IncomeType::findOrFail($id);
-        } else {
-            $record = OperatingAdvance::findOrFail($id);
-        }
 
+        } else {
+            $record = IncomeType::findOrFail($id);
+
+        }
         $record->delete();
         return 'success';
     }
-
 
     public function pluckExpenses()
     {
@@ -125,13 +114,6 @@ class IncomeExpenseController extends Controller
         return response()->json($income); // Return JSON response
     }
     
-    public function pluckOperatingAdvance()
-    {
-        $data = OperatingAdvance::pluck('name', 'id');
-        return response()->json($data);
-    }
-
-
 
     public function income_expense_details($type, $id)
     {
