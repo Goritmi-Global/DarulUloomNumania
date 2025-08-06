@@ -7,476 +7,250 @@
                 $page.props.default_language === 'SA',
         }"
     >
-        <header id="header" class="header fixed-top d-flex align-items-center">
-            <div class="d-flex align-items-center justify-content-between">
+        <!-- HEADER -->
+        <header
+            id="header"
+            class="header fixed-top d-flex justify-content-between align-items-center px-4 shadow-sm bg-white"
+        >
+            <div class="d-flex align-items-center gap-3">
                 <a
                     :href="route('dashboard')"
                     class="logo d-flex align-items-center"
                 >
-                    <img :src="'/images/frontlogo.png'" height="150" alt="" />
-                    <!-- <span class="d-none d-lg-block theme-text-color">Darul Ul Oloom</span> -->
+                    <img
+                        :src="'/images/frontlogo.png'"
+                        alt="Logo"
+                        height="50"
+                        class="me-2"
+                    />
                 </a>
-
-                <i class="bi bi-list toggle-sidebar-btn"></i>
+                <i class="bi bi-list toggle-sidebar-btn fs-4"></i>
             </div>
 
-            <!-- End Search Bar -->
-            <a
-                class="nav-link nav-icon ms-2"
-                :href="route('/')"
-                target="_blank"
-                title="Browse Website"
-            >
-                <i class="bi bi-globe"></i>
-            </a>
+            <div class="d-flex align-items-center gap-3">
+                <a
+                    class="nav-link"
+                    :href="route('/')"
+                    target="_blank"
+                    title="Browse Website"
+                >
+                    <i class="bi bi-globe fs-5 text-primary"></i>
+                </a>
 
-            <nav class="header-nav ms-auto">
-                <ul class="d-flex align-items-center">
-                    <li class="nav-item dropdown">
-                        <a
-                            class="nav-link dropdown-toggle"
-                            style="
-                                font-size: 14px;
-                                font-weight: 600;
-                                color: #012970;
-                            "
-                            href="#"
-                            id="languageDropdown"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            {{ translate(user_language_name) }}
-                        </a>
-                        <ul
-                            class="dropdown-menu dropdown-menu-end c-global-radius"
-                            aria-labelledby="languageDropdown"
-                        >
-                            <li
-                                v-for="(language, index) in languages"
-                                :key="index"
-                                :class="[
+                <!-- Language Switch -->
+                <div class="dropdown">
+                    <a
+                        class="nav-link dropdown-toggle fw-semibold text-primary"
+                        href="#"
+                        id="languageDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        {{ translate(user_language_name) }}
+                    </a>
+                    <ul
+                        class="dropdown-menu dropdown-menu-end shadow-sm"
+                        aria-labelledby="languageDropdown"
+                    >
+                        <li
+                            v-for="(language, index) in languages"
+                            :key="index"
+                            :class="{
+                                'lang-active':
                                     language.code ==
-                                    $page.props.default_language
-                                        ? 'lang-active'
-                                        : '',
-                                ]"
+                                    $page.props.default_language,
+                            }"
+                        >
+                            <a
+                                class="dropdown-item"
+                                href="javascript:void(0)"
+                                @click="changeLang(language.code)"
                             >
-                                <a
-                                    class="dropdown-item"
-                                    style=""
-                                    href="javascript:void(0)"
-                                    @click="changeLang(language.code)"
-                                    >{{ language.name }}</a
-                                >
-                            </li>
-                        </ul>
-                    </li>
+                                {{ language.name }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
-                    <li class="nav-item dropdown nav-item d-block d-lg-none">
-                        <a
-                            class="nav-link nav-profile d-flex align-items-center pe-0"
-                            href="#"
-                            data-bs-toggle="dropdown"
-                        >
-                            <span class="d-md-block dropdown-toggle ps-2"
-                                >{{ $page.props.user.first_name }}
-                                {{ $page.props.user.last_name }}</span
-                            > </a
-                        ><!-- End Profile Iamge Icon -->
-
-                        <ul
-                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
-                        >
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center"
-                                    href="/profile"
-                                >
-                                    <i class="bi bi-gear"></i>
-                                    <span
-                                        >{{ translate("Account Settings") }}
-                                    </span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <hr class="dropdown-divider" />
-                            </li>
-
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center"
-                                    href="javascript:;"
-                                    @click="logout"
-                                >
-                                    <i class="bi bi-box-arrow-right"></i>
-                                    <span>{{ translate("Sign Out") }} </span>
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- End Profile Dropdown Items -->
-                    </li>
-
-                    <!-- End Search Icon-->
-
-                    <li class="nav-item dropdown pe-3">
-                        <a
-                            class="nav-link nav-profile d-flex align-items-center pe-0"
-                            href="#"
-                            data-bs-toggle="dropdown"
-                        >
-                            <span class="d-none d-md-block dropdown-toggle ps-2"
-                                >{{ $page.props.user.first_name }}
-                                {{ $page.props.user.last_name }}</span
-                            > </a
-                        ><!-- End Profile Iamge Icon -->
-
-                        <ul
-                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
-                        >
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center"
-                                    href="/profile"
-                                >
-                                    <i class="bi bi-gear"></i>
-                                    <span
-                                        >{{ translate("Account Settings") }}
-                                    </span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <hr class="dropdown-divider" />
-                            </li>
-
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center"
-                                    href="javascript:;"
-                                    @click="logout"
-                                >
-                                    <i class="bi bi-box-arrow-right"></i>
-                                    <span>{{ translate("Sign Out") }} </span>
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- End Profile Dropdown Items -->
-                    </li>
-                    <!-- End Profile Nav -->
-                </ul>
-            </nav>
-            <!-- End Icons Navigation -->
+                <!-- Profile (Mobile + Desktop) -->
+                <div class="dropdown d-flex align-items-center">
+                    <a
+                        class="nav-link dropdown-toggle fw-semibold text-dark"
+                        href="#"
+                        id="userDropdown"
+                        data-bs-toggle="dropdown"
+                        role="button"
+                        aria-expanded="false"
+                    >
+                        {{ $page.props.user.first_name }}
+                        {{ $page.props.user.last_name }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                        <li>
+                            <a
+                                class="dropdown-item d-flex align-items-center gap-2"
+                                href="/profile"
+                            >
+                                <i class="bi bi-gear text-primary"></i>
+                                {{ translate("Account Settings") }}
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                            <a
+                                class="dropdown-item d-flex align-items-center gap-2"
+                                href="javascript:;"
+                                @click="logout"
+                            >
+                                <i
+                                    class="bi bi-box-arrow-right text-danger"
+                                ></i>
+                                {{ translate("Sign Out") }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </header>
-        <!-- End Header -->
 
-        <!-- ======= Sidebar ======= -->
-        <aside id="sidebar" class="sidebar">
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="sidebar pt-5">
             <ul class="sidebar-nav" id="sidebar-nav">
-                <!-- Dashboard -->
-
                 <li class="nav-item">
                     <a
-                        class="nav-link collapsed"
+                        class="nav-link"
                         :class="{ active: isActive('/dashboard') }"
                         href="/dashboard"
                     >
                         <i class="bi bi-house-door"></i>
-                        <span>{{ translate("Dashboard") }} </span>
+                        <span>{{ translate("Dashboard") }}</span>
                     </a>
                 </li>
 
-                <!-- Accounts (Parent Menu with Transactions and Other Sub-Menus) -->
+                <!-- ACCOUNTS -->
                 <li
                     class="nav-item"
                     v-if="
-                        $page.props.user.role === 'superadmin' ||
-                        $page.props.user.role === 'accountant'
+                        ['superadmin', 'accountant'].includes(
+                            $page.props.user.role
+                        )
                     "
                 >
                     <a
                         class="nav-link"
-                        :class="{
-                            collapsed: !isParentActive([
-                                '/transactions',
-                                '/business/types',
-                                '/expense/types',
-                                '/income/types',
-                                '/income-statements',
-                                '/reports',
-                                '/loan-management',
-                            ]),
-                        }"
-                        data-bs-target="#accounts-nav"
+                        :class="{ collapsed: !isParentActive(accountsLinks) }"
                         data-bs-toggle="collapse"
+                        data-bs-target="#accounts-nav"
                         href="#"
                     >
-                        <i class="bi bi-person-circle"></i>
+                        <i class="bi bi-wallet2"></i>
                         <span>{{ translate("Accounts") }}</span>
                         <i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul
                         id="accounts-nav"
                         class="nav-content collapse"
-                        :class="{
-                            show: isParentActive([
-                                '/transactions',
-                                '/business/types',
-                                '/expense/types',
-                                '/income/types',
-                                '/income-statements',
-                                '/reports',
-                                '/loan-management',
-                            ]),
-                        }"
+                        :class="{ show: isParentActive(accountsLinks) }"
                         data-bs-parent="#sidebar-nav"
                     >
-                        <li>
+                        <li v-for="link in accountsLinks" :key="link.path">
                             <a
-                                :class="{ active: isActive('/transactions') }"
-                                href="/transactions"
+                                :href="link.path"
+                                :class="{ active: isActive(link.path) }"
                             >
-                                <i class="bi bi-cash"></i>
-                                <span>{{ translate("Transactions") }} </span>
+                                <i :class="link.icon"></i>
+                                <span>{{ translate(link.label) }}</span>
                             </a>
                         </li>
-                        <!-- <li>
-                            <a
-                                :class="{ active: isActive('/business/types') }"
-                                href="/business/types"
-                            >
-                                <i class="bi bi-briefcase"></i>
-                                <span>Business Types</span>
-                            </a>
-                        </li> -->
-                        <li>
-                            <a
-                                :class="{ active: isActive('/expense/types') }"
-                                href="/expense/types"
-                            >
-                                <i class="bi bi-dash-circle"></i>
-                                <span>{{ translate("Expense Types") }} </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                :class="{ active: isActive('/income/types') }"
-                                href="/income/types"
-                            >
-                                <i class="bi bi-plus-circle"></i>
-                                <span>{{ translate("Income Types") }} </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                :class="{
-                                    active: isActive('/income-statements'),
-                                }"
-                                href="/income-statements"
-                            >
-                                <i class="bi bi-file-earmark-text"></i>
-                                <span
-                                    >{{ translate("Income Statements") }}
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                :class="{ active: isActive('/reports') }"
-                                href="/reports"
-                            >
-                                <i class="bi bi-bar-chart-line"></i>
-                                <span>{{ translate("Reports") }} </span>
-                            </a>
-                        </li>
-                        <!-- <li>
-                            <a
-                                :class="{
-                                    active: isActive('/loan-management'),
-                                }"
-                                href="/loan-management"
-                            >
-                                <i class="bi bi-cash-coin"></i>
-                                <span>Loan Management</span>
-                            </a>
-                        </li>-->
                     </ul>
                 </li>
 
-                <!-- End Accounts Section -->
-
+                <!-- STUDENTS -->
                 <li
                     class="nav-item"
                     v-if="
-                        $page.props.user.role === 'superadmin' ||
-                        $page.props.user.role === 'admission'
+                        ['superadmin', 'admission'].includes(
+                            $page.props.user.role
+                        )
                     "
                 >
                     <a
                         class="nav-link"
-                        :class="{ collapsed: !isParentActive(['/students']) }"
-                        data-bs-target="#students-nav"
+                        :class="{ collapsed: !isParentActive(studentLinks) }"
                         data-bs-toggle="collapse"
+                        data-bs-target="#students-nav"
                         href="#"
                     >
-                        <i class="bi bi-gear"></i>
+                        <i class="bi bi-person-lines-fill"></i>
                         <span>{{ translate("Students") }}</span>
                         <i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul
                         id="students-nav"
                         class="nav-content collapse"
-                     
-                        :class="{
-                            show: isParentActive([
-                                '/students',
-                                '/enrolled-students',
-                                '/enroll-new-students',
-                                
-                            ]),
-                        }"
+                        :class="{ show: isParentActive(studentLinks) }"
                         data-bs-parent="#sidebar-nav"
                     >
-                        <!-- Languages (Only for Super Admin) -->
-                        <li>
+                        <li v-for="link in studentLinks" :key="link.path">
                             <a
-                                :class="{ active: isActive('/students') }"
-                                href="/students"
+                                :href="link.path"
+                                :class="{ active: isActive(link.path) }"
                             >
-                                <i class="bi bi-translate"></i>
-                                <span>{{ translate("All Students") }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                :class="{ active: isActive('/enrolled-students') }"
-                                href="/enrolled-students"
-                            >
-                                <i class="bi bi-translate"></i>
-                                <span>{{ translate("Enrolled Students") }}</span> 
+                                <i class="bi bi-chevron-right"></i>
+                                {{ translate(link.label) }}
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                <!-- <li
-                    class="nav-item"
-                    v-if="
-                        $page.props.user.role === 'superadmin' ||
-                        $page.props.user.role === 'admission'
-                    "
-                >
-                    <a
-                        class="nav-link collapsed"
-                        :class="{ active: isActive('/students') }"
-                        href="/students"
-                    >
-                        <i class="bi bi-people-fill"></i>
-                        <span>{{ translate("Enrolled Student") }}</span>
-                    </a>
-                </li> -->
+                <!-- DARUL IFTAH -->
                 <li
                     class="nav-item"
                     v-if="
-                        $page.props.user.role === 'superadmin' ||
-                        $page.props.user.role === 'iftah'
+                        ['superadmin', 'iftah'].includes($page.props.user.role)
                     "
                 >
                     <a
                         class="nav-link"
-                        :class="{
-                            collapsed: !isParentActive([
-                                '/introduction',
-                                '/books',
-                                '/bayanaat',
-                                '/islamic-names',
-                                '/questions-answers',
-                            ]),
-                        }"
-                        data-bs-target="#darul-iftah-nav"
+                        :class="{ collapsed: !isParentActive(iftahLinks) }"
                         data-bs-toggle="collapse"
+                        data-bs-target="#darul-iftah-nav"
                         href="#"
                     >
-                        <i class="bi bi-person-circle"></i>
+                        <i class="bi bi-journal-bookmark"></i>
                         <span>{{ translate("Darul Iftah") }}</span>
                         <i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul
                         id="darul-iftah-nav"
                         class="nav-content collapse"
-                        :class="{
-                            show: isParentActive([
-                                '/introduction',
-                                '/books',
-                                '/bayanaat',
-                                '/islamic-names',
-                                '/questions-answers',
-                            ]),
-                        }"
+                        :class="{ show: isParentActive(iftahLinks) }"
                         data-bs-parent="#sidebar-nav"
                     >
-                        <li>
+                        <li v-for="link in iftahLinks" :key="link.path">
                             <a
-                                :class="{ active: isActive('/introduction') }"
-                                href="/introduction"
+                                :href="link.path"
+                                :class="{ active: isActive(link.path) }"
                             >
-                                <i class="bi bi-info-circle"></i>
-                                {{ translate("Introduction") }}
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                :class="{ active: isActive('/books') }"
-                                href="/books"
-                            >
-                                <i class="bi bi-book"></i>
-                                {{ translate("Books") }}
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                :class="{ active: isActive('/bayanaat') }"
-                                href="/bayanaat"
-                            >
-                                <i class="bi bi-mic"></i>
-                                {{ translate("Bayanaat") }}
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                :class="{ active: isActive('/islamic-names') }"
-                                href="/islamic-names"
-                            >
-                                <i class="bi bi-person-badge"></i>
-                                {{ translate("Islamic Names") }}
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                :class="{
-                                    active: isActive('/questions-answers'),
-                                }"
-                                href="/questions-answers"
-                            >
-                                <i class="bi bi-question-circle"></i>
-                                {{ translate("Questions & Answers") }}
+                                <i class="bi bi-chevron-right"></i>
+                                {{ translate(link.label) }}
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                <!-- Software Users (Separate from Accounts) -->
+                <!-- USERS & SETTINGS (Superadmin Only) -->
                 <li
                     class="nav-item"
                     v-if="$page.props.user.role === 'superadmin'"
                 >
                     <a
-                        class="nav-link collapsed"
+                        class="nav-link"
+                        :href="'/users'"
                         :class="{ active: isActive('/users') }"
-                        href="/users"
                     >
-                        <i class="bi bi-people"></i>
+                        <i class="bi bi-people-fill"></i>
                         <span>{{ translate("Software Users") }}</span>
                     </a>
                 </li>
@@ -487,8 +261,8 @@
                     <a
                         class="nav-link"
                         :class="{ collapsed: !isParentActive(['/languages']) }"
-                        data-bs-target="#settings-nav"
                         data-bs-toggle="collapse"
+                        data-bs-target="#settings-nav"
                         href="#"
                     >
                         <i class="bi bi-gear"></i>
@@ -501,129 +275,146 @@
                         :class="{ show: isParentActive(['/languages']) }"
                         data-bs-parent="#sidebar-nav"
                     >
-                        <!-- Languages (Only for Super Admin) -->
                         <li>
                             <a
+                                :href="'/languages'"
                                 :class="{ active: isActive('/languages') }"
-                                href="/languages"
                             >
                                 <i class="bi bi-translate"></i>
-                                <span>{{ translate("Languages") }}</span>
+                                {{ translate("Languages") }}
                             </a>
                         </li>
                     </ul>
                 </li>
             </ul>
         </aside>
-        <!-- End Sidebar-->
+
+        <!-- PAGE CONTENT -->
         <slot></slot>
-        <!-- ======= Footer ======= -->
-        <footer id="footer" class="footer">
-            <div class="copyright">
-                &copy; {{ translate("Copyright") }}
-                <strong
-                    ><span>{{
-                        translate("Jamia Darol Uloom Noumania Utmanzai")
-                    }}</span></strong
-                >. {{ translate("All Rights Reserved") }}
-            </div>
-            <div class="credits">
+
+        <!-- FOOTER -->
+        <footer id="footer" class="footer bg-light text-center py-3">
+            <div class="text-muted small">
+                &copy; {{ new Date().getFullYear() }}
+                {{ translate("Jamia Darol Uloom Noumania Utmanzai") }}.
+                {{ translate("All Rights Reserved") }}
+                <br />
                 {{ translate("Designed by") }}
-                <a href="https://goritmi.co.uk">{{
-                    translate("Goritim Ltd")
-                }}</a>
+                <a href="https://goritmi.co.uk" target="_blank">Goritmi Ltd</a>
             </div>
         </footer>
-        <!-- End Footer -->
     </div>
 </template>
 
 <script>
-import axios from "axios";
-import Multiselect from "@vueform/multiselect";
 export default {
-    components: {
-        Multiselect,
-    },
-    created() {
-        this.fatchLanguages();
-    },
     data() {
         return {
             languages: [],
             user_language_name: "",
+            accountsLinks: [
+                {
+                    path: "/transactions",
+                    label: "Transactions",
+                    icon: "bi bi-cash",
+                },
+                {
+                    path: "/expense/types",
+                    label: "Expense Types",
+                    icon: "bi bi-dash-circle",
+                },
+                {
+                    path: "/income/types",
+                    label: "Income Types",
+                    icon: "bi bi-plus-circle",
+                },
+                {
+                    path: "/income-statements",
+                    label: "Income Statements",
+                    icon: "bi bi-file-earmark-text",
+                },
+                {
+                    path: "/reports",
+                    label: "Reports",
+                    icon: "bi bi-bar-chart-line",
+                },
+            ],
+            studentLinks: [
+                { path: "/students", label: "All Students" },
+                { path: "/enrolled-students", label: "Enrolled Students" },
+            ],
+            iftahLinks: [
+                { path: "/introduction", label: "Introduction" },
+                { path: "/books", label: "Books" },
+                { path: "/bayanaat", label: "Bayanaat" },
+                { path: "/islamic-names", label: "Islamic Names" },
+                { path: "/questions-answers", label: "Questions & Answers" },
+            ],
         };
     },
     mounted() {
-        let bootstrapJs = document.createElement("script");
-        bootstrapJs.setAttribute(
-            "src",
-            "/backend/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"
-        );
-        document.head.appendChild(bootstrapJs);
-
-        let mainJs = document.createElement("script");
-        mainJs.setAttribute("src", "/backend/assets/js/main.js");
-        document.head.appendChild(mainJs);
+        this.loadExternalScripts();
     },
-
+    created() {
+        this.fetchLanguages();
+    },
     methods: {
-        // Checks if the current route starts with the given path
         isActive(route) {
-            return window.location.pathname.startsWith(route);
-        },
-        isParentActive(routes) {
-            return routes.some((route) =>
-                window.location.pathname.startsWith(route)
-            );
-        },
+            return this.$page.url === route || this.$page.url.startsWith(route + '/');
 
+        },
+        isParentActive(links) {
+            return links.some((link) => this.$page.url.startsWith(link.path));
+        },
         logout() {
             axios
-                .post(route("api.logout"), this.form, {
-                    headers: {
-                        Authorization: "Bearer " + this.$page.props.auth_token,
-                    },
-                })
+                .post(
+                    route("api.logout"),
+                    {},
+                    {
+                        headers: {
+                            Authorization:
+                                "Bearer " + this.$page.props.auth_token,
+                        },
+                    }
+                )
                 .then(() => {
                     this.$inertia.get(route("login"));
-                })
-                .catch((error) => {});
+                });
         },
-        fatchLanguages() {
+        fetchLanguages() {
             axios
                 .get(route("api.all.languages"), {
                     headers: {
                         Authorization: "Bearer " + this.$page.props.auth_token,
                     },
                 })
-                .then((response) => {
-                    this.languages = response.data;
-                    // getting user default language name from langauges array
-                    this.user_language_name = response.data.filter(
-                        (p) => p.code == this.$page.props.default_language
-                    )[0].name;
-                })
-                .catch((error) => {
-                    toastr.error(error.response.data.message);
+                .then((res) => {
+                    this.languages = res.data;
+                    const userLang = res.data.find(
+                        (p) => p.code === this.$page.props.default_language
+                    );
+                    this.user_language_name = userLang ? userLang.name : "";
                 });
         },
         changeLang(code) {
-            let formData = new FormData();
+            const formData = new FormData();
             formData.append("default_language", code);
-
             axios
                 .post(route("api.user.default.language"), formData)
-                .then((data) => {
+                .then(() => {
                     window.location.reload();
-                })
-                .catch((error) => {
-                    toastr.error(error.response.data.message);
-
-                    if (error.response.data.errors) {
-                        this.formErrors = error.response.data.errors;
-                    }
                 });
+        },
+        loadExternalScripts() {
+            const bootstrapJs = document.createElement("script");
+            bootstrapJs.src =
+                "/backend/assets/vendor/bootstrap/js/bootstrap.bundle.min.js";
+            document.head.appendChild(bootstrapJs);
+
+            const mainJs = document.createElement("script");
+            mainJs.src = "/backend/assets/js/main.js";
+            document.head.appendChild(mainJs);
         },
     },
 };
@@ -676,11 +467,7 @@ export default {
     text-align: left;
     padding-bottom: 5px;
 }
-
-.nav-link.active {
-    background-color: #f6f9ff !important; /* Change this to your desired color */
-    color: #174696 !important;
-}
+ 
 .section-title h5 {
     font-size: 22px;
     font-weight: bold;
@@ -758,5 +545,10 @@ export default {
 .fade-enter,
 .fade-leave-to {
     opacity: 0;
+}
+.nav-link.active {
+    background-color: #f6f9ff !important;
+    color: #174696 !important;
+    font-weight: bold;
 }
 </style>
