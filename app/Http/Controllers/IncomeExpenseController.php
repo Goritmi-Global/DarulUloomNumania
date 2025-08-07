@@ -119,6 +119,12 @@ class IncomeExpenseController extends Controller
         return response()->json($expense); // Return JSON response
     }
     
+    public function pluckAdvance()
+    {
+        $advance = OperatingAdvance::pluck('name', 'id');
+        return response()->json($advance);
+    }
+
     public function pluckIncome()
     {
         $income = IncomeType::pluck('name', 'id'); // Pluck should come last

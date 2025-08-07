@@ -452,6 +452,25 @@
                                         </div>
                                     </div>
                                     <div
+                                            class="col-12 col-md-6"
+                                            v-if="form.process_type === 'Advance'"
+                                        >
+                                            <label>{{ translate("Advance Type") }}</label>
+                                            <Multiselect
+                                                v-model="form.advance_type"
+                                                :options="AdvanceTypesOptions"
+                                                :searchable="true"
+                                                :class="{ 'invalid-bg': formErrors.advance_type }"
+                                        />
+                                            <div
+                                                class="invalid-feedback animated fadeIn"
+                                                v-if="formErrors.advance_type"
+                                            >
+                                                {{ formErrors.advance_type[0] }}
+                                            </div>
+                                        </div>
+
+                                    <div
                                         class="col-12 col-md-6"
                                         v-if="
                                             form.process_type == 'Borrow' ||
@@ -505,8 +524,11 @@
                                     <div
                                         class="col-md-6 col-12"
                                         v-if="
-                                            form.process_type == 'Expense' ||
+                                            form.process_type == 'Expense'
+                                             ||
                                             form.process_type == 'Lend'
+                                             ||
+                                            form.process_type == 'Advance'
                                         "
                                     >
                                         <label for="cash_out">{{
@@ -822,6 +844,7 @@ export default {
                 remarks: "",
                 expense_type: "",
                 income_type: "",
+                advance_type: "",
                 process_type: "",
                 receipt_image: "",
                 person: "",
@@ -835,10 +858,13 @@ export default {
             isCashOutReadonly: false,
             ExpenseTypesOptions: [],
             IncomeTypesOptions: [],
+            AdvanceTypesOptions: [],
             methodTypesOpions: ["Bank", "Cash"],
             processTypeOptions: [
                 { label: "Expense (خرچ)", value: "Expense" },
                 { label: "Income (آمدنی)", value: "Income" },
+                { label: "Operating Advance (ادھار)", value: "Advance" },
+
             ],
             monthsOptions: [
                 { value: 1, label: "January" },
@@ -952,6 +978,7 @@ export default {
                 formData.append("transaction_type", this.filterTransactionType);
             }
 
+
             axios
                 .post(route("api.transaction.fetch"), formData, {
                     headers: {
@@ -1010,6 +1037,8 @@ export default {
                 "income_type",
                 sanitizeValue(this.form.income_type)
             );
+            formData.append("advance_type", sanitizeValue(this.form.advance_type));
+
             formData.append(
                 "process_type",
                 sanitizeValue(this.form.process_type)
@@ -1214,6 +1243,7 @@ export default {
                         remarks: response.data.remarks,
                         expense_type: response.data.expense_type || "",
                         income_type: response.data.income_type || "",
+                        advance_type: response.data.advance_type || "",
                         process_type: response.data.process_type || "",
                         person: response.data.person || "",
                     };
@@ -1244,6 +1274,9 @@ export default {
             if (processType == "Expense") {
                 this.pluckExpenseTypes();
             }
+            if (processType == "Advance") {
+                this.pluckAdvanceTypes();
+            }
         },
         pluckIncomeTypes() {
             axios
@@ -1265,6 +1298,17 @@ export default {
                     console.error("Error fetching expense types:", error);
                 });
         },
+        pluckAdvanceTypes() {
+        axios
+            .get(route("api.advance.pluck")) // Ensure this API exists
+            .then((response) => {
+                this.AdvanceTypesOptions = response.data;
+            })
+            .catch((error) => {
+                console.error("Error fetching advance types:", error);
+            });
+    },
+
         pluckPersons() {
             axios
                 .get(route("api.persons.pluck"))

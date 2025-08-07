@@ -76,6 +76,8 @@ Route::middleware(['web'])->group(function () {
     Route::delete('/income/expense/delete/{id}/{process}', [IncomeExpenseController::class, 'delete'])->name('api.income.expense.delete'); // Delete a specific transaction entry
     Route::get('/expense/pluck', [IncomeExpenseController::class, 'pluck'])->name('api.expense.pluck');
     Route::get('/income/pluck/', [IncomeExpenseController::class, 'pluckIncome'])->name('api.income.pluck');
+    Route::get('/advance/pluck', [IncomeExpenseController::class, 'pluckAdvance'])->name('api.advance.pluck');
+
     Route::get('/expense/pluck/', [IncomeExpenseController::class, 'pluckExpenses'])->name('api.expense.pluck');
 
     // Business Type Routes

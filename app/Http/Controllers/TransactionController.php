@@ -12,6 +12,8 @@ use App\Models\MoneyTakenFrom;
 use App\Models\Person;
 use App\Models\Upload;
 use App\Models\BusinessType;
+use App\Models\OperatingAdvance;
+use App\Models\OperatingAdvanceEnteries;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -82,6 +84,18 @@ class TransactionController extends Controller
                     $transaction->income_type = $income_type ? $income_type->name . " (Income)" : "Unknown Income";
                 }
             }
+            
+            // Check if the transaction has Advance
+            if ($transaction->transaction_type == 'Advance') {
+                $advance = OperatingAdvanceEnteries::where('transaction_id', $transaction->id)->first();
+                if ($advance) {
+                    // dd("Test",$advance);
+                    $advance_type = OperatingAdvance::find($advance->operating_advance_id);
+                    $transaction->expense_type = $advance_type ? $advance_type->name . " (Advance)" : "Unknown Advance";
+                }
+            }
+
+
             // Check if the transaction has Lend
             if ($transaction->transaction_type == 'Lend') {
                 $moneyGiven = MoneyGivenTo::where('transaction_id', $transaction->id)->first();
@@ -123,22 +137,23 @@ class TransactionController extends Controller
     // Store or update a transaction entry
     public function store(Request $request)
     {  
-        $request->validate([
-            'process_type'  => 'required',
-            'income_type'   => 'required_if:process_type,Income',
-            'expense_type'  => 'required_if:process_type,Expense',
-            'person'        => 'required_if:process_type,Borrow,Lend', // Person is required for borrowed/loan
-            'cash_in'       => 'nullable|numeric|required_without:cash_out|required_if:income_type,!null|required_if:process_type,Borrow',
-            'cash_out'      => 'nullable|numeric|required_without:cash_in|required_if:expense_type,!null|required_if:process_type,Lend',
-            'date'          => 'required',
-            'islamic_date'          => 'required',
-            'ref_no'        => 'nullable|string|max:255',
-            'method'        => 'required|string|max:255',
-            'remarks'       => 'required|string|max:255',
-            'received_by'       => 'nullable|string|max:255',
-            'received_from'       => 'nullable|string|max:255',
-        ]);
-  
+       $request->validate([
+        'process_type'  => 'required',
+        'income_type'   => 'required_if:process_type,Income',
+        'expense_type'  => 'required_if:process_type,Expense',
+        'advance_type'  => 'required_if:process_type,Advance',
+        'person'        => 'required_if:process_type,Borrow,Lend',
+        'cash_in'       => 'nullable|numeric|required_without:cash_out|required_if:income_type,!null|required_if:process_type,Borrow',
+        'cash_out'      => 'nullable|numeric|required_without:cash_in|required_if:expense_type,!null|required_if:process_type,Lend|required_if:process_type,Advance',
+        'date'          => 'required',
+        'islamic_date'  => 'required',
+        'ref_no'        => 'nullable|string|max:255',
+        'method'        => 'required|string|max:255',
+        'remarks'       => 'required|string|max:255',
+        'received_by'   => 'nullable|string|max:255',
+        'received_from' => 'nullable|string|max:255',
+    ]);
+
         if ($request->id) {
             // Fetch existing transaction
             $transaction = Transaction::findOrFail($request->id);
@@ -156,6 +171,10 @@ class TransactionController extends Controller
             elseif ($transaction->cash_out > 0 && $request->process_type == 'Lend') {
                 $previousProcessType = "Lend";
             }
+            elseif ($transaction->cash_in > 0 && $request->process_type == 'Advance') {
+                $previousProcessType = "Advance";
+            }
+
              
             else {
                 $previousProcessType = null;
@@ -165,6 +184,8 @@ class TransactionController extends Controller
 
             $expense = Expense::where('transaction_id', $transaction->id)->first();
             $income  = Income::where('transaction_id', $transaction->id)->first();
+            $operatingAdvance = OperatingAdvanceEnteries::where('transaction_id', $transaction->id)->first();
+
             $MoneyTakenFrom  = MoneyTakenFrom::where('transaction_id', $transaction->id)->first();
             $MoneyGivenTo  = MoneyGivenTo::where('transaction_id', $transaction->id)->first();
 
@@ -175,6 +196,9 @@ class TransactionController extends Controller
                 }
                 if (($previousProcessType === "Expense")&& $expense) {
                     $expense->delete(); // Delete old expense record
+                }
+                if (($previousProcessType === "Advance") && $operatingAdvance) {
+                    $operatingAdvance->delete();
                 }
                 if (($previousProcessType === "Borrow")&& $MoneyTakenFrom) {
                     $MoneyTakenFrom->delete(); // Delete old expense record
@@ -284,6 +308,27 @@ class TransactionController extends Controller
 
             $income->save();
         }
+        // Handle Operating Advance 
+        if ($request->process_type == 'Advance') {
+            $advance = OperatingAdvanceEnteries::where('transaction_id', $transaction->id)->first();
+            if (!$advance) {
+                $advance = new OperatingAdvanceEnteries();
+                $advance->id = Str::orderedUuid();
+            }
+            $advance->transaction_id = $transaction->id;
+            $advance->operating_advance_id = $request->advance_type;
+            $advance->transaction_date = $request->date;   
+            // dd($request->input());           
+            $advance->amount           = $request->cash_out;
+
+            // Ensure transaction reflects the expense correctly
+            $transaction->cash_out = $request->cash_out;
+            $transaction->cash_in  = null; // Ensure cash_in is reset when switching
+
+
+            $advance->save();
+        }
+
         // Handle Money Taken
         if ($request->process_type == 'Borrow') {
             $borrowedMoney = MoneyTakenFrom::where('transaction_id', $transaction->id)->first();
@@ -357,6 +402,14 @@ class TransactionController extends Controller
 
             $transaction->cash_in = 0;
         }
+        if ($transaction->transaction_type == 'Advance') {
+            $advance = OperatingAdvanceEnteries::where('transaction_id', $id)->first();
+            $transaction->advance_type = $advance->operating_advance_id ?? null;
+            $transaction->process_type = 'Advance';
+            $transaction->cash_out = 0;
+        }
+
+
         if ($transaction->transaction_type == 'Lend') {
             $moneyGiven               = MoneyGivenTo::where('transaction_id', $id)->first();
              
@@ -384,7 +437,8 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         MoneyTakenFrom::where('transaction_id',$id)->delete();
         MoneyGivenTo::where('transaction_id',$id)->delete();
-        
+        OperatingAdvance::where('transaction_id', $id)->delete();
+
         $transaction->delete();
 
         return 'success';
