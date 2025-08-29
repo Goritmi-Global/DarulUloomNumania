@@ -6,8 +6,8 @@ import fs from 'fs';
 export default defineConfig({
   server: {
     https: {
-      key: fs.readFileSync('C:/laragon/etc/ssl/laragon.key'),
-      cert: fs.readFileSync('C:/laragon/etc/ssl/laragon.crt'),
+      key: fs.readFileSync('C:/xampp/apache/conf/ssl.key/server.key'),
+      cert: fs.readFileSync('C:/xampp/apache/conf/ssl.crt/server.crt'),
     },
     host: 'localhost',
     port: 5173,

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Student;
@@ -34,12 +35,10 @@ class StudentsController extends Controller
 
         if ($studentRecord->image) {
             $upload = Upload::where('id', $studentRecord->image)->first();
-            if($upload)
-            {
+            if ($upload) {
                 $profilePicture = $upload ? getFileUrl($upload->file_name) : null;
                 $studentRecord->image = $profilePicture;
-            }   
-
+            }
         }
 
         return Inertia::render('Students/CreateNewStudent', ['studentId' => $id, 'studentData' => $studentRecord]);
@@ -88,9 +87,12 @@ class StudentsController extends Controller
             'cnic'               => 'required|string|max:255',
             'country'            => 'required',
             'province'           => 'required',
+            'district'           => 'required',
+            'reg_no'             => 'required',
+            // 'visaNumber'        =>  'required',
             'phone_number'       => 'required|string|max:255',
             'whatsapp'           => 'required|string|max:255',
-
+            // 'hostelName'         => 'required',
             'guardian_name'      => 'required|string|max:255',
             'guardian_cnic'      => 'required|string|max:255',
             'guardian_mobile'    => 'required|string|max:255',
@@ -100,16 +102,16 @@ class StudentsController extends Controller
             'total_marks'        => 'required|string|max:255',
             'obtained_marks'     => 'required|string|max:255',
 
-            'primary_education'  => 'required|string|max:255',
-            'additional_ability' => 'required|string|max:255',
+            // 'primary_education'  => 'required|string|max:255',
+            // 'additional_ability' => 'required|string|max:255',
 
             'permanent_address'  => 'required|string',
             'current_address'    => 'required|string',
         ]);
 
         $student = $request->id
-        ? Student::findOrFail($request->id)
-        : new Student(['id' => Str::uuid()]);
+            ? Student::findOrFail($request->id)
+            : new Student(['id' => Str::uuid()]);
 
         // Personal Information
         $student->apply_for    = $request->apply_for;
@@ -117,11 +119,14 @@ class StudentsController extends Controller
         $student->father       = $request->father;
         $student->dob          = $request->dob;
         $student->cnic         = $request->cnic;
+        $student->reg_no         = $request->reg_no;
         $student->country      = $request->country;
         $student->province     = $request->province;
+        $student->district     = $request->district;
+        $student->visa    = $request->visaNumber;
         $student->phone_number = $request->phone_number;
         $student->whatsapp     = $request->whatsapp;
-
+        $student->hostel     = $request->hostelName;
         // Guardian Info
         $student->guardian_name   = $request->guardian_name;
         $student->guardian_cnic   = $request->guardian_cnic;
@@ -181,13 +186,69 @@ class StudentsController extends Controller
             $student->image = $upload->id;
         }
 
+        if ($request->cnic_front) {
+            // Delete old image if exists
+            if ($student->cnic_front) {
+                Storage::disk('public')->delete($student->cnic_front);
+                File::delete(public_path('storage/' . $student->cnic_front)); // clean up public side
+            }
+
+            // Decode Base64 image
+            $data = substr($request->cnic_front, strpos($request->cnic_front, ',') + 1);
+            $data = base64_decode($data);
+
+            // Generate unique name and path
+            $image_name = Str::random(40) . '.png';
+            $image_path = 'StudentImages/' . $image_name;
+
+            // Store in storage/app/public
+            Storage::disk('public')->put($image_path, $data);
+
+            // Copy to public/storage for web access
+            $source      = storage_path('app/public/' . $image_path);
+            $destination = public_path('storage/' . $image_path);
+            File::ensureDirectoryExists(dirname($destination));
+            File::copy($source, $destination);
+
+            // Save path in students table (cnic_front column)
+            $student->cnic_front = $image_path;
+        }
+
+        if ($request->cnic_back) {
+            // Delete old image if exists
+            if ($student->cnic_back) {
+                Storage::disk('public')->delete($student->cnic_back);
+                File::delete(public_path('storage/' . $student->cnic_back)); // clean up public side
+            }
+
+            // Decode Base64 image
+            $data = substr($request->cnic_back, strpos($request->cnic_back, ',') + 1);
+            $data = base64_decode($data);
+
+            // Generate unique name and path
+            $image_name = Str::random(40) . '.png';
+            $image_path = 'StudentImages/' . $image_name;
+
+            // Store in storage/app/public
+            Storage::disk('public')->put($image_path, $data);
+
+            // Copy to public/storage for web access
+            $source      = storage_path('app/public/' . $image_path);
+            $destination = public_path('storage/' . $image_path);
+            File::ensureDirectoryExists(dirname($destination));
+            File::copy($source, $destination);
+
+            // Save path in students table (cnic_back column)
+            $student->cnic_back = $image_path;
+        }
+
         // Save
         $student->save();
 
         return response()->json([
             'message' => $request->id
-            ? 'Student updated successfully'
-            : 'Student enrolled successfully',
+                ? 'Student updated successfully'
+                : 'Student enrolled successfully',
         ]);
     }
 
@@ -218,4 +279,15 @@ class StudentsController extends Controller
         return 'success';
     }
 
+    public function findByRegNo($regNo)
+    {
+
+        $student = Student::where('reg_no', $regNo)->first();
+        
+        if (!$student) {
+            return response()->json(['message' => 'Student not found'], 404);
+        }
+
+        return response()->json($student);
+    }
 }

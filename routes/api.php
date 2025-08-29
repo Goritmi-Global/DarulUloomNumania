@@ -175,3 +175,4 @@ Route::post('/question/store', [QuestionAnswerController::class, 'saveQuestion']
 Route::get('/questions/approved', [QuestionAnswerController::class, 'getApprovedQuestions'])->name('api.questions.approved');
 
 Route::get('/enroll/status/check/{cnic}', [StudentsController::class, 'checkAdmissionStatus'])->name('api.enroll.status.check');
+Route::get('/students/{regNo}', [StudentsController::class, 'findByRegNo']);

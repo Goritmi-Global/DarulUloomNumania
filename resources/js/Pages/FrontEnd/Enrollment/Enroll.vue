@@ -302,11 +302,59 @@
                     <h1 class="display-4 p-3 mt-3 theme-text-color">
                         {{ translate("Enroll") }}
                     </h1>
-
+                    
+                        
                     <section class="section bg-white">
                         <div class="card shadow-sm border-0 shadow-lg">
                             <div class="card-body p-4">
                                 <div class="row g-3">
+
+                                    <div class="col-md-12">
+  <label class="form-label">
+    {{ translate("Have You Studied before Noumania?") }}
+  </label>
+  <Multiselect
+    v-model="form.studiedBefore"
+    :options="myOptions"
+    placeholder="Please select"
+    :searchable="true"
+    :multiple="true"
+    :class="{ 'is-invalid': formErrors.studiedBefore }"
+  />
+  <div v-if="formErrors.studiedBefore" class="text-danger">
+    {{ formErrors.studiedBefore[0] }}
+  </div>
+</div>
+
+
+<div class="col-md-12" v-if="form.studiedBefore === 'Yes'">
+  <label class="form-label">
+    {{ translate("Registration Number") }}
+  </label>
+
+  <div class="input-group">
+    <input 
+      type="text" 
+      id="regNo" 
+      v-model="form.registrationNumber" 
+      class="form-control" 
+      placeholder="Enter Registration Number"
+    >
+    <button 
+      class="btn btn-primary" 
+      type="button"
+      @click="searchStudent"
+    >
+      Search
+    </button>
+  </div>
+
+  <div v-if="formErrors.studiedBefore" class="text-danger">
+    {{ formErrors.studiedBefore[0] }}
+  </div>
+</div>
+
+                                    <template v-if="form.studiedBefore !== 'Yes' || studentData">
                                     <!-- Apply For -->
                                     <div class="col-md-12">
                                         <label class="form-label">{{
@@ -375,6 +423,27 @@
                                         </div>
                                     </div>
 
+                                    <!-- Registration Number  -->
+                                      <div class="col-md-6">
+                                        <label class="form-label">{{
+                                            translate("Registration Number")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.reg_no"
+                                            :class="{
+                                                'is-invalid': formErrors.reg_no,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.reg_no"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.reg_no[0] }}
+                                        </div>
+                                    </div>
+
                                     <!-- CNIC -->
                                     <div class="col-md-6">
                                         <label class="form-label">{{
@@ -438,6 +507,27 @@
                                         />
                                     </div>
 
+                                    <template v-if="form.country === 'Afghanistan'">
+                                         <div class="col-md-6">
+                                        <label class="form-label">{{
+                                            translate("Visa Number")
+                                        }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="form.visaNumber"
+                                            :class="{
+                                                'is-invalid': formErrors.dob,
+                                            }"
+                                        />
+                                        <div
+                                            v-if="formErrors.visaNumber"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.visaNumber[0] }}
+                                        </div>
+                                    </div>
+                                    </template>
                                     <div class="col-md-6">
                                         <label class="form-label">{{
                                             translate("Province")
@@ -472,6 +562,19 @@
                                         />
                                     </div>
 
+                                    <!-- for District -->
+                                    <template v-if="form.province">
+  <div class="col-md-6">
+    <label class="form-label">{{ translate("District") }}</label>
+    <Multiselect
+      v-model="form.district"
+      :options="districtsByProvince[form.province] || []"
+      :placeholder="translate('Select district')"
+      :searchable="true"
+      :class="{ 'is-invalid': formErrors.district }"
+    />
+  </div>
+</template>
                                     <!-- Phone & WhatsApp -->
                                     <div class="col-md-6">
                                         <label class="form-label">{{
@@ -578,6 +681,38 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-6" v-if="studentData">
+                                        <label class="form-label">{{
+                                            translate("Are You Hostelite?")
+                                        }}</label>
+                                        <select v-model="form.hostelite" id="hostelite" class="form-select">
+                                            <option disabled value="">Please select</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                        <div
+                                            v-if="formErrors.hostelite"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.hostelite[0] }}
+                                        </div>
+                                    </div>
+
+
+                                      <div class="col-md-12" v-if="form.hostelite === 'yes'">
+                                        <label class="form-label">{{
+                                            translate("Hostel Name")
+                                        }}</label>
+                                       <input type="text" id="regNo" v-model="form.hostelName" class="form-control">
+                                        <div
+                                            v-if="formErrors.hostelName"
+                                            class="text-danger"
+                                        >
+                                            {{ formErrors.hostelName[0] }}
+                                        </div>
+                                    </div>
+
+
                                     <!-- Academic Info -->
                                     <div class="col-md-12">
                                         <label class="form-label">{{
@@ -599,6 +734,7 @@
                                             {{ formErrors.previous_madrasa[0] }}
                                         </div>
                                     </div>
+                                    <template v-if="form.apply_for !== 'متوسطا'">
                                     <div class="col-md-6">
                                         <label class="form-label">{{
                                             translate("Previous Class")
@@ -624,6 +760,7 @@
                                             {{ formErrors.previous_class[0] }}
                                         </div>
                                     </div>
+                                  
                                     <div class="col-md-3">
                                         <label class="form-label">{{
                                             translate("Total Marks")
@@ -664,7 +801,8 @@
                                             {{ formErrors.obtained_marks[0] }}
                                         </div>
                                     </div>
-
+  </template>
+                                    
                                     <div class="col-md-12">
                                         <label class="form-label">{{
                                             translate("Secular Education")
@@ -757,41 +895,113 @@
                                             {{ formErrors.current_address[0] }}
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mt-3">
-                                        <div class="c-files">
-                                            <span
-                                                class="col-6 col-form-label mt-1"
-                                                >{{ "Image" }}</span
-                                            >
-                                            <br />
-                                            <Cropper
-                                                @croppedImg="croppedImgSubmit"
-                                                accept=".jpg,.jpeg,.png"
-                                            />
-                                            <br />
-                                            <ImageZooming
-                                                v-if="form.image"
-                                                :file="form.image"
-                                                :width="100"
-                                            />
-                                            <ImageZooming
-                                                v-else
-                                                :file="
-                                                    existing_image ??
-                                                    '/images/default.jpg'
-                                                "
-                                                :width="100"
-                                            />
+                                 <div class="row mt-3">
+  <!-- Upload Image -->
+  <div class="col-md-3">
+    <div class="c-files">
+      <span class="col-form-label mt-1">Upload Image</span>
+      <br />
+      <Cropper
+        @croppedImg="croppedImgSubmit"
+        accept=".jpg,.jpeg,.png"
+      />
+      <br />
+      <ImageZooming
+        v-if="form.image"
+        :file="form.image"
+        :width="100"
+      />
+      <ImageZooming
+        v-else
+        :file="existing_image ?? '/images/default.jpg'"
+        :width="100"
+      />
+    </div>
+    <div class="invalid-feedback animated fadeIn" v-if="formErrors.image">
+      {{ formErrors.image[0] }}
+    </div>
+  </div>
 
-                                            <!-- <img :src="form.image" width="100" /> -->
-                                        </div>
-                                        <div
-                                            class="invalid-feedback animated fadeIn"
-                                            v-if="formErrors.image"
-                                        >
-                                            {{ formErrors.image[0] }}
-                                        </div>
-                                    </div>
+  <!-- CNIC Front -->
+  <div class="col-md-3">
+    <div class="c-files">
+      <span class="col-form-label mt-1">CNIC Front</span>
+      <br />
+      <Cropper
+        @croppedImg="cropCNICFront"
+        accept=".jpg,.jpeg,.png"
+      />
+      <br />
+      <ImageZooming
+        v-if="form.cnic_front"
+        :file="form.cnic_front"
+        :width="100"
+      />
+      <ImageZooming
+        v-else
+        :file="existing_cnic_front ?? '/images/default.jpg'"
+        :width="100"
+      />
+    </div>
+    <div class="invalid-feedback animated fadeIn" v-if="formErrors.cnic_front">
+      {{ formErrors.cnic_front[0] }}
+    </div>
+  </div>
+
+  <!-- CNIC Back -->
+  <div class="col-md-3">
+    <div class="c-files">
+      <span class="col-form-label mt-1">CNIC Back</span>
+      <br />
+      <Cropper
+        @croppedImg="cropCNICBack"
+        accept=".jpg,.jpeg,.png"
+      />
+      <br />
+      <ImageZooming
+        v-if="form.cnic_back"
+        :file="form.cnic_back"
+        :width="100"
+      />
+      <ImageZooming
+        v-else
+        :file="existing_cnic_back ?? '/images/default.jpg'"
+        :width="100"
+      />
+    </div>
+    <div class="invalid-feedback animated fadeIn" v-if="formErrors.cnic_back">
+      {{ formErrors.cnic_back[0] }}
+    </div>
+  </div>
+
+  <!-- Payment Receipt -->
+  <div class="col-md-3">
+    <div class="c-files">
+      <span class="col-form-label mt-1">Payment Image</span>
+      <br />
+      <Cropper
+        @croppedImg="cropReceipt"
+        accept=".jpg,.jpeg,.png"
+      />
+      <br />
+      <ImageZooming
+        v-if="form.payment_receipt"
+        :file="form.payment_receipt"
+        :width="100"
+      />
+      <ImageZooming
+        v-else
+        :file="existing_payment_receipt ?? '/images/default.jpg'"
+        :width="100"
+      />
+    </div>
+    <div class="invalid-feedback animated fadeIn" v-if="formErrors.payment_receipt">
+      {{ formErrors.payment_receipt[0] }}
+    </div>
+  </div>
+</div>
+
+
 
                                     <!-- Submit -->
                                     <div class="mt-4">
@@ -815,10 +1025,15 @@
                                             ></span>
                                         </button>
                                     </div>
+                                    </template>
                                 </div>
+                                
                             </div>
+                            
                         </div>
+                        
                     </section>
+                    
                 </div>
             </div>
         </div>
@@ -919,6 +1134,10 @@ export default {
 
                 "متوسطا",
             ],
+            myOptions: [
+                "Yes",
+                "No"
+            ],
             previousClassOptions: [
                 "دورہ حدیث",
                 "درجہ سابعہ",
@@ -940,16 +1159,25 @@ export default {
                 cnic: "",
                 country: "Pakistan",
                 province: "",
+                district: "",
+                hostelite: "",
+                hostelName: "",
+                studiedBefore: "",
+                registrationNumber: "",
                 current_address: "",
                 permanent_address: "",
                 phone_number: "",
                 whatsapp_number: "",
-                image: null, // For storing the uploaded image
+                reg_no: "",
+                image: null,
+                cnic_front: null, 
+                cnic_back:null,
+                payment_receipt: null,// For storing the uploaded image
                 // Guardian Info
                 guardian_name: "",
                 guardian_cnic: "",
                 guardian_phone: "",
-
+                visaNumber: "",
                 // Academic Info
                 desired_class: "",
                 previous_madrasa: "",
@@ -959,10 +1187,41 @@ export default {
                 primary_education: "",
                 additional_ability: "",
             },
+            studentData: null,
+            
             countryList: [
                 { label: "Pakistan (پاکستان)", value: "Pakistan" },
                 { label: "Afghanistan (افغانستان)", value: "Afghanistan" },
             ],
+            districtsByProvince: {
+    "Punjab": [
+        "Lahore", "Faisalabad", "Rawalpindi", "Multan", "Gujranwala"
+    ],
+    "Sindh": [
+        "Karachi", "Hyderabad", "Sukkur", "Larkana", "Nawabshah"
+    ],
+    "Khyber Pakhtunkhwa": [
+        "Peshawar", "Mardan", "Abbottabad", "Swat", "Kohat"
+    ],
+    "Balochistan": [
+        "Quetta", "Gwadar", "Turbat", "Khuzdar", "Sibi"
+    ],
+    "Gilgit-Baltistan": [
+        "Gilgit", "Skardu", "Hunza", "Ghizer", "Diamer"
+    ],
+    "Azad Jammu and Kashmir": [
+        "Muzaffarabad", "Mirpur", "Kotli", "Rawalakot", "Bagh"
+    ],
+
+    
+    "Kabul": ["Kabul City", "Paghman", "Deh Sabz"],
+    "Kandahar": ["Kandahar City", "Spin Boldak"],
+    "Herat": ["Herat City", "Shindand"],
+    "Badakhshan": ["Arghanj Khwāh", "Argō", "Bahārak", "Darāyim", "Darwāz-e Bālā", "Darwāz-e Pāyīn", "Fayzābād", "Ishkāshim", "Kishm", "Kuran wa Munjan", "Shahr-e Bāmiyān", "Shahrak", "Shibar", "Tashkurgan", "Yawan"],
+    "Badghis": ["Ab Kamari", "Ghormach", "Jawand", "Muqur", "Bala Murghab", "Qadis", "Qala-e Naw"],
+    "Baghlan": ["Baghlan-e Jadid", "Baghlan-e Markazi", "Dahana-i-Ghori", "Dushi", "Khenjan", "Pul-i-Khumri", "Tala wa Barfak", "Khinjan", "Nahrin"],
+}
+,
 
             pakProvinceOptions: [
                 { label: "Punjab (پنجاب)", value: "Punjab" },
@@ -1027,6 +1286,63 @@ export default {
         };
     },
     methods: {
+
+  async searchStudent() {
+    if (!this.form.registrationNumber) {
+        alert("Please enter a registration number.");
+        return;
+    }
+
+    this.studentData = null; // clear old result first
+
+    try {
+        const response = await axios.get(`/api/students/${this.form.registrationNumber}`);
+        this.studentData = response.data;
+      
+        this.form.apply_for = this.studentData.apply_for || ''
+        this.form.reg_no = this.studentData.reg_no || ''
+        this.form.name = this.studentData.name || '';
+        this.form.father = this.studentData.father || '';
+        this.form.cnic = this.studentData.cnic || '';
+        this.form.cnic_back = this.studentData.cnic_back || '';
+        this.form.cnic_front = this.studentData.cnic_front || '';
+        this.form.dob = this.studentData.dob || '';
+        this.form.country = this.studentData.country || '';
+        this.form.province = this.studentData.province || '';
+        this.form.district = this.studentData.district || '';
+        this.form.phone_number = this.studentData.phone_number || '';
+        this.form.whatsapp = this.studentData.whatsapp || '';
+        this.form.guardian_name = this.studentData.guardian_name || '';
+        this.form.guardian_cnic = this.studentData.guardian_cnic || '';
+        this.form.guardian_mobile = this.studentData.guardian_mobile || '';
+        this.form.hostelite = this.studentData.hostelite || '';
+        this.form.hostelName = this.studentData.hostelName || '';
+        this.form.previous_madrasa = this.studentData.previous_madrasa || '';
+        this.form.previous_class = this.studentData.previous_class || [];
+        this.form.total_marks = this.studentData.total_marks || '';
+        this.form.obtained_marks = this.studentData.obtained_marks || '';
+        this.form.primary_education = this.studentData.primary_education || '';
+        this.form.additional_ability = this.studentData.additional_ability || '';
+        this.form.permanent_address = this.studentData.permanent_address || '';
+        this.form.current_address = this.studentData.current_address || '';
+        this.form.image = this.studentData.image || '';
+        this.form.cnic_front = this.studentData.cnic_front || '';
+        this.form.cnic_back = this.studentData.cnic_back || '';
+        this.form.payment_receipt = this.studentData.payment_receipt || '';
+        this.form.studiedBefore = this.studentData.studiedBefore || '';
+
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            alert("No student found with this registration number.");
+        } else {
+            console.error("Error fetching student:", error);
+            alert("Something went wrong. Please try again.");
+        }
+    }
+}
+
+,
+
         hideModal() {
             this.showModal = false;
             this.clearForm();
@@ -1117,10 +1433,18 @@ export default {
                 });
         },
 
-        croppedImgSubmit(img) {
-            this.form.image = img;
-        },
-
+         croppedImgSubmit(img) {
+        this.form.image = img; // Profile image
+    },
+    cropCNICFront(img) {
+        this.form.cnic_front = img; // CNIC front image
+    },
+    cropCNICBack(img) {
+        this.form.cnic_back = img; // CNIC back image
+    },
+    cropReceipt(img){
+        this.form.payment_receipt = img;
+    },  
         clearForm() {
             this.form = {
                 id: "",
