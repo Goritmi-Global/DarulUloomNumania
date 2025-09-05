@@ -316,7 +316,7 @@
   <Multiselect
     v-model="form.studiedBefore"
     :options="myOptions"
-    placeholder="Please select"
+    :placeholder="translate('Please select')"
     :searchable="true"
     :multiple="true"
     :class="{ 'is-invalid': formErrors.studiedBefore }"
@@ -338,19 +338,19 @@
       id="regNo" 
       v-model="form.registrationNumber" 
       class="form-control" 
-      placeholder="Enter Registration Number"
+      :placeholder="translate('Enter Registration Number')"
     >
     <button 
       class="btn btn-primary" 
       type="button"
       @click="searchStudent"
     >
-      Search
+      {{translate('Search')}}
     </button>
   </div>
 
   <div v-if="formErrors.studiedBefore" class="text-danger">
-    {{ formErrors.studiedBefore[0] }}
+    {{ translate(formErrors.studiedBefore[0]) }}
   </div>
 </div>
 
@@ -398,7 +398,7 @@
                                             v-if="formErrors.name"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.name[0] }}
+                                            {{ translate(formErrors.name[0]) }}
                                         </div>
                                     </div>
 
@@ -419,7 +419,7 @@
                                             v-if="formErrors.father"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.father[0] }}
+                                            {{ translate(formErrors.father[0]) }}
                                         </div>
                                     </div>
 
@@ -440,7 +440,7 @@
                                             v-if="formErrors.reg_no"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.reg_no[0] }}
+                                            {{ translate(formErrors.reg_no[0]) }}
                                         </div>
                                     </div>
 
@@ -461,7 +461,7 @@
                                             v-if="formErrors.cnic"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.cnic[0] }}
+                                            {{ translate(formErrors.cnic[0]) }}
                                         </div>
                                     </div>
 
@@ -482,7 +482,7 @@
                                             v-if="formErrors.dob"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.dob[0] }}
+                                            {{ translate(formErrors.dob[0]) }}
                                         </div>
                                     </div>
 
@@ -505,6 +505,12 @@
                                                     formErrors.country,
                                             }"
                                         />
+                                         <div
+                                            v-if="formErrors.country"
+                                            class="text-danger"
+                                        >
+                                            {{ translate(formErrors.country[0]) }}
+                                        </div>
                                     </div>
 
                                     <template v-if="form.country === 'Afghanistan'">
@@ -524,7 +530,7 @@
                                             v-if="formErrors.visaNumber"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.visaNumber[0] }}
+                                            {{ translate(formErrors.visaNumber[0]) }}
                                         </div>
                                     </div>
                                     </template>
@@ -594,7 +600,7 @@
                                             v-if="formErrors.phone_number"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.phone_number[0] }}
+                                            {{ translate(formErrors.phone_number[0]) }}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -615,7 +621,7 @@
                                             v-if="formErrors.whatsapp"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.whatsapp[0] }}
+                                            {{ translate(formErrors.whatsapp[0]) }}
                                         </div>
                                     </div>
 
@@ -637,7 +643,7 @@
                                             v-if="formErrors.guardian_name"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.guardian_name[0] }}
+                                            {{ translate(formErrors.guardian_name[0]) }}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -657,7 +663,7 @@
                                             v-if="formErrors.guardian_cnic"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.guardian_cnic[0] }}
+                                            {{ translate(formErrors.guardian_cnic[0]) }}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -677,7 +683,7 @@
                                             v-if="formErrors.guardian_mobile"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.guardian_mobile[0] }}
+                                            {{ translate(formErrors.guardian_mobile[0]) }}
                                         </div>
                                     </div>
 
@@ -686,15 +692,15 @@
                                             translate("Are You Hostelite?")
                                         }}</label>
                                         <select v-model="form.hostelite" id="hostelite" class="form-select">
-                                            <option disabled value="">Please select</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
+                                            <option disabled value="">{{translate('Please select')}}</option>
+                                            <option value="yes">Yes (ہاں)</option>
+                                              <option value="no">No (نہیں)</option>
                                         </select>
                                         <div
                                             v-if="formErrors.hostelite"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.hostelite[0] }}
+                                            {{ translate(formErrors.hostelite[0]) }}
                                         </div>
                                     </div>
 
@@ -708,7 +714,7 @@
                                             v-if="formErrors.hostelName"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.hostelName[0] }}
+                                            {{ translate(formErrors.hostelName[0]) }}
                                         </div>
                                     </div>
 
@@ -731,7 +737,7 @@
                                             v-if="formErrors.previous_madrasa"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.previous_madrasa[0] }}
+                                            {{ translate(formErrors.previous_madrasa[0]) }}
                                         </div>
                                     </div>
                                     <template v-if="form.apply_for !== 'متوسطا'">
@@ -757,7 +763,7 @@
                                             v-if="formErrors.previous_class"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.previous_class[0] }}
+                                            {{ translate(formErrors.previous_class[0]) }}
                                         </div>
                                     </div>
                                   
@@ -778,7 +784,7 @@
                                             v-if="formErrors.total_marks"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.total_marks[0] }}
+                                            {{ translate(formErrors.total_marks[0]) }}
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -798,7 +804,7 @@
                                             v-if="formErrors.obtained_marks"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.obtained_marks[0] }}
+                                            {{ translate(formErrors.obtained_marks[0]) }}
                                         </div>
                                     </div>
   </template>
@@ -821,7 +827,7 @@
                                             class="text-danger"
                                         >
                                             {{
-                                                formErrors.primary_education[0]
+                                                translate(formErrors.primary_education[0])
                                             }}
                                         </div>
                                     </div>
@@ -846,7 +852,7 @@
                                             class="text-danger"
                                         >
                                             {{
-                                                formErrors.additional_ability[0]
+                                                translate(formErrors.additional_ability[0])
                                             }}
                                         </div>
                                     </div>
@@ -871,7 +877,7 @@
                                             class="text-danger"
                                         >
                                             {{
-                                                formErrors.permanent_address[0]
+                                                translate(formErrors.permanent_address[0])
                                             }}
                                         </div>
                                     </div>
@@ -892,14 +898,14 @@
                                             v-if="formErrors.current_address"
                                             class="text-danger"
                                         >
-                                            {{ formErrors.current_address[0] }}
+                                            {{ translate(formErrors.current_address[0]) }}
                                         </div>
                                     </div>
                                  <div class="row mt-3">
   <!-- Upload Image -->
   <div class="col-md-3">
     <div class="c-files">
-      <span class="col-form-label mt-1">Upload Image</span>
+      <span class="col-form-label mt-1">{{translate('Upload Image')}}</span>
       <br />
       <Cropper
         @croppedImg="croppedImgSubmit"
@@ -925,7 +931,7 @@
   <!-- CNIC Front -->
   <div class="col-md-3">
     <div class="c-files">
-      <span class="col-form-label mt-1">CNIC Front</span>
+      <span class="col-form-label mt-1">{{translate('CNIC Front')}}</span>
       <br />
       <Cropper
         @croppedImg="cropCNICFront"
@@ -951,7 +957,7 @@
   <!-- CNIC Back -->
   <div class="col-md-3">
     <div class="c-files">
-      <span class="col-form-label mt-1">CNIC Back</span>
+      <span class="col-form-label mt-1">{{translate('CNIC Back')}}</span>
       <br />
       <Cropper
         @croppedImg="cropCNICBack"
@@ -977,7 +983,7 @@
   <!-- Payment Receipt -->
   <div class="col-md-3">
     <div class="c-files">
-      <span class="col-form-label mt-1">Payment Image</span>
+      <span class="col-form-label mt-1">{{translate('Payment Image')}}</span>
       <br />
       <Cropper
         @croppedImg="cropReceipt"
@@ -1106,185 +1112,238 @@ export default {
         Multiselect,
     },
 
-    data() {
-        return {
-            enrollCheckCnin: "",
-            admissionStatusDetails: null,
-            formErrors: {},
-            checkStatusBtn: 1,
-            noRecordFound: false,
+   data() {
+    return {
+        enrollCheckCnin: "",
+        admissionStatusDetails: null,
+        formErrors: {},
+        checkStatusBtn: 1,
+        noRecordFound: false,
+        currentStudent: "",
+        currentCourse: "",
+        students: [],
+        filterOptions: [
+            "تَخَصُّص فِی الفِقْہِ ایک سال",
+            "تَخَصُّص فِی الفِقْہِ دو سال",
+            "تحصُّص فِي اللُّغَاتِ",
+            "دورہ حدیث",
+            "درجہ سابعہ",
+            "درجہ سادسہ",
+            "درجہ خامسہ",
+            "درجہ رابعہ",
+            "درجہ ثالثہ",
+            "درجہ ثانیہ",
+            "درجہ اولیٰ",
+            "متوسطا",
+        ],
+       myOptions: [
+    { label: "Yes (ہاں)", value: "Yes" },
+    { label: "No (نہیں)", value: "No" },
+],
 
-            formErrors: {},
+        previousClassOptions: [
+            "دورہ حدیث",
+            "درجہ سابعہ",
+            "درجہ سادسہ",
+            "درجہ خامسہ",
+            "درجہ رابعہ",
+            "درجہ ثالثہ",
+            "درجہ ثانیہ",
+            "درجہ اولیٰ",
+            "متوسطا",
+        ],
 
-            currentStudent: "",
-            currentCourse: "",
-            students: [],
-            filterOptions: [
-                "تَخَصُّص فِی الفِقْہِ ایک سال",
-                "تَخَصُّص فِی الفِقْہِ دو سال",
-                "تحصُّص فِي اللُّغَاتِ",
-                "دورہ حدیث",
-                "درجہ سابعہ",
-                "درجہ سادسہ",
-                "درجہ خامسہ",
-                "درجہ رابعہ",
-                "درجہ ثالثہ",
-                "درجہ ثانیہ",
-                "درجہ اولیٰ",
+        form: {
+            id: "",
+            apply_for: this.course,
+            name: "",
+            father: "",
+            dob: "",
+            cnic: "",
+            country: "Pakistan",
+            province: "",
+            district: "",
+            hostelite: "",
+            hostelName: "",
+            studiedBefore: "",
+            registrationNumber: "",
+            current_address: "",
+            permanent_address: "",
+            phone_number: "",
+            whatsapp_number: "",
+            reg_no: "",
+            image: null,
+            cnic_front: null,
+            cnic_back: null,
+            payment_receipt: null,
+            // Guardian Info
+            guardian_name: "",
+            guardian_cnic: "",
+            guardian_phone: "",
+            visaNumber: "",
+            // Academic Info
+            desired_class: "",
+            previous_madrasa: "",
+            previous_class: "",
+            total_marks: "",
+            obtained_marks: "",
+            primary_education: "",
+            additional_ability: "",
+        },
 
-                "متوسطا",
+        studentData: null,
+
+        // ✅ FIXED: just properties, not const
+        countryList: [
+            { label: "Pakistan (پاکستان)", value: "Pakistan" },
+            { label: "Afghanistan (افغانستان)", value: "Afghanistan" },
+        ],
+
+        districtsByProvince: {
+            "Punjab": [
+                { label: "Lahore (لاہور)", value: "Lahore" },
+                { label: "Faisalabad (فیصل آباد)", value: "Faisalabad" },
+                { label: "Rawalpindi (راولپنڈی)", value: "Rawalpindi" },
+                { label: "Multan (ملتان)", value: "Multan" },
+                { label: "Gujranwala (گوجرانوالہ)", value: "Gujranwala" }
             ],
-            myOptions: [
-                "Yes",
-                "No"
+            "Sindh": [
+                { label: "Karachi (کراچی)", value: "Karachi" },
+                { label: "Hyderabad (حیدرآباد)", value: "Hyderabad" },
+                { label: "Sukkur (سکھر)", value: "Sukkur" },
+                { label: "Larkana (لاڑکانہ)", value: "Larkana" },
+                { label: "Nawabshah (نوابشاہ)", value: "Nawabshah" }
             ],
-            previousClassOptions: [
-                "دورہ حدیث",
-                "درجہ سابعہ",
-                "درجہ سادسہ",
-                "درجہ خامسہ",
-                "درجہ رابعہ",
-                "درجہ ثالثہ",
-                "درجہ ثانیہ",
-                "درجہ اولیٰ",
-
-                "متوسطا",
+            "Khyber Pakhtunkhwa": [
+                { label: "Peshawar (پشاور)", value: "Peshawar" },
+                { label: "Mardan (مردان)", value: "Mardan" },
+                { label: "Abbottabad (ایبٹ آباد)", value: "Abbottabad" },
+                { label: "Swat (سوات)", value: "Swat" },
+                { label: "Kohat (کوہاٹ)", value: "Kohat" }
             ],
-            form: {
-                id: "",
-                apply_for: this.course,
-                name: "",
-                father: "",
-                dob: "",
-                cnic: "",
-                country: "Pakistan",
-                province: "",
-                district: "",
-                hostelite: "",
-                hostelName: "",
-                studiedBefore: "",
-                registrationNumber: "",
-                current_address: "",
-                permanent_address: "",
-                phone_number: "",
-                whatsapp_number: "",
-                reg_no: "",
-                image: null,
-                cnic_front: null, 
-                cnic_back:null,
-                payment_receipt: null,// For storing the uploaded image
-                // Guardian Info
-                guardian_name: "",
-                guardian_cnic: "",
-                guardian_phone: "",
-                visaNumber: "",
-                // Academic Info
-                desired_class: "",
-                previous_madrasa: "",
-                previous_class: "",
-                total_marks: "",
-                obtained_marks: "",
-                primary_education: "",
-                additional_ability: "",
-            },
-            studentData: null,
-            
-            countryList: [
-                { label: "Pakistan (پاکستان)", value: "Pakistan" },
-                { label: "Afghanistan (افغانستان)", value: "Afghanistan" },
+            "Balochistan": [
+                { label: "Quetta (کوئٹہ)", value: "Quetta" },
+                { label: "Gwadar (گوادر)", value: "Gwadar" },
+                { label: "Turbat (تربت)", value: "Turbat" },
+                { label: "Khuzdar (خضدار)", value: "Khuzdar" },
+                { label: "Sibi (سبی)", value: "Sibi" }
             ],
-            districtsByProvince: {
-    "Punjab": [
-        "Lahore", "Faisalabad", "Rawalpindi", "Multan", "Gujranwala"
-    ],
-    "Sindh": [
-        "Karachi", "Hyderabad", "Sukkur", "Larkana", "Nawabshah"
-    ],
-    "Khyber Pakhtunkhwa": [
-        "Peshawar", "Mardan", "Abbottabad", "Swat", "Kohat"
-    ],
-    "Balochistan": [
-        "Quetta", "Gwadar", "Turbat", "Khuzdar", "Sibi"
-    ],
-    "Gilgit-Baltistan": [
-        "Gilgit", "Skardu", "Hunza", "Ghizer", "Diamer"
-    ],
-    "Azad Jammu and Kashmir": [
-        "Muzaffarabad", "Mirpur", "Kotli", "Rawalakot", "Bagh"
-    ],
-
-    
-    "Kabul": ["Kabul City", "Paghman", "Deh Sabz"],
-    "Kandahar": ["Kandahar City", "Spin Boldak"],
-    "Herat": ["Herat City", "Shindand"],
-    "Badakhshan": ["Arghanj Khwāh", "Argō", "Bahārak", "Darāyim", "Darwāz-e Bālā", "Darwāz-e Pāyīn", "Fayzābād", "Ishkāshim", "Kishm", "Kuran wa Munjan", "Shahr-e Bāmiyān", "Shahrak", "Shibar", "Tashkurgan", "Yawan"],
-    "Badghis": ["Ab Kamari", "Ghormach", "Jawand", "Muqur", "Bala Murghab", "Qadis", "Qala-e Naw"],
-    "Baghlan": ["Baghlan-e Jadid", "Baghlan-e Markazi", "Dahana-i-Ghori", "Dushi", "Khenjan", "Pul-i-Khumri", "Tala wa Barfak", "Khinjan", "Nahrin"],
-}
-,
-
-            pakProvinceOptions: [
-                { label: "Punjab (پنجاب)", value: "Punjab" },
-                { label: "Sindh (سندھ)", value: "Sindh" },
-                {
-                    label: "Khyber Pakhtunkhwa (خیبر پختونخوا)",
-                    value: "Khyber Pakhtunkhwa",
-                },
-                { label: "Balochistan (بلوچستان)", value: "Balochistan" },
-                {
-                    label: "Gilgit-Baltistan (گلگت بلتستان)",
-                    value: "Gilgit-Baltistan",
-                },
-                {
-                    label: "Azad Jammu and Kashmir (آزاد جموں و کشمیر)",
-                    value: "Azad Jammu and Kashmir",
-                },
+            "Gilgit-Baltistan": [
+                { label: "Gilgit (گلگت)", value: "Gilgit" },
+                { label: "Skardu (سکردو)", value: "Skardu" },
+                { label: "Hunza (ہنزہ)", value: "Hunza" },
+                { label: "Ghizer (غذر)", value: "Ghizer" },
+                { label: "Diamer (دیامر)", value: "Diamer" }
             ],
-
-            afgProvinceOptions: [
-                { label: "Badakhshan (بدخشان)", value: "Badakhshan" },
-                { label: "Badghis (بادغیس)", value: "Badghis" },
-                { label: "Baghlan (بغلان)", value: "Baghlan" },
-                { label: "Balkh (بلخ)", value: "Balkh" },
-                { label: "Bamyan (بامیان)", value: "Bamyan" },
-                { label: "Daykundi (دایکندی)", value: "Daykundi" },
-                { label: "Farah (فراہ)", value: "Farah" },
-                { label: "Faryab (فاریاب)", value: "Faryab" },
-                { label: "Ghazni (غزنی)", value: "Ghazni" },
-                { label: "Ghor (غور)", value: "Ghor" },
-                { label: "Helmand (ہلمند)", value: "Helmand" },
-                { label: "Herat (ہرات)", value: "Herat" },
-                { label: "Jowzjan (جوزجان)", value: "Jowzjan" },
-                { label: "Kabul (کابل)", value: "Kabul" },
-                { label: "Kandahar (قندھار)", value: "Kandahar" },
-                { label: "Kapisa (کاپیسا)", value: "Kapisa" },
-                { label: "Khost (خوست)", value: "Khost" },
-                { label: "Kunar (کنڑ)", value: "Kunar" },
-                { label: "Kunduz (کندز)", value: "Kunduz" },
-                { label: "Laghman (لغمان)", value: "Laghman" },
-                { label: "Logar (لوگر)", value: "Logar" },
-                { label: "Nangarhar (ننگرہار)", value: "Nangarhar" },
-                { label: "Nimroz (نیمروز)", value: "Nimroz" },
-                { label: "Nuristan (نورستان)", value: "Nuristan" },
-                { label: "Paktia (پکتیا)", value: "Paktia" },
-                { label: "Paktika (پکتیکا)", value: "Paktika" },
-                { label: "Panjshir (پنجشیر)", value: "Panjshir" },
-                { label: "Parwan (پروان)", value: "Parwan" },
-                { label: "Samangan (سمنگان)", value: "Samangan" },
-                { label: "Sar-e Pol (سر پل)", value: "Sar-e Pol" },
-                { label: "Takhar (تخار)", value: "Takhar" },
-                { label: "Urozgan (اروزگان)", value: "Urozgan" },
-                { label: "Wardak (وردک)", value: "Wardak" },
-                { label: "Zabul (زابل)", value: "Zabul" },
+            "Azad Jammu and Kashmir": [
+                { label: "Muzaffarabad (مظفرآباد)", value: "Muzaffarabad" },
+                { label: "Mirpur (میرپور)", value: "Mirpur" },
+                { label: "Kotli (کوٹلی)", value: "Kotli" },
+                { label: "Rawalakot (راولا کوٹ)", value: "Rawalakot" },
+                { label: "Bagh (باغ)", value: "Bagh" }
             ],
+            "Kabul": [
+                { label: "Kabul City (کابل شہر)", value: "Kabul City" },
+                { label: "Paghman (پغمان)", value: "Paghman" },
+                { label: "Deh Sabz (ده سبز)", value: "Deh Sabz" }
+            ],
+            "Kandahar": [
+                { label: "Kandahar City (قندہار شہر)", value: "Kandahar City" },
+                { label: "Spin Boldak (سپین بولدک)", value: "Spin Boldak" }
+            ],
+            "Herat": [
+                { label: "Herat City (ہرات شہر)", value: "Herat City" },
+                { label: "Shindand (شین ڈنڈ)", value: "Shindand" }
+            ],
+            "Badakhshan": [
+                { label: "Arghanj Khwāh (ارغنج خواہ)", value: "Arghanj Khwāh" },
+                { label: "Argō (آرگو)", value: "Argō" },
+                { label: "Bahārak (بہارک)", value: "Bahārak" },
+                { label: "Darāyim (درایم)", value: "Darāyim" },
+                { label: "Darwāz-e Bālā (درواز بالا)", value: "Darwāz-e Bālā" },
+                { label: "Darwāz-e Pāyīn (درواز پائین)", value: "Darwāz-e Pāyīn" },
+                { label: "Fayzābād (فیض آباد)", value: "Fayzābād" },
+                { label: "Ishkāshim (اشکاشم)", value: "Ishkāshim" },
+                { label: "Kishm (کشم)", value: "Kishm" },
+                { label: "Kuran wa Munjan (کران و منجان)", value: "Kuran wa Munjan" },
+                { label: "Shahr-e Bāmiyān (شہر بامیان)", value: "Shahr-e Bāmiyān" },
+                { label: "Shahrak (شہراک)", value: "Shahrak" },
+                { label: "Shibar (شیبر)", value: "Shibar" },
+                { label: "Tashkurgan (تاشقرغان)", value: "Tashkurgan" },
+                { label: "Yawan (یاوان)", value: "Yawan" }
+            ],
+            "Badghis": [
+                { label: "Ab Kamari (اب کمری)", value: "Ab Kamari" },
+                { label: "Ghormach (غورماچ)", value: "Ghormach" },
+                { label: "Jawand (جوند)", value: "Jawand" },
+                { label: "Muqur (مقر)", value: "Muqur" },
+                { label: "Bala Murghab (بالا مرغاب)", value: "Bala Murghab" },
+                { label: "Qadis (قادس)", value: "Qadis" },
+                { label: "Qala-e Naw (قلعہ نو)", value: "Qala-e Naw" }
+            ],
+            "Baghlan": [
+                { label: "Baghlan-e Jadid (بغلان جدید)", value: "Baghlan-e Jadid" },
+                { label: "Baghlan-e Markazi (بغلان مرکزی)", value: "Baghlan-e Markazi" },
+                { label: "Dahana-i-Ghori (دہنہ غوری)", value: "Dahana-i-Ghori" },
+                { label: "Dushi (دوشی)", value: "Dushi" },
+                { label: "Khenjan (خنجان)", value: "Khenjan" },
+                { label: "Pul-i-Khumri (پل خمری)", value: "Pul-i-Khumri" },
+                { label: "Tala wa Barfak (تلا و برفک)", value: "Tala wa Barfak" },
+                { label: "Khinjan (خنجان)", value: "Khinjan" },
+                { label: "Nahrin (نہرین)", value: "Nahrin" }
+            ],
+        },
 
-            formErrors: [],
+        pakProvinceOptions: [
+            { label: "Punjab (پنجاب)", value: "Punjab" },
+            { label: "Sindh (سندھ)", value: "Sindh" },
+            { label: "Khyber Pakhtunkhwa (خیبر پختونخوا)", value: "Khyber Pakhtunkhwa" },
+            { label: "Balochistan (بلوچستان)", value: "Balochistan" },
+            { label: "Gilgit-Baltistan (گلگت بلتستان)", value: "Gilgit-Baltistan" },
+            { label: "Azad Jammu and Kashmir (آزاد جموں و کشمیر)", value: "Azad Jammu and Kashmir" },
+        ],
 
-            formStatus: 1,
+        afgProvinceOptions: [
+            { label: "Badakhshan (بدخشان)", value: "Badakhshan" },
+            { label: "Badghis (بادغیس)", value: "Badghis" },
+            { label: "Baghlan (بغلان)", value: "Baghlan" },
+            { label: "Balkh (بلخ)", value: "Balkh" },
+            { label: "Bamyan (بامیان)", value: "Bamyan" },
+            { label: "Daykundi (دایکندی)", value: "Daykundi" },
+            { label: "Farah (فراہ)", value: "Farah" },
+            { label: "Faryab (فاریاب)", value: "Faryab" },
+            { label: "Ghazni (غزنی)", value: "Ghazni" },
+            { label: "Ghor (غور)", value: "Ghor" },
+            { label: "Helmand (ہلمند)", value: "Helmand" },
+            { label: "Herat (ہرات)", value: "Herat" },
+            { label: "Jowzjan (جوزجان)", value: "Jowzjan" },
+            { label: "Kabul (کابل)", value: "Kabul" },
+            { label: "Kandahar (قندھار)", value: "Kandahar" },
+            { label: "Kapisa (کاپیسا)", value: "Kapisa" },
+            { label: "Khost (خوست)", value: "Khost" },
+            { label: "Kunar (کنڑ)", value: "Kunar" },
+            { label: "Kunduz (کندز)", value: "Kunduz" },
+            { label: "Laghman (لغمان)", value: "Laghman" },
+            { label: "Logar (لوگر)", value: "Logar" },
+            { label: "Nangarhar (ننگرہار)", value: "Nangarhar" },
+            { label: "Nimroz (نیمروز)", value: "Nimroz" },
+            { label: "Nuristan (نورستان)", value: "Nuristan" },
+            { label: "Paktia (پکتیا)", value: "Paktia" },
+            { label: "Paktika (پکتیکا)", value: "Paktika" },
+            { label: "Panjshir (پنجشیر)", value: "Panjshir" },
+            { label: "Parwan (پروان)", value: "Parwan" },
+            { label: "Samangan (سمنگان)", value: "Samangan" },
+            { label: "Sar-e Pol (سر پل)", value: "Sar-e Pol" },
+            { label: "Takhar (تخار)", value: "Takhar" },
+            { label: "Urozgan (اروزگان)", value: "Urozgan" },
+            { label: "Wardak (وردک)", value: "Wardak" },
+            { label: "Zabul (زابل)", value: "Zabul" },
+        ],
 
-            // showModal: false,
-        };
-    },
+        formStatus: 1,
+    };
+},
+
     methods: {
 
   async searchStudent() {
@@ -1516,6 +1575,7 @@ export default {
 .is-invalid {
     border-color: red;
 }
+
 .card {
     max-width: 800px;
     width: 100%;
@@ -1545,4 +1605,6 @@ export default {
 .theme-text-color {
     color: #023f86;
 }
+
+
 </style>

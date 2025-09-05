@@ -282,7 +282,9 @@ class StudentsController extends Controller
     public function findByRegNo($regNo)
     {
 
-        $student = Student::where('reg_no', $regNo)->first();
+      $student = Student::where('reg_no', $regNo)
+                ->latest()
+                ->first();
         
         if (!$student) {
             return response()->json(['message' => 'Student not found'], 404);
