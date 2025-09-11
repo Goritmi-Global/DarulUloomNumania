@@ -118,6 +118,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware(['role.admission'])->group(function () {
         Route::get('/students', [StudentsController::class, 'index'])->name('students');
         Route::get('/enrolled-students', [StudentsController::class, 'EnrolledStudents'])->name('enrolled-students');
+        Route::get('/alreadyEnrolled-students', [StudentsController::class, 'AlreadyEnrolledStudents'])->name('alreadyEnrolled-students');
         Route::get('/enroll-new-students', [StudentsController::class, 'enroll_new_students'])->name('enroll-new-students');
         Route::get('/student/details/{id}', [StudentsController::class, 'details'])->name('student.details');
         Route::get('/student/payment/details/{id}', [StudentsController::class, 'student_payement_details'])->name('student.payment.details');

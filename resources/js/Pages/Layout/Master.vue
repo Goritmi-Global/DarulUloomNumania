@@ -404,6 +404,7 @@ export default {
             studentLinks: [
                 { path: "/students", label: "All Students" },
                 { path: "/enrolled-students", label: "Enrolled Students" },
+                { path: "/alreadyEnrolled-students", label: "Already Enrolled Students" },
             ],
             iftahLinks: [
                 { path: "/introduction", label: "Introduction" },

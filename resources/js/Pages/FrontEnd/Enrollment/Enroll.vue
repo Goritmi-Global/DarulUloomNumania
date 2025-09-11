@@ -310,49 +310,50 @@
                                 <div class="row g-3">
 
                                     <div class="col-md-12">
-  <label class="form-label">
-    {{ translate("Have You Studied before Noumania?") }}
-  </label>
-  <Multiselect
-    v-model="form.studiedBefore"
-    :options="myOptions"
-    :placeholder="translate('Please select')"
-    :searchable="true"
-    :multiple="true"
-    :class="{ 'is-invalid': formErrors.studiedBefore }"
-  />
-  <div v-if="formErrors.studiedBefore" class="text-danger">
-    {{ formErrors.studiedBefore[0] }}
-  </div>
-</div>
+                                        <label class="form-label">
+                                            {{ translate("Have You Studied before Noumania?") }}
+                                        </label>
+                                        <Multiselect
+                                            v-model="form.studiedBefore"
+                                            :options="myOptions"
+                                            :placeholder="translate('Please select')"
+                                            :searchable="true"
+                                            
+                                            :multiple="true"
+                                            :class="{ 'is-invalid': formErrors.studiedBefore }"
+                                        />
+                                        <div v-if="formErrors.studiedBefore" class="text-danger">
+                                            {{ formErrors.studiedBefore[0] }}
+                                        </div>
+                                        </div>
 
 
-<div class="col-md-12" v-if="form.studiedBefore === 'Yes'">
-  <label class="form-label">
-    {{ translate("Registration Number") }}
-  </label>
+                                        <div class="col-md-12" v-if="form.studiedBefore === 'Yes'">
+                                        <label class="form-label">
+                                            {{ translate("Registration Number") }}
+                                        </label>
 
-  <div class="input-group">
-    <input 
-      type="text" 
-      id="regNo" 
-      v-model="form.registrationNumber" 
-      class="form-control" 
-      :placeholder="translate('Enter Registration Number')"
-    >
-    <button 
-      class="btn btn-primary" 
-      type="button"
-      @click="searchStudent"
-    >
-      {{translate('Search')}}
-    </button>
-  </div>
+                                        <div class="input-group">
+                                            <input 
+                                            type="text" 
+                                            id="regNo" 
+                                            v-model="form.registrationNumber" 
+                                            class="form-control" 
+                                            :placeholder="translate('Enter Registration Number')"
+                                            >
+                                            <button 
+                                            class="btn btn-primary" 
+                                            type="button"
+                                            @click="searchStudent"
+                                            >
+                                            {{translate('Search')}}
+                                            </button>
+                                        </div>
 
-  <div v-if="formErrors.studiedBefore" class="text-danger">
-    {{ translate(formErrors.studiedBefore[0]) }}
-  </div>
-</div>
+                                        <div v-if="formErrors.studiedBefore" class="text-danger">
+                                            {{ translate(formErrors.studiedBefore[0]) }}
+                                        </div>
+                                        </div>
 
                                     <template v-if="form.studiedBefore !== 'Yes' || studentData">
                                     <!-- Apply For -->

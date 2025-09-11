@@ -3,7 +3,7 @@
         <div class="pagetitle d-flex justify-content-between">
             <div>
                 <h1 class="theme-text-color">
-                    {{ translate("Enroll New Student") }}
+                    {{ translate("Already Enrolled Students") }}
                 </h1>
                 <nav>
                     <ol class="breadcrumb">
@@ -67,6 +67,8 @@
                                             {{ translate(formErrors.studiedBefore[0]) }}
                                         </div>
                                     </div>
+
+                                    
                                     <template v-if="form.studiedBefore !== 'Yes' || studentData">
                                         <!-- Apply For -->
                                         <div class="col-md-12">
@@ -119,6 +121,18 @@
                                             }" />
                                             <div v-if="formErrors.reg_no" class="text-danger">
                                                 {{ translate(formErrors.reg_no[0]) }}
+                                            </div>
+                                        </div>
+
+                                         <div class="col-md-6">
+                                            <label class="form-label">{{
+                                                translate("Class Number")
+                                                }}</label>
+                                            <input type="text" class="form-control" v-model="form.class_no" :class="{
+                                                'is-invalid': formErrors.class_no,
+                                            }" />
+                                            <div v-if="formErrors.class_no" class="text-danger">
+                                                {{ translate(formErrors.class_no[0]) }}
                                             </div>
                                         </div>
 
@@ -641,6 +655,7 @@ export default {
                 registrationNumber: "",
                 reg_no: "",
                 district: "",
+                class_no: "",
                 cnic_front: null,
                 cnic_back:null,
                 payment_receipt: null,
@@ -840,6 +855,7 @@ export default {
                 console.log(this.studentData);
                 this.form.apply_for = this.studentData.apply_for || ''
                 this.form.reg_no = this.studentData.reg_no || ''
+                this.form.class_no = this.studentData.class_no || ''
                 this.form.name = this.studentData.name || '';
                 this.form.father = this.studentData.father || '';
                 this.form.cnic = this.studentData.cnic || '';
@@ -973,7 +989,6 @@ export default {
 
 <style>
 @import "@vueform/multiselect/themes/default.css";
-
 .cursor-pointer {
     cursor: pointer;
 }
