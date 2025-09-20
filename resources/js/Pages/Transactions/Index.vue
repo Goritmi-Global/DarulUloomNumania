@@ -328,7 +328,7 @@
                                                 :deleteId="entry.id"
                                                 @deleteThis="deleteThis"
                                             />
-                                            <button
+                                            <!-- <button
                                                 class="btn btn-sm fs-6"
                                                 title="Print"
                                                 @click="
@@ -339,15 +339,33 @@
                                                 "
                                             >
                                                 <i class="bi bi-printer"></i>
-                                            </button>
- 
-                                            <button
-    class="btn btn-sm fs-6"
-    title="Share"
-    @click="shareSlip(entry, globalIndex(idx))"
->
-    <i class="bi bi-whatsapp text-success"></i>
-</button>
+                                            </button> -->
+
+                                            <!-- <button
+                                                class="btn btn-sm fs-6"
+                                                title="Share"
+                                                @click="
+                                                    shareSlip(
+                                                        entry,
+                                                        globalIndex(idx)
+                                                    )
+                                                "
+                                            >
+                                                <i
+                                                    class="bi bi-whatsapp text-success"
+                                                ></i>
+                                            </button> -->
+                                            <ReceiptShare
+                                                :entry="entry"
+                                                :transactionEntries="
+                                                    transactionEntries
+                                                "
+                                                :indexForBalance="
+                                                    indexForBalance
+                                                "
+                                                :translate="translate"
+                                                bookNo="05"
+                                            />
                                         </div>
                                     </td>
                                 </tr>
@@ -975,9 +993,6 @@
                             >
                                 <i class="bi bi-printer me-1"></i> Print
                             </button>
-                            
-
-
                         </div>
                     </div>
                 </div>
@@ -989,6 +1004,7 @@
 <script>
 import axios from "axios";
 import Master from "../Layout/Master.vue";
+import ReceiptShare from "./ReceiptShare.vue";
 import html2canvas from "html2canvas";
 import Multiselect from "@vueform/multiselect";
 import * as XLSX from "xlsx";
@@ -1038,7 +1054,7 @@ export default {
     created() {
         this.process_type = "Income";
     },
-    components: { Multiselect, Datepicker, html2canvas },
+    components: { Multiselect, Datepicker, html2canvas, ReceiptShare },
     data() {
         return {
             today: this.getPakistanDate(),
@@ -1197,8 +1213,6 @@ export default {
         },
     },
     methods: {
-      
-
         /* --- Helpers for table numbering --- */
         tableIndex(idxOnPage) {
             return (this.currentPage - 1) * this.perPage + idxOnPage + 1;
@@ -1217,14 +1231,16 @@ export default {
         goNext() {
             if (this.currentPage < this.totalPages) this.currentPage++;
         },
-  shareSlip(entry, indexForBalance) {
-    let runningBalance = 0;
-    for (let i = 0; i <= indexForBalance; i++) {
-        const e = this.transactionEntries[i];
-        runningBalance += (parseFloat(e.cash_in) || 0) - (parseFloat(e.cash_out) || 0);
-    }
+        shareSlip(entry, indexForBalance) {
+            let runningBalance = 0;
+            for (let i = 0; i <= indexForBalance; i++) {
+                const e = this.transactionEntries[i];
+                runningBalance +=
+                    (parseFloat(e.cash_in) || 0) -
+                    (parseFloat(e.cash_out) || 0);
+            }
 
-    const text = `
+            const text = `
 ------------------------------------------------
                  TRANSACTION RECEIPT
 ------------------------------------------------
@@ -1246,9 +1262,9 @@ Remarks: ${entry.remarks || "-"}
 ------------------------------------------------
 `;
 
-    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-    window.open(url, "_blank");
-},
+            const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+            window.open(url, "_blank");
+        },
         getPakistanDate() {
             const formatter = new Intl.DateTimeFormat("en-CA", {
                 timeZone: "Asia/Karachi",
