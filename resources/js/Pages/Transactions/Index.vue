@@ -28,6 +28,7 @@
                     @click="
                         clearFields();
                         form.process_type = ['Income'];
+                        pluckExpIncTypes('Income');
                     "
                 >
                     <i class="bi bi-arrow-down-circle"></i>
@@ -41,6 +42,7 @@
                     @click="
                         clearFields();
                         form.process_type = ['Expense'];
+                        pluckExpIncTypes('Expense');
                     "
                 >
                     <i class="bi bi-arrow-up-circle"></i>
@@ -53,7 +55,8 @@
                     data-bs-target="#transactionmodal"
                     @click="
                         clearFields();
-                        form.process_type = ['Advance'];
+                        form.process_type = 'Advance';
+                        pluckExpIncTypes('Advance');
                     "
                 >
                     <i class="bi bi-cash-coin"></i>
@@ -78,46 +81,58 @@
 
                     <!-- Top right tools -->
                     <div
-                        class="d-flex justify-content-end align-items-center gap-2 p-2"
+                        class="d-flex justify-content-between align-items-center gap-2 p-2"
                     >
                         <input
                             v-model.trim="tableQuery"
                             type="text"
                             class="form-control"
                             style="max-width: 260px"
-                            :placeholder="translate('Search in table...')"
+                            :placeholder="
+                                translate('Global search in table...')
+                            "
                         />
                         <div class="dropdown">
                             <button
                                 class="btn btn-light border dropdown-toggle"
                                 data-bs-toggle="dropdown"
                             >
-                                {{ translate("Table Options") }}
+                                {{ translate("Export Options") }}
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <a
-                                        class="dropdown-item"
+                                        class="dropdown-item d-flex align-items-center"
                                         href="#"
                                         @click.prevent="exportToExcel"
-                                        >{{ translate("Export Excel") }}</a
                                     >
+                                        <i
+                                            class="bi bi-file-earmark-excel me-2 text-success"
+                                        ></i>
+                                        {{ translate("Export Excel") }}
+                                    </a>
                                 </li>
                                 <li>
                                     <a
-                                        class="dropdown-item"
+                                        class="dropdown-item d-flex align-items-center"
                                         href="#"
                                         @click.prevent="exportToPDF"
-                                        >{{ translate("Export PDF") }}</a
                                     >
+                                        <i
+                                            class="bi bi-file-earmark-pdf me-2 text-danger"
+                                        ></i>
+                                        {{ translate("Export PDF") }}
+                                    </a>
                                 </li>
                                 <li>
                                     <a
-                                        class="dropdown-item"
+                                        class="dropdown-item d-flex align-items-center"
                                         href="#"
                                         @click.prevent="printSlip"
-                                        >{{ translate("Print List") }}</a
                                     >
+                                        <i class="bi bi-printer me-2"></i>
+                                        {{ translate("Print List") }}
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -125,10 +140,8 @@
 
                     <!-- Filters (kept intact) -->
                     <div class="card card-body p-2">
-                        <div
-                            class="d-flex justify-content-between align-items-center c-filter"
-                        >
-                            <div class="d-flex align-items-center gap-2">
+                        <div class="d-flex justify-content-between c-filter">
+                            <div class="d-flex align-items-center gap-1">
                                 <div class="col-auto">
                                     <Multiselect
                                         v-model="selectedFilter"
@@ -230,9 +243,7 @@
                                             v-if="serachingLoading"
                                             class="spinner-border spinner-border-sm"
                                         ></span>
-                                        <span v-if="!serachingLoading">{{
-                                            translate("Search")
-                                        }}</span>
+                                        <i v-else class="bi bi-search"></i>
                                     </button>
                                 </div>
                             </div>
@@ -329,6 +340,14 @@
                                             >
                                                 <i class="bi bi-printer"></i>
                                             </button>
+ 
+                                            <button
+    class="btn btn-sm fs-6"
+    title="Share"
+    @click="shareSlip(entry, globalIndex(idx))"
+>
+    <i class="bi bi-whatsapp text-success"></i>
+</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -422,7 +441,7 @@
                 tabindex="-1"
                 aria-hidden="true"
             >
-                <div class="modal-dialog modal-xl">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-primary" v-if="form.id">
@@ -956,6 +975,9 @@
                             >
                                 <i class="bi bi-printer me-1"></i> Print
                             </button>
+                            
+
+
                         </div>
                     </div>
                 </div>
@@ -1175,6 +1197,8 @@ export default {
         },
     },
     methods: {
+      
+
         /* --- Helpers for table numbering --- */
         tableIndex(idxOnPage) {
             return (this.currentPage - 1) * this.perPage + idxOnPage + 1;
@@ -1193,7 +1217,38 @@ export default {
         goNext() {
             if (this.currentPage < this.totalPages) this.currentPage++;
         },
+  shareSlip(entry, indexForBalance) {
+    let runningBalance = 0;
+    for (let i = 0; i <= indexForBalance; i++) {
+        const e = this.transactionEntries[i];
+        runningBalance += (parseFloat(e.cash_in) || 0) - (parseFloat(e.cash_out) || 0);
+    }
 
+    const text = `
+------------------------------------------------
+                 TRANSACTION RECEIPT
+------------------------------------------------
+Receipt No: ${entry.ref_no || "-"}
+Date: ${entry.transaction_date || "-"}
+Islamic Date: ${entry.islamic_date || "-"}
+
+Type: ${entry.income_type || entry.expense_type || entry.advance_type || "-"}
+Method: ${entry.method || "-"}
+
+Received From: ${entry.received_from || "-"}
+Received By:   ${entry.received_by || "-"}
+
+Cash In:  ${this.formatCurrency(entry.cash_in || 0)}
+Cash Out: ${this.formatCurrency(entry.cash_out || 0)}
+Balance:  ${this.formatCurrency(runningBalance)}
+
+Remarks: ${entry.remarks || "-"}
+------------------------------------------------
+`;
+
+    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank");
+},
         getPakistanDate() {
             const formatter = new Intl.DateTimeFormat("en-CA", {
                 timeZone: "Asia/Karachi",
