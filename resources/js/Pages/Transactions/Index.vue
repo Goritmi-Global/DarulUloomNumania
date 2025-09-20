@@ -6,10 +6,16 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/dashboard">{{ translate("Darul Oloom") }}</a>
+                            <a href="/dashboard">{{
+                                translate("Darul Oloom")
+                            }}</a>
                         </li>
-                        <li class="breadcrumb-item">{{ translate("Transaction") }}</li>
-                        <li class="breadcrumb-item active">{{ translate("Index") }}</li>
+                        <li class="breadcrumb-item">
+                            {{ translate("Transaction") }}
+                        </li>
+                        <li class="breadcrumb-item active">
+                            {{ translate("Index") }}
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -19,7 +25,10 @@
                     data-bs-toggle="modal"
                     ref="openTransactionModal"
                     data-bs-target="#transactionmodal"
-                    @click="clearFields(); form.process_type = ['Income'];"
+                    @click="
+                        clearFields();
+                        form.process_type = ['Income'];
+                    "
                 >
                     <i class="bi bi-arrow-down-circle"></i>
                     {{ translate("Income") }}
@@ -29,7 +38,10 @@
                     data-bs-toggle="modal"
                     ref="openTransactionModal"
                     data-bs-target="#transactionmodal"
-                    @click="clearFields(); form.process_type = ['Expense'];"
+                    @click="
+                        clearFields();
+                        form.process_type = ['Expense'];
+                    "
                 >
                     <i class="bi bi-arrow-up-circle"></i>
                     {{ translate("Expense") }}
@@ -39,7 +51,10 @@
                     data-bs-toggle="modal"
                     ref="openTransactionModal"
                     data-bs-target="#transactionmodal"
-                    @click="clearFields(); form.process_type = ['Advance'];"
+                    @click="
+                        clearFields();
+                        form.process_type = ['Advance'];
+                    "
                 >
                     <i class="bi bi-cash-coin"></i>
                     {{ translate("Advance") }}
@@ -62,7 +77,9 @@
                     </h5>
 
                     <!-- Top right tools -->
-                    <div class="d-flex justify-content-end align-items-center gap-2 p-2">
+                    <div
+                        class="d-flex justify-content-end align-items-center gap-2 p-2"
+                    >
                         <input
                             v-model.trim="tableQuery"
                             type="text"
@@ -71,39 +88,74 @@
                             :placeholder="translate('Search in table...')"
                         />
                         <div class="dropdown">
-                            <button class="btn btn-light border dropdown-toggle" data-bs-toggle="dropdown">
-                                {{ translate('Table Options') }}
+                            <button
+                                class="btn btn-light border dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                            >
+                                {{ translate("Table Options") }}
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#" @click.prevent="exportToExcel">{{ translate('Export Excel') }}</a></li>
-                                <li><a class="dropdown-item" href="#" @click.prevent="exportToPDF">{{ translate('Export PDF') }}</a></li>
-                                <li><a class="dropdown-item" href="#" @click.prevent="printSlip">{{ translate('Print List') }}</a></li>
+                                <li>
+                                    <a
+                                        class="dropdown-item"
+                                        href="#"
+                                        @click.prevent="exportToExcel"
+                                        >{{ translate("Export Excel") }}</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        class="dropdown-item"
+                                        href="#"
+                                        @click.prevent="exportToPDF"
+                                        >{{ translate("Export PDF") }}</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        class="dropdown-item"
+                                        href="#"
+                                        @click.prevent="printSlip"
+                                        >{{ translate("Print List") }}</a
+                                    >
+                                </li>
                             </ul>
                         </div>
                     </div>
 
                     <!-- Filters (kept intact) -->
                     <div class="card card-body p-2">
-                        <div class="d-flex justify-content-between align-items-center c-filter">
+                        <div
+                            class="d-flex justify-content-between align-items-center c-filter"
+                        >
                             <div class="d-flex align-items-center gap-2">
                                 <div class="col-auto">
                                     <Multiselect
                                         v-model="selectedFilter"
-                                        :options="['Monthly','Yearly','Custom']"
+                                        :options="[
+                                            'Monthly',
+                                            'Yearly',
+                                            'Custom',
+                                        ]"
                                         :searchable="true"
                                         :placeholder="translate('Filter By')"
                                         @clear="fetchTransactionEntries"
                                     />
                                 </div>
 
-                                <div class="col-auto d-flex gap-2" v-if="selectedFilter === 'Monthly'">
+                                <div
+                                    class="col-auto d-flex gap-2"
+                                    v-if="selectedFilter === 'Monthly'"
+                                >
                                     <div class="col-auto">
                                         <Multiselect
                                             v-model="selectedYear"
                                             :options="yearsOptions"
                                             :searchable="true"
                                             @clear="fetchTransactionEntries"
-                                            :placeholder="translate('Select Year')"
+                                            :placeholder="
+                                                translate('Select Year')
+                                            "
                                         />
                                     </div>
                                     <div class="col-auto">
@@ -112,12 +164,17 @@
                                             :options="monthsOptions"
                                             :searchable="true"
                                             @clear="fetchTransactionEntries"
-                                            :placeholder="translate('Select Month')"
+                                            :placeholder="
+                                                translate('Select Month')
+                                            "
                                         />
                                     </div>
                                 </div>
 
-                                <div class="col-auto" v-if="selectedFilter === 'Yearly'">
+                                <div
+                                    class="col-auto"
+                                    v-if="selectedFilter === 'Yearly'"
+                                >
                                     <Multiselect
                                         v-model="selectedYear"
                                         :options="yearsOptions"
@@ -127,19 +184,26 @@
                                     />
                                 </div>
 
-                                <div class="col-auto d-flex gap-2" v-if="selectedFilter === 'Custom'">
+                                <div
+                                    class="col-auto d-flex gap-2"
+                                    v-if="selectedFilter === 'Custom'"
+                                >
                                     <input
                                         type="date"
                                         class="form-control"
                                         v-model="startDate"
-                                        :class="{ 'invalid-bg': formErrors.startDate }"
+                                        :class="{
+                                            'invalid-bg': formErrors.startDate,
+                                        }"
                                         placeholder="Start Date"
                                     />
                                     <input
                                         type="date"
                                         class="form-control"
                                         v-model="endDate"
-                                        :class="{ 'invalid-bg': formErrors.endDate }"
+                                        :class="{
+                                            'invalid-bg': formErrors.endDate,
+                                        }"
                                         :placeholder="translate('End Date')"
                                     />
                                 </div>
@@ -148,7 +212,9 @@
                                     <Multiselect
                                         v-model="filterTransactionType"
                                         :options="processTypeOptions"
-                                        :placeholder="translate('Filter By Type')"
+                                        :placeholder="
+                                            translate('Filter By Type')
+                                        "
                                         :searchable="true"
                                         @clear="fetchTransactionEntries"
                                     />
@@ -160,13 +226,20 @@
                                         class="btn btn-success"
                                         :disabled="serachingLoading"
                                     >
-                                        <span v-if="serachingLoading" class="spinner-border spinner-border-sm"></span>
-                                        <span v-if="!serachingLoading">{{ translate("Search") }}</span>
+                                        <span
+                                            v-if="serachingLoading"
+                                            class="spinner-border spinner-border-sm"
+                                        ></span>
+                                        <span v-if="!serachingLoading">{{
+                                            translate("Search")
+                                        }}</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <span class="text-danger" v-if="FilterErrors">{{ FilterErrors }}</span>
+                        <span class="text-danger" v-if="FilterErrors">{{
+                            FilterErrors
+                        }}</span>
                     </div>
 
                     <!-- Table -->
@@ -186,15 +259,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(entry, idx) in visibleEntries" :key="entry.id">
+                                <tr
+                                    v-for="(entry, idx) in visibleEntries"
+                                    :key="entry.id"
+                                >
                                     <td>{{ tableIndex(idx) }}</td>
                                     <td>{{ entry.transaction_date }}</td>
                                     <td>{{ entry.islamic_date }}</td>
                                     <td>{{ entry.ref_no }}</td>
-                                    <td>{{ entry.income_type ?? entry.expense_type ?? entry.advance_type }}</td>
-                                    <td>{{ formatCurrency(entry.cash_in) ?? 0 }}</td>
-                                    <td>{{ formatCurrency(entry.cash_out) ?? 0 }}</td>
-                                    <td>{{ calculateBalance(globalIndex(idx)) }}</td>
+                                    <td>
+                                        {{
+                                            entry.income_type ??
+                                            entry.expense_type ??
+                                            entry.advance_type
+                                        }}
+                                    </td>
+                                    <td>
+                                        {{ formatCurrency(entry.cash_in) ?? 0 }}
+                                    </td>
+                                    <td>
+                                        {{
+                                            formatCurrency(entry.cash_out) ?? 0
+                                        }}
+                                    </td>
+                                    <td>
+                                        {{ calculateBalance(globalIndex(idx)) }}
+                                    </td>
                                     <td>
                                         <div class="btn-group">
                                             <button
@@ -202,7 +292,12 @@
                                                 title="View"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#viewTransactionModal"
-                                                @click="viewEntry(entry, globalIndex(idx))"
+                                                @click="
+                                                    viewEntry(
+                                                        entry,
+                                                        globalIndex(idx)
+                                                    )
+                                                "
                                             >
                                                 <i class="bi bi-eye"></i>
                                             </button>
@@ -211,15 +306,26 @@
                                                 title="Edit"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#transactionmodal"
-                                                @click="showEntry(entry.id); clearFields();"
+                                                @click="
+                                                    showEntry(entry.id);
+                                                    clearFields();
+                                                "
                                             >
                                                 <i class="bi bi-pencil"></i>
                                             </button>
-                                            <DeleteModal :deleteId="entry.id" @deleteThis="deleteThis" />
+                                            <DeleteModal
+                                                :deleteId="entry.id"
+                                                @deleteThis="deleteThis"
+                                            />
                                             <button
                                                 class="btn btn-sm fs-6"
                                                 title="Print"
-                                                @click="printSingleSlip(entry, globalIndex(idx))"
+                                                @click="
+                                                    printSingleSlip(
+                                                        entry,
+                                                        globalIndex(idx)
+                                                    )
+                                                "
                                             >
                                                 <i class="bi bi-printer"></i>
                                             </button>
@@ -227,30 +333,56 @@
                                     </td>
                                 </tr>
                                 <tr v-if="!visibleEntries.length">
-                                    <td colspan="9" class="text-center text-muted">{{ translate('No records found') }}</td>
+                                    <td
+                                        colspan="9"
+                                        class="text-center text-muted"
+                                    >
+                                        {{ translate("No records found") }}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <!-- Pagination + size -->
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <div
+                        class="d-flex justify-content-between align-items-center flex-wrap gap-2"
+                    >
                         <div class="d-flex align-items-center gap-2">
                             <span class="text-muted">
-                                {{ translate('Rows per page') }}
+                                {{ translate("Rows per page") }}
                             </span>
-                            <select class="form-select form-select-sm" style="width: 90px" v-model.number="perPage">
-                                <option v-for="s in pageSizes" :key="s" :value="s">{{ s }}</option>
+                            <select
+                                class="form-select form-select-sm"
+                                style="width: 90px"
+                                v-model.number="perPage"
+                            >
+                                <option
+                                    v-for="s in pageSizes"
+                                    :key="s"
+                                    :value="s"
+                                >
+                                    {{ s }}
+                                </option>
                             </select>
                             <span class="text-muted ms-2">
-                                {{ showingFrom }}–{{ showingTo }} {{ translate('of') }} {{ filteredEntries.length }}
+                                {{ showingFrom }}–{{ showingTo }}
+                                {{ translate("of") }}
+                                {{ filteredEntries.length }}
                             </span>
                         </div>
                         <nav>
                             <ul class="pagination mb-0">
-                                <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                    <button class="page-link" @click="goPrev" :disabled="currentPage === 1">
-                                        {{ translate('Previous') }}
+                                <li
+                                    class="page-item"
+                                    :class="{ disabled: currentPage === 1 }"
+                                >
+                                    <button
+                                        class="page-link"
+                                        @click="goPrev"
+                                        :disabled="currentPage === 1"
+                                    >
+                                        {{ translate("Previous") }}
                                     </button>
                                 </li>
                                 <li
@@ -259,11 +391,22 @@
                                     :key="n"
                                     :class="{ active: n === currentPage }"
                                 >
-                                    <button class="page-link" @click="goTo(n)">{{ n }}</button>
+                                    <button class="page-link" @click="goTo(n)">
+                                        {{ n }}
+                                    </button>
                                 </li>
-                                <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                    <button class="page-link" @click="goNext" :disabled="currentPage === totalPages">
-                                        {{ translate('Next') }}
+                                <li
+                                    class="page-item"
+                                    :class="{
+                                        disabled: currentPage === totalPages,
+                                    }"
+                                >
+                                    <button
+                                        class="page-link"
+                                        @click="goNext"
+                                        :disabled="currentPage === totalPages"
+                                    >
+                                        {{ translate("Next") }}
                                     </button>
                                 </li>
                             </ul>
@@ -273,159 +416,279 @@
             </div>
 
             <!-- Add/Edit Modal (kept intact) -->
-            <div class="modal fade" id="transactionmodal" tabindex="-1" aria-hidden="true">
+            <div
+                class="modal fade"
+                id="transactionmodal"
+                tabindex="-1"
+                aria-hidden="true"
+            >
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-primary" v-if="form.id">
-                                {{ form.remarks }} - {{ form.method }} <small>({{ form.date }})</small>
+                                {{ form.remarks }} - {{ form.method }}
+                                <small>({{ form.date }})</small>
                             </h5>
                             <h5 class="modal-title text-primary" v-else>
                                 {{ translate("New Transaction Entry") }}
                             </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                            ></button>
                         </div>
                         <div class="modal-body">
                             <div class="card card-body p-3">
                                 <div class="row g-3">
                                     <div class="col-12 col-md-12 mb-3">
-                                        <label>{{ translate("Process Type") }}</label>
+                                        <label>{{
+                                            translate("Process Type")
+                                        }}</label>
                                         <Multiselect
                                             v-model="form.process_type"
                                             :options="processTypeOptions"
                                             :searchable="false"
                                             readonly
-                                            @select="pluckExpIncTypes(form.process_type); clearProcessType()"
-                                            :class="{ 'invalid-bg': formErrors.process_type }"
+                                            @select="
+                                                pluckExpIncTypes(
+                                                    form.process_type
+                                                );
+                                                clearProcessType();
+                                            "
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.process_type,
+                                            }"
                                         />
-                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.process_type">
+                                        <div
+                                            class="invalid-feedback animated fadeIn"
+                                            v-if="formErrors.process_type"
+                                        >
                                             {{ formErrors.process_type[0] }}
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-md-6" v-if="form.process_type == 'Income'">
-                                        <label>{{ translate("Income Type") }}</label>
+                                    <div
+                                        class="col-12 col-md-6"
+                                        v-if="form.process_type == 'Income'"
+                                    >
+                                        <label>{{
+                                            translate("Income Type")
+                                        }}</label>
                                         <Multiselect
                                             v-model="form.income_type"
                                             :options="IncomeTypesOptions"
                                             :searchable="true"
-                                            :class="{ 'invalid-bg': formErrors.income_type }"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.income_type,
+                                            }"
                                         />
-                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.income_type">
+                                        <div
+                                            class="invalid-feedback animated fadeIn"
+                                            v-if="formErrors.income_type"
+                                        >
                                             {{ formErrors.income_type[0] }}
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-md-6" v-if="form.process_type == 'Expense'">
-                                        <label>{{ translate("Expense Type") }}</label>
+                                    <div
+                                        class="col-12 col-md-6"
+                                        v-if="form.process_type == 'Expense'"
+                                    >
+                                        <label>{{
+                                            translate("Expense Type")
+                                        }}</label>
                                         <Multiselect
                                             v-model="form.expense_type"
                                             :options="ExpenseTypesOptions"
                                             :searchable="true"
-                                            :class="{ 'invalid-bg': formErrors.expense_type }"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.expense_type,
+                                            }"
                                         />
-                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.expense_type">
+                                        <div
+                                            class="invalid-feedback animated fadeIn"
+                                            v-if="formErrors.expense_type"
+                                        >
                                             {{ formErrors.expense_type[0] }}
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-md-6" v-if="form.process_type === 'Advance'">
-                                        <label>{{ translate("Advance Type") }}</label>
+                                    <div
+                                        class="col-12 col-md-6"
+                                        v-if="form.process_type === 'Advance'"
+                                    >
+                                        <label>{{
+                                            translate("Advance Type")
+                                        }}</label>
                                         <Multiselect
                                             v-model="form.advance_type"
                                             :options="AdvanceTypesOptions"
                                             :searchable="true"
-                                            :class="{ 'invalid-bg': formErrors.advance_type }"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.advance_type,
+                                            }"
                                         />
-                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.advance_type">
+                                        <div
+                                            class="invalid-feedback animated fadeIn"
+                                            v-if="formErrors.advance_type"
+                                        >
                                             {{ formErrors.advance_type[0] }}
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-md-6" v-if="form.process_type == 'Borrow' || form.process_type == 'Lend'">
+                                    <div
+                                        class="col-12 col-md-6"
+                                        v-if="
+                                            form.process_type == 'Borrow' ||
+                                            form.process_type == 'Lend'
+                                        "
+                                    >
                                         <label>{{ "Select person" }}</label>
                                         <Multiselect
                                             v-model="form.person"
                                             :options="personsOptions"
                                             :searchable="true"
-                                            :class="{ 'invalid-bg': formErrors.person }"
+                                            :class="{
+                                                'invalid-bg': formErrors.person,
+                                            }"
                                         />
-                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.person">
+                                        <div
+                                            class="invalid-feedback animated fadeIn"
+                                            v-if="formErrors.person"
+                                        >
                                             {{ formErrors.person[0] }}
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 col-12" v-if="form.process_type == 'Income' || form.process_type == 'Borrow'">
-                                        <label for="cash_in">{{ translate("Cash In") }}</label>
+                                    <div
+                                        class="col-md-6 col-12"
+                                        v-if="
+                                            form.process_type == 'Income' ||
+                                            form.process_type == 'Borrow'
+                                        "
+                                    >
+                                        <label for="cash_in">{{
+                                            translate("Cash In")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             id="cash_in"
                                             v-model="form.cash_in"
-                                            :class="{ 'invalid-bg': formErrors.cash_in }"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.cash_in,
+                                            }"
                                         />
-                                        <div v-if="formErrors.cash_in" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.cash_in"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.cash_in[0] }}
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 col-12" v-if="form.process_type == 'Expense' || form.process_type == 'Lend' || form.process_type == 'Advance'">
-                                        <label for="cash_out">{{ translate("Cash Out") }}</label>
+                                    <div
+                                        class="col-md-6 col-12"
+                                        v-if="
+                                            form.process_type == 'Expense' ||
+                                            form.process_type == 'Lend' ||
+                                            form.process_type == 'Advance'
+                                        "
+                                    >
+                                        <label for="cash_out">{{
+                                            translate("Cash Out")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             id="cash_out"
                                             v-model="form.cash_out"
-                                            :class="{ 'invalid-bg': formErrors.cash_out }"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.cash_out,
+                                            }"
                                         />
-                                        <div v-if="formErrors.cash_out" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.cash_out"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.cash_out[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="remarks">{{ translate("Description") }}</label>
+                                        <label for="remarks">{{
+                                            translate("Description")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             id="remarks"
                                             v-model="form.remarks"
-                                            :class="{ 'invalid-bg': formErrors.remarks }"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.remarks,
+                                            }"
                                         />
-                                        <div v-if="formErrors.remarks" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.remarks"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.remarks[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-12 col-md-6">
-                                        <label>{{ translate("Payment Method") }}</label>
+                                        <label>{{
+                                            translate("Payment Method")
+                                        }}</label>
                                         <Multiselect
                                             v-model="form.method"
                                             :options="methodTypesOpions"
                                             :searchable="true"
-                                            :class="{ 'invalid-bg': formErrors.method }"
+                                            :class="{
+                                                'invalid-bg': formErrors.method,
+                                            }"
                                         />
-                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.method">
+                                        <div
+                                            class="invalid-feedback animated fadeIn"
+                                            v-if="formErrors.method"
+                                        >
                                             {{ formErrors.method[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-12 col-md-6">
-                                        <label class="form-label">{{ translate("English Date") }}</label>
+                                        <label class="form-label">{{
+                                            translate("English Date")
+                                        }}</label>
                                         <Datepicker
                                             autoApply
                                             :enable-time-picker="false"
-                                            :class="{ 'invalid-bg': formErrors.date }"
+                                            :class="{
+                                                'invalid-bg': formErrors.date,
+                                            }"
                                             v-model="form.date"
                                             @update:modelValue="convertToHijri"
                                         />
-                                        <div v-if="formErrors.date" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.date"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.date[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-12 col-md-6">
-                                        <label class="form-label">{{ translate("Islamic Date") }}</label>
+                                        <label class="form-label">{{
+                                            translate("Islamic Date")
+                                        }}</label>
                                         <Datepicker
                                             v-model="form.islamic_date"
                                             :enable-time-picker="false"
@@ -433,69 +696,134 @@
                                             :disabled="true"
                                             :input-props="{ readonly: true }"
                                         />
-                                        <div v-if="formErrors.islamic_date" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.islamic_date"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.islamic_date[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label>{{ translate("Received from") }}</label>
+                                        <label>{{
+                                            translate("Received from")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             v-model="form.received_from"
-                                            :class="{ 'invalid-bg': formErrors.received_from }"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.received_from,
+                                            }"
                                         />
-                                        <div v-if="formErrors.received_from" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.received_from"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.received_from[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label>{{ translate("Received By") }}</label>
+                                        <label>{{
+                                            translate("Received By")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             v-model="form.received_by"
-                                            :class="{ 'invalid-bg': formErrors.received_by }"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.received_by,
+                                            }"
                                         />
-                                        <div v-if="formErrors.received_by" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.received_by"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.received_by[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label>{{ translate("Reciept No") }}</label>
+                                        <label>{{
+                                            translate("Reciept No")
+                                        }}</label>
                                         <input
                                             type="text"
                                             class="form-control"
                                             v-model="form.ref_no"
-                                            :class="{ 'invalid-bg': formErrors.ref_no }"
+                                            :class="{
+                                                'invalid-bg': formErrors.ref_no,
+                                            }"
                                         />
-                                        <div v-if="formErrors.ref_no" class="invalid-feedback">
+                                        <div
+                                            v-if="formErrors.ref_no"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.ref_no[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label>{{ translate("Receipt image") }}</label>
+                                        <label>{{
+                                            translate("Receipt image")
+                                        }}</label>
                                         <br />
-                                        <CropperOffCanvas @croppedImg="croppedImgPassToForm" accept=".jpg,.jpeg,.png" />
+                                        <CropperOffCanvas
+                                            @croppedImg="croppedImgPassToForm"
+                                            accept=".jpg,.jpeg,.png"
+                                        />
                                         <br />
-                                        <img v-if="form.receipt_image" :src="form.receipt_image ?? '/images/default.jpg'" :width="100" />
-                                        <img v-else-if="existing_receipt_image" :src="existing_receipt_image ?? '/images/default.jpg'" :width="100" />
-                                        <img v-else :src="'/images/default.jpg'" :width="100" />
-                                        <div v-if="formErrors.receipt_image" class="invalid-feedback">
+                                        <img
+                                            v-if="form.receipt_image"
+                                            :src="
+                                                form.receipt_image ??
+                                                '/images/default.jpg'
+                                            "
+                                            :width="100"
+                                        />
+                                        <img
+                                            v-else-if="existing_receipt_image"
+                                            :src="
+                                                existing_receipt_image ??
+                                                '/images/default.jpg'
+                                            "
+                                            :width="100"
+                                        />
+                                        <img
+                                            v-else
+                                            :src="'/images/default.jpg'"
+                                            :width="100"
+                                        />
+                                        <div
+                                            v-if="formErrors.receipt_image"
+                                            class="invalid-feedback"
+                                        >
                                             {{ formErrors.receipt_image[0] }}
                                         </div>
                                     </div>
 
                                     <div class="mt-3">
-                                        <button type="submit" class="btn btn-success" v-if="formStatus == 1" @click="submit">
+                                        <button
+                                            type="submit"
+                                            class="btn btn-success"
+                                            v-if="formStatus == 1"
+                                            @click="submit"
+                                        >
                                             Save
                                         </button>
-                                        <button class="btn btn-success" type="button" disabled v-else>
-                                            Saving <span class="spinner-border spinner-border-sm"></span>
+                                        <button
+                                            class="btn btn-success"
+                                            type="button"
+                                            disabled
+                                            v-else
+                                        >
+                                            Saving
+                                            <span
+                                                class="spinner-border spinner-border-sm"
+                                            ></span>
                                         </button>
                                     </div>
                                 </div>
@@ -503,40 +831,129 @@
                         </div>
                     </div>
                 </div>
-                <button hidden data-bs-toggle="modal" data-bs-target="#customermodal" ref="closeModal"></button>
+                <button
+                    hidden
+                    data-bs-toggle="modal"
+                    data-bs-target="#customermodal"
+                    ref="closeModal"
+                ></button>
             </div>
 
             <!-- Details Modal -->
-            <div class="modal fade" id="viewTransactionModal" tabindex="-1" aria-hidden="true">
+            <div
+                class="modal fade"
+                id="viewTransactionModal"
+                tabindex="-1"
+                aria-hidden="true"
+            >
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Transaction Details</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                            ></button>
                         </div>
                         <div class="modal-body">
                             <table class="table">
                                 <tbody>
-                                    <tr><th>Date</th><td>{{ selectedEntry.transaction_date }}</td></tr>
-                                    <tr><th>Islamic Date</th><td>{{ selectedEntry.islamic_date }}</td></tr>
-                                    <tr><th>Receipt No</th><td>{{ selectedEntry.ref_no }}</td></tr>
-                                    <tr><th>Type</th><td>{{ selectedEntry.income_type ?? selectedEntry.expense_type ?? selectedEntry.advance_type }}</td></tr>
-                                    <tr><th>Method</th><td>{{ selectedEntry.method }}</td></tr>
-                                    <tr><th>Received From</th><td>{{ selectedEntry.received_from }}</td></tr>
-                                    <tr><th>Received By</th><td>{{ selectedEntry.received_by }}</td></tr>
-                                    <tr><th>Cash In</th><td>{{ formatCurrency(selectedEntry.cash_in) }}</td></tr>
-                                    <tr><th>Cash Out</th><td>{{ formatCurrency(selectedEntry.cash_out) }}</td></tr>
-                                    <tr><th>Remarks</th><td>{{ selectedEntry.remarks }}</td></tr>
+                                    <tr>
+                                        <th>Date</th>
+                                        <td>
+                                            {{ selectedEntry.transaction_date }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Islamic Date</th>
+                                        <td>
+                                            {{ selectedEntry.islamic_date }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Receipt No</th>
+                                        <td>{{ selectedEntry.ref_no }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Type</th>
+                                        <td>
+                                            {{
+                                                selectedEntry.income_type ??
+                                                selectedEntry.expense_type ??
+                                                selectedEntry.advance_type
+                                            }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Method</th>
+                                        <td>{{ selectedEntry.method }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Received From</th>
+                                        <td>
+                                            {{ selectedEntry.received_from }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Received By</th>
+                                        <td>{{ selectedEntry.received_by }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Cash In</th>
+                                        <td>
+                                            {{
+                                                formatCurrency(
+                                                    selectedEntry.cash_in
+                                                )
+                                            }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Cash Out</th>
+                                        <td>
+                                            {{
+                                                formatCurrency(
+                                                    selectedEntry.cash_out
+                                                )
+                                            }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Remarks</th>
+                                        <td>{{ selectedEntry.remarks }}</td>
+                                    </tr>
                                     <tr v-if="selectedEntry.receipt_image">
                                         <th>Receipt Image</th>
-                                        <td><img :src="selectedEntry.receipt_image" width="200" @error="setAltImg" /></td>
+                                        <td>
+                                            <img
+                                                :src="
+                                                    selectedEntry.receipt_image
+                                                "
+                                                width="200"
+                                                @error="setAltImg"
+                                            />
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button class="btn btn-primary" @click="printSingleSlip(selectedEntry, selectedIndex)">
+                            <button
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                            >
+                                Close
+                            </button>
+                            <button
+                                class="btn btn-primary"
+                                @click="
+                                    printSingleSlip(
+                                        selectedEntry,
+                                        selectedIndex
+                                    )
+                                "
+                            >
                                 <i class="bi bi-printer me-1"></i> Print
                             </button>
                         </div>
@@ -572,9 +989,20 @@ window.onload = function () {
     window.shareSlip = function () {
         html2canvas(document.getElementById("slipContent")).then((canvas) => {
             canvas.toBlob((blob) => {
-                const file = new File([blob], "TransactionSlip.png", { type: "image/png" });
-                if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                    navigator.share({ title: "Transaction Slip", text: "Here is your receipt", files: [file] }).catch(console.error);
+                const file = new File([blob], "TransactionSlip.png", {
+                    type: "image/png",
+                });
+                if (
+                    navigator.canShare &&
+                    navigator.canShare({ files: [file] })
+                ) {
+                    navigator
+                        .share({
+                            title: "Transaction Slip",
+                            text: "Here is your receipt",
+                            files: [file],
+                        })
+                        .catch(console.error);
                 } else {
                     alert("Your browser doesn't support native sharing.");
                 }
@@ -599,8 +1027,24 @@ export default {
             startDate: "",
             endDate: "",
             filterTransactionType: "",
-            months: ["January","February","March","April","May","June","July","August","September","October","November","December"],
-            years: Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - i),
+            months: [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+            ],
+            years: Array.from(
+                { length: 10 },
+                (_, i) => new Date().getFullYear() - i
+            ),
 
             form: {
                 id: "",
@@ -635,13 +1079,24 @@ export default {
                 { label: "Operating Advance (ادھار)", value: "Advance" },
             ],
             monthsOptions: [
-                { value: 1, label: "January" }, { value: 2, label: "February" }, { value: 3, label: "March" },
-                { value: 4, label: "April" }, { value: 5, label: "May" }, { value: 6, label: "June" },
-                { value: 7, label: "July" }, { value: 8, label: "August" }, { value: 9, label: "September" },
-                { value: 10, label: "October" }, { value: 11, label: "November" }, { value: 12, label: "December" },
+                { value: 1, label: "January" },
+                { value: 2, label: "February" },
+                { value: 3, label: "March" },
+                { value: 4, label: "April" },
+                { value: 5, label: "May" },
+                { value: 6, label: "June" },
+                { value: 7, label: "July" },
+                { value: 8, label: "August" },
+                { value: 9, label: "September" },
+                { value: 10, label: "October" },
+                { value: 11, label: "November" },
+                { value: 12, label: "December" },
             ],
             personsOptions: [],
-            yearsOptions: Array.from({ length: 2050 - 2020 + 1 }, (_, i) => 2020 + i),
+            yearsOptions: Array.from(
+                { length: 2050 - 2020 + 1 },
+                (_, i) => 2020 + i
+            ),
             existing_receipt_image: "",
             FilterErrors: "",
             serachingLoading: false,
@@ -668,16 +1123,27 @@ export default {
             const q = (this.tableQuery || "").toLowerCase().trim();
             if (!q) return this.transactionEntries;
             return this.transactionEntries.filter((e) => {
-                const type = e.income_type || e.expense_type || e.advance_type || "";
+                const type =
+                    e.income_type || e.expense_type || e.advance_type || "";
                 return [
-                    e.transaction_date, e.islamic_date, e.ref_no, type,
-                    e.remarks, e.method, e.received_from, e.received_by,
-                    String(e.cash_in), String(e.cash_out)
+                    e.transaction_date,
+                    e.islamic_date,
+                    e.ref_no,
+                    type,
+                    e.remarks,
+                    e.method,
+                    e.received_from,
+                    e.received_by,
+                    String(e.cash_in),
+                    String(e.cash_out),
                 ].some((v) => (v || "").toString().toLowerCase().includes(q));
             });
         },
         totalPages() {
-            return Math.max(1, Math.ceil(this.filteredEntries.length / this.perPage));
+            return Math.max(
+                1,
+                Math.ceil(this.filteredEntries.length / this.perPage)
+            );
         },
         visibleEntries() {
             const start = (this.currentPage - 1) * this.perPage;
@@ -693,7 +1159,10 @@ export default {
             return (this.currentPage - 1) * this.perPage + 1;
         },
         showingTo() {
-            return Math.min(this.currentPage * this.perPage, this.filteredEntries.length);
+            return Math.min(
+                this.currentPage * this.perPage,
+                this.filteredEntries.length
+            );
         },
     },
     watch: {
@@ -701,7 +1170,8 @@ export default {
             this.currentPage = 1;
         },
         filteredEntries() {
-            if (this.currentPage > this.totalPages) this.currentPage = this.totalPages;
+            if (this.currentPage > this.totalPages)
+                this.currentPage = this.totalPages;
         },
     },
     methods: {
@@ -714,9 +1184,15 @@ export default {
         },
 
         /* --- Pagination buttons --- */
-        goTo(n) { if (n >= 1 && n <= this.totalPages) this.currentPage = n; },
-        goPrev() { if (this.currentPage > 1) this.currentPage--; },
-        goNext() { if (this.currentPage < this.totalPages) this.currentPage++; },
+        goTo(n) {
+            if (n >= 1 && n <= this.totalPages) this.currentPage = n;
+        },
+        goPrev() {
+            if (this.currentPage > 1) this.currentPage--;
+        },
+        goNext() {
+            if (this.currentPage < this.totalPages) this.currentPage++;
+        },
 
         getPakistanDate() {
             const formatter = new Intl.DateTimeFormat("en-CA", {
@@ -738,31 +1214,49 @@ export default {
         fetchTransactionEntries() {
             this.serachingLoading = true;
             this.FilterErrors = "";
-            if (this.selectedFilter === "Monthly" && (!this.selectedMonth || !this.selectedYear)) {
-                this.FilterErrors = this.translate("Please select both Month and Year for the Monthly filter.");
+            if (
+                this.selectedFilter === "Monthly" &&
+                (!this.selectedMonth || !this.selectedYear)
+            ) {
+                this.FilterErrors = this.translate(
+                    "Please select both Month and Year for the Monthly filter."
+                );
                 this.serachingLoading = false;
                 return;
             }
             if (this.selectedFilter === "Yearly" && !this.selectedYear) {
-                this.FilterErrors = this.translate("Please select a Year for the Yearly filter.");
+                this.FilterErrors = this.translate(
+                    "Please select a Year for the Yearly filter."
+                );
                 this.serachingLoading = false;
                 return;
             }
-            if (this.selectedFilter === "Custom" && (!this.startDate || !this.endDate)) {
-                this.FilterErrors = this.translate("Please select both Start Date and End Date for the Custom filter.");
+            if (
+                this.selectedFilter === "Custom" &&
+                (!this.startDate || !this.endDate)
+            ) {
+                this.FilterErrors = this.translate(
+                    "Please select both Start Date and End Date for the Custom filter."
+                );
                 this.serachingLoading = false;
                 return;
             }
 
             const formData = new FormData();
             formData.append("selectedFilter", this.selectedFilter);
-            if (this.selectedMonth) formData.append("selectedMonth", this.selectedMonth);
-            if (this.selectedYear) formData.append("selectedYear", this.selectedYear);
+            if (this.selectedMonth)
+                formData.append("selectedMonth", this.selectedMonth);
+            if (this.selectedYear)
+                formData.append("selectedYear", this.selectedYear);
             if (this.startDate) formData.append("startDate", this.startDate);
             if (this.endDate) formData.append("endDate", this.endDate);
-            if (this.filterTransactionType) formData.append("transaction_type", this.filterTransactionType);
+            if (this.filterTransactionType)
+                formData.append("transaction_type", this.filterTransactionType);
 
-            axios.post(route("api.transaction.fetch"), formData, { headers: { "Content-Type": "multipart/form-data" } })
+            axios
+                .post(route("api.transaction.fetch"), formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                })
                 .then((response) => {
                     this.serachingLoading = false;
                     this.transactionEntries = response.data;
@@ -777,14 +1271,17 @@ export default {
             let balance = 0;
             for (let i = 0; i <= index; i++) {
                 const e = this.transactionEntries[i];
-                balance += (parseFloat(e.cash_in) || 0) - (parseFloat(e.cash_out) || 0);
+                balance +=
+                    (parseFloat(e.cash_in) || 0) -
+                    (parseFloat(e.cash_out) || 0);
             }
             return this.formatCurrency(balance);
         },
         submit() {
-            if (this.form.date) this.form.date = moment(this.form.date).format("YYYY/MM/DD");
+            if (this.form.date)
+                this.form.date = moment(this.form.date).format("YYYY/MM/DD");
             const formData = new FormData();
-            const s = (v) => (v ?? "").toString().trim() === "" ? "" : v;
+            const s = (v) => ((v ?? "").toString().trim() === "" ? "" : v);
 
             formData.append("id", s(this.form.id));
             formData.append("cash_in", s(this.form.cash_in));
@@ -801,13 +1298,19 @@ export default {
             formData.append("process_type", s(this.form.process_type));
             formData.append("received_from", s(this.form.received_from));
             formData.append("received_by", s(this.form.received_by));
-            if (this.form.receipt_image) formData.append("receipt_image", this.form.receipt_image);
+            if (this.form.receipt_image)
+                formData.append("receipt_image", this.form.receipt_image);
 
-            axios.post(route("api.transaction.store"), formData, { headers: { "Content-Type": "multipart/form-data" } })
+            axios
+                .post(route("api.transaction.store"), formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                })
                 .then(() => {
                     this.formStatus = 1;
                     this.fetchTransactionEntries();
-                    toastr.success(this.translate("Transaction entry saved successfully."));
+                    toastr.success(
+                        this.translate("Transaction entry saved successfully.")
+                    );
                     this.$refs.closeModal?.click();
                 })
                 .catch((error) => {
@@ -820,10 +1323,17 @@ export default {
             let runningBalance = 0;
             for (let i = 0; i <= indexForBalance; i++) {
                 const e = this.transactionEntries[i];
-                runningBalance += (parseFloat(e.cash_in) || 0) - (parseFloat(e.cash_out) || 0);
+                runningBalance +=
+                    (parseFloat(e.cash_in) || 0) -
+                    (parseFloat(e.cash_out) || 0);
             }
             const currentDateTime = new Date().toLocaleString("en-US", {
-                day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: true,
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
             });
             const html = `
     <html>
@@ -847,17 +1357,37 @@ export default {
         <div class="center title">Transaction Receipt</div>
         <div class="center">Jamia Darul Uloom Noamaniya</div>
         <div class="dot"></div>
-        <div class="row"><span>Date</span><span>${entry.transaction_date || "-"}</span></div>
-        <div class="row"><span>Islamic Date</span><span>${entry.islamic_date || "-"}</span></div>
-        <div class="row"><span>Receipt No</span><span>${entry.ref_no || "-"}</span></div>
-        <div class="row"><span>Type</span><span>${entry.income_type || entry.expense_type || entry.advance_type || "-"}</span></div>
-        <div class="row"><span>Method</span><span>${entry.method || "-"}</span></div>
-        <div class="row"><span>Received From</span><span>${entry.received_from || "-"}</span></div>
-        <div class="row"><span>Received By</span><span>${entry.received_by || "-"}</span></div>
+        <div class="row"><span>Date</span><span>${
+            entry.transaction_date || "-"
+        }</span></div>
+        <div class="row"><span>Islamic Date</span><span>${
+            entry.islamic_date || "-"
+        }</span></div>
+        <div class="row"><span>Receipt No</span><span>${
+            entry.ref_no || "-"
+        }</span></div>
+        <div class="row"><span>Type</span><span>${
+            entry.income_type || entry.expense_type || entry.advance_type || "-"
+        }</span></div>
+        <div class="row"><span>Method</span><span>${
+            entry.method || "-"
+        }</span></div>
+        <div class="row"><span>Received From</span><span>${
+            entry.received_from || "-"
+        }</span></div>
+        <div class="row"><span>Received By</span><span>${
+            entry.received_by || "-"
+        }</span></div>
         <div class="dot"></div>
-        <div class="row"><span>Cash In</span><span>${this.formatCurrency(entry.cash_in || 0)}</span></div>
-        <div class="row"><span>Cash Out</span><span>${this.formatCurrency(entry.cash_out || 0)}</span></div>
-        <div class="row"><span>Balance (till this)</span><span>${this.formatCurrency(runningBalance)}</span></div>
+        <div class="row"><span>Cash In</span><span>${this.formatCurrency(
+            entry.cash_in || 0
+        )}</span></div>
+        <div class="row"><span>Cash Out</span><span>${this.formatCurrency(
+            entry.cash_out || 0
+        )}</span></div>
+        <div class="row"><span>Balance (till this)</span><span>${this.formatCurrency(
+            runningBalance
+        )}</span></div>
         <div class="dot"></div>
         <div>Remarks: ${entry.remarks || "-"}</div>
         <div class="center mt8">Printed: ${currentDateTime}</div>
@@ -870,22 +1400,42 @@ export default {
             w.document.close();
         },
         formatCurrency(value) {
-            return new Intl.NumberFormat("en-PK", { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value || 0);
+            return new Intl.NumberFormat("en-PK", {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+            }).format(value || 0);
         },
         clearFields() {
             this.form = {
-                id: "", remarks: "", cash_in: "", cash_out: "", date: "", receipt_image: "",
-                islamic_date: "", ref_no: "", method: "", expense_type: "", income_type: "", advance_type: "",
-                process_type: "", person: "", business_type: "", received_from: "", received_by: "",
+                id: "",
+                remarks: "",
+                cash_in: "",
+                cash_out: "",
+                date: "",
+                receipt_image: "",
+                islamic_date: "",
+                ref_no: "",
+                method: "",
+                expense_type: "",
+                income_type: "",
+                advance_type: "",
+                process_type: "",
+                person: "",
+                business_type: "",
+                received_from: "",
+                received_by: "",
             };
             this.existing_receipt_image = "";
             this.formErrors = [];
         },
         showEntry(entry_id) {
-            axios.get(route("api.transaction.show", entry_id))
+            axios
+                .get(route("api.transaction.show", entry_id))
                 .then((response) => {
-                    if (response.data.process_type === "Income") this.pluckIncomeTypes();
-                    if (response.data.process_type === "Expense") this.pluckExpenseTypes();
+                    if (response.data.process_type === "Income")
+                        this.pluckIncomeTypes();
+                    if (response.data.process_type === "Expense")
+                        this.pluckExpenseTypes();
 
                     this.form = {
                         id: response.data.id,
@@ -912,7 +1462,8 @@ export default {
                 });
         },
         deleteThis(id) {
-            axios.delete(route("api.transaction.delete", id))
+            axios
+                .delete(route("api.transaction.delete", id))
                 .then(() => {
                     this.fetchTransactionEntries();
                     toastr.success("Transaction entry deleted successfully.");
@@ -927,77 +1478,132 @@ export default {
             if (processType == "Advance") this.pluckAdvanceTypes();
         },
         pluckIncomeTypes() {
-            axios.get(route("api.income.pluck"))
-                .then((response) => { this.IncomeTypesOptions = response.data; })
-                .catch((error) => { console.error("Error fetching income types:", error); });
+            axios
+                .get(route("api.income.pluck"))
+                .then((response) => {
+                    this.IncomeTypesOptions = response.data;
+                })
+                .catch((error) => {
+                    console.error("Error fetching income types:", error);
+                });
         },
         pluckExpenseTypes() {
-            axios.get(route("api.expense.pluck"))
-                .then((response) => { this.ExpenseTypesOptions = response.data; })
-                .catch((error) => { console.error("Error fetching expense types:", error); });
+            axios
+                .get(route("api.expense.pluck"))
+                .then((response) => {
+                    this.ExpenseTypesOptions = response.data;
+                })
+                .catch((error) => {
+                    console.error("Error fetching expense types:", error);
+                });
         },
         pluckAdvanceTypes() {
-            axios.get(route("api.advance.pluck"))
-                .then((response) => { this.AdvanceTypesOptions = response.data; })
-                .catch((error) => { console.error("Error fetching advance types:", error); });
+            axios
+                .get(route("api.advance.pluck"))
+                .then((response) => {
+                    this.AdvanceTypesOptions = response.data;
+                })
+                .catch((error) => {
+                    console.error("Error fetching advance types:", error);
+                });
         },
         pluckPersons() {
-            axios.get(route("api.persons.pluck"))
-                .then((response) => { this.personsOptions = response.data; })
-                .catch((error) => { console.error(error); });
+            axios
+                .get(route("api.persons.pluck"))
+                .then((response) => {
+                    this.personsOptions = response.data;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         },
         exportToExcel() {
             this.excelBtnLoader = true;
             const formData = new FormData();
             formData.append("selectedFilter", this.selectedFilter);
-            if (this.selectedMonth) formData.append("selectedMonth", this.selectedMonth);
-            if (this.selectedYear) formData.append("selectedYear", this.selectedYear);
+            if (this.selectedMonth)
+                formData.append("selectedMonth", this.selectedMonth);
+            if (this.selectedYear)
+                formData.append("selectedYear", this.selectedYear);
             if (this.startDate) formData.append("startDate", this.startDate);
             if (this.endDate) formData.append("endDate", this.endDate);
-            if (this.filterTransactionType) formData.append("transaction_type", this.filterTransactionType);
+            if (this.filterTransactionType)
+                formData.append("transaction_type", this.filterTransactionType);
 
-            axios.post(route("download-excel"), formData, {
-                headers: { "Content-Type": "multipart/form-data" }, responseType: "blob",
-            }).then((response) => {
-                this.excelBtnLoader = false;
-                const url = window.URL.createObjectURL(new Blob([response.data]));
-                const a = document.createElement("a");
-                a.href = url; a.download = "transaction_report.xlsx";
-                document.body.appendChild(a); a.click(); document.body.removeChild(a);
-            }).catch((error) => {
-                this.excelBtnLoader = false;
-                toastr.error(error.response?.data?.message || "Error generating Excel");
-            });
+            axios
+                .post(route("download-excel"), formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                    responseType: "blob",
+                })
+                .then((response) => {
+                    this.excelBtnLoader = false;
+                    const url = window.URL.createObjectURL(
+                        new Blob([response.data])
+                    );
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = "transaction_report.xlsx";
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                })
+                .catch((error) => {
+                    this.excelBtnLoader = false;
+                    toastr.error(
+                        error.response?.data?.message ||
+                            "Error generating Excel"
+                    );
+                });
         },
         exportToPDF() {
             this.pdfBtnLoader = true;
             const formData = new FormData();
             formData.append("selectedFilter", this.selectedFilter);
-            if (this.selectedMonth) formData.append("selectedMonth", this.selectedMonth);
-            if (this.selectedYear) formData.append("selectedYear", this.selectedYear);
+            if (this.selectedMonth)
+                formData.append("selectedMonth", this.selectedMonth);
+            if (this.selectedYear)
+                formData.append("selectedYear", this.selectedYear);
             if (this.startDate) formData.append("startDate", this.startDate);
             if (this.endDate) formData.append("endDate", this.endDate);
-            if (this.filterTransactionType) formData.append("transaction_type", this.filterTransactionType);
+            if (this.filterTransactionType)
+                formData.append("transaction_type", this.filterTransactionType);
 
-            axios.post(route("download-pdf"), formData, {
-                headers: { "Content-Type": "multipart/form-data" }, responseType: "blob",
-            }).then((response) => {
-                const link = document.createElement("a");
-                const url = window.URL.createObjectURL(new Blob([response.data]));
-                link.href = url; link.setAttribute("download", "TransactionReport.pdf");
-                document.body.appendChild(link); link.click(); document.body.removeChild(link);
-                this.pdfBtnLoader = false;
-            }).catch((error) => {
-                this.pdfBtnLoader = false;
-                toastr.error(error.response?.data?.message || "Error generating PDF");
-            });
+            axios
+                .post(route("download-pdf"), formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                    responseType: "blob",
+                })
+                .then((response) => {
+                    const link = document.createElement("a");
+                    const url = window.URL.createObjectURL(
+                        new Blob([response.data])
+                    );
+                    link.href = url;
+                    link.setAttribute("download", "TransactionReport.pdf");
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    this.pdfBtnLoader = false;
+                })
+                .catch((error) => {
+                    this.pdfBtnLoader = false;
+                    toastr.error(
+                        error.response?.data?.message || "Error generating PDF"
+                    );
+                });
         },
         formatDate(date) {
             const d = new Date(date);
-            return d.toLocaleDateString("en-US", { day: "2-digit", month: "short", year: "numeric" });
+            return d.toLocaleDateString("en-US", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+            });
         },
         warning() {
-            toastr.warning("This feature is not added yet! Working in progress.");
+            toastr.warning(
+                "This feature is not added yet! Working in progress."
+            );
         },
         croppedImgPassToForm(img) {
             this.form.receipt_image = img;
@@ -1008,18 +1614,38 @@ export default {
         /* Main list print — kept the same as you asked */
         printSlip() {
             let printWindow = window.open("", "_blank");
-            const getMonthName = (m) => new Date(2025, m - 1, 1).toLocaleString("en-US", { month: "long" });
+            const getMonthName = (m) =>
+                new Date(2025, m - 1, 1).toLocaleString("en-US", {
+                    month: "long",
+                });
             let currentDateTime = new Date().toLocaleString("en-US", {
-                day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: true,
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
             });
             let title = this.translate("All Transactions List");
             if (this.selectedFilter === "Monthly") {
                 const monthName = getMonthName(this.selectedMonth);
-                title = `${this.translate("Transactions for")} ${monthName} ${this.selectedYear}`;
+                title = `${this.translate("Transactions for")} ${monthName} ${
+                    this.selectedYear
+                }`;
             } else if (this.selectedFilter === "Yearly" && this.selectedYear) {
-                title = `${this.translate("Transactions for the Year")} ${this.selectedYear}`;
-            } else if (this.selectedFilter === "Custom" && this.startDate && this.endDate) {
-                title = `${this.translate("Transactions from")} ${this.formatDate(this.startDate)} ${this.translate("to")} ${this.formatDate(this.endDate)}`;
+                title = `${this.translate("Transactions for the Year")} ${
+                    this.selectedYear
+                }`;
+            } else if (
+                this.selectedFilter === "Custom" &&
+                this.startDate &&
+                this.endDate
+            ) {
+                title = `${this.translate(
+                    "Transactions from"
+                )} ${this.formatDate(this.startDate)} ${this.translate(
+                    "to"
+                )} ${this.formatDate(this.endDate)}`;
             }
 
             printWindow.document.write(`
@@ -1055,29 +1681,44 @@ export default {
                     </tr>
                 </thead>
                 <tbody>
-                    ${this.transactionEntries.map((entry, index) => `
+                    ${this.transactionEntries
+                        .map(
+                            (entry, index) => `
                         <tr>
                             <td>${index + 1}</td>
                             <td>${entry.transaction_date}</td>
                             <td>${entry.islamic_date}</td>
                             <td>${entry.ref_no}</td>
-                            <td>${entry.income_type ?? entry.expense_type ?? entry.advance_type}</td>
+                            <td>${
+                                entry.income_type ??
+                                entry.expense_type ??
+                                entry.advance_type
+                            }</td>
                             <td>${this.formatCurrency(entry.cash_in) ?? 0}</td>
                             <td>${this.formatCurrency(entry.cash_out) ?? 0}</td>
                             <td>${this.calculateBalance(index)}</td>
                         </tr>
-                    `).join("")}
+                    `
+                        )
+                        .join("")}
                 </tbody>
             </table>
-            <div class="footer">${this.translate("Printed")}: ${currentDateTime}</div>
+            <div class="footer">${this.translate(
+                "Printed"
+            )}: ${currentDateTime}</div>
         </body>
         </html>`);
             printWindow.document.close();
-            printWindow.onload = function () { printWindow.print(); printWindow.close(); };
+            printWindow.onload = function () {
+                printWindow.print();
+                printWindow.close();
+            };
         },
         editTransaction() {},
         convertToHijri(date) {
-            this.form.islamic_date = date ? moment(date).format("iYYYY/iM/iD") : "";
+            this.form.islamic_date = date
+                ? moment(date).format("iYYYY/iM/iD")
+                : "";
         },
         viewEntry(entry, idx) {
             this.selectedEntry = entry || {};
@@ -1089,7 +1730,15 @@ export default {
 
 <style scoped>
 @import "@vueform/multiselect/themes/default.css";
-.invalid-bg { border-color: #f8d4d4; background-color: #f8d4d4; }
-.invalid-feedback { color: red; font-size: 0.875rem; }
-.c-filter .multiselect { width: 200px !important; }
+.invalid-bg {
+    border-color: #f8d4d4;
+    background-color: #f8d4d4;
+}
+.invalid-feedback {
+    color: red;
+    font-size: 0.875rem;
+}
+.c-filter .multiselect {
+    width: 200px !important;
+}
 </style>
