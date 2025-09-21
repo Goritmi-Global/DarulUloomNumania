@@ -1,26 +1,38 @@
 <template>
     <main id="main" class="main">
         <!-- questoin Hero Section -->
-
-        <section class="hero-section text-center text-white py-5">
-            <div class="container">
-                <h1 class="display-4 fw-bold">
-                    {{ translate("Ask a Question") }}
-                </h1>
-                <p class="lead">
-                    {{
-                        translate(
-                            "Have a question? Send us a message, and we will respond as soon as possible"
-                        )
-                    }}
-                </p>
-                <a
-                    href="#ask-question-section"
-                    class="btn btn-light btn-lg mt-3 shadow rounded-pill"
-                >
-                    {{ translate("Ask Question") }}
-                </a>
+        <section class="hero-section text-white d-flex align-items-center">
+            <div class="container py-5">
+                <div class="row justify-content-center text-center">
+                    <div class="col-xl-8 col-lg-9">
+                        <span
+                            class="badge badge-soft-white rounded-pill px-3 py-2 mb-3"
+                        >
+                            <i class=""></i>{{ translate("Have a question?") }}
+                        </span>
+                        <h1 class="display-5 fw-bold mb-2 lh-sm">
+                            {{ translate("Ask a Question") }}
+                        </h1>
+                        <p class="lead text-white-80 mb-3">
+                            {{
+                                translate(
+                                    "Have a question? Send us a message, and we will respond as soon as possible"
+                                )
+                            }}
+                        </p>
+                        <a
+                            href="#ask-question-section"
+                            class="btn btn-light btn-lg mt-1 shadow rounded-pill px-4 hero-cta"
+                        >
+                            <i class="bi bi-chat-dots me-2"></i
+                            >{{ translate("Ask Question") }}
+                        </a>
+                    </div>
+                </div>
             </div>
+            <!-- Decorative blur orbs -->
+            <div class="hero-orb orb-1"></div>
+            <div class="hero-orb orb-2"></div>
         </section>
 
         <!-- Search Bar -->
