@@ -72,7 +72,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
          
         Route::get('/operating/advance', [IncomeExpenseController::class, 'operating_advance_index'])->name('operating.advance');
 
-
+Route::get('/operating-advance/{id}', [IncomeExpenseController::class, 'operating_advance_show'])
+    ->whereUuid('id')
+    ->name('operating_advance.show');
 
         // 🏫 Admission Officer Routes
         Route::get('/students', [StudentsController::class, 'index'])->name('students');

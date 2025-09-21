@@ -43,7 +43,16 @@
                             <tbody>
                                 <tr v-for="(advance, index) in expenseType" :key="advance.id">
                                     <th scope="row">{{ index + 1 }}</th>
-                                    <td>{{ advance.name }}</td>
+                                    <td>
+  <Link
+    :href="route('operating_advance.show', advance.id)"
+    class="text-primary text-decoration-underline name-link"
+    title="View details"
+  >
+    {{ advance.name }}
+  </Link>
+</td>
+
                                     <td>{{ advance.designation }}</td>
                                     <td>{{ advance.contact }}</td>
                                     <td>
