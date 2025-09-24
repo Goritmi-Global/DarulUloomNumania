@@ -49,6 +49,16 @@
                     {{ translate("Multiple Expense") }}
                 </button>
 
+                    <button class="btn btn-success mt-3 ms-2" data-bs-toggle="modal" ref="openTransactionModal"
+                    data-bs-target="#transactionmodal" @click="
+                        clearFields();
+                    form.process_type = 'Salary';
+                    pluckExpIncTypes('Salary');
+                    ">
+                    <i class="bi bi-cash-coin"></i>
+                    {{ translate("Salaries") }}
+                </button>
+
                 <button class="btn btn-success mt-3 ms-2" data-bs-toggle="modal" ref="openTransactionModal"
                     data-bs-target="#transactionmodal" @click="
                         clearFields();
@@ -194,6 +204,7 @@
                                             entry.income_type ??
                                             entry.expense_type ??
                                             entry.advance_type
+                                            
                                         }}
                                     </td>
                                     <td>
@@ -635,6 +646,20 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-12 col-md-6" v-if="form.process_type === 'Salary'">
+                                        <label>{{
+                                            translate("Teachers")
+                                            }}</label>
+                                        <Multiselect v-model="form.advance_type" :options="teachersData"
+                                            :searchable="true" :class="{
+                                                'invalid-bg':
+                                                    formErrors.advance_type,
+                                            }" />
+                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.advance_type">
+                                            {{ formErrors.advance_type[0] }}
+                                        </div>
+                                    </div>
+
                                     <div class="col-12 col-md-6" v-if="form.process_type === 'Advance'">
                                         <label>{{
                                             translate("Advance Type")
@@ -683,7 +708,8 @@
                                     <div class="col-md-6 col-12" v-if="
                                         form.process_type == 'Expense' ||
                                         form.process_type == 'Lend' ||
-                                        form.process_type == 'Advance'
+                                        form.process_type == 'Advance' ||
+                                        form.process_type == 'Salary'
                                     ">
                                         <label for="cash_out">{{
                                             translate("Cash Out")
@@ -1057,11 +1083,13 @@ export default {
             ExpenseTypesOptions: [],
             IncomeTypesOptions: [],
             AdvanceTypesOptions: [],
+            teachersData: [],
             methodTypesOpions: ["Bank", "Cash"],
             processTypeOptions: [
                 { label: "Expense (خرچ)", value: "Expense" },
                 { label: "Income (آمدنی)", value: "Income" },
                 { label: "Operating Advance (ادھار)", value: "Advance" },
+                { label: "Salaries", value: "Salary" },
             ],
             monthsOptions: [
                 { value: 1, label: "January" },
@@ -1553,6 +1581,7 @@ Remarks: ${entry.remarks || "-"}
             if (processType == "Income") this.pluckIncomeTypes();
             if (processType == "Expense") this.pluckExpenseTypes();
             if (processType == "Advance") this.pluckAdvanceTypes();
+            if (processType == "Salary") this.pluckTeacher();
         },
         pluckIncomeTypes() {
             axios
@@ -1579,11 +1608,24 @@ Remarks: ${entry.remarks || "-"}
                 .get(route("api.advance.pluck"))
                 .then((response) => {
                     this.AdvanceTypesOptions = response.data;
+                    console.log(this.AdvanceTypesOptions);
                 })
                 .catch((error) => {
                     console.error("Error fetching advance types:", error);
                 });
         },
+
+         pluckTeacher() {
+            axios
+                .get(route("api.teacher.pluck"))
+                .then((response) => {
+                    this.teachersData = response.data;
+                })
+                .catch((error) => {
+                    console.error("Error fetching advance types:", error);
+                });
+        },
+
         pluckPersons() {
             axios
                 .get(route("api.persons.pluck"))

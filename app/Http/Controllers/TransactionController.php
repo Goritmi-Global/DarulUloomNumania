@@ -13,6 +13,8 @@ use App\Models\MoneyTakenFrom;
 use App\Models\OperatingAdvance;
 use App\Models\OperatingAdvanceEnteries;
 use App\Models\Person;
+use App\Models\Salary;
+use App\Models\Teacher;
 use App\Models\Transaction;
 use App\Models\Upload;
 use Carbon\Carbon;
@@ -92,6 +94,15 @@ class TransactionController extends Controller
                 }
             }
 
+            if ($transaction->transaction_type == 'Salary') {
+                $salary = Salary::where('transaction_id', $transaction->id)->first();
+                if ($salary) {
+                    // dd("Test",$advance);
+                    $advance_type = Teacher::find($salary->advance_type_id);
+                    $transaction->expense_type = $advance_type ? $advance_type->name.' (Salary)' : 'Unknown Advance';
+                }
+            }
+
             // Check if the transaction has Lend
             if ($transaction->transaction_type == 'Lend') {
                 $moneyGiven = MoneyGivenTo::where('transaction_id', $transaction->id)->first();
@@ -132,7 +143,7 @@ class TransactionController extends Controller
     // store multiple Transactions
     public function storeMultiple(Request $request)
     {
-        
+
         $request->validate([
             'transactions' => 'required|array|min:1',
             'transactions.*.cash_out' => 'nullable|numeric',
@@ -345,6 +356,23 @@ class TransactionController extends Controller
             $transaction->cash_out = null; // Ensure cash_out is reset when switching
 
             $income->save();
+        }
+
+        if ($request->process_type == 'Salary') {
+            $salary = Salary::where('transaction_id', $transaction->id)->first();
+            if (! $salary) {
+                $salary = new Salary;
+            }
+
+            $salary->transaction_id = $transaction->id;
+            $salary->advance_type_id = $request->advance_type ?? null;
+            $salary->transaction_date = $request->date;
+            $salary->amount = $request->cash_out;
+
+            $transaction->cash_out = $request->cash_out;
+            $transaction->cash_in = null;
+
+            $salary->save();
         }
         // Handle Operating Advance
         if ($request->process_type == 'Advance') {

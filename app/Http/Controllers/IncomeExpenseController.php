@@ -13,6 +13,7 @@ use App\Models\BusinessType;
 use App\Models\Person;
 use App\Models\OperatingAdvance;
 use App\Models\OperatingAdvanceEnteries;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\DB;
 
 class IncomeExpenseController extends Controller
@@ -125,6 +126,11 @@ class IncomeExpenseController extends Controller
     {
         $advance = OperatingAdvance::pluck('name', 'id');
         return response()->json($advance);
+    }
+
+    public function pluckTeacher(){
+        $teacher = Teacher::pluck('name', 'id');
+        return response()->json($teacher);
     }
 
     public function pluckIncome()
