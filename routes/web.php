@@ -16,6 +16,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\operatingAdvanceController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -86,6 +87,13 @@ Route::get('/operating-advance/{id}', [IncomeExpenseController::class, 'operatin
         Route::get('/download/pdf/{student_id}/{slip_id}', [StudentsController::class, 'download_student_enrollment_pdf'])->name('download.pdf');
         Route::get('/print/pdf/{student_id}/{slip_id}', [StudentsController::class, 'print_student_enrollment_pdf'])->name('print.pdf');
         Route::get('/student/details/pdf/print/{student_id}/{process}', [StudentsController::class, 'download_print_student_details_pdf'])->name('student.details.pdf.print');
+
+
+        // Routes for Teacher   
+        Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers');
+        Route::get('/teachers/{id}', [TeacherController::class, 'showTeacherDeatails'])->name('teachers.show');
+
+
 
         // 📚 Iftah Manager Routes
         Route::get('/introduction', [IntroductionController::class, 'index'])->name('introduction');

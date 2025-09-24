@@ -13,6 +13,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\QuestionAnswerController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +62,13 @@ Route::middleware(['web'])->group(function () {
     Route::post('/students/update-status', [StudentsController::class, 'updateStatus'])->name('api.students.updateStatus');
      
     Route::delete('/students/delete/{id}', [StudentsController::class, 'delete'])->name('api.students.delete');
+
+
+    // teachers Routes
+     Route::post('/teachers/store', [TeacherController::class, 'store'])->name('api.teachers.store');
+     Route::get('/teachers/fetch', [TeacherController::class, 'fetch'])->name('api.teachers.fetch'); 
+     Route::get('/teachers/{id}', [TeacherController::class, 'show'])->name('api.teachers.show');
+   
                                                                                                                           // Cashbook routes
     Route::post('/transaction/fetch', [TransactionController::class, 'fetch'])->name('api.transaction.fetch');            // Fetch all transaction entries
     Route::post('/transaction/store', [TransactionController::class, 'store'])->name('api.transaction.store');            // Create or update a transaction entry

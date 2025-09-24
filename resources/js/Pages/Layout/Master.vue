@@ -201,6 +201,19 @@
           </ul>
         </li>
 
+
+        <!-- Teachers  -->
+
+
+         <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
+          <a class="nav-link" :href="'/teachers'" :class="{ active: isActive('/teachers') }">
+            <i class="bi bi-people-fill"></i>
+            <span>{{ translate("Teachers") }}</span>
+          </a>
+        </li>
+
+         
+
         <!-- Darul Iftah -->
         <li
           class="nav-item"
