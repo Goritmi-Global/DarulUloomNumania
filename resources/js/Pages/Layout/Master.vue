@@ -212,6 +212,14 @@
           </a>
         </li>
 
+
+        <!-- Session Module -->
+           <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
+          <a class="nav-link" :href="'/sessions'" :class="{ active: isActive('/sessions') }">
+            <i class="bi bi-people-fill"></i>
+            <span>{{ translate("Sessions") }}</span>
+          </a>
+        </li>
          
 
         <!-- Darul Iftah -->

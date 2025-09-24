@@ -16,6 +16,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\operatingAdvanceController;
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
@@ -92,6 +93,10 @@ Route::get('/operating-advance/{id}', [IncomeExpenseController::class, 'operatin
         // Routes for Teacher   
         Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers');
         Route::get('/teachers/{id}', [TeacherController::class, 'showTeacherDeatails'])->name('teachers.show');
+
+
+        // Route for Session
+         Route::get('/sessions', [SessionController::class, 'index'])->name('sessions');
 
 
 
