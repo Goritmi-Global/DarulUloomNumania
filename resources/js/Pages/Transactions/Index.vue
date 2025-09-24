@@ -8,7 +8,7 @@
                         <li class="breadcrumb-item">
                             <a href="/dashboard">{{
                                 translate("Darul Oloom")
-                            }}</a>
+                                }}</a>
                         </li>
                         <li class="breadcrumb-item">
                             {{ translate("Transaction") }}
@@ -20,45 +20,41 @@
                 </nav>
             </div>
             <div>
-                <button
-                    class="btn btn-success mt-3"
-                    data-bs-toggle="modal"
-                    ref="openTransactionModal"
-                    data-bs-target="#transactionmodal"
-                    @click="
+                <button class="btn btn-success mt-3" data-bs-toggle="modal" ref="openTransactionModal"
+                    data-bs-target="#transactionmodal" @click="
                         clearFields();
-                        form.process_type = ['Income'];
-                        pluckExpIncTypes('Income');
-                    "
-                >
+                    form.process_type = ['Income'];
+                    pluckExpIncTypes('Income');
+                    ">
                     <i class="bi bi-arrow-down-circle"></i>
                     {{ translate("Income") }}
                 </button>
-                <button
-                    class="btn btn-success mt-3 ms-2"
-                    data-bs-toggle="modal"
-                    ref="openTransactionModal"
-                    data-bs-target="#transactionmodal"
-                    @click="
+                <button class="btn btn-success mt-3 ms-2" data-bs-toggle="modal" ref="openTransactionModal"
+                    data-bs-target="#transactionmodal" @click="
                         clearFields();
-                        form.process_type = ['Expense'];
-                        pluckExpIncTypes('Expense');
-                    "
-                >
+                    form.process_type = ['Expense'];
+                    pluckExpIncTypes('Expense');
+                    ">
                     <i class="bi bi-arrow-up-circle"></i>
                     {{ translate("Expense") }}
                 </button>
-                <button
-                    class="btn btn-success mt-3 ms-2"
-                    data-bs-toggle="modal"
-                    ref="openTransactionModal"
-                    data-bs-target="#transactionmodal"
-                    @click="
+
+                <button class="btn btn-success mt-3 ms-2" data-bs-toggle="modal" ref="openTransactionModal"
+                    data-bs-target="#multipleTransactionModal" @click="
                         clearFields();
-                        form.process_type = 'Advance';
-                        pluckExpIncTypes('Advance');
-                    "
-                >
+                    form.process_type = ['Expense'];
+                    pluckExpIncTypes('Expense');
+                    ">
+                    <i class="bi bi-arrow-up-circle"></i>
+                    {{ translate("Multiple Expense") }}
+                </button>
+
+                <button class="btn btn-success mt-3 ms-2" data-bs-toggle="modal" ref="openTransactionModal"
+                    data-bs-target="#transactionmodal" @click="
+                        clearFields();
+                    form.process_type = 'Advance';
+                    pluckExpIncTypes('Advance');
+                    ">
                     <i class="bi bi-cash-coin"></i>
                     {{ translate("Advance") }}
                 </button>
@@ -68,68 +64,41 @@
         <section class="section">
             <div class="card">
                 <div class="card-body">
-                    <h5
-                        class="card-title theme-text-color"
-                        :class="{
-                            'rtl-text':
-                                $page.props.default_language === 'PK' ||
-                                $page.props.default_language === 'SA',
-                        }"
-                    >
+                    <h5 class="card-title theme-text-color" :class="{
+                        'rtl-text':
+                            $page.props.default_language === 'PK' ||
+                            $page.props.default_language === 'SA',
+                    }">
                         {{ translate("All Transaction Entries") }}
                     </h5>
 
                     <!-- Top right tools -->
-                    <div
-                        class="d-flex justify-content-between align-items-center gap-2 p-2"
-                    >
-                        <input
-                            v-model.trim="tableQuery"
-                            type="text"
-                            class="form-control"
-                            style="max-width: 260px"
-                            :placeholder="
-                                translate('Global search in table...')
-                            "
-                        />
+                    <div class="d-flex justify-content-between align-items-center gap-2 p-2">
+                        <input v-model.trim="tableQuery" type="text" class="form-control" style="max-width: 260px"
+                            :placeholder="translate('Global search in table...')
+                                " />
                         <div class="dropdown">
-                            <button
-                                class="btn btn-light border dropdown-toggle"
-                                data-bs-toggle="dropdown"
-                            >
+                            <button class="btn btn-light border dropdown-toggle" data-bs-toggle="dropdown">
                                 {{ translate("Export Options") }}
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <a
-                                        class="dropdown-item d-flex align-items-center"
-                                        href="#"
-                                        @click.prevent="exportToExcel"
-                                    >
-                                        <i
-                                            class="bi bi-file-earmark-excel me-2 text-success"
-                                        ></i>
+                                    <a class="dropdown-item d-flex align-items-center" href="#"
+                                        @click.prevent="exportToExcel">
+                                        <i class="bi bi-file-earmark-excel me-2 text-success"></i>
                                         {{ translate("Export Excel") }}
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        class="dropdown-item d-flex align-items-center"
-                                        href="#"
-                                        @click.prevent="exportToPDF"
-                                    >
-                                        <i
-                                            class="bi bi-file-earmark-pdf me-2 text-danger"
-                                        ></i>
+                                    <a class="dropdown-item d-flex align-items-center" href="#"
+                                        @click.prevent="exportToPDF">
+                                        <i class="bi bi-file-earmark-pdf me-2 text-danger"></i>
                                         {{ translate("Export PDF") }}
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        class="dropdown-item d-flex align-items-center"
-                                        href="#"
-                                        @click.prevent="printSlip"
-                                    >
+                                    <a class="dropdown-item d-flex align-items-center" href="#"
+                                        @click.prevent="printSlip">
                                         <i class="bi bi-printer me-2"></i>
                                         {{ translate("Print List") }}
                                     </a>
@@ -143,106 +112,51 @@
                         <div class="d-flex justify-content-between c-filter">
                             <div class="d-flex align-items-center gap-1">
                                 <div class="col-auto">
-                                    <Multiselect
-                                        v-model="selectedFilter"
-                                        :options="[
-                                            'Monthly',
-                                            'Yearly',
-                                            'Custom',
-                                        ]"
-                                        :searchable="true"
-                                        :placeholder="translate('Filter By')"
-                                        @clear="fetchTransactionEntries"
-                                    />
+                                    <Multiselect v-model="selectedFilter" :options="[
+                                        'Monthly',
+                                        'Yearly',
+                                        'Custom',
+                                    ]" :searchable="true" :placeholder="translate('Filter By')"
+                                        @clear="fetchTransactionEntries" />
                                 </div>
 
-                                <div
-                                    class="col-auto d-flex gap-2"
-                                    v-if="selectedFilter === 'Monthly'"
-                                >
+                                <div class="col-auto d-flex gap-2" v-if="selectedFilter === 'Monthly'">
                                     <div class="col-auto">
-                                        <Multiselect
-                                            v-model="selectedYear"
-                                            :options="yearsOptions"
-                                            :searchable="true"
-                                            @clear="fetchTransactionEntries"
-                                            :placeholder="
-                                                translate('Select Year')
-                                            "
-                                        />
+                                        <Multiselect v-model="selectedYear" :options="yearsOptions" :searchable="true"
+                                            @clear="fetchTransactionEntries" :placeholder="translate('Select Year')
+                                                " />
                                     </div>
                                     <div class="col-auto">
-                                        <Multiselect
-                                            v-model="selectedMonth"
-                                            :options="monthsOptions"
-                                            :searchable="true"
-                                            @clear="fetchTransactionEntries"
-                                            :placeholder="
-                                                translate('Select Month')
-                                            "
-                                        />
+                                        <Multiselect v-model="selectedMonth" :options="monthsOptions" :searchable="true"
+                                            @clear="fetchTransactionEntries" :placeholder="translate('Select Month')
+                                                " />
                                     </div>
                                 </div>
 
-                                <div
-                                    class="col-auto"
-                                    v-if="selectedFilter === 'Yearly'"
-                                >
-                                    <Multiselect
-                                        v-model="selectedYear"
-                                        :options="yearsOptions"
-                                        :searchable="true"
-                                        @clear="fetchTransactionEntries"
-                                        placeholder="Select Year"
-                                    />
+                                <div class="col-auto" v-if="selectedFilter === 'Yearly'">
+                                    <Multiselect v-model="selectedYear" :options="yearsOptions" :searchable="true"
+                                        @clear="fetchTransactionEntries" placeholder="Select Year" />
                                 </div>
 
-                                <div
-                                    class="col-auto d-flex gap-2"
-                                    v-if="selectedFilter === 'Custom'"
-                                >
-                                    <input
-                                        type="date"
-                                        class="form-control"
-                                        v-model="startDate"
-                                        :class="{
-                                            'invalid-bg': formErrors.startDate,
-                                        }"
-                                        placeholder="Start Date"
-                                    />
-                                    <input
-                                        type="date"
-                                        class="form-control"
-                                        v-model="endDate"
-                                        :class="{
-                                            'invalid-bg': formErrors.endDate,
-                                        }"
-                                        :placeholder="translate('End Date')"
-                                    />
+                                <div class="col-auto d-flex gap-2" v-if="selectedFilter === 'Custom'">
+                                    <input type="date" class="form-control" v-model="startDate" :class="{
+                                        'invalid-bg': formErrors.startDate,
+                                    }" placeholder="Start Date" />
+                                    <input type="date" class="form-control" v-model="endDate" :class="{
+                                        'invalid-bg': formErrors.endDate,
+                                    }" :placeholder="translate('End Date')" />
                                 </div>
 
                                 <div class="col-auto">
-                                    <Multiselect
-                                        v-model="filterTransactionType"
-                                        :options="processTypeOptions"
-                                        :placeholder="
-                                            translate('Filter By Type')
-                                        "
-                                        :searchable="true"
-                                        @clear="fetchTransactionEntries"
-                                    />
+                                    <Multiselect v-model="filterTransactionType" :options="processTypeOptions"
+                                        :placeholder="translate('Filter By Type')
+                                            " :searchable="true" @clear="fetchTransactionEntries" />
                                 </div>
 
                                 <div class="col-auto">
-                                    <button
-                                        @click="fetchTransactionEntries"
-                                        class="btn btn-success"
-                                        :disabled="serachingLoading"
-                                    >
-                                        <span
-                                            v-if="serachingLoading"
-                                            class="spinner-border spinner-border-sm"
-                                        ></span>
+                                    <button @click="fetchTransactionEntries" class="btn btn-success"
+                                        :disabled="serachingLoading">
+                                        <span v-if="serachingLoading" class="spinner-border spinner-border-sm"></span>
                                         <i v-else class="bi bi-search"></i>
                                     </button>
                                 </div>
@@ -250,7 +164,7 @@
                         </div>
                         <span class="text-danger" v-if="FilterErrors">{{
                             FilterErrors
-                        }}</span>
+                            }}</span>
                     </div>
 
                     <!-- Table -->
@@ -270,10 +184,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr
-                                    v-for="(entry, idx) in visibleEntries"
-                                    :key="entry.id"
-                                >
+                                <tr v-for="(entry, idx) in visibleEntries" :key="entry.id">
                                     <td>{{ tableIndex(idx) }}</td>
                                     <td>{{ entry.transaction_date }}</td>
                                     <td>{{ entry.islamic_date }}</td>
@@ -298,36 +209,23 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <button
-                                                class="btn btn-sm fs-6"
-                                                title="View"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#viewTransactionModal"
-                                                @click="
+                                            <button class="btn btn-sm fs-6" title="View" data-bs-toggle="modal"
+                                                data-bs-target="#viewTransactionModal" @click="
                                                     viewEntry(
                                                         entry,
                                                         globalIndex(idx)
                                                     )
-                                                "
-                                            >
+                                                    ">
                                                 <i class="bi bi-eye"></i>
                                             </button>
-                                            <button
-                                                class="btn btn-sm fs-6"
-                                                title="Edit"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#transactionmodal"
-                                                @click="
+                                            <button class="btn btn-sm fs-6" title="Edit" data-bs-toggle="modal"
+                                                data-bs-target="#transactionmodal" @click="
                                                     showEntry(entry.id);
-                                                    clearFields();
-                                                "
-                                            >
+                                                clearFields();
+                                                ">
                                                 <i class="bi bi-pencil"></i>
                                             </button>
-                                            <DeleteModal
-                                                :deleteId="entry.id"
-                                                @deleteThis="deleteThis"
-                                            />
+                                            <DeleteModal :deleteId="entry.id" @deleteThis="deleteThis" />
                                             <!-- <button
                                                 class="btn btn-sm fs-6"
                                                 title="Print"
@@ -355,25 +253,14 @@
                                                     class="bi bi-whatsapp text-success"
                                                 ></i>
                                             </button> -->
-                                            <ReceiptShare
-                                                :entry="entry"
-                                                :transactionEntries="
-                                                    transactionEntries
-                                                "
-                                                :indexForBalance="
-                                                    indexForBalance
-                                                "
-                                                :translate="translate"
-                                                bookNo="05"
-                                            />
+                                            <ReceiptShare :entry="entry" :transactionEntries="transactionEntries
+                                                " :indexForBalance="indexForBalance
+                                                    " :translate="translate" bookNo="05" />
                                         </div>
                                     </td>
                                 </tr>
                                 <tr v-if="!visibleEntries.length">
-                                    <td
-                                        colspan="9"
-                                        class="text-center text-muted"
-                                    >
+                                    <td colspan="9" class="text-center text-muted">
                                         {{ translate("No records found") }}
                                     </td>
                                 </tr>
@@ -382,23 +269,13 @@
                     </div>
 
                     <!-- Pagination + size -->
-                    <div
-                        class="d-flex justify-content-between align-items-center flex-wrap gap-2"
-                    >
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
                         <div class="d-flex align-items-center gap-2">
                             <span class="text-muted">
                                 {{ translate("Rows per page") }}
                             </span>
-                            <select
-                                class="form-select form-select-sm"
-                                style="width: 90px"
-                                v-model.number="perPage"
-                            >
-                                <option
-                                    v-for="s in pageSizes"
-                                    :key="s"
-                                    :value="s"
-                                >
+                            <select class="form-select form-select-sm" style="width: 90px" v-model.number="perPage">
+                                <option v-for="s in pageSizes" :key="s" :value="s">
                                     {{ s }}
                                 </option>
                             </select>
@@ -410,39 +287,21 @@
                         </div>
                         <nav>
                             <ul class="pagination mb-0">
-                                <li
-                                    class="page-item"
-                                    :class="{ disabled: currentPage === 1 }"
-                                >
-                                    <button
-                                        class="page-link"
-                                        @click="goPrev"
-                                        :disabled="currentPage === 1"
-                                    >
+                                <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                                    <button class="page-link" @click="goPrev" :disabled="currentPage === 1">
                                         {{ translate("Previous") }}
                                     </button>
                                 </li>
-                                <li
-                                    class="page-item"
-                                    v-for="n in pages"
-                                    :key="n"
-                                    :class="{ active: n === currentPage }"
-                                >
+                                <li class="page-item" v-for="n in pages" :key="n"
+                                    :class="{ active: n === currentPage }">
                                     <button class="page-link" @click="goTo(n)">
                                         {{ n }}
                                     </button>
                                 </li>
-                                <li
-                                    class="page-item"
-                                    :class="{
-                                        disabled: currentPage === totalPages,
-                                    }"
-                                >
-                                    <button
-                                        class="page-link"
-                                        @click="goNext"
-                                        :disabled="currentPage === totalPages"
-                                    >
+                                <li class="page-item" :class="{
+                                    disabled: currentPage === totalPages,
+                                }">
+                                    <button class="page-link" @click="goNext" :disabled="currentPage === totalPages">
                                         {{ translate("Next") }}
                                     </button>
                                 </li>
@@ -452,13 +311,268 @@
                 </div>
             </div>
 
+            <!-- modal for Multiple Transactions  -->
+            <div class="modal fade" id="multipleTransactionModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-primary">
+                                {{ translate("Multiple Transaction Entry") }}
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="card card-body p-3">
+
+                                <!-- loop through each form -->
+                                <div class="row g-3 border rounded p-2 mb-3" v-for="(form, index) in forms"
+                                    :key="index">
+
+                                     <div class="col-12 col-md-12 mb-3">
+                                        <label>{{
+                                            translate("Process Type")
+                                            }}</label>
+                                        <Multiselect v-model="form.process_type" :options="processTypeOptions"
+                                            :searchable="false" readonly @select="
+                                                pluckExpIncTypes(
+                                                    form.process_type
+                                                );
+                                            clearProcessType();
+                                            " :class="{
+                                                'invalid-bg':
+                                                    formErrors.process_type,
+                                            }" />
+                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.process_type">
+                                            {{ formErrors.process_type[0] }}
+                                        </div>
+                                    </div>
+
+                                     <div class="col-12 col-md-4" v-if="form.process_type == 'Income'">
+                                        <label>{{
+                                            translate("Income Type")
+                                            }}</label>
+                                        <Multiselect v-model="form.income_type" :options="IncomeTypesOptions"
+                                            :searchable="true" :class="{
+                                                'invalid-bg':
+                                                    formErrors.income_type,
+                                            }" />
+                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.income_type">
+                                            {{ formErrors.income_type[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4" v-if="form.process_type == 'Expense'">
+                                        <label>Expense Type</label>
+                                        <Multiselect v-model="form.expense_type" :options="ExpenseTypesOptions"
+                                            :searchable="true" />
+
+                                            <div class="invalid-feedback animated fadeIn" v-if="formErrors.expense_type">
+                                            {{ formErrors.expense_type[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4" v-if="form.process_type === 'Advance'">
+                                        <label>{{
+                                            translate("Advance Type")
+                                            }}</label>
+                                        <Multiselect v-model="form.advance_type" :options="AdvanceTypesOptions"
+                                            :searchable="true" :class="{
+                                                'invalid-bg':
+                                                    formErrors.advance_type,
+                                            }" />
+                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.advance_type">
+                                            {{ formErrors.advance_type[0] }}
+                                        </div>
+                                    </div>
+
+                                     <div class="col-12 col-md-4" v-if="
+                                        form.process_type == 'Borrow' ||
+                                        form.process_type == 'Lend'
+                                    ">
+                                        <label>{{ "Select person" }}</label>
+                                        <Multiselect v-model="form.person" :options="personsOptions" :searchable="true"
+                                            :class="{
+                                                'invalid-bg': formErrors.person,
+                                            }" />
+                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.person">
+                                            {{ formErrors.person[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-12" v-if="
+                                        form.process_type == 'Income' ||
+                                        form.process_type == 'Borrow'
+                                    ">
+                                        <label for="cash_in">{{
+                                            translate("Cash In")
+                                            }}</label>
+                                        <input type="text" class="form-control" id="cash_in" v-model="form.cash_in"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.cash_in,
+                                            }" />
+                                        <div v-if="formErrors.cash_in" class="invalid-feedback">
+                                            {{ formErrors.cash_in[0] }}
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4 col-12" v-if="
+                                        form.process_type == 'Expense' ||
+                                        form.process_type == 'Lend' ||
+                                        form.process_type == 'Advance'
+                                    ">
+                                        <label for="cash_out">{{
+                                            translate("Cash Out")
+                                            }}</label>
+                                        <input type="text" class="form-control" id="cash_out" v-model="form.cash_out"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.cash_out,
+                                            }" />
+                                        <div v-if="formErrors.cash_out" class="invalid-feedback">
+                                            {{ formErrors.cash_out[0] }}
+                                        </div>
+                                    </div>
+
+                                   <div class="col-md-4 col-12">
+                                        <label for="remarks">{{
+                                            translate("Description")
+                                            }}</label>
+                                        <input type="text" class="form-control" id="remarks" v-model="form.remarks"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.remarks,
+                                            }" />
+                                        <div v-if="formErrors.remarks" class="invalid-feedback">
+                                            {{ formErrors.remarks[0] }}
+                                        </div>
+                                    </div>
+
+                                     <div class="col-12 col-md-4">
+                                        <label>{{
+                                            translate("Payment Method")
+                                            }}</label>
+                                        <Multiselect v-model="form.method" :options="methodTypesOpions"
+                                            :searchable="true" :class="{
+                                                'invalid-bg': formErrors.method,
+                                            }" />
+                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.method">
+                                            {{ formErrors.method[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4">
+                                        <label class="form-label">{{
+                                            translate("English Date")
+                                            }}</label>
+                                        <Datepicker autoApply :enable-time-picker="false" :class="{
+                                            'invalid-bg': formErrors.date,
+                                        }" v-model="form.date" @update:modelValue="(val) => convertToHijriInMultipleTransactions(val, index)" />
+                                        <div v-if="formErrors.date" class="invalid-feedback">
+                                            {{ formErrors.date[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4">
+                                        <label class="form-label">{{
+                                            translate("Islamic Date")
+                                            }}</label>
+                                        <Datepicker v-model="form.islamic_date" :enable-time-picker="false" autoApply
+                                            :disabled="true" :input-props="{ readonly: true }" />
+                                        <div v-if="formErrors.islamic_date" class="invalid-feedback">
+                                            {{ formErrors.islamic_date[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-12">
+                                        <label>{{
+                                            translate("Received from")
+                                            }}</label>
+                                        <input type="text" class="form-control" v-model="form.received_from" :class="{
+                                            'invalid-bg':
+                                                formErrors.received_from,
+                                        }" />
+                                        <div v-if="formErrors.received_from" class="invalid-feedback">
+                                            {{ formErrors.received_from[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-12">
+                                        <label>{{
+                                            translate("Received By")
+                                            }}</label>
+                                        <input type="text" class="form-control" v-model="form.received_by" :class="{
+                                            'invalid-bg':
+                                                formErrors.received_by,
+                                        }" />
+                                        <div v-if="formErrors.received_by" class="invalid-feedback">
+                                            {{ formErrors.received_by[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-12">
+                                        <label>{{
+                                            translate("Reciept No")
+                                            }}</label>
+                                        <input type="text" class="form-control" v-model="form.ref_no" :class="{
+                                            'invalid-bg': formErrors.ref_no,
+                                        }" />
+                                        <div v-if="formErrors.ref_no" class="invalid-feedback">
+                                            {{ formErrors.ref_no[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-12">
+                                        <label>{{
+                                            translate("Receipt image")
+                                            }}</label>
+                                        <br />
+                                        <CropperOffCanvas @croppedImg="croppedImgPassToFormForMultiple" accept=".jpg,.jpeg,.png" />
+                                        <br />
+                                        <img v-if="form.receipt_image" :src="form.receipt_image ??
+                                            '/images/default.jpg'
+                                            " :width="100" />
+                                        <img v-else-if="existing_receipt_image" :src="existing_receipt_image ??
+                                            '/images/default.jpg'
+                                            " :width="100" />
+                                        <img v-else :src="'/images/default.jpg'" :width="100" />
+                                        <div v-if="formErrors.receipt_image" class="invalid-feedback">
+                                            {{ formErrors.receipt_image[0] }}
+                                        </div>
+                                    </div>
+
+
+                                    <!-- remove button -->
+                                    <div class="col-12 text-end">
+                                        <button class="btn btn-danger btn-sm" v-if="forms.length > 1"
+                                            @click="removeForm(index)">
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
+
+                              <div class="col-md-12 text-end"> <button class="btn btn-primary btn-sm mt-2 px-4 py-2" @click="addForm">
+                                    + Add
+                                </button>
+                            </div>
+                               
+
+                                <!-- save button -->
+                                <div class="mt-3">
+                                    <button type="submit" class="btn btn-success" @click="submitMultipleExpense">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Add/Edit Modal (kept intact) -->
-            <div
-                class="modal fade"
-                id="transactionmodal"
-                tabindex="-1"
-                aria-hidden="true"
-            >
+            <div class="modal fade" id="transactionmodal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -469,11 +583,7 @@
                             <h5 class="modal-title text-primary" v-else>
                                 {{ translate("New Transaction Entry") }}
                             </h5>
-                            <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                            ></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
                             <div class="card card-body p-3">
@@ -481,180 +591,109 @@
                                     <div class="col-12 col-md-12 mb-3">
                                         <label>{{
                                             translate("Process Type")
-                                        }}</label>
-                                        <Multiselect
-                                            v-model="form.process_type"
-                                            :options="processTypeOptions"
-                                            :searchable="false"
-                                            readonly
-                                            @select="
+                                            }}</label>
+                                        <Multiselect v-model="form.process_type" :options="processTypeOptions"
+                                            :searchable="false" readonly @select="
                                                 pluckExpIncTypes(
                                                     form.process_type
                                                 );
-                                                clearProcessType();
-                                            "
-                                            :class="{
+                                            clearProcessType();
+                                            " :class="{
                                                 'invalid-bg':
                                                     formErrors.process_type,
-                                            }"
-                                        />
-                                        <div
-                                            class="invalid-feedback animated fadeIn"
-                                            v-if="formErrors.process_type"
-                                        >
+                                            }" />
+                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.process_type">
                                             {{ formErrors.process_type[0] }}
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="col-12 col-md-6"
-                                        v-if="form.process_type == 'Income'"
-                                    >
+                                    <div class="col-12 col-md-6" v-if="form.process_type == 'Income'">
                                         <label>{{
                                             translate("Income Type")
-                                        }}</label>
-                                        <Multiselect
-                                            v-model="form.income_type"
-                                            :options="IncomeTypesOptions"
-                                            :searchable="true"
-                                            :class="{
+                                            }}</label>
+                                        <Multiselect v-model="form.income_type" :options="IncomeTypesOptions"
+                                            :searchable="true" :class="{
                                                 'invalid-bg':
                                                     formErrors.income_type,
-                                            }"
-                                        />
-                                        <div
-                                            class="invalid-feedback animated fadeIn"
-                                            v-if="formErrors.income_type"
-                                        >
+                                            }" />
+                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.income_type">
                                             {{ formErrors.income_type[0] }}
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="col-12 col-md-6"
-                                        v-if="form.process_type == 'Expense'"
-                                    >
+                                    <div class="col-12 col-md-6" v-if="form.process_type == 'Expense'">
                                         <label>{{
                                             translate("Expense Type")
-                                        }}</label>
-                                        <Multiselect
-                                            v-model="form.expense_type"
-                                            :options="ExpenseTypesOptions"
-                                            :searchable="true"
-                                            :class="{
+                                            }}</label>
+                                        <Multiselect v-model="form.expense_type" :options="ExpenseTypesOptions"
+                                            :searchable="true" :class="{
                                                 'invalid-bg':
                                                     formErrors.expense_type,
-                                            }"
-                                        />
-                                        <div
-                                            class="invalid-feedback animated fadeIn"
-                                            v-if="formErrors.expense_type"
-                                        >
+                                            }" />
+                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.expense_type">
                                             {{ formErrors.expense_type[0] }}
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="col-12 col-md-6"
-                                        v-if="form.process_type === 'Advance'"
-                                    >
+                                    <div class="col-12 col-md-6" v-if="form.process_type === 'Advance'">
                                         <label>{{
                                             translate("Advance Type")
-                                        }}</label>
-                                        <Multiselect
-                                            v-model="form.advance_type"
-                                            :options="AdvanceTypesOptions"
-                                            :searchable="true"
-                                            :class="{
+                                            }}</label>
+                                        <Multiselect v-model="form.advance_type" :options="AdvanceTypesOptions"
+                                            :searchable="true" :class="{
                                                 'invalid-bg':
                                                     formErrors.advance_type,
-                                            }"
-                                        />
-                                        <div
-                                            class="invalid-feedback animated fadeIn"
-                                            v-if="formErrors.advance_type"
-                                        >
+                                            }" />
+                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.advance_type">
                                             {{ formErrors.advance_type[0] }}
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="col-12 col-md-6"
-                                        v-if="
-                                            form.process_type == 'Borrow' ||
-                                            form.process_type == 'Lend'
-                                        "
-                                    >
+                                    <div class="col-12 col-md-6" v-if="
+                                        form.process_type == 'Borrow' ||
+                                        form.process_type == 'Lend'
+                                    ">
                                         <label>{{ "Select person" }}</label>
-                                        <Multiselect
-                                            v-model="form.person"
-                                            :options="personsOptions"
-                                            :searchable="true"
+                                        <Multiselect v-model="form.person" :options="personsOptions" :searchable="true"
                                             :class="{
                                                 'invalid-bg': formErrors.person,
-                                            }"
-                                        />
-                                        <div
-                                            class="invalid-feedback animated fadeIn"
-                                            v-if="formErrors.person"
-                                        >
+                                            }" />
+                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.person">
                                             {{ formErrors.person[0] }}
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="col-md-6 col-12"
-                                        v-if="
-                                            form.process_type == 'Income' ||
-                                            form.process_type == 'Borrow'
-                                        "
-                                    >
+                                    <div class="col-md-6 col-12" v-if="
+                                        form.process_type == 'Income' ||
+                                        form.process_type == 'Borrow'
+                                    ">
                                         <label for="cash_in">{{
                                             translate("Cash In")
-                                        }}</label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="cash_in"
-                                            v-model="form.cash_in"
+                                            }}</label>
+                                        <input type="text" class="form-control" id="cash_in" v-model="form.cash_in"
                                             :class="{
                                                 'invalid-bg':
                                                     formErrors.cash_in,
-                                            }"
-                                        />
-                                        <div
-                                            v-if="formErrors.cash_in"
-                                            class="invalid-feedback"
-                                        >
+                                            }" />
+                                        <div v-if="formErrors.cash_in" class="invalid-feedback">
                                             {{ formErrors.cash_in[0] }}
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="col-md-6 col-12"
-                                        v-if="
-                                            form.process_type == 'Expense' ||
-                                            form.process_type == 'Lend' ||
-                                            form.process_type == 'Advance'
-                                        "
-                                    >
+                                    <div class="col-md-6 col-12" v-if="
+                                        form.process_type == 'Expense' ||
+                                        form.process_type == 'Lend' ||
+                                        form.process_type == 'Advance'
+                                    ">
                                         <label for="cash_out">{{
                                             translate("Cash Out")
-                                        }}</label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="cash_out"
-                                            v-model="form.cash_out"
+                                            }}</label>
+                                        <input type="text" class="form-control" id="cash_out" v-model="form.cash_out"
                                             :class="{
                                                 'invalid-bg':
                                                     formErrors.cash_out,
-                                            }"
-                                        />
-                                        <div
-                                            v-if="formErrors.cash_out"
-                                            class="invalid-feedback"
-                                        >
+                                            }" />
+                                        <div v-if="formErrors.cash_out" class="invalid-feedback">
                                             {{ formErrors.cash_out[0] }}
                                         </div>
                                     </div>
@@ -662,21 +701,13 @@
                                     <div class="col-md-6 col-12">
                                         <label for="remarks">{{
                                             translate("Description")
-                                        }}</label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="remarks"
-                                            v-model="form.remarks"
+                                            }}</label>
+                                        <input type="text" class="form-control" id="remarks" v-model="form.remarks"
                                             :class="{
                                                 'invalid-bg':
                                                     formErrors.remarks,
-                                            }"
-                                        />
-                                        <div
-                                            v-if="formErrors.remarks"
-                                            class="invalid-feedback"
-                                        >
+                                            }" />
+                                        <div v-if="formErrors.remarks" class="invalid-feedback">
                                             {{ formErrors.remarks[0] }}
                                         </div>
                                     </div>
@@ -684,19 +715,12 @@
                                     <div class="col-12 col-md-6">
                                         <label>{{
                                             translate("Payment Method")
-                                        }}</label>
-                                        <Multiselect
-                                            v-model="form.method"
-                                            :options="methodTypesOpions"
-                                            :searchable="true"
-                                            :class="{
+                                            }}</label>
+                                        <Multiselect v-model="form.method" :options="methodTypesOpions"
+                                            :searchable="true" :class="{
                                                 'invalid-bg': formErrors.method,
-                                            }"
-                                        />
-                                        <div
-                                            class="invalid-feedback animated fadeIn"
-                                            v-if="formErrors.method"
-                                        >
+                                            }" />
+                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.method">
                                             {{ formErrors.method[0] }}
                                         </div>
                                     </div>
@@ -704,20 +728,11 @@
                                     <div class="col-12 col-md-6">
                                         <label class="form-label">{{
                                             translate("English Date")
-                                        }}</label>
-                                        <Datepicker
-                                            autoApply
-                                            :enable-time-picker="false"
-                                            :class="{
-                                                'invalid-bg': formErrors.date,
-                                            }"
-                                            v-model="form.date"
-                                            @update:modelValue="convertToHijri"
-                                        />
-                                        <div
-                                            v-if="formErrors.date"
-                                            class="invalid-feedback"
-                                        >
+                                            }}</label>
+                                        <Datepicker autoApply :enable-time-picker="false" :class="{
+                                            'invalid-bg': formErrors.date,
+                                        }" v-model="form.date" @update:modelValue="convertToHijri" />
+                                        <div v-if="formErrors.date" class="invalid-feedback">
                                             {{ formErrors.date[0] }}
                                         </div>
                                     </div>
@@ -725,18 +740,10 @@
                                     <div class="col-12 col-md-6">
                                         <label class="form-label">{{
                                             translate("Islamic Date")
-                                        }}</label>
-                                        <Datepicker
-                                            v-model="form.islamic_date"
-                                            :enable-time-picker="false"
-                                            autoApply
-                                            :disabled="true"
-                                            :input-props="{ readonly: true }"
-                                        />
-                                        <div
-                                            v-if="formErrors.islamic_date"
-                                            class="invalid-feedback"
-                                        >
+                                            }}</label>
+                                        <Datepicker v-model="form.islamic_date" :enable-time-picker="false" autoApply
+                                            :disabled="true" :input-props="{ readonly: true }" />
+                                        <div v-if="formErrors.islamic_date" class="invalid-feedback">
                                             {{ formErrors.islamic_date[0] }}
                                         </div>
                                     </div>
@@ -744,20 +751,12 @@
                                     <div class="col-md-6 col-12">
                                         <label>{{
                                             translate("Received from")
-                                        }}</label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            v-model="form.received_from"
-                                            :class="{
-                                                'invalid-bg':
-                                                    formErrors.received_from,
-                                            }"
-                                        />
-                                        <div
-                                            v-if="formErrors.received_from"
-                                            class="invalid-feedback"
-                                        >
+                                            }}</label>
+                                        <input type="text" class="form-control" v-model="form.received_from" :class="{
+                                            'invalid-bg':
+                                                formErrors.received_from,
+                                        }" />
+                                        <div v-if="formErrors.received_from" class="invalid-feedback">
                                             {{ formErrors.received_from[0] }}
                                         </div>
                                     </div>
@@ -765,20 +764,12 @@
                                     <div class="col-md-6 col-12">
                                         <label>{{
                                             translate("Received By")
-                                        }}</label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            v-model="form.received_by"
-                                            :class="{
-                                                'invalid-bg':
-                                                    formErrors.received_by,
-                                            }"
-                                        />
-                                        <div
-                                            v-if="formErrors.received_by"
-                                            class="invalid-feedback"
-                                        >
+                                            }}</label>
+                                        <input type="text" class="form-control" v-model="form.received_by" :class="{
+                                            'invalid-bg':
+                                                formErrors.received_by,
+                                        }" />
+                                        <div v-if="formErrors.received_by" class="invalid-feedback">
                                             {{ formErrors.received_by[0] }}
                                         </div>
                                     </div>
@@ -786,19 +777,11 @@
                                     <div class="col-md-6 col-12">
                                         <label>{{
                                             translate("Reciept No")
-                                        }}</label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            v-model="form.ref_no"
-                                            :class="{
-                                                'invalid-bg': formErrors.ref_no,
-                                            }"
-                                        />
-                                        <div
-                                            v-if="formErrors.ref_no"
-                                            class="invalid-feedback"
-                                        >
+                                            }}</label>
+                                        <input type="text" class="form-control" v-model="form.ref_no" :class="{
+                                            'invalid-bg': formErrors.ref_no,
+                                        }" />
+                                        <div v-if="formErrors.ref_no" class="invalid-feedback">
                                             {{ formErrors.ref_no[0] }}
                                         </div>
                                     </div>
@@ -806,61 +789,30 @@
                                     <div class="col-md-6 col-12">
                                         <label>{{
                                             translate("Receipt image")
-                                        }}</label>
+                                            }}</label>
                                         <br />
-                                        <CropperOffCanvas
-                                            @croppedImg="croppedImgPassToForm"
-                                            accept=".jpg,.jpeg,.png"
-                                        />
+                                        <CropperOffCanvas @croppedImg="croppedImgPassToForm" accept=".jpg,.jpeg,.png" />
                                         <br />
-                                        <img
-                                            v-if="form.receipt_image"
-                                            :src="
-                                                form.receipt_image ??
-                                                '/images/default.jpg'
-                                            "
-                                            :width="100"
-                                        />
-                                        <img
-                                            v-else-if="existing_receipt_image"
-                                            :src="
-                                                existing_receipt_image ??
-                                                '/images/default.jpg'
-                                            "
-                                            :width="100"
-                                        />
-                                        <img
-                                            v-else
-                                            :src="'/images/default.jpg'"
-                                            :width="100"
-                                        />
-                                        <div
-                                            v-if="formErrors.receipt_image"
-                                            class="invalid-feedback"
-                                        >
+                                        <img v-if="form.receipt_image" :src="form.receipt_image ??
+                                            '/images/default.jpg'
+                                            " :width="100" />
+                                        <img v-else-if="existing_receipt_image" :src="existing_receipt_image ??
+                                            '/images/default.jpg'
+                                            " :width="100" />
+                                        <img v-else :src="'/images/default.jpg'" :width="100" />
+                                        <div v-if="formErrors.receipt_image" class="invalid-feedback">
                                             {{ formErrors.receipt_image[0] }}
                                         </div>
                                     </div>
 
                                     <div class="mt-3">
-                                        <button
-                                            type="submit"
-                                            class="btn btn-success"
-                                            v-if="formStatus == 1"
-                                            @click="submit"
-                                        >
+                                        <button type="submit" class="btn btn-success" v-if="formStatus == 1"
+                                            @click="submit">
                                             Save
                                         </button>
-                                        <button
-                                            class="btn btn-success"
-                                            type="button"
-                                            disabled
-                                            v-else
-                                        >
+                                        <button class="btn btn-success" type="button" disabled v-else>
                                             Saving
-                                            <span
-                                                class="spinner-border spinner-border-sm"
-                                            ></span>
+                                            <span class="spinner-border spinner-border-sm"></span>
                                         </button>
                                     </div>
                                 </div>
@@ -868,30 +820,16 @@
                         </div>
                     </div>
                 </div>
-                <button
-                    hidden
-                    data-bs-toggle="modal"
-                    data-bs-target="#customermodal"
-                    ref="closeModal"
-                ></button>
+                <button hidden data-bs-toggle="modal" data-bs-target="#customermodal" ref="closeModal"></button>
             </div>
 
             <!-- Details Modal -->
-            <div
-                class="modal fade"
-                id="viewTransactionModal"
-                tabindex="-1"
-                aria-hidden="true"
-            >
+            <div class="modal fade" id="viewTransactionModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Transaction Details</h5>
-                            <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                            ></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
                             <table class="table">
@@ -963,34 +901,23 @@
                                     <tr v-if="selectedEntry.receipt_image">
                                         <th>Receipt Image</th>
                                         <td>
-                                            <img
-                                                :src="
-                                                    selectedEntry.receipt_image
-                                                "
-                                                width="200"
-                                                @error="setAltImg"
-                                            />
+                                            <img :src="selectedEntry.receipt_image
+                                                " width="200" @error="setAltImg" />
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <button
-                                class="btn btn-secondary"
-                                data-bs-dismiss="modal"
-                            >
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">
                                 Close
                             </button>
-                            <button
-                                class="btn btn-primary"
-                                @click="
-                                    printSingleSlip(
-                                        selectedEntry,
-                                        selectedIndex
-                                    )
-                                "
-                            >
+                            <button class="btn btn-primary" @click="
+                                printSingleSlip(
+                                    selectedEntry,
+                                    selectedIndex
+                                )
+                                ">
                                 <i class="bi bi-printer me-1"></i> Print
                             </button>
                         </div>
@@ -1103,6 +1030,26 @@ export default {
                 received_from: "",
                 received_by: "",
             },
+
+            forms: [
+                {
+                    cash_in: "",
+                    cash_out: "",
+                    date: "",
+                    islamic_date: "",
+                    ref_no: "",
+                    method: "",
+                    remarks: "",
+                    expense_type: "",
+                    income_type: "",
+                    advance_type: "",
+                    process_type: "Expense",
+                    receipt_image: "",
+                    business_type: "",
+                    received_from: "",
+                    received_by: "",
+                }
+            ],
             formErrors: [],
             formStatus: 1,
             isCashInReadonly: false,
@@ -1213,6 +1160,72 @@ export default {
         },
     },
     methods: {
+
+        addForm() {
+            this.forms.push({
+                cash_out: "",
+                date: "",
+                islamic_date: "",
+                ref_no: "",
+                method: "",
+                remarks: "",
+                expense_type: "",
+                income_type: "",
+                advance_type: "",
+                process_type: "Expense",
+                receipt_image: "",
+                person: "",
+                business_type: "",
+                received_from: "",
+                received_by: "",
+            });
+        },
+        removeForm(index) {
+            this.forms.splice(index, 1);
+        },
+
+        submitMultipleExpense() {  
+       
+  },
+
+  submitMultipleExpense() {
+    // Format dates and prepare payload
+    const payload = this.forms.map((form) => {
+      return {
+        id: form.id,
+        cash_in: form.cash_in,
+        cash_out: form.cash_out,
+        date: form.date ? moment(form.date).format("YYYY/MM/DD") : "",
+        islamic_date: form.islamic_date,
+        ref_no: form.ref_no,
+        method: form.method,
+        remarks: form.remarks,
+        person: form.person,
+        expense_type: form.expense_type,
+        income_type: form.income_type,
+        advance_type: form.advance_type,
+        process_type: form.process_type,
+        received_from: form.received_from,
+        received_by: form.received_by,
+        receipt_image: form.receipt_image ?? null,
+      };
+    });
+
+    axios
+      .post(route("api.transaction.storeMultiple"), { transactions: payload })
+      .then(() => {
+        this.formStatus = 1;
+        this.fetchTransactionEntries();
+        toastr.success(this.translate("Multiple transactions saved successfully."));
+        this.$refs.closeModal?.click();
+      })
+      .catch((error) => {
+        this.formStatus = 1;
+        toastr.error(error.response?.data?.message || "Error saving multiple expenses");
+        this.formErrors = error.response?.data?.errors || {};
+      });
+  },
+
         /* --- Helpers for table numbering --- */
         tableIndex(idxOnPage) {
             return (this.currentPage - 1) * this.perPage + idxOnPage + 1;
@@ -1428,37 +1441,30 @@ Remarks: ${entry.remarks || "-"}
         <div class="center title">Transaction Receipt</div>
         <div class="center">Jamia Darul Uloom Noamaniya</div>
         <div class="dot"></div>
-        <div class="row"><span>Date</span><span>${
-            entry.transaction_date || "-"
-        }</span></div>
-        <div class="row"><span>Islamic Date</span><span>${
-            entry.islamic_date || "-"
-        }</span></div>
-        <div class="row"><span>Receipt No</span><span>${
-            entry.ref_no || "-"
-        }</span></div>
-        <div class="row"><span>Type</span><span>${
-            entry.income_type || entry.expense_type || entry.advance_type || "-"
-        }</span></div>
-        <div class="row"><span>Method</span><span>${
-            entry.method || "-"
-        }</span></div>
-        <div class="row"><span>Received From</span><span>${
-            entry.received_from || "-"
-        }</span></div>
-        <div class="row"><span>Received By</span><span>${
-            entry.received_by || "-"
-        }</span></div>
+        <div class="row"><span>Date</span><span>${entry.transaction_date || "-"
+                }</span></div>
+        <div class="row"><span>Islamic Date</span><span>${entry.islamic_date || "-"
+                }</span></div>
+        <div class="row"><span>Receipt No</span><span>${entry.ref_no || "-"
+                }</span></div>
+        <div class="row"><span>Type</span><span>${entry.income_type || entry.expense_type || entry.advance_type || "-"
+                }</span></div>
+        <div class="row"><span>Method</span><span>${entry.method || "-"
+                }</span></div>
+        <div class="row"><span>Received From</span><span>${entry.received_from || "-"
+                }</span></div>
+        <div class="row"><span>Received By</span><span>${entry.received_by || "-"
+                }</span></div>
         <div class="dot"></div>
         <div class="row"><span>Cash In</span><span>${this.formatCurrency(
-            entry.cash_in || 0
-        )}</span></div>
+                    entry.cash_in || 0
+                )}</span></div>
         <div class="row"><span>Cash Out</span><span>${this.formatCurrency(
-            entry.cash_out || 0
-        )}</span></div>
+                    entry.cash_out || 0
+                )}</span></div>
         <div class="row"><span>Balance (till this)</span><span>${this.formatCurrency(
-            runningBalance
-        )}</span></div>
+                    runningBalance
+                )}</span></div>
         <div class="dot"></div>
         <div>Remarks: ${entry.remarks || "-"}</div>
         <div class="center mt8">Printed: ${currentDateTime}</div>
@@ -1622,7 +1628,7 @@ Remarks: ${entry.remarks || "-"}
                     this.excelBtnLoader = false;
                     toastr.error(
                         error.response?.data?.message ||
-                            "Error generating Excel"
+                        "Error generating Excel"
                     );
                 });
         },
@@ -1679,6 +1685,10 @@ Remarks: ${entry.remarks || "-"}
         croppedImgPassToForm(img) {
             this.form.receipt_image = img;
         },
+
+         croppedImgPassToFormForMultiple(img) {
+            this.forms.receipt_image = img;
+        },
         setAltImg(event) {
             event.target.src = "/images/default.jpg";
         },
@@ -1700,13 +1710,11 @@ Remarks: ${entry.remarks || "-"}
             let title = this.translate("All Transactions List");
             if (this.selectedFilter === "Monthly") {
                 const monthName = getMonthName(this.selectedMonth);
-                title = `${this.translate("Transactions for")} ${monthName} ${
-                    this.selectedYear
-                }`;
+                title = `${this.translate("Transactions for")} ${monthName} ${this.selectedYear
+                    }`;
             } else if (this.selectedFilter === "Yearly" && this.selectedYear) {
-                title = `${this.translate("Transactions for the Year")} ${
-                    this.selectedYear
-                }`;
+                title = `${this.translate("Transactions for the Year")} ${this.selectedYear
+                    }`;
             } else if (
                 this.selectedFilter === "Custom" &&
                 this.startDate &&
@@ -1753,30 +1761,29 @@ Remarks: ${entry.remarks || "-"}
                 </thead>
                 <tbody>
                     ${this.transactionEntries
-                        .map(
-                            (entry, index) => `
+                    .map(
+                        (entry, index) => `
                         <tr>
                             <td>${index + 1}</td>
                             <td>${entry.transaction_date}</td>
                             <td>${entry.islamic_date}</td>
                             <td>${entry.ref_no}</td>
-                            <td>${
-                                entry.income_type ??
-                                entry.expense_type ??
-                                entry.advance_type
+                            <td>${entry.income_type ??
+                            entry.expense_type ??
+                            entry.advance_type
                             }</td>
                             <td>${this.formatCurrency(entry.cash_in) ?? 0}</td>
                             <td>${this.formatCurrency(entry.cash_out) ?? 0}</td>
                             <td>${this.calculateBalance(index)}</td>
                         </tr>
                     `
-                        )
-                        .join("")}
+                    )
+                    .join("")}
                 </tbody>
             </table>
             <div class="footer">${this.translate(
-                "Printed"
-            )}: ${currentDateTime}</div>
+                        "Printed"
+                    )}: ${currentDateTime}</div>
         </body>
         </html>`);
             printWindow.document.close();
@@ -1785,12 +1792,19 @@ Remarks: ${entry.remarks || "-"}
                 printWindow.close();
             };
         },
-        editTransaction() {},
+        editTransaction() { },
+
         convertToHijri(date) {
             this.form.islamic_date = date
                 ? moment(date).format("iYYYY/iM/iD")
                 : "";
         },
+
+        convertToHijriInMultipleTransactions(date, index) {
+    this.forms[index].islamic_date = date
+      ? moment(date).format("iYYYY/iM/iD")
+      : "";
+  },
         viewEntry(entry, idx) {
             this.selectedEntry = entry || {};
             this.selectedIndex = idx ?? -1;
@@ -1801,14 +1815,17 @@ Remarks: ${entry.remarks || "-"}
 
 <style scoped>
 @import "@vueform/multiselect/themes/default.css";
+
 .invalid-bg {
     border-color: #f8d4d4;
     background-color: #f8d4d4;
 }
+
 .invalid-feedback {
     color: red;
     font-size: 0.875rem;
 }
+
 .c-filter .multiselect {
     width: 200px !important;
 }

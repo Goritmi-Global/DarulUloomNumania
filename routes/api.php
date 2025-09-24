@@ -75,7 +75,9 @@ Route::middleware(['web'])->group(function () {
     Route::get('/transaction/show/{id}', [TransactionController::class, 'show'])->name('api.transaction.show');           // Show a specific transaction entry
     Route::delete('/transaction/delete/{id}', [TransactionController::class, 'destroy'])->name('api.transaction.delete'); // Delete a specific transaction entry
     Route::get('/transaction/pluck', [TransactionController::class, 'pluck'])->name('api.transaction.pluck');             // (Optional) Fetch transaction data for dropdowns or other purposes
-
+   // route for multiple Expense
+    Route::post('/transactions/multiple', [TransactionController::class, 'storeMultiple'])
+    ->name('api.transaction.storeMultiple');
                                                                                                                                            // /Income Expense routes
                                                                                                                                            // Fetch all transaction entries
     Route::post('/income/expense/store', [IncomeExpenseController::class, 'store'])->name('api.income.expense.store');                     // Create or update a transaction entry
@@ -87,6 +89,9 @@ Route::middleware(['web'])->group(function () {
     Route::get('/advance/pluck', [IncomeExpenseController::class, 'pluckAdvance'])->name('api.advance.pluck');
 
     Route::get('/expense/pluck/', [IncomeExpenseController::class, 'pluckExpenses'])->name('api.expense.pluck');
+
+ 
+
 
     // Business Type Routes
     Route::post('/business/type/save', [CommonDataController::class, 'saveBusinessType'])->name('api.business.types.store');
