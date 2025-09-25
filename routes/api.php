@@ -5,6 +5,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CommonDataController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HostelController;
 use App\Http\Controllers\IncomeExpenseController;
 use App\Http\Controllers\IncomeStatementController;
 use App\Http\Controllers\IntroductionController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\IslamicNameController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\QuestionAnswerController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
@@ -60,26 +62,25 @@ Route::middleware(['web'])->group(function () {
     Route::get('/students/fetch', [StudentsController::class, 'students'])->name('api.students.fetch');
     Route::get('/accepted/students/fetch', [StudentsController::class, 'enrolled_students'])->name('api.accepted.students.fetch');
     Route::post('/students/update-status', [StudentsController::class, 'updateStatus'])->name('api.students.updateStatus');
-     
+
     Route::delete('/students/delete/{id}', [StudentsController::class, 'delete'])->name('api.students.delete');
 
-
     // teachers Routes
-     Route::post('/teachers/store', [TeacherController::class, 'store'])->name('api.teachers.store');
-     Route::get('/teachers/fetch', [TeacherController::class, 'fetch'])->name('api.teachers.fetch'); 
-     Route::get('/teachers/{id}', [TeacherController::class, 'show'])->name('api.teachers.show');
-   
-                                                                                                                          // Cashbook routes
+    Route::post('/teachers/store', [TeacherController::class, 'store'])->name('api.teachers.store');
+    Route::get('/teachers/fetch', [TeacherController::class, 'fetch'])->name('api.teachers.fetch');
+    Route::get('/teachers/{id}', [TeacherController::class, 'show'])->name('api.teachers.show');
+
+    // Cashbook routes
     Route::post('/transaction/fetch', [TransactionController::class, 'fetch'])->name('api.transaction.fetch');            // Fetch all transaction entries
     Route::post('/transaction/store', [TransactionController::class, 'store'])->name('api.transaction.store');            // Create or update a transaction entry
     Route::get('/transaction/show/{id}', [TransactionController::class, 'show'])->name('api.transaction.show');           // Show a specific transaction entry
     Route::delete('/transaction/delete/{id}', [TransactionController::class, 'destroy'])->name('api.transaction.delete'); // Delete a specific transaction entry
     Route::get('/transaction/pluck', [TransactionController::class, 'pluck'])->name('api.transaction.pluck');             // (Optional) Fetch transaction data for dropdowns or other purposes
-   // route for multiple Expense
+    // route for multiple Expense
     Route::post('/transactions/multiple', [TransactionController::class, 'storeMultiple'])
-    ->name('api.transaction.storeMultiple');
-                                                                                                                                           // /Income Expense routes
-                                                                                                                                           // Fetch all transaction entries
+        ->name('api.transaction.storeMultiple');
+    // /Income Expense routes
+    // Fetch all transaction entries
     Route::post('/income/expense/store', [IncomeExpenseController::class, 'store'])->name('api.income.expense.store');                     // Create or update a transaction entry
     Route::get('/income/expense/fetch/{process}', [IncomeExpenseController::class, 'fetch'])->name('api.income.expense.fetch');            // Fetch all transaction entries
     Route::get('/income/expense/show/{id}/{process}', [IncomeExpenseController::class, 'show'])->name('api.income.expense.show');          // Show a specific transaction entry
@@ -91,8 +92,21 @@ Route::middleware(['web'])->group(function () {
 
     Route::get('/expense/pluck/', [IncomeExpenseController::class, 'pluckExpenses'])->name('api.expense.pluck');
 
- 
+    // session
 
+    Route::prefix('sessions')->name('api.sessions.')->group(function () {
+        Route::get('/fetch', [SessionController::class, 'fetch'])->name('fetch');
+        Route::get('/show/{id}', [SessionController::class, 'show'])->name('show');
+        Route::post('/store', [SessionController::class, 'store'])->name('store');
+    });
+
+    // Routes for Hostels
+    Route::prefix('hostels')->name('api.hostels.')->group(function () {
+        Route::get('/fetch', [HostelController::class, 'fetch'])->name('fetch');
+        Route::get('/show/{id}', [HostelController::class, 'show'])->name('show');
+        Route::post('/store', [HostelController::class, 'store'])->name('store');
+        Route::delete('{id}', [HostelController::class, 'destroy'])->name('destroy');
+    });
 
     // Business Type Routes
     Route::post('/business/type/save', [CommonDataController::class, 'saveBusinessType'])->name('api.business.types.store');
@@ -106,9 +120,9 @@ Route::middleware(['web'])->group(function () {
     Route::delete('/person/{id}', [CommonDataController::class, 'deletePerson'])->name('api.person.delete');
     Route::get('/persons/pluck', [CommonDataController::class, 'pluckPersons'])->name('api.persons.pluck');
 
-                                                                                                                                                                            // reports
+    // reports
     Route::post('/transaction/reports/fetch', [ReportController::class, 'transactions_reports_fetch'])->name('api.transaction.report.fetch');                               // Fetch all transaction entries
-                                                                                                                                                                            // income statements reports
+    // income statements reports
     Route::post('/transaction/income/statements/fetch', [IncomeStatementController::class, 'transactions_reports_fetch'])->name('api.transaction.income.statements.fetch'); // Fetch all transaction entries
 
     // languages
@@ -123,14 +137,13 @@ Route::middleware(['web'])->group(function () {
     Route::post('/translations/store', [LanguageController::class, 'translations_store'])->name('api.translations.store');
     Route::post('/translations/search', [LanguageController::class, 'translations_search'])->name('api.translations.search');
     Route::delete('/translation/delete/{id}', [LanguageController::class, 'translation_delete'])->name('api.translation.delete');
-    
 
     // changing default language
     Route::post('/make/default/language', [LanguageController::class, 'make_default_language'])->name('api.make.default.language');
     Route::get('/fetch/default/language', [LanguageController::class, 'fetch_default_language'])->name('api.fetch.default.language');
     Route::get('/languages/data', [LanguageController::class, 'languages_data'])->name('api.languages.data');
 
-// introduction controller
+    // introduction controller
 
     Route::prefix('introduction')->group(function () {
         Route::get('/fetch', [IntroductionController::class, 'fetch'])->name('api.introduction.fetch');
@@ -139,7 +152,7 @@ Route::middleware(['web'])->group(function () {
         Route::delete('/delete/{id}', [IntroductionController::class, 'destroy'])->name('api.introduction.delete');
     });
 
-// Book Controller Routes
+    // Book Controller Routes
     Route::prefix('books')->group(function () {
         Route::get('/', [BookController::class, 'fetch'])->name('api.books.fetch');           // Fetch all books
         Route::post('/', [BookController::class, 'store'])->name('api.books.store');          // Create a book
@@ -148,7 +161,7 @@ Route::middleware(['web'])->group(function () {
         Route::delete('/{id}', [BookController::class, 'destroy'])->name('api.books.delete'); // Delete a book
     });
 
-// Bayanat
+    // Bayanat
     Route::prefix('bayanaat')->group(function () {
         Route::get('/', [BayanaatController::class, 'fetch'])->name('api.bayanaat.fetch');           // Fetch all Bayanaat
         Route::post('/', [BayanaatController::class, 'store'])->name('api.bayanaat.store');          // Create a new Bayaan
@@ -157,7 +170,7 @@ Route::middleware(['web'])->group(function () {
         Route::delete('/{id}', [BayanaatController::class, 'destroy'])->name('api.bayanaat.delete'); // Delete a Bayaan
     });
 
-// Islamic names
+    // Islamic names
     Route::prefix('islamic-names')->group(function () {
         Route::get('/', [IslamicNameController::class, 'fetch'])->name('api.islamic-names.fetch');           // Get all names
         Route::post('/', [IslamicNameController::class, 'store'])->name('api.islamic-names.store');          // Create a new name

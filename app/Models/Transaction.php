@@ -23,6 +23,12 @@ class Transaction extends Model
             }
         });
     }
+
+   public function salary()
+{
+    return $this->hasOne(Salary::class, 'transaction_id', 'id');
+}
+
 }
 
 

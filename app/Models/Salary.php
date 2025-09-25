@@ -31,10 +31,10 @@ class Salary extends Model
         });
     }
 
-    // Relations
-    public function transaction()
-    {
-        return $this->belongsTo(Transaction::class);
-    }
+   public function transaction()
+{
+    return $this->belongsTo(Transaction::class, 'transaction_id', 'id');
+}
+
 
 }

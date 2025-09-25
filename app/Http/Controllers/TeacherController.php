@@ -7,6 +7,7 @@ use App\Models\IncomeType;
 use App\Models\Teacher;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class TeacherController extends Controller
@@ -54,13 +55,58 @@ class TeacherController extends Controller
         $record = Teacher::findOrFail($id);
         return $record;
     }
-
-    public function showTeacherDeatails($id)
+public function showTeacherDeatails(string $id)
 {
-    $teacher = Teacher::findOrFail($id);
+    // Ensure the Advance exists
+    $advance = Teacher::findOrFail($id);
 
+    // 1) Collect all transaction_ids from operating_advances_enteries for this advance
+    $txIds = DB::table('salaries')
+        ->where('advance_type_id', $id)
+        ->pluck('transaction_id')
+        ->values();
+
+        // dd($txIds);
+    // 2) Pull matching transactions (if none, you'll just get an empty collection)
+    $transactions = $txIds->isEmpty()
+        ? collect()
+        : Transaction::query()
+            ->whereIn('id', $txIds)
+            ->with('salary')
+            ->orderByDesc('transaction_date')
+            ->get([
+                'id',
+                'transaction_date',
+                'islamic_date',
+                'ref_no',
+                'method',
+                'received_from',
+                'received_by',
+                'remarks',
+                'cash_in',
+                'cash_out',
+                'transaction_type',
+            ]);
+           
+    // 3) Totals
+    $totalIn  = (int) $transactions->sum('cash_in');
+    $totalOut = (int) $transactions->sum('cash_out');
+
+    // 4) Render
     return Inertia::render('Teachers/TeacherDetails', [
-        'record' => [$teacher], 
+        'record' => [
+            'id'          => $advance->id,
+            'name'        => $advance->name,
+            'designation' => $advance->designation ?? null,
+            'contact'     => $advance->contact ?? null,
+            'type'        => 'Advance',
+        ],
+        'transactions' => $transactions,
+        'totals' => [
+            'in'  => $totalIn,
+            'out' => $totalOut,
+            'net' => $totalIn - $totalOut,
+        ],
     ]);
 }
 

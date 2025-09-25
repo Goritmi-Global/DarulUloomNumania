@@ -49,7 +49,7 @@
                     {{ translate("Multiple Expense") }}
                 </button>
 
-                    <button class="btn btn-success mt-3 ms-2" data-bs-toggle="modal" ref="openTransactionModal"
+                <button class="btn btn-success mt-3 ms-2" data-bs-toggle="modal" ref="openTransactionModal"
                     data-bs-target="#transactionmodal" @click="
                         clearFields();
                     form.process_type = 'Salary';
@@ -204,7 +204,7 @@
                                             entry.income_type ??
                                             entry.expense_type ??
                                             entry.advance_type
-                                            
+
                                         }}
                                     </td>
                                     <td>
@@ -340,7 +340,7 @@
                                 <div class="row g-3 border rounded p-2 mb-3" v-for="(form, index) in forms"
                                     :key="index">
 
-                                     <div class="col-12 col-md-12 mb-3">
+                                    <div class="col-12 col-md-12 mb-3">
                                         <label>{{
                                             translate("Process Type")
                                             }}</label>
@@ -359,7 +359,7 @@
                                         </div>
                                     </div>
 
-                                     <div class="col-12 col-md-4" v-if="form.process_type == 'Income'">
+                                    <div class="col-12 col-md-4" v-if="form.process_type == 'Income'">
                                         <label>{{
                                             translate("Income Type")
                                             }}</label>
@@ -378,7 +378,7 @@
                                         <Multiselect v-model="form.expense_type" :options="ExpenseTypesOptions"
                                             :searchable="true" />
 
-                                            <div class="invalid-feedback animated fadeIn" v-if="formErrors.expense_type">
+                                        <div class="invalid-feedback animated fadeIn" v-if="formErrors.expense_type">
                                             {{ formErrors.expense_type[0] }}
                                         </div>
                                     </div>
@@ -397,7 +397,7 @@
                                         </div>
                                     </div>
 
-                                     <div class="col-12 col-md-4" v-if="
+                                    <div class="col-12 col-md-4" v-if="
                                         form.process_type == 'Borrow' ||
                                         form.process_type == 'Lend'
                                     ">
@@ -447,7 +447,7 @@
                                         </div>
                                     </div>
 
-                                   <div class="col-md-4 col-12">
+                                    <div class="col-md-4 col-12">
                                         <label for="remarks">{{
                                             translate("Description")
                                             }}</label>
@@ -461,7 +461,7 @@
                                         </div>
                                     </div>
 
-                                     <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-4">
                                         <label>{{
                                             translate("Payment Method")
                                             }}</label>
@@ -480,7 +480,8 @@
                                             }}</label>
                                         <Datepicker autoApply :enable-time-picker="false" :class="{
                                             'invalid-bg': formErrors.date,
-                                        }" v-model="form.date" @update:modelValue="(val) => convertToHijriInMultipleTransactions(val, index)" />
+                                        }" v-model="form.date"
+                                            @update:modelValue="(val) => convertToHijriInMultipleTransactions(val, index)" />
                                         <div v-if="formErrors.date" class="invalid-feedback">
                                             {{ formErrors.date[0] }}
                                         </div>
@@ -540,7 +541,8 @@
                                             translate("Receipt image")
                                             }}</label>
                                         <br />
-                                        <CropperOffCanvas @croppedImg="croppedImgPassToFormForMultiple" accept=".jpg,.jpeg,.png" />
+                                        <CropperOffCanvas @croppedImg="croppedImgPassToFormForMultiple"
+                                            accept=".jpg,.jpeg,.png" />
                                         <br />
                                         <img v-if="form.receipt_image" :src="form.receipt_image ??
                                             '/images/default.jpg'
@@ -564,11 +566,12 @@
                                     </div>
                                 </div>
 
-                              <div class="col-md-12 text-end"> <button class="btn btn-primary btn-sm mt-2 px-4 py-2" @click="addForm">
-                                    + Add
-                                </button>
-                            </div>
-                               
+                                <div class="col-md-12 text-end"> <button class="btn btn-primary btn-sm mt-2 px-4 py-2"
+                                        @click="addForm">
+                                        + Add
+                                    </button>
+                                </div>
+
 
                                 <!-- save button -->
                                 <div class="mt-3">
@@ -724,7 +727,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 col-12">
+
+
+                                    <div class="col-md-6 col-12" v-if="form.process_type == 'Expense' ||
+                                        form.process_type == 'Lend' ||
+                                        form.process_type == 'Advance' || form.process_type == 'income'">
                                         <label for="remarks">{{
                                             translate("Description")
                                             }}</label>
@@ -737,6 +744,17 @@
                                             {{ formErrors.remarks[0] }}
                                         </div>
                                     </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label">{{ translate("Salary Month") }}</label>
+                                        <Datepicker v-model="form.salary_month" month-picker autoApply :class="{
+                                            'invalid-bg': formErrors.salary_month,
+                                        }" />
+                                        <div v-if="formErrors.salary_month" class="invalid-feedback">
+                                            {{ formErrors.salary_month[0] }}
+                                        </div>
+                                    </div>
+
 
                                     <div class="col-12 col-md-6">
                                         <label>{{
@@ -1046,6 +1064,7 @@ export default {
                 ref_no: "",
                 method: "",
                 remarks: "",
+                salary_month: "",
                 expense_type: "",
                 income_type: "",
                 advance_type: "",
@@ -1212,47 +1231,47 @@ export default {
             this.forms.splice(index, 1);
         },
 
-        submitMultipleExpense() {  
-       
-  },
+        submitMultipleExpense() {
 
-  submitMultipleExpense() {
-    // Format dates and prepare payload
-    const payload = this.forms.map((form) => {
-      return {
-        id: form.id,
-        cash_in: form.cash_in,
-        cash_out: form.cash_out,
-        date: form.date ? moment(form.date).format("YYYY/MM/DD") : "",
-        islamic_date: form.islamic_date,
-        ref_no: form.ref_no,
-        method: form.method,
-        remarks: form.remarks,
-        person: form.person,
-        expense_type: form.expense_type,
-        income_type: form.income_type,
-        advance_type: form.advance_type,
-        process_type: form.process_type,
-        received_from: form.received_from,
-        received_by: form.received_by,
-        receipt_image: form.receipt_image ?? null,
-      };
-    });
+        },
 
-    axios
-      .post(route("api.transaction.storeMultiple"), { transactions: payload })
-      .then(() => {
-        this.formStatus = 1;
-        this.fetchTransactionEntries();
-        toastr.success(this.translate("Multiple transactions saved successfully."));
-        this.$refs.closeModal?.click();
-      })
-      .catch((error) => {
-        this.formStatus = 1;
-        toastr.error(error.response?.data?.message || "Error saving multiple expenses");
-        this.formErrors = error.response?.data?.errors || {};
-      });
-  },
+        submitMultipleExpense() {
+            // Format dates and prepare payload
+            const payload = this.forms.map((form) => {
+                return {
+                    id: form.id,
+                    cash_in: form.cash_in,
+                    cash_out: form.cash_out,
+                    date: form.date ? moment(form.date).format("YYYY/MM/DD") : "",
+                    islamic_date: form.islamic_date,
+                    ref_no: form.ref_no,
+                    method: form.method,
+                    remarks: form.remarks,
+                    person: form.person,
+                    expense_type: form.expense_type,
+                    income_type: form.income_type,
+                    advance_type: form.advance_type,
+                    process_type: form.process_type,
+                    received_from: form.received_from,
+                    received_by: form.received_by,
+                    receipt_image: form.receipt_image ?? null,
+                };
+            });
+
+            axios
+                .post(route("api.transaction.storeMultiple"), { transactions: payload })
+                .then(() => {
+                    this.formStatus = 1;
+                    this.fetchTransactionEntries();
+                    toastr.success(this.translate("Multiple transactions saved successfully."));
+                    this.$refs.closeModal?.click();
+                })
+                .catch((error) => {
+                    this.formStatus = 1;
+                    toastr.error(error.response?.data?.message || "Error saving multiple expenses");
+                    this.formErrors = error.response?.data?.errors || {};
+                });
+        },
 
         /* --- Helpers for table numbering --- */
         tableIndex(idxOnPage) {
@@ -1401,6 +1420,12 @@ Remarks: ${entry.remarks || "-"}
             formData.append("date", s(this.form.date));
             formData.append("islamic_date", s(this.form.islamic_date));
             formData.append("ref_no", s(this.form.ref_no));
+            formData.append(
+                "salary_month",
+                this.form.salary_month
+                    ? `${this.form.salary_month.year}-${String(this.form.salary_month.month).padStart(2, "0")}`
+                    : ""
+            );
             formData.append("method", s(this.form.method));
             formData.append("remarks", s(this.form.remarks));
             formData.append("person", s(this.form.person));
@@ -1615,7 +1640,7 @@ Remarks: ${entry.remarks || "-"}
                 });
         },
 
-         pluckTeacher() {
+        pluckTeacher() {
             axios
                 .get(route("api.teacher.pluck"))
                 .then((response) => {
@@ -1728,7 +1753,7 @@ Remarks: ${entry.remarks || "-"}
             this.form.receipt_image = img;
         },
 
-         croppedImgPassToFormForMultiple(img) {
+        croppedImgPassToFormForMultiple(img) {
             this.forms.receipt_image = img;
         },
         setAltImg(event) {
@@ -1843,10 +1868,10 @@ Remarks: ${entry.remarks || "-"}
         },
 
         convertToHijriInMultipleTransactions(date, index) {
-    this.forms[index].islamic_date = date
-      ? moment(date).format("iYYYY/iM/iD")
-      : "";
-  },
+            this.forms[index].islamic_date = date
+                ? moment(date).format("iYYYY/iM/iD")
+                : "";
+        },
         viewEntry(entry, idx) {
             this.selectedEntry = entry || {};
             this.selectedIndex = idx ?? -1;

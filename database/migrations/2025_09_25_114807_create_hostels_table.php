@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sessions', function (Blueprint $table) {
+        Schema::create('hostels', function (Blueprint $table) {
             $table->id();
-            $table->string('data');   // example: "2025-2026"
-            $table->boolean('status')->default(1); // 1 = active, 0 = inactive
+            $table->string('hostel_name');
+            $table->string('contact_number')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sessions');
+        Schema::dropIfExists('hostels');
     }
 };

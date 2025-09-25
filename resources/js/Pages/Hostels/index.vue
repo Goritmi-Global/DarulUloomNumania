@@ -2,13 +2,13 @@
     <main id="main" class="main">
         <div class="pagetitle d-flex justify-content-between">
             <div>
-                <h1 class="theme-text-color">{{ translate("Session Management") }}</h1>
+                <h1 class="theme-text-color">{{ translate("Hostel Management") }}</h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/dashboard">{{ translate("Darul Oloom") }}</a>
                         </li>
-                        <li class="breadcrumb-item">{{ translate("Sessions") }}</li>
+                        <li class="breadcrumb-item">{{ translate("Hostels") }}</li>
                         <li class="breadcrumb-item active">{{ translate("Index") }}</li>
                     </ol>
                 </nav>
@@ -16,7 +16,7 @@
             <div>
                 <button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#updateRecordModal"
                     @click="clearFields">
-                    <i class="bi bi-plus-lg"></i> {{ translate("New Session") }}
+                    <i class="bi bi-plus-lg"></i> {{ translate("New Hostel") }}
                 </button>
             </div>
         </div>
@@ -24,30 +24,32 @@
         <section class="section">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title theme-text-color">{{ translate("All Sessions") }}</h5>
+                    <h5 class="card-title theme-text-color">{{ translate("All Hostels") }}</h5>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>{{ translate("Session") }}</th>
-                                    <th>{{ translate("Status") }}</th>
+                                    <th>{{ translate("Hostel Name") }}</th>
+                                    <th>{{ translate("Contact Number") }}</th>
                                     <th>{{ translate("Action") }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(session, index) in sessionsData" :key="session.id">
+                                <tr v-for="(hostel, index) in hostelsData" :key="hostel.id">
                                     <th scope="row">{{ index + 1 }}</th>
-                                    <td>{{ session.data }}</td>
-                                    <td>
-                                        <span v-if="session.status" class="badge bg-success">Active</span>
-                                        <span v-else class="badge bg-secondary">Inactive</span>
-                                    </td>
+                                    <td>{{ hostel.hostel_name }}</td>
+                                    <td>{{ hostel.contact_number }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <button class="btn btn-sm fs-6" title="Edit" data-bs-toggle="modal"
-                                                data-bs-target="#updateRecordModal" @click="showEntry(session.id)">
+                                                data-bs-target="#updateRecordModal" @click="showEntry(hostel.id)">
                                                 <i class="bi bi-pencil"></i>
+                                            </button>
+
+                                            <button class="btn btn-sm text-danger fs-6" title="Delete"
+                                                @click="deleteEntry(hostel.id)">
+                                                <i class="bi bi-trash"></i>
                                             </button>
                                         </div>
                                     </td>
@@ -64,35 +66,31 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-primary">
-                                {{ form.id ? form.data : translate("Add New Session") }}
+                                {{ form.id ? form.hostel_name : translate("Add New Hostel") }}
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
                             <div class="card card-body p-3">
                                 <div class="row g-3">
-                                    <!-- Session Field -->
+                                    <!-- Hostel Name -->
                                     <div class="col-12">
-                                        <label class="form-label">{{ translate("Session (e.g. 2025-2026)") }}</label>
-                                        <input type="text" v-model="form.data" class="form-control"
-                                            placeholder="2025-2026" :class="{ 'invalid-bg': formErrors.data }" />
-                                        <div v-if="formErrors.data" class="invalid-feedback">
-                                            {{ formErrors.data[0] }}
+                                        <label class="form-label">{{ translate("Hostel Name") }}</label>
+                                        <input type="text" v-model="form.hostel_name" class="form-control"
+                                            :class="{ 'invalid-bg': formErrors.hostel_name }" />
+                                        <div v-if="formErrors.hostel_name" class="invalid-feedback">
+                                            {{ formErrors.hostel_name[0] }}
                                         </div>
                                     </div>
-                                    <!-- Status Field -->
+                                    <!-- Contact Number -->
                                     <div class="col-12">
-                                        <label class="form-label">{{ translate("Status") }}</label>
-                                        <select v-model="form.status" class="form-control"
-                                            :class="{ 'invalid-bg': formErrors.status }">
-                                            <option :value="1">Active</option>
-                                            <option :value="0">Inactive</option>
-                                        </select>
-                                        <div v-if="formErrors.status" class="invalid-feedback">
-                                            {{ formErrors.status[0] }}
+                                        <label class="form-label">{{ translate("Contact Number") }}</label>
+                                        <input type="text" v-model="form.contact_number" class="form-control"
+                                            :class="{ 'invalid-bg': formErrors.contact_number }" />
+                                        <div v-if="formErrors.contact_number" class="invalid-feedback">
+                                            {{ formErrors.contact_number[0] }}
                                         </div>
                                     </div>
-
                                     <!-- Save Button -->
                                     <div class="mt-3">
                                         <button type="button" class="btn btn-success" @click="submit"
@@ -118,15 +116,16 @@
 <script>
 import axios from "axios";
 import Master from "../Layout/Master.vue";
+
 export default {
     layout: Master,
     data() {
         return {
-            sessionsData: [],
+            hostelsData: [],
             form: {
                 id: "",
-                data: "",
-                status: 1,
+                hostel_name: "",
+                contact_number: "",
             },
             formErrors: [],
             formStatus: 1,
@@ -138,14 +137,14 @@ export default {
     methods: {
         fetchRecords() {
             axios
-                .get(route("api.sessions.fetch"))
+                .get(route("api.hostels.fetch"))
                 .then((res) => {
-                    this.sessionsData = res.data;
+                    this.hostelsData = res.data;
                 })
                 .catch((err) => console.error(err));
         },
         showEntry(id) {
-            axios.get(route("api.sessions.show", id))
+            axios.get(route("api.hostels.show", id))
                 .then((res) => {
                     this.form = { ...res.data };
                 })
@@ -154,7 +153,7 @@ export default {
         submit() {
             this.formStatus = 0;
             axios
-                .post(route("api.sessions.store"), this.form) // Add/Update
+                .post(route("api.hostels.store"), this.form)
                 .then(() => {
                     this.formStatus = 1;
                     toastr.success(this.translate("Saved successfully."));
@@ -167,11 +166,21 @@ export default {
                     toastr.error(err.response.data.message);
                 });
         },
+        deleteEntry(id) {
+            if (confirm(this.translate("Are you sure you want to delete this hostel?"))) {
+                axios.delete(route("api.hostels.destroy", id))
+                    .then(() => {
+                        toastr.success(this.translate("Deleted successfully."));
+                        this.fetchRecords();
+                    })
+                    .catch((err) => toastr.error(err.response.data.message));
+            }
+        },
         clearFields() {
             this.form = {
                 id: "",
-                data: "",
-                status: 1,
+                hostel_name: "",
+                contact_number: "",
             };
             this.formErrors = [];
         },

@@ -99,7 +99,7 @@ class TransactionController extends Controller
                 if ($salary) {
                     // dd("Test",$advance);
                     $advance_type = Teacher::find($salary->advance_type_id);
-                    $transaction->expense_type = $advance_type ? $advance_type->name.' (Salary)' : 'Unknown Advance';
+                    $transaction->expense_type = $advance_type ? $advance_type->name.' (Salary)' : 'Unknown Salary';
                 }
             }
 
@@ -192,6 +192,7 @@ class TransactionController extends Controller
     // Store or update a transaction entry
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'process_type' => 'required',
             'income_type' => 'required_if:process_type,Income',
@@ -204,7 +205,7 @@ class TransactionController extends Controller
             'islamic_date' => 'required',
             'ref_no' => 'nullable|string|max:255',
             'method' => 'required|string|max:255',
-            'remarks' => 'required|string|max:255',
+            // 'remarks' => 'required|string|max:255',
             'received_by' => 'nullable|string|max:255',
             'received_from' => 'nullable|string|max:255',
         ]);
@@ -358,6 +359,8 @@ class TransactionController extends Controller
             $income->save();
         }
 
+        // Handle Salary
+
         if ($request->process_type == 'Salary') {
             $salary = Salary::where('transaction_id', $transaction->id)->first();
             if (! $salary) {
@@ -368,7 +371,7 @@ class TransactionController extends Controller
             $salary->advance_type_id = $request->advance_type ?? null;
             $salary->transaction_date = $request->date;
             $salary->amount = $request->cash_out;
-
+            $salary->month_and_year = $request->salary_month;
             $transaction->cash_out = $request->cash_out;
             $transaction->cash_in = null;
 

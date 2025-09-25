@@ -160,6 +160,16 @@ export default {
     created() {
         this.fetchRecords();
     },
+    watch: {
+  "form.teacher_id"(val) {
+    if (this.form.process_type === "Salary") {
+      const teacher = this.teachers.find(t => t.id === val);
+      this.form.cash_out = teacher ? teacher.monthly_salary : "";
+    }
+  }
+}
+,
+
     methods: {
         fetchRecords() {
             axios

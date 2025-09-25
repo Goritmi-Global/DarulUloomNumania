@@ -6,6 +6,7 @@ use App\Http\Controllers\CommonDataController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExternalWebstieController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HostelController;
 use App\Http\Controllers\IncomeExpenseController;
 use App\Http\Controllers\IncomeStatementController;
 use App\Http\Controllers\IntroductionController;
@@ -96,7 +97,13 @@ Route::get('/operating-advance/{id}', [IncomeExpenseController::class, 'operatin
 
 
         // Route for Session
-         Route::get('/sessions', [SessionController::class, 'index'])->name('sessions');
+        Route::get('/sessions', [SessionController::class, 'index'])->name('sessions');
+
+        // Route for Hostel
+        Route::get('/hostels', [HostelController::class, 'index'])->name('sessions');
+        
+      
+         
 
 
 
