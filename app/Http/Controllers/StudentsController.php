@@ -82,7 +82,7 @@ class StudentsController extends Controller
 
     public function store(Request $request)
     {
-
+       
         $request->validate([
             'apply_for'          => 'required',
             'name'               => 'required|string|max:255',
@@ -93,7 +93,7 @@ class StudentsController extends Controller
             'province'           => 'required',
             'district'           => 'required',
             'reg_no'             => 'required',
-            'class_no'             => 'required',
+            // 'class_no'             => 'required',
             // 'visaNumber'        =>  'required',
             'phone_number'       => 'required|string|max:255',
             'whatsapp'           => 'required|string|max:255',
@@ -125,12 +125,13 @@ class StudentsController extends Controller
         $student->dob          = $request->dob;
         $student->cnic         = $request->cnic;
         $student->reg_no         = $request->reg_no;
-        $student->class_no         = $request->class_no;
+        // $student->class_no         = $request->class_no;
         $student->country      = $request->country;
         $student->province     = $request->province;
         $student->district     = $request->district;
         $student->visa    = $request->visaNumber;
         $student->phone_number = $request->phone_number;
+        $student->class_id = $request->class_id;
         $student->whatsapp     = $request->whatsapp;
         $student->hostel     = $request->hostelName;
         // Guardian Info

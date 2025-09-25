@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\BayanaatController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\CommonDataController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -15,6 +17,7 @@ use App\Http\Controllers\QuestionAnswerController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
@@ -106,6 +109,28 @@ Route::middleware(['web'])->group(function () {
         Route::get('/show/{id}', [HostelController::class, 'show'])->name('show');
         Route::post('/store', [HostelController::class, 'store'])->name('store');
         Route::delete('{id}', [HostelController::class, 'destroy'])->name('destroy');
+    });
+
+    // Rouets for Classes
+   Route::prefix('classes')->name('api.classes.')->group(function () {
+    Route::get('cards', [ClassController::class, 'cards'])->name('cards');    // <- new
+    Route::get('list', [ClassController::class, 'list'])->name('list');      // optional
+    Route::get('fetch', [ClassController::class, 'fetch'])->name('fetch');
+    Route::get('{id}', [ClassController::class, 'show'])->name('show');
+    Route::post('store', [ClassController::class, 'store'])->name('store');
+    Route::delete('{id}', [ClassController::class, 'destroy'])->name('destroy');
+});
+
+
+// Route for attendance 
+
+Route::post('/attendance/mark', [AttendanceController::class, 'store']);
+
+    // Route::get('/classes/list', [ClassController::class, 'list'])->name('api.classes.list');
+
+    Route::prefix('subjects')->name('api.subjects.')->group(function () {
+        Route::post('store', [SubjectController::class, 'store'])->name('store');
+        Route::delete('{id}', [SubjectController::class, 'destroy'])->name('destroy');
     });
 
     // Business Type Routes

@@ -227,7 +227,24 @@
             <span>{{ translate("Hostel") }}</span>
           </a>
         </li>
-         
+
+        <!-- Class Module -->
+
+         <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
+          <a class="nav-link" :href="'/classes'" :class="{ active: isActive('/classes') }">
+            <i class="bi bi-people-fill"></i>
+            <span>{{ translate("Class") }}</span>
+          </a>
+        </li>
+
+
+        <!-- Attendance module  -->
+          <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
+          <a class="nav-link" :href="'/attendances'" :class="{ active: isActive('/attendances') }">
+            <i class="bi bi-people-fill"></i>
+            <span>{{ translate("Attendance") }}</span>
+          </a>
+        </li>
 
         <!-- Darul Iftah -->
         <li

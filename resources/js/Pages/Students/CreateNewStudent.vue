@@ -298,8 +298,22 @@
                                             </div>
                                         </div>
 
+
+                                        <!-- Classes  -->
+                                        <div class="col-md-6">
+                                            <label class="form-label">{{
+                                                translate("Class")
+                                            }}</label>
+                                            <Multiselect v-model="form.class_id" :options="classOptions"
+                                                placeholder="Select Class" :searchable="true" />
+
+                                            <div v-if="formErrors.class_id" class="text-danger">
+                                                {{ formErrors.class_id[0] }}
+                                            </div>
+                                        </div>
+
                                         <!-- Academic Info -->
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <label class="form-label">{{
                                                 translate("Previous Madrasa Name")
                                             }}</label>
@@ -321,9 +335,9 @@
                                                 <Multiselect v-model="form.previous_class"
                                                     :options="previousClassOptions" :placeholder="translate('Select Course')
                                                         " :searchable="true" :multiple="true" :class="{
-                                                        'is-invalid':
-                                                            formErrors.previous_class,
-                                                    }" />
+                                                            'is-invalid':
+                                                                formErrors.previous_class,
+                                                        }" />
 
                                                 <div v-if="formErrors.previous_class" class="text-danger">
                                                     {{ formErrors.previous_class[0] }}
@@ -471,7 +485,8 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="c-files">
-                                                <span class="col-form-label mt-1">{{ translate('Payment Image') }}</span>
+                                                <span class="col-form-label mt-1">{{ translate('Payment Image')
+                                                }}</span>
                                                 <br />
                                                 <Cropper @croppedImg="cropReceipt" accept=".jpg,.jpeg,.png" />
                                                 <br />
@@ -538,7 +553,9 @@ export default {
     },
     props: ["studentId", "studentData"],
     created() {
+          this.fetchClasses();
         if (this.studentId) {
+           
             // in the Props in studentData the current student record is coming if studnetId found then get the studentData in the form3
             const studentData = this.studentData;
             // Set the form data with the studentData
@@ -574,6 +591,7 @@ export default {
         }
     },
 
+    
     data() {
         return {
             enrollCheckCnin: "",
@@ -583,9 +601,9 @@ export default {
             noRecordFound: false,
 
             formErrors: {},
-
             currentStudent: "",
             currentCourse: "",
+
             myOptions: [
                 { label: "Yes (ہاں)", value: "Yes" },
                 { label: "No (نہیں)", value: "No" },
@@ -635,6 +653,7 @@ export default {
                 image: null, // For storing the uploaded image
                 // Guardian Info
                 guardian_name: "",
+                class_id: null,
                 guardian_cnic: "",
                 guardian_phone: "",
                 studiedBefore: "",
@@ -642,7 +661,7 @@ export default {
                 reg_no: "",
                 district: "",
                 cnic_front: null,
-                cnic_back:null,
+                cnic_back: null,
                 payment_receipt: null,
                 // Academic Info
                 desired_class: "",
@@ -655,6 +674,8 @@ export default {
 
                 status: "",
             },
+
+            classOptions: [],
 
             studentData: null,
 
@@ -681,6 +702,7 @@ export default {
                     value: "Azad Jammu and Kashmir",
                 },
             ],
+
 
             districtsByProvince: {
                 "Punjab": [
@@ -825,6 +847,8 @@ export default {
             showModal: false,
         };
     },
+
+
     methods: {
         async searchStudent() {
             if (!this.form.registrationNumber) {
@@ -880,93 +904,102 @@ export default {
             }
         },
 
+        fetchClasses() {
+            axios.get(route("api.classes.list"))
+                .then((res) => {
+                    console.log('Hello');
+                    this.classOptions = res.data;
+                })
+                .catch((err) => console.error(err));
+        },
+    },
 
-        submit() {
-            this.currentStudent = this.form.name;
-            this.currentCourse = this.form.apply_for;
-            this.formStatus = 0;
 
-            const formData = new FormData();
-            for (let key in this.form) {
-                if (this.form[key] !== null) {
-                    formData.append(key, this.form[key]);
-                }
+    submit() {
+        this.currentStudent = this.form.name;
+        this.currentCourse = this.form.apply_for;
+        this.formStatus = 0;
+
+        const formData = new FormData();
+        for (let key in this.form) {
+            if (this.form[key] !== null) {
+                formData.append(key, this.form[key]);
             }
+        }
 
-            axios
-                .post(route("api.student.store"), formData, {
-                    headers: { "Content-Type": "multipart/form-data" },
-                })
-                .then(() => {
-                    this.formStatus = 1;
-                    this.clearForm();
-                    toastr.success(
-                        this.translate("Student enrolled successfully.")
+        axios
+            .post(route("api.student.store"), formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then(() => {
+                this.formStatus = 1;
+                this.clearForm();
+                toastr.success(
+                    this.translate("Student enrolled successfully.")
+                );
+                this.showModal = true;
+                this.$inertia.get(route("students"));
+            })
+            .catch((error) => {
+                toastr.error(error.response.data.message);
+                this.formStatus = 1;
+                if (error.response?.data?.errors) {
+                    this.formErrors = error.response.data.errors;
+                    let errorMessages = Object.values(this.formErrors)
+                        .flat()
+                        .join("<br>");
+                    toastr.error(
+                        this.translate("Some fields required data")
                     );
-                    this.showModal = true;
-                    this.$inertia.get(route("students"));
-                })
-                .catch((error) => {
-                    toastr.error(error.response.data.message);
-                    this.formStatus = 1;
-                    if (error.response?.data?.errors) {
-                        this.formErrors = error.response.data.errors;
-                        let errorMessages = Object.values(this.formErrors)
-                            .flat()
-                            .join("<br>");
-                        toastr.error(
-                            this.translate("Some fields required data")
-                        );
-                    } else {
-                        toastr.error(
-                            this.translate("An unexpected error occurred.")
-                        );
-                    }
-                });
-        },
+                } else {
+                    toastr.error(
+                        this.translate("An unexpected error occurred.")
+                    );
+                }
+            });
+    },
 
-        croppedImgSubmit(img) {
-            this.form.image = img;
-        },
-         cropCNICFront(img) {
+    croppedImgSubmit(img) {
+        this.form.image = img;
+    },
+    cropCNICFront(img) {
         this.form.cnic_front = img; // CNIC front image
     },
     cropCNICBack(img) {
         this.form.cnic_back = img; // CNIC back image
     },
-    cropReceipt(img){
+    cropReceipt(img) {
         this.form.payment_receipt = img;
-    },  
+    },
 
-        clearForm() {
-            this.form = {
-                id: "",
-                apply_for: "",
-                name: "",
-                father: "",
-                dob: "",
-                cnic: "",
-                country: "",
-                province: "",
-                current_address: "",
-                permanent_address: "",
-                phone_number: "",
-                whatsapp_number: "",
+    clearForm() {
+        this.form = {
+            id: "",
+            apply_for: "",
+            name: "",
+            father: "",
+            dob: "",
+            cnic: "",
+            country: "",
+            province: "",
+            current_address: "",
+            permanent_address: "",
+            phone_number: "",
+            whatsapp_number: "",
 
-                guardian_name: "",
-                guardian_cnic: "",
-                guardian_phone: "",
+            guardian_name: "",
+            guardian_cnic: "",
+            guardian_phone: "",
 
-                desired_class: "",
-                previous_madrasa: "",
-                previous_class: "",
-                total_marks: "",
-                obtained_marks: "",
-                primary_education: "",
-                additional_ability: "",
-            };
-            this.formErrors = {};
-        },
+            desired_class: "",
+            previous_madrasa: "",
+            previous_class: "",
+            total_marks: "",
+            obtained_marks: "",
+            primary_education: "",
+            additional_ability: "",
+        };
+        this.formErrors = {};
     },
 };
 </script>

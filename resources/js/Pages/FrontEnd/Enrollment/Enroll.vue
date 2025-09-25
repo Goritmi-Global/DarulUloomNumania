@@ -719,9 +719,21 @@
                                         </div>
                                     </div>
 
+   <!-- Classes  -->
+                                        <div class="col-md-6">
+                                            <label class="form-label">{{
+                                                translate("Class")
+                                            }}</label>
+                                            <Multiselect v-model="form.class_id" :options="classOptions"
+                                                placeholder="Select Class" :searchable="true" />
+
+                                            <div v-if="formErrors.class_id" class="text-danger">
+                                                {{ formErrors.class_id[0] }}
+                                            </div>
+                                        </div>
 
                                     <!-- Academic Info -->
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <label class="form-label">{{
                                             translate("Previous Madrasa Name")
                                         }}</label>
@@ -1112,6 +1124,10 @@ export default {
     components: {
         Multiselect,
     },
+    
+    created(){
+        this.fetchClasses();
+    },
 
    data() {
     return {
@@ -1165,6 +1181,7 @@ export default {
             province: "",
             district: "",
             hostelite: "",
+            class_id: "",
             hostelName: "",
             studiedBefore: "",
             registrationNumber: "",
@@ -1191,6 +1208,7 @@ export default {
             primary_education: "",
             additional_ability: "",
         },
+         classOptions: [],
 
         studentData: null,
 
@@ -1402,6 +1420,15 @@ export default {
 }
 
 ,
+
+ fetchClasses() {
+            axios.get(route("api.classes.list"))
+                .then((res) => {
+                    console.log('Hello');
+                    this.classOptions = res.data;
+                })
+                .catch((err) => console.error(err));
+        },
 
         hideModal() {
             this.showModal = false;

@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\BayanaatController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\CommonDataController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExternalWebstieController;
@@ -14,11 +16,10 @@ use App\Http\Controllers\IslamicNameController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\QuestionAnswerController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\StudentsController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\operatingAdvanceController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -36,12 +37,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/storage-link', function () {
     Artisan::call('storage:link');
-    return "Storage link has been created successfully!";
+
+    return 'Storage link has been created successfully!';
 });
 
 Route::get('/login', [HomeController::class, 'index'])->name('login');
 Route::get('/policy/and/privacy', [HomeController::class, 'privacyPolicy'])->name('privacy.policy');
-
 
 // Authenticated routes
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -72,12 +73,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/download-report-excel', [ReportController::class, 'report_exportTo_excel'])->name('download-report-excel');
         Route::post('/download-income-statement-pdf', [IncomeStatementController::class, 'downloadIncomeStatementPDF'])->name('download-income-statement-pdf');
 
-         
         Route::get('/operating/advance', [IncomeExpenseController::class, 'operating_advance_index'])->name('operating.advance');
 
-Route::get('/operating-advance/{id}', [IncomeExpenseController::class, 'operating_advance_show'])
-    ->whereUuid('id')
-    ->name('operating_advance.show');
+        Route::get('/operating-advance/{id}', [IncomeExpenseController::class, 'operating_advance_show'])
+            ->whereUuid('id')
+            ->name('operating_advance.show');
 
         // 🏫 Admission Officer Routes
         Route::get('/students', [StudentsController::class, 'index'])->name('students');
@@ -90,22 +90,26 @@ Route::get('/operating-advance/{id}', [IncomeExpenseController::class, 'operatin
         Route::get('/print/pdf/{student_id}/{slip_id}', [StudentsController::class, 'print_student_enrollment_pdf'])->name('print.pdf');
         Route::get('/student/details/pdf/print/{student_id}/{process}', [StudentsController::class, 'download_print_student_details_pdf'])->name('student.details.pdf.print');
 
-
-        // Routes for Teacher   
+        // Routes for Teacher
         Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers');
         Route::get('/teachers/{id}', [TeacherController::class, 'showTeacherDeatails'])->name('teachers.show');
-
 
         // Route for Session
         Route::get('/sessions', [SessionController::class, 'index'])->name('sessions');
 
         // Route for Hostel
-        Route::get('/hostels', [HostelController::class, 'index'])->name('sessions');
-        
-      
-         
+        Route::get('/hostels', [HostelController::class, 'index'])->name('hostels');
+        // Rout for Attendance
+        Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances');
+        Route::get('/attendance/class/{id}', [AttendanceController::class, 'showClassStudents'])
+     ->name('attendance.class.show');
 
 
+        // Route for Class
+        Route::prefix('classes')->name('classes.')->group(function () {
+            Route::get('/', [ClassController::class, 'index'])->name('index');
+            Route::get('{id}', [ClassController::class, 'showClassDetails'])->name('show');
+        });
 
         // 📚 Iftah Manager Routes
         Route::get('/introduction', [IntroductionController::class, 'index'])->name('introduction');
@@ -144,7 +148,7 @@ Route::get('/operating-advance/{id}', [IncomeExpenseController::class, 'operatin
         Route::get('/enroll-new-students', [StudentsController::class, 'enroll_new_students'])->name('enroll-new-students');
         Route::get('/student/details/{id}', [StudentsController::class, 'details'])->name('student.details');
         Route::get('/student/payment/details/{id}', [StudentsController::class, 'student_payement_details'])->name('student.payment.details');
-   Route::get('/student/show/{id}', [StudentsController::class, 'show'])->name('student.show');
+        Route::get('/student/show/{id}', [StudentsController::class, 'show'])->name('student.show');
         Route::get('/download/pdf/{student_id}/{slip_id}', [StudentsController::class, 'download_student_enrollment_pdf'])->name('download.pdf');
         Route::get('/print/pdf/{student_id}/{slip_id}', [StudentsController::class, 'print_student_enrollment_pdf'])->name('print.pdf');
         Route::get('/student/details/pdf/print/{student_id}/{process}', [StudentsController::class, 'download_print_student_details_pdf'])->name('student.details.pdf.print');
