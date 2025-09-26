@@ -13,6 +13,7 @@ class Result extends Model
         'student_id',
         'class_id',
         'marks',
+         'percentage',
     ];
 
     protected $casts = [

@@ -19,6 +19,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
@@ -180,3 +181,6 @@ Route::get('/about', [ExternalWebstieController::class, 'about'])->name('/about'
 Route::get('/events', [ExternalWebstieController::class, 'events'])->name('/events');
 Route::get('/contact', [ExternalWebstieController::class, 'contact'])->name('/contact');
 Route::get('/ask/question', [QuestionAnswerController::class, 'ask_question'])->name('ask.question');
+
+
+Route::get('/courses/enroll', [SubjectController::class, 'getCourses'])->name('get.courses');

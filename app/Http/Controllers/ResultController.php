@@ -37,7 +37,7 @@ class ResultController extends Controller
             'class_id' => 'required|exists:classes,id',
             'results' => 'required|array',
             // 'marks' => 'required'
-        ]); 
+        ]);
 
         foreach ($data['results'] as $result) {
             Result::updateOrCreate(
@@ -47,8 +47,10 @@ class ResultController extends Controller
                 ],
                 [
                     'marks' => json_encode($result['marks']),
+                    'percentage' => $result['percentage'],
                 ]
             );
+
         }
 
         return response()->json(['message' => 'Results saved successfully!']);

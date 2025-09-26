@@ -134,6 +134,7 @@ Route::middleware(['web'])->group(function () {
         Route::post('store', [SubjectController::class, 'store'])->name('store');
         Route::delete('{id}', [SubjectController::class, 'destroy'])->name('destroy');
     });
+    Route::get('/subjects', [SubjectController::class, 'getSubjects']);
 
     // Business Type Routes
     Route::post('/business/type/save', [CommonDataController::class, 'saveBusinessType'])->name('api.business.types.store');

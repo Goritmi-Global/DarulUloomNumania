@@ -1127,6 +1127,7 @@ export default {
     
     created(){
         this.fetchClasses();
+        this.getSubjects();
     },
 
    data() {
@@ -1139,20 +1140,7 @@ export default {
         currentStudent: "",
         currentCourse: "",
         students: [],
-        filterOptions: [
-            "تَخَصُّص فِی الفِقْہِ ایک سال",
-            "تَخَصُّص فِی الفِقْہِ دو سال",
-            "تحصُّص فِي اللُّغَاتِ",
-            "دورہ حدیث",
-            "درجہ سابعہ",
-            "درجہ سادسہ",
-            "درجہ خامسہ",
-            "درجہ رابعہ",
-            "درجہ ثالثہ",
-            "درجہ ثانیہ",
-            "درجہ اولیٰ",
-            "متوسطا",
-        ],
+        filterOptions: [],
        myOptions: [
     { label: "Yes (ہاں)", value: "Yes" },
     { label: "No (نہیں)", value: "No" },
@@ -1417,9 +1405,16 @@ export default {
             alert("Something went wrong. Please try again.");
         }
     }
-}
+},
 
-,
+async getSubjects() {
+      try {
+        const response = await axios.get("/api/subjects");
+        this.filterOptions = response.data.map(sub => sub.subject_name);
+      } catch (error) {
+        console.error("Error fetching subjects:", error);
+      }
+    },
 
  fetchClasses() {
             axios.get(route("api.classes.list"))

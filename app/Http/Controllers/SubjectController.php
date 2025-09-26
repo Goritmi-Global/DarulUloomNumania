@@ -31,4 +31,10 @@ class SubjectController extends Controller
 
         return response()->json(['message' => 'Subject deleted successfully.']);
     }
+
+    public function getSubjects()
+    {
+
+        return response()->json(Subject::select('id', 'subject_name')->get());
+    }
 }

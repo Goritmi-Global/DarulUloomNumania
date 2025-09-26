@@ -31,6 +31,7 @@
                   <th>#</th>
                   <th>{{ translate('Name') }}</th>
                   <th v-for="sub in subjects" :key="sub.id">{{ sub.subject_name }}</th>
+                  <th>{{ translate('Percentage') }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -41,8 +42,14 @@
                     <input type="number" class="form-control" v-model.number="results[s.id][sub.id]" min="0"
                       :max="sub.total_marks" placeholder="Marks" />
                   </td>
+                  <td>
+                    <span class="fw-bold">
+                      {{ calculatePercentage(s.id) }} %
+                    </span>
+                  </td>
                 </tr>
               </tbody>
+
             </table>
             <div class="text-end">
               <button type="submit" class="btn btn-primary mt-3">
@@ -85,6 +92,21 @@ export default {
   }
   ,
   methods: {
+    calculatePercentage(studentId) {
+      const marks = this.results[studentId];
+      if (!marks) return 0;
+
+      let totalObtained = 0;
+      let totalMarks = 0;
+
+      this.subjects.forEach((sub) => {
+        totalObtained += marks[sub.id] || 0;
+        totalMarks += sub.total_marks;
+      });
+
+      return totalMarks > 0 ? ((totalObtained / totalMarks) * 100).toFixed(2) : 0;
+    },
+
     async saveResults() {
       try {
         const payload = {
@@ -96,13 +118,15 @@ export default {
           payload.results.push({
             student_id: s.id,
             class_id: this.classData.id,
-            marks: this.results[s.id], // already {subject_id: marks}
+            marks: this.results[s.id], // {subject_id: marks}
+            percentage: this.calculatePercentage(s.id), // NEW FIELD
           });
         });
 
         const response = await axios.post("/api/results/save", payload);
         alert(response.data.message);
 
+        // reset fields after save
         this.students.forEach((s) => {
           this.results[s.id] = {};
           this.subjects.forEach((sub) => {

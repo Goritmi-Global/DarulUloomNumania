@@ -83,17 +83,18 @@ export default {
 .class-card {
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
-  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
-
+  background: #ffffff; /* White background */
   border-radius: 10px;
   padding: 15px;
   color: #333;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); /* Deeper shadow */
 }
 
 .class-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2); /* Stronger hover shadow */
 }
+
 .open{
   background-color: #1C0D82;
   padding: 10px;
