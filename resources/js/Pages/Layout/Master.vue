@@ -1,12 +1,9 @@
 <template>
-  <div
-    class="main"
-    :class="{
-      'c-jameel-noori':
-        $page.props.default_language === 'PK' ||
-        $page.props.default_language === 'SA',
-    }"
-  >
+  <div class="main" :class="{
+    'c-jameel-noori':
+      $page.props.default_language === 'PK' ||
+      $page.props.default_language === 'SA',
+  }">
     <!-- HEADER -->
     <header id="header" class="app-header fixed-top d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between w-100">
@@ -23,12 +20,7 @@
         </div>
 
         <!-- Middle: quick link -->
-        <a
-          class="nav-link nav-icon ms-2 globe-link"
-          :href="route('/')"
-          target="_blank"
-          title="Browse Website"
-        >
+        <a class="nav-link nav-icon ms-2 globe-link" :href="route('/')" target="_blank" title="Browse Website">
           <i class="bi bi-globe"></i>
         </a>
 
@@ -37,21 +29,13 @@
           <ul class="d-flex align-items-center m-0">
             <!-- Language -->
             <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle lang-toggle"
-                href="#"
-                id="languageDropdown"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
+              <a class="nav-link dropdown-toggle lang-toggle" href="#" id="languageDropdown" data-bs-toggle="dropdown"
+                aria-expanded="false">
                 {{ translate(user_language_name) }}
               </a>
               <ul class="dropdown-menu dropdown-menu-end c-global-radius languages" aria-labelledby="languageDropdown">
-                <li
-                  v-for="(language, index) in languages"
-                  :key="index"
-                  :class="language.code === $page.props.default_language ? 'lang-active' : ''"
-                >
+                <li v-for="(language, index) in languages" :key="index"
+                  :class="language.code === $page.props.default_language ? 'lang-active' : ''">
                   <a class="dropdown-item" href="javascript:void(0)" @click="changeLang(language.code)">
                     {{ language.name }}
                   </a>
@@ -74,14 +58,18 @@
                     {{ $page.props.user.first_name }} {{ $page.props.user.last_name }}
                   </div>
                 </li>
-                <li><hr class="dropdown-divider my-2" /></li>
+                <li>
+                  <hr class="dropdown-divider my-2" />
+                </li>
                 <li>
                   <a class="dropdown-item d-flex align-items-center gap-2" href="/profile">
                     <i class="bi bi-gear"></i>
                     <span>{{ translate("Account Settings") }}</span>
                   </a>
                 </li>
-                <li><hr class="dropdown-divider my-2" /></li>
+                <li>
+                  <hr class="dropdown-divider my-2" />
+                </li>
                 <li>
                   <a class="dropdown-item d-flex align-items-center gap-2" href="javascript:;" @click="logout">
                     <i class="bi bi-box-arrow-right"></i>
@@ -106,14 +94,18 @@
                     {{ $page.props.user.first_name }} {{ $page.props.user.last_name }}
                   </div>
                 </li>
-                <li><hr class="dropdown-divider my-2" /></li>
+                <li>
+                  <hr class="dropdown-divider my-2" />
+                </li>
                 <li>
                   <a class="dropdown-item d-flex align-items-center gap-2" href="/profile">
                     <i class="bi bi-gear"></i>
                     <span>{{ translate("Account Settings") }}</span>
                   </a>
                 </li>
-                <li><hr class="dropdown-divider my-2" /></li>
+                <li>
+                  <hr class="dropdown-divider my-2" />
+                </li>
                 <li>
                   <a class="dropdown-item d-flex align-items-center gap-2" href="javascript:;" @click="logout">
                     <i class="bi bi-box-arrow-right"></i>
@@ -140,27 +132,15 @@
         </li>
 
         <!-- Accounts -->
-        <li
-          class="nav-item"
-          v-if="['superadmin', 'accountant'].includes($page.props.user.role)"
-        >
-          <a
-            class="nav-link with-caret"
-            :class="{ collapsed: !isParentActive(accountsLinks) }"
-            data-bs-toggle="collapse"
-            data-bs-target="#accounts-nav"
-            href="#"
-          >
+        <li class="nav-item" v-if="['superadmin', 'accountant'].includes($page.props.user.role)">
+          <a class="nav-link with-caret" :class="{ collapsed: !isParentActive(accountsLinks) }"
+            data-bs-toggle="collapse" data-bs-target="#accounts-nav" href="#">
             <i class="bi bi-wallet2"></i>
             <span>{{ translate("Accounts") }}</span>
             <i class="bi bi-chevron-down ms-auto caret"></i>
           </a>
-          <ul
-            id="accounts-nav"
-            class="nav-content collapse"
-            :class="{ show: isParentActive(accountsLinks) }"
-            data-bs-parent="#sidebar-nav"
-          >
+          <ul id="accounts-nav" class="nav-content collapse" :class="{ show: isParentActive(accountsLinks) }"
+            data-bs-parent="#sidebar-nav">
             <li v-for="link in accountsLinks" :key="link.path">
               <a :href="link.path" :class="{ active: isActive(link.path) }">
                 <i :class="link.icon"></i>
@@ -171,27 +151,15 @@
         </li>
 
         <!-- Students -->
-        <li
-          class="nav-item"
-          v-if="['superadmin', 'admission'].includes($page.props.user.role)"
-        >
-          <a
-            class="nav-link with-caret"
-            :class="{ collapsed: !isParentActive(studentLinks) }"
-            data-bs-toggle="collapse"
-            data-bs-target="#students-nav"
-            href="#"
-          >
+        <li class="nav-item" v-if="['superadmin', 'admission'].includes($page.props.user.role)">
+          <a class="nav-link with-caret" :class="{ collapsed: !isParentActive(studentLinks) }" data-bs-toggle="collapse"
+            data-bs-target="#students-nav" href="#">
             <i class="bi bi-person-lines-fill"></i>
             <span>{{ translate("Students") }}</span>
             <i class="bi bi-chevron-down ms-auto caret"></i>
           </a>
-          <ul
-            id="students-nav"
-            class="nav-content collapse"
-            :class="{ show: isParentActive(studentLinks) }"
-            data-bs-parent="#sidebar-nav"
-          >
+          <ul id="students-nav" class="nav-content collapse" :class="{ show: isParentActive(studentLinks) }"
+            data-bs-parent="#sidebar-nav">
             <li v-for="link in studentLinks" :key="link.path">
               <a :href="link.path" :class="{ active: isActive(link.path) }">
                 <i class="bi bi-chevron-right"></i>
@@ -205,7 +173,7 @@
         <!-- Teachers  -->
 
 
-         <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
+        <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
           <a class="nav-link" :href="'/teachers'" :class="{ active: isActive('/teachers') }">
             <i class="bi bi-people-fill"></i>
             <span>{{ translate("Teachers") }}</span>
@@ -214,70 +182,54 @@
 
 
         <!-- Session Module -->
-          <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
+        <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
           <a class="nav-link" :href="'/sessions'" :class="{ active: isActive('/sessions') }">
-            <i class="bi bi-people-fill"></i>
+            <i class="bi bi-calendar-week-fill"></i>
             <span>{{ translate("Sessions") }}</span>
           </a>
         </li>
 
-         <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
+        <!-- Hostel Module -->
+        <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
           <a class="nav-link" :href="'/hostels'" :class="{ active: isActive('/hostels') }">
-            <i class="bi bi-people-fill"></i>
+            <i class="bi bi-building"></i>
             <span>{{ translate("Hostel") }}</span>
           </a>
         </li>
 
         <!-- Class Module -->
-
-         <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
+        <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
           <a class="nav-link" :href="'/classes'" :class="{ active: isActive('/classes') }">
-            <i class="bi bi-people-fill"></i>
+            <i class="bi bi-journal-bookmark-fill"></i>
             <span>{{ translate("Class") }}</span>
           </a>
         </li>
 
-
-        <!-- Attendance module  -->
-          <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
+        <!-- Attendance Module -->
+        <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
           <a class="nav-link" :href="'/attendances'" :class="{ active: isActive('/attendances') }">
-            <i class="bi bi-people-fill"></i>
+            <i class="bi bi-check2-square"></i>
             <span>{{ translate("Attendance") }}</span>
           </a>
         </li>
 
-        <!-- Result Module  -->
-
+        <!-- Result Module -->
         <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
           <a class="nav-link" :href="'/results'" :class="{ active: isActive('/results') }">
-            <i class="bi bi-people-fill"></i>
+            <i class="bi bi-bar-chart-fill"></i>
             <span>{{ translate("Result") }}</span>
           </a>
         </li>
-
-
         <!-- Darul Iftah -->
-        <li
-          class="nav-item"
-          v-if="['superadmin', 'iftah'].includes($page.props.user.role)"
-        >
-          <a
-            class="nav-link with-caret"
-            :class="{ collapsed: !isParentActive(iftahLinks) }"
-            data-bs-toggle="collapse"
-            data-bs-target="#darul-iftah-nav"
-            href="#"
-          >
+        <li class="nav-item" v-if="['superadmin', 'iftah'].includes($page.props.user.role)">
+          <a class="nav-link with-caret" :class="{ collapsed: !isParentActive(iftahLinks) }" data-bs-toggle="collapse"
+            data-bs-target="#darul-iftah-nav" href="#">
             <i class="bi bi-journal-bookmark"></i>
             <span>{{ translate("Darul Iftah") }}</span>
             <i class="bi bi-chevron-down ms-auto caret"></i>
           </a>
-          <ul
-            id="darul-iftah-nav"
-            class="nav-content collapse"
-            :class="{ show: isParentActive(iftahLinks) }"
-            data-bs-parent="#sidebar-nav"
-          >
+          <ul id="darul-iftah-nav" class="nav-content collapse" :class="{ show: isParentActive(iftahLinks) }"
+            data-bs-parent="#sidebar-nav">
             <li v-for="link in iftahLinks" :key="link.path">
               <a :href="link.path" :class="{ active: isActive(link.path) }">
                 <i class="bi bi-chevron-right"></i>
@@ -295,23 +247,14 @@
           </a>
         </li>
         <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
-          <a
-            class="nav-link with-caret"
-            :class="{ collapsed: !isParentActive(['/languages']) }"
-            data-bs-toggle="collapse"
-            data-bs-target="#settings-nav"
-            href="#"
-          >
+          <a class="nav-link with-caret" :class="{ collapsed: !isParentActive(['/languages']) }"
+            data-bs-toggle="collapse" data-bs-target="#settings-nav" href="#">
             <i class="bi bi-gear"></i>
             <span>{{ translate("Settings") }}</span>
             <i class="bi bi-chevron-down ms-auto caret"></i>
           </a>
-          <ul
-            id="settings-nav"
-            class="nav-content collapse"
-            :class="{ show: isParentActive(['/languages']) }"
-            data-bs-parent="#sidebar-nav"
-          >
+          <ul id="settings-nav" class="nav-content collapse" :class="{ show: isParentActive(['/languages']) }"
+            data-bs-parent="#sidebar-nav">
             <li>
               <a :href="'/languages'" :class="{ active: isActive('/languages') }">
                 <i class="bi bi-translate"></i>
@@ -349,23 +292,23 @@ export default {
       languages: [],
       user_language_name: "",
       accountsLinks: [
-        { path: "/transactions",       label: "Transactions",       icon: "bi bi-cash" },
-        { path: "/expense/types",      label: "Expense Types",      icon: "bi bi-dash-circle" },
-        { path: "/income/types",       label: "Income Types",       icon: "bi bi-plus-circle" },
-        { path: "/operating/advance",  label: "Operating Advance",  icon: "bi bi-plus-circle" },
-        { path: "/income-statements",  label: "Income Statements",  icon: "bi bi-file-earmark-text" },
-        { path: "/reports",            label: "Reports",            icon: "bi bi-bar-chart-line" },
+        { path: "/transactions", label: "Transactions", icon: "bi bi-cash" },
+        { path: "/expense/types", label: "Expense Types", icon: "bi bi-dash-circle" },
+        { path: "/income/types", label: "Income Types", icon: "bi bi-plus-circle" },
+        { path: "/operating/advance", label: "Operating Advance", icon: "bi bi-plus-circle" },
+        { path: "/income-statements", label: "Income Statements", icon: "bi bi-file-earmark-text" },
+        { path: "/reports", label: "Reports", icon: "bi bi-bar-chart-line" },
       ],
       studentLinks: [
-        { path: "/students",           label: "All Students" },
-        { path: "/enrolled-students",  label: "Enrolled Students" },
+        { path: "/students", label: "All Students" },
+        { path: "/enrolled-students", label: "Enrolled Students" },
       ],
       iftahLinks: [
-        { path: "/introduction",       label: "Introduction" },
-        { path: "/books",              label: "Books" },
-        { path: "/bayanaat",           label: "Bayanaat" },
-        { path: "/islamic-names",      label: "Islamic Names" },
-        { path: "/questions-answers",  label: "Questions & Answers" },
+        { path: "/introduction", label: "Introduction" },
+        { path: "/books", label: "Books" },
+        { path: "/bayanaat", label: "Bayanaat" },
+        { path: "/islamic-names", label: "Islamic Names" },
+        { path: "/questions-answers", label: "Questions & Answers" },
       ],
     };
   },
@@ -437,75 +380,114 @@ export default {
 
 <style>
 /* ===== Brand tokens ===== */
-:root{
-  --brand:#012970;           /* primary (your current theme) */
-  --brand-ink:#0b1e4c;       /* darker text */
-  --brand-soft:rgba(1,41,112,.14);
-  --card:#ffffff;
-  --shadow:0 10px 30px rgba(16,24,40,.08);
+:root {
+  --brand: #012970;
+  /* primary (your current theme) */
+  --brand-ink: #0b1e4c;
+  /* darker text */
+  --brand-soft: rgba(1, 41, 112, .14);
+  --card: #ffffff;
+  --shadow: 0 10px 30px rgba(16, 24, 40, .08);
 }
 
 /* ===== Header ===== */
-.app-header{
-  background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.86));
+.app-header {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .92), rgba(255, 255, 255, .86));
   backdrop-filter: saturate(160%) blur(6px);
   border-bottom: 1px solid var(--brand-soft);
   padding: .6rem .9rem;
   box-shadow: var(--shadow);
 }
-.icon-btn{
+
+.icon-btn {
   border: 1px solid var(--brand-soft);
   background: var(--card);
-  width: 42px; height: 42px;
+  width: 42px;
+  height: 42px;
   border-radius: 12px;
-  display: grid; place-items:center;
+  display: grid;
+  place-items: center;
   color: var(--brand-ink);
 }
-.logo-img{ height: 40px; }
-.logo-text{
-  font-weight: 800; letter-spacing: .2px; color: var(--brand-ink);
+
+.logo-img {
+  height: 40px;
 }
-.globe-link{ color: var(--brand-ink); font-size: 1.05rem; }
+
+.logo-text {
+  font-weight: 800;
+  letter-spacing: .2px;
+  color: var(--brand-ink);
+}
+
+.globe-link {
+  color: var(--brand-ink);
+  font-size: 1.05rem;
+}
 
 /* Profile / language */
-.avatar-circle{
-  width: 34px; height: 34px; border-radius: 50%;
+.avatar-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
   background: var(--brand);
-  display: grid; place-items:center;
+  display: grid;
+  place-items: center;
   color: #fff;
 }
-.user-name{ color: var(--brand-ink); font-weight: 600; }
-.lang-toggle{
-  font-size: .92rem; font-weight: 700; color: var(--brand-ink);
+
+.user-name {
+  color: var(--brand-ink);
+  font-weight: 600;
 }
-.dropdown-menu.profile{
+
+.lang-toggle {
+  font-size: .92rem;
+  font-weight: 700;
+  color: var(--brand-ink);
+}
+
+.dropdown-menu.profile {
   border-radius: 14px;
   border: 1px solid var(--brand-soft);
   box-shadow: var(--shadow);
 }
-.dropdown-menu.profile .dropdown-item{
-  padding: .55rem .9rem; border-radius: 10px;
+
+.dropdown-menu.profile .dropdown-item {
+  padding: .55rem .9rem;
+  border-radius: 10px;
 }
-.dropdown-menu.profile .dropdown-item:hover{
-  background: rgba(1,41,112,.08);
+
+.dropdown-menu.profile .dropdown-item:hover {
+  background: rgba(1, 41, 112, .08);
   color: var(--brand-ink);
 }
-.languages .lang-active a{
-  color:#fff !important; background: var(--brand) !important;
+
+.languages .lang-active a {
+  color: #fff !important;
+  background: var(--brand) !important;
 }
 
 /* ===== Sidebar ===== */
-.sidebar{
+.sidebar {
   background: var(--card);
   border-right: 1px solid var(--brand-soft);
-  padding-top: 76px; /* under fixed header */
+  padding-top: 76px;
+  /* under fixed header */
 }
-.sidebar-nav{
+
+.sidebar-nav {
   padding: .75rem .75rem 1.25rem;
 }
-.sidebar-nav .nav-item{ margin-bottom: .25rem; }
-.sidebar-nav .nav-link{
-  display: flex; align-items: center; gap: .6rem;
+
+.sidebar-nav .nav-item {
+  margin-bottom: .25rem;
+}
+
+.sidebar-nav .nav-link {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
   padding: .7rem .75rem;
   border-radius: 12px;
   color: var(--brand-ink);
@@ -514,60 +496,97 @@ export default {
   transition: .15s ease;
   font-weight: 600;
 }
-.sidebar-nav .nav-link i{ color: var(--brand-ink); }
-.sidebar-nav .nav-link:hover{
+
+.sidebar-nav .nav-link i {
+  color: var(--brand-ink);
+}
+
+.sidebar-nav .nav-link:hover {
   border-color: var(--brand-soft);
   transform: translateY(-1px);
   box-shadow: var(--shadow);
 }
-.sidebar-nav .nav-link.active{
-  background: rgba(1,41,112,.08);
-  border-color: rgba(1,41,112,.22);
+
+.sidebar-nav .nav-link.active {
+  background: rgba(1, 41, 112, .08);
+  border-color: rgba(1, 41, 112, .22);
   color: var(--brand-ink);
 }
-.sidebar-nav .nav-link.with-caret .caret{ transition: transform .18s ease; }
-.sidebar-nav .nav-link.active .caret{ transform: rotate(180deg); }
 
-.sidebar-nav .nav-content{
+.sidebar-nav .nav-link.with-caret .caret {
+  transition: transform .18s ease;
+}
+
+.sidebar-nav .nav-link.active .caret {
+  transform: rotate(180deg);
+}
+
+.sidebar-nav .nav-content {
   padding-left: 2.25rem;
   border-left: 2px dashed var(--brand-soft);
   margin: .35rem 0 .65rem .45rem;
 }
-.sidebar-nav .nav-content a{
+
+.sidebar-nav .nav-content a {
   display: block;
   padding: .45rem .4rem;
   border-radius: 10px;
   color: var(--brand-ink);
   font-weight: 500;
 }
-.sidebar-nav .nav-content a:hover{ background: rgba(1,41,112,.06); }
-.sidebar-nav .nav-content a.active{
-  background: rgba(1,41,112,.12);
+
+.sidebar-nav .nav-content a:hover {
+  background: rgba(1, 41, 112, .06);
+}
+
+.sidebar-nav .nav-content a.active {
+  background: rgba(1, 41, 112, .12);
   color: var(--brand-ink);
   font-weight: 700;
 }
 
 /* ===== Footer ===== */
-.footer{
+.footer {
   border-top: 1px solid var(--brand-soft);
   background: var(--card);
   color: var(--brand-ink);
 }
 
 /* ===== RTL font helpers (kept) ===== */
-.c-jameel-noori { font-family: "Jameel Noori Nastaleeq", serif; font-size: 16px !important; }
-.rtl-text { direction: rtl; text-align: right; font-family: "Jameel Noori Nastaleeq", serif; font-size: 16px !important; }
-.rtl-text .nav ul { justify-content: flex-end !important; }
+.c-jameel-noori {
+  font-family: "Jameel Noori Nastaleeq", serif;
+  font-size: 16px !important;
+}
+
+.rtl-text {
+  direction: rtl;
+  text-align: right;
+  font-family: "Jameel Noori Nastaleeq", serif;
+  font-size: 16px !important;
+}
+
+.rtl-text .nav ul {
+  justify-content: flex-end !important;
+}
 
 /* ===== Utilities / theme ===== */
-.theme-text-color { color: var(--brand-ink) !important; font-weight: 700; }
-.theme-bg-color   { background-color: var(--brand) !important; }
-.text-primary     { color: var(--brand) !important; }
+.theme-text-color {
+  color: var(--brand-ink) !important;
+  font-weight: 700;
+}
+
+.theme-bg-color {
+  background-color: var(--brand) !important;
+}
+
+.text-primary {
+  color: var(--brand) !important;
+}
 
 /* Multiselect tune */
-.multiselect{
+.multiselect {
   --ms-border-color: var(--brand-soft);
-  --ms-ring-color: rgba(1,41,112,.25);
+  --ms-ring-color: rgba(1, 41, 112, .25);
   --ms-radius: 12px;
   --ms-option-bg-selected: var(--brand);
   --ms-option-color-selected: #fff;
@@ -576,9 +595,21 @@ export default {
 }
 
 /* Small bits kept from your custom rules */
-.section-title { text-align: left; padding-bottom: 5px; }
-.section-title h5 { font-size: 22px; font-weight: bold; text-transform: uppercase; position: relative; color: var(--brand-ink); }
+.section-title {
+  text-align: left;
+  padding-bottom: 5px;
+}
+
+.section-title h5 {
+  font-size: 22px;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: relative;
+  color: var(--brand-ink);
+}
 
 /* Toastr color alignment */
-.toast-success { background-color: var(--brand) !important; }
+.toast-success {
+  background-color: var(--brand) !important;
+}
 </style>

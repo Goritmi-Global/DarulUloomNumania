@@ -8,6 +8,7 @@
             <div class="card">
                 <div class="card-body">
                     <form @submit.prevent="markAttendance">
+                        <h5 class="card-title fw-bold">{{ translate('All Students') }}</h5>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -15,7 +16,7 @@
                                     <th>Name</th>
                                     <th>CNIC</th>
                                     <th>Phone</th>
-                                    <th>Present</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,9 +37,12 @@
                             </tbody>
                         </table>
 
-                        <button type="submit" class="btn btn-primary mt-3">
-                            Mark Attendance
-                        </button>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary mt-3">
+                                Mark Attendance
+                            </button>
+                        </div>
+
                     </form>
                 </div>
             </div>
