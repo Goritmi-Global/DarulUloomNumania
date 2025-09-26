@@ -38,7 +38,7 @@
                 </div>
               </div>
               <div>
-                <div class="text-muted small">{{ translate("Class Name") }}</div>
+                <div class="text-muted fw-bold">{{ translate("Class Name") }}</div>
                 <div class="fw-semibold">{{ record.class_name }}</div>
                 <div class="small text-muted mt-1">
                   {{ translate("Academic Class") }}
@@ -53,13 +53,13 @@
           <div class="card border-0 shadow-lg rounded-4 h-100">
             <div class="card-body d-grid metrics-grid">
               <div class="metric-tile">
-                <div class="text-muted small">{{ translate("Total Subjects") }}</div>
+                <div class="text-muted fw-bold">{{ translate("Total Subjects") }}</div>
                 <div class="fs-4 fw-bold text-primary">{{ totals.total_subjects }}</div>
               </div>
               
               <div class="metric-tile highlight">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                  <span class="text-muted small">{{ translate("Total Marks") }}</span>
+                  <span class="text-muted fw-bold">{{ translate("Total Marks") }}</span>
                 </div>
                 <div class="subjects-list">
                   <div v-if="subjects.length > 0" class="small">

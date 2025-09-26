@@ -16,6 +16,7 @@ use App\Http\Controllers\IslamicNameController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\QuestionAnswerController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TeacherController;
@@ -102,8 +103,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         // Rout for Attendance
         Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances');
         Route::get('/attendance/class/{id}', [AttendanceController::class, 'showClassStudents'])
-     ->name('attendance.class.show');
+            ->name('attendance.class.show');
 
+        // Route for Result
+        Route::get('/results', [ResultController::class, 'index'])->name('results');
+        Route::get('/results/class/{id}', [ResultController::class, 'showClassResults'])->name('results.class.show');
 
         // Route for Class
         Route::prefix('classes')->name('classes.')->group(function () {

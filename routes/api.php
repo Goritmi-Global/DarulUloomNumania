@@ -15,6 +15,7 @@ use App\Http\Controllers\IslamicNameController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\QuestionAnswerController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\SubjectController;
@@ -112,21 +113,22 @@ Route::middleware(['web'])->group(function () {
     });
 
     // Rouets for Classes
-   Route::prefix('classes')->name('api.classes.')->group(function () {
-    Route::get('cards', [ClassController::class, 'cards'])->name('cards');    // <- new
-    Route::get('list', [ClassController::class, 'list'])->name('list');      // optional
-    Route::get('fetch', [ClassController::class, 'fetch'])->name('fetch');
-    Route::get('{id}', [ClassController::class, 'show'])->name('show');
-    Route::post('store', [ClassController::class, 'store'])->name('store');
-    Route::delete('{id}', [ClassController::class, 'destroy'])->name('destroy');
-});
+    Route::prefix('classes')->name('api.classes.')->group(function () {
+        Route::get('cards', [ClassController::class, 'cards'])->name('cards');    // <- new
+        Route::get('list', [ClassController::class, 'list'])->name('list');      // optional
+        Route::get('fetch', [ClassController::class, 'fetch'])->name('fetch');
+        Route::get('{id}', [ClassController::class, 'show'])->name('show');
+        Route::post('store', [ClassController::class, 'store'])->name('store');
+        Route::delete('{id}', [ClassController::class, 'destroy'])->name('destroy');
+    });
 
+    // Route for attendance
 
-// Route for attendance 
+    Route::post('/attendance/mark', [AttendanceController::class, 'store']);
 
-Route::post('/attendance/mark', [AttendanceController::class, 'store']);
+    // Route for Result 
+    Route::post('/results/save', [ResultController::class, 'store']);
 
-    // Route::get('/classes/list', [ClassController::class, 'list'])->name('api.classes.list');
 
     Route::prefix('subjects')->name('api.subjects.')->group(function () {
         Route::post('store', [SubjectController::class, 'store'])->name('store');

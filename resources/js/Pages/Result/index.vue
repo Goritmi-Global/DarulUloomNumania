@@ -2,11 +2,11 @@
   <main id="main" class="main">
     <div class="pagetitle d-flex justify-content-between">
       <div>
-        <h1 class="theme-text-color">{{ translate("Attendance Management") }}</h1>
+        <h1 class="theme-text-color">{{ translate("Result Management") }}</h1>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/dashboard">{{ translate("Darul Oloom") }}</a></li>
-            <li class="breadcrumb-item">{{ translate("Attendance") }}</li>
+            <li class="breadcrumb-item">{{ translate("Results") }}</li>
             <li class="breadcrumb-item active">{{ translate("Classes") }}</li>
           </ol>
         </nav>
@@ -28,10 +28,10 @@
             <div class="card-body d-flex flex-column justify-content-between">
               <div>
                 <h5 class="card-title theme-text-color mb-2">{{ c.class_name }}</h5>
-                <p class="mb-0 text-muted fw-bold">{{ translate('students') }} : {{ c.students_count }} </p>
+                <p class="mb-0 text-muted fw-bold">{{ translate('students') }} : {{ c.students_count }}</p>
               </div>
               <div class="mt-3 text-end">
-                <span class="badge open">{{ translate('Open') }}</span>
+                <span class="badge result">{{ translate('Enter Results') }}</span>
               </div>
             </div>
           </div>
@@ -56,13 +56,13 @@ export default {
   created() {
     this.fetchClassCards();
   },
+
   methods: {
     fetchClassCards() {
       this.loading = true;
       axios
         .get(route("api.classes.cards"))
         .then((res) => {
-          // res.data example: [{id:1, class_name:'Test', students_count:5}, ...]
           this.classesData = res.data || [];
         })
         .catch((err) => {
@@ -71,14 +71,12 @@ export default {
         })
         .finally(() => (this.loading = false));
     },
-
     goToClass(classId) {
-      window.location.href = `/attendance/class/${classId}`;
+      window.location.href = `/results/class/${classId}`;
     },
   },
 };
 </script>
-
 <style scoped>
 .class-card {
   cursor: pointer;
@@ -94,9 +92,9 @@ export default {
   transform: translateY(-6px);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
-.open{
+
+.result{
   background-color: #1C0D82;
   padding: 10px;
 }
 </style>
-

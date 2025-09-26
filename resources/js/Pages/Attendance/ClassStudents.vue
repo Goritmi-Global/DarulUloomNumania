@@ -1,10 +1,10 @@
 <template>
     <main id="main" class="main">
-        <div class="pagetitle">
+        <div class="pagetitle mt-2">
             <h1>{{ translate('Class Students') }}</h1>
         </div>
 
-        <section class="section">
+        <section class="section mt-5">
             <div class="card">
                 <div class="card-body">
                     <form @submit.prevent="markAttendance">

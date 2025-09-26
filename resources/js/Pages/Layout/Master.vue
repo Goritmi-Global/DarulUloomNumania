@@ -246,6 +246,16 @@
           </a>
         </li>
 
+        <!-- Result Module  -->
+
+        <li class="nav-item" v-if="$page.props.user.role === 'superadmin'">
+          <a class="nav-link" :href="'/results'" :class="{ active: isActive('/results') }">
+            <i class="bi bi-people-fill"></i>
+            <span>{{ translate("Result") }}</span>
+          </a>
+        </li>
+
+
         <!-- Darul Iftah -->
         <li
           class="nav-item"
